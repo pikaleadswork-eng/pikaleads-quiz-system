@@ -1,6 +1,6 @@
-import { eq, desc } from "drizzle-orm";
+import { eq, desc, and, gte } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, leads, InsertLead, abTestVariants, abTestAssignments, incompleteQuizSessions, InsertABTestVariant, InsertABTestAssignment, InsertIncompleteQuizSession, leadStatuses, InsertLeadStatus, leadComments, InsertLeadComment, activityLog, InsertActivityLog, messages, InsertMessage, assignmentRules, InsertAssignmentRule, assignmentHistory, systemSettings } from "../drizzle/schema";
+import { InsertUser, users, leads, InsertLead, abTestVariants, abTestAssignments, incompleteQuizSessions, InsertABTestVariant, InsertABTestAssignment, InsertIncompleteQuizSession, leadStatuses, InsertLeadStatus, leadComments, InsertLeadComment, activityLog, InsertActivityLog, messages, InsertMessage, assignmentRules, InsertAssignmentRule, assignmentHistory, systemSettings, appointments, managerInvitations, InsertManagerInvitation } from "../drizzle/schema";
 import { sql } from "drizzle-orm";
 import { ENV } from './_core/env';
 
@@ -295,7 +295,6 @@ export async function assignLeadToManager(leadId: number, managerId: number, adm
 /**
  * Manager Invitation functions
  */
-import { managerInvitations, InsertManagerInvitation } from "../drizzle/schema";
 
 export async function createManagerInvitation(invitation: InsertManagerInvitation) {
   const db = await getDb();
@@ -582,4 +581,73 @@ export async function getLeadByPhone(phone: string) {
   
   const result = await db.select().from(leads).where(eq(leads.phone, phone)).limit(1);
   return result[0] || null;
+}
+
+/**
+ * Appointments functions
+ */
+
+export async function createAppointment(data: {
+  leadId: number;
+  managerId: number;
+  title: string;
+  description?: string;
+  scheduledAt: string;
+  duration: number;
+  meetingLink?: string;
+}) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const [result] = await db.insert(appointments).values({
+    leadId: data.leadId,
+    managerId: data.managerId,
+    title: data.title,
+    description: data.description || null,
+    scheduledAt: new Date(data.scheduledAt),
+    duration: data.duration,
+    meetingLink: data.meetingLink || null,
+    status: 'scheduled',
+  });
+  return (result as any).insertId as number;
+}
+
+export async function getAppointments() {
+  const db = await getDb();
+  if (!db) return [];
+  return await db.select().from(appointments).orderBy(desc(appointments.scheduledAt));
+}
+
+export async function getUpcomingAppointments(managerId?: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  const now = new Date();
+  
+  if (managerId) {
+    return await db
+      .select()
+      .from(appointments)
+      .where(and(
+        gte(appointments.scheduledAt, now),
+        eq(appointments.status, 'scheduled'),
+        eq(appointments.managerId, managerId)
+      ))
+      .orderBy(appointments.scheduledAt);
+  }
+  
+  return await db
+    .select()
+    .from(appointments)
+    .where(and(
+      gte(appointments.scheduledAt, now),
+      eq(appointments.status, 'scheduled')
+    ))
+    .orderBy(appointments.scheduledAt);
+}
+
+export async function updateAppointmentStatus(appointmentId: number, status: string) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.update(appointments).set({ status }).where(eq(appointments.id, appointmentId));
 }

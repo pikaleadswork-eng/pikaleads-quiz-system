@@ -1,4 +1,4 @@
-import { int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { boolean, int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
 
 /**
  * Core user table backing auth flow.
@@ -244,3 +244,27 @@ export const systemSettings = mysqlTable("system_settings", {
 
 export type SystemSetting = typeof systemSettings.$inferSelect;
 export type InsertSystemSetting = typeof systemSettings.$inferInsert;
+
+
+/**
+ * Appointments table for scheduling meetings with leads
+ */
+export const appointments = mysqlTable("appointments", {
+  id: int("id").autoincrement().primaryKey(),
+  leadId: int("leadId").notNull(),
+  managerId: int("managerId").notNull(),
+  title: varchar("title", { length: 255 }).notNull(),
+  description: text("description"),
+  scheduledAt: timestamp("scheduledAt").notNull(),
+  duration: int("duration").notNull(), // in minutes
+  status: varchar("status", { length: 20 }).notNull().default('scheduled'), // scheduled, completed, cancelled
+  calendlyEventId: varchar("calendlyEventId", { length: 255 }),
+  googleEventId: varchar("googleEventId", { length: 255 }),
+  meetingLink: varchar("meetingLink", { length: 500 }),
+  reminderSent: boolean("reminderSent").default(false),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Appointment = typeof appointments.$inferSelect;
+export type InsertAppointment = typeof appointments.$inferInsert;

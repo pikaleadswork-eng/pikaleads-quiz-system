@@ -315,6 +315,372 @@ export const quizTranslations: QuizTranslations = {
     pl: { title: "Rozwijaj swój kanał Telegram z Google Ads", subtitle: "Uzyskaj docelowych subskrybentów z Google Search i YouTube", bonus: "Bezpłatny audyt + strategia", description: "Uzyskaj docelowych subskrybentów dla swojego kanału Telegram", questions: [{ question: "Typ kanału?", options: ["Biznes", "Analityka", "Wiadomości", "Sprzedaż", "Inne"] }, { question: "Cel?", options: ["Subskrybenci", "Leady", "Sprzedaż", "Zaangażowanie"] }, { question: "Budżet?", options: ["Do $300", "$300–$1000", "$1000–$3000", "$3000+"] }, { question: "Konkurenci?", options: ["Tak, znam", "Tak, nie jestem pewien", "Brak", "Potrzebuję pomocy"] }] },
     de: { title: "Wachsen Sie Ihren Telegram-Kanal mit Google Ads", subtitle: "Erhalten Sie gezielte Abonnenten von Google Search und YouTube", bonus: "Kostenloser Audit + Strategie", description: "Erhalten Sie gezielte Abonnenten für Ihren Telegram-Kanal", questions: [{ question: "Kanaltyp?", options: ["Geschäft", "Analytik", "Nachrichten", "Verkauf", "Anderes"] }, { question: "Ziel?", options: ["Abonnenten", "Leads", "Verkäufe", "Engagement"] }, { question: "Budget?", options: ["Bis $300", "$300–$1000", "$1000–$3000", "$3000+"] }, { question: "Wettbewerber?", options: ["Ja, ich weiß", "Ja, nicht sicher", "Keine", "Brauche Hilfe"] }] },
   },
+  "furniture": {
+    uk: {
+      title: "Хочете отримувати 30+ заявок на меблі щодня?",
+      subtitle: "Пройдіть короткий квіз — розрахуємо вашу стратегію та вартість заявки",
+      bonus: "Безкоштовний аудит вашої реклами + стратегія запуску",
+      description: "Отримайте 30+ якісних лідів щодня для вашого меблевого бізнесу",
+      questions: [
+        {
+          question: "Що саме ви продаєте?",
+          options: ["Кухні", "М'які меблі", "Шафи / гардероби", "Корпусні меблі", "Все разом"],
+        },
+        {
+          question: "Ваш середній чек?",
+          options: ["До $200", "$200–$700", "$700–$2000", "$2000+"],
+        },
+        {
+          question: "Ваш бюджет на рекламу?",
+          options: ["До $500", "$500–$1500", "$1500–$3000", "$3000+"],
+        },
+        {
+          question: "Ключова ціль:",
+          options: ["Заявки", "Дзвінки", "Візити у салон"],
+        },
+      ],
+    },
+    en: {
+      title: "Want to Get 30+ Furniture Leads Daily?",
+      subtitle: "Take a short quiz and we'll calculate your lead cost and strategy",
+      bonus: "Free audit of your advertising + launch strategy",
+      description: "Get 30+ quality leads daily for your furniture business",
+      questions: [
+        {
+          question: "What exactly do you sell?",
+          options: ["Kitchens", "Soft Furniture", "Wardrobes / Closets", "Case Furniture", "All of the Above"],
+        },
+        {
+          question: "What's your average order value?",
+          options: ["Up to $200", "$200–$700", "$700–$2000", "$2000+"],
+        },
+        {
+          question: "What's your advertising budget?",
+          options: ["Up to $500", "$500–$1500", "$1500–$3000", "$3000+"],
+        },
+        {
+          question: "What's your main goal?",
+          options: ["Leads", "Phone Calls", "Showroom Visits"],
+        },
+      ],
+    },
+    ru: {
+      title: "Хотите получать 30+ заявок на мебель ежедневно?",
+      subtitle: "Пройдите короткий квиз — рассчитаем вашу стратегию и стоимость заявки",
+      bonus: "Бесплатный аудит вашей рекламы + стратегия запуска",
+      description: "Получайте 30+ качественных лидов ежедневно для вашего мебельного бизнеса",
+      questions: [
+        {
+          question: "Что именно вы продаёте?",
+          options: ["Кухни", "Мягкая мебель", "Шкафы / гардеробы", "Корпусная мебель", "Всё вместе"],
+        },
+        {
+          question: "Ваш средний чек?",
+          options: ["До $200", "$200–$700", "$700–$2000", "$2000+"],
+        },
+        {
+          question: "Ваш бюджет на рекламу?",
+          options: ["До $500", "$500–$1500", "$1500–$3000", "$3000+"],
+        },
+        {
+          question: "Ключевая цель:",
+          options: ["Заявки", "Звонки", "Визиты в салон"],
+        },
+      ],
+    },
+    pl: {
+      title: "Chcesz otrzymywać 30+ zapytań o meble dziennie?",
+      subtitle: "Wypełnij krótki quiz — obliczymy Twoją strategię i koszt leada",
+      bonus: "Bezpłatny audyt Twojej reklamy + strategia uruchomienia",
+      description: "Uzyskaj 30+ wysokiej jakości leadów dziennie dla Twojego biznesu meblowego",
+      questions: [
+        {
+          question: "Co dokładnie sprzedajesz?",
+          options: ["Kuchnie", "Meble tapicerowane", "Szafy / Garderoby", "Meble korpusowe", "Wszystko powyższe"],
+        },
+        {
+          question: "Średnia wartość zamówienia?",
+          options: ["Do $200", "$200–$700", "$700–$2000", "$2000+"],
+        },
+        {
+          question: "Twój budżet reklamowy?",
+          options: ["Do $500", "$500–$1500", "$1500–$3000", "$3000+"],
+        },
+        {
+          question: "Główny cel:",
+          options: ["Leady", "Telefony", "Wizyty w salonie"],
+        },
+      ],
+    },
+    de: {
+      title: "Möchten Sie täglich 30+ Möbel-Leads erhalten?",
+      subtitle: "Nehmen Sie an einem kurzen Quiz teil – wir berechnen Ihre Strategie und Lead-Kosten",
+      bonus: "Kostenloser Audit Ihrer Werbung + Startstrategie",
+      description: "Erhalten Sie täglich 30+ qualitativ hochwertige Leads für Ihr Möbelgeschäft",
+      questions: [
+        {
+          question: "Was genau verkaufen Sie?",
+          options: ["Küchen", "Polstermöbel", "Schränke / Garderoben", "Korpusmöbel", "Alles zusammen"],
+        },
+        {
+          question: "Ihr durchschnittlicher Bestellwert?",
+          options: ["Bis $200", "$200–$700", "$700–$2000", "$2000+"],
+        },
+        {
+          question: "Ihr Werbebudget?",
+          options: ["Bis $500", "$500–$1500", "$1500–$3000", "$3000+"],
+        },
+        {
+          question: "Hauptziel:",
+          options: ["Leads", "Anrufe", "Showroom-Besuche"],
+        },
+      ],
+    },
+  },
+  "apartment-renovation": {
+    uk: {
+      title: "5-15 гарячих лідів щодня для ремонтних послуг",
+      subtitle: "Пройдіть квіз — отримайте персональний маркетинговий план",
+      bonus: "Безкоштовний аудит вашої реклами + стратегія запуску",
+      description: "Отримайте 5-15 гарячих лідів щодня для ремонтних послуг",
+      questions: [
+        {
+          question: "Який тип ремонту ви пропонуєте?",
+          options: ["Косметичний", "Капітальний ремонт", "Елітний ремонт", "Окремі роботи (стіни, електрика, сантехніка)"],
+        },
+        {
+          question: "Середня вартість проєкту?",
+          options: ["До $1000", "$1000–$5000", "$5000–$15000", "$15000+"],
+        },
+        {
+          question: "Ваша зона обслуговування?",
+          options: ["Місто", "Регіон", "По всій країні"],
+        },
+        {
+          question: "Ціль реклами?",
+          options: ["Дзвінки", "Заявки", "Запити на контакт"],
+        },
+      ],
+    },
+    en: {
+      title: "Get 5-15 Hot Leads Daily for Apartment Renovations",
+      subtitle: "Complete the quiz to get your personalized marketing plan",
+      bonus: "Free audit of your advertising + launch strategy",
+      description: "Get 5-15 hot leads daily for renovation services",
+      questions: [
+        {
+          question: "What type of renovation do you offer?",
+          options: ["Cosmetic", "Major Renovation", "Luxury Renovation", "Specific Work (walls, electrical, plumbing)"],
+        },
+        {
+          question: "Average project cost?",
+          options: ["Up to $1000", "$1000–$5000", "$5000–$15000", "$15000+"],
+        },
+        {
+          question: "Your service area?",
+          options: ["City", "Region", "Nationwide"],
+        },
+        {
+          question: "Advertising goal?",
+          options: ["Phone Calls", "Leads", "Contact Requests"],
+        },
+      ],
+    },
+    ru: {
+      title: "5-15 горячих лидов ежедневно для ремонтных услуг",
+      subtitle: "Пройдите квиз — получите персональный маркетинговый план",
+      bonus: "Бесплатный аудит вашей рекламы + стратегия запуска",
+      description: "Получайте 5-15 горячих лидов ежедневно для ремонтных услуг",
+      questions: [
+        {
+          question: "Какой тип ремонта вы предлагаете?",
+          options: ["Косметический", "Капитальный ремонт", "Элитный ремонт", "Отдельные работы (стены, электрика, сантехника)"],
+        },
+        {
+          question: "Средняя стоимость проекта?",
+          options: ["До $1000", "$1000–$5000", "$5000–$15000", "$15000+"],
+        },
+        {
+          question: "Ваша зона обслуживания?",
+          options: ["Город", "Регион", "По всей стране"],
+        },
+        {
+          question: "Цель рекламы?",
+          options: ["Звонки", "Заявки", "Запросы на контакт"],
+        },
+      ],
+    },
+    pl: {
+      title: "5-15 gorących leadów dziennie dla usług remontowych",
+      subtitle: "Wypełnij quiz — otrzymaj spersonalizowany plan marketingowy",
+      bonus: "Bezpłatny audyt Twojej reklamy + strategia uruchomienia",
+      description: "Uzyskaj 5-15 gorących leadów dziennie dla usług remontowych",
+      questions: [
+        {
+          question: "Jaki typ remontu oferujesz?",
+          options: ["Kosmetyczny", "Kapitalny remont", "Luksusowy remont", "Określone prace (ściany, elektryka, hydraulika)"],
+        },
+        {
+          question: "Średni koszt projektu?",
+          options: ["Do $1000", "$1000–$5000", "$5000–$15000", "$15000+"],
+        },
+        {
+          question: "Twój obszar usług?",
+          options: ["Miasto", "Region", "Cały kraj"],
+        },
+        {
+          question: "Cel reklamy?",
+          options: ["Telefony", "Leady", "Prośby o kontakt"],
+        },
+      ],
+    },
+    de: {
+      title: "5-15 heiße Leads täglich für Renovierungsdienste",
+      subtitle: "Nehmen Sie am Quiz teil — erhalten Sie Ihren personalisierten Marketingplan",
+      bonus: "Kostenloser Audit Ihrer Werbung + Startstrategie",
+      description: "Erhalten Sie täglich 5-15 heiße Leads für Renovierungsdienste",
+      questions: [
+        {
+          question: "Welche Art von Renovierung bieten Sie an?",
+          options: ["Kosmetisch", "Großrenovierung", "Luxusrenovierung", "Spezifische Arbeiten (Wände, Elektrik, Sanitär)"],
+        },
+        {
+          question: "Durchschnittliche Projektkosten?",
+          options: ["Bis $1000", "$1000–$5000", "$5000–$15000", "$15000+"],
+        },
+        {
+          question: "Ihr Servicebereich?",
+          options: ["Stadt", "Region", "Landesweit"],
+        },
+        {
+          question: "Werbeziel?",
+          options: ["Anrufe", "Leads", "Kontaktanfragen"],
+        },
+      ],
+    },
+  },
+  "e-commerce": {
+    uk: {
+      title: "Хочете масштабувати свій інтернет-магазин? Отримайте 30-120 лідів щодня",
+      subtitle: "Відповідайте на кілька питань, щоб дізнатися свій потенціал зростання",
+      bonus: "Безкоштовний аудит вашої реклами + стратегія запуску",
+      description: "Масштабуйте свій інтернет-магазин з 30-120 лідами щодня",
+      questions: [
+        {
+          question: "Категорія магазину?",
+          options: ["Одяг", "Товари для дому", "Електроніка", "Краса та догляд", "Інше"],
+        },
+        {
+          question: "Ваш середній чек?",
+          options: ["До $50", "$50–$150", "$150–$500", "$500+"],
+        },
+        {
+          question: "Ваш бюджет на рекламу?",
+          options: ["До $500", "$500–$2000", "$2000–$5000", "$5000+"],
+        },
+        {
+          question: "Чи є у вас воронка продажів?",
+          options: ["Так, повністю налаштована", "Частково налаштована", "Ні, потрібна допомога", "Не впевнений"],
+        },
+      ],
+    },
+    en: {
+      title: "Want to Scale Your E-Commerce? Get 30-120 Leads Daily",
+      subtitle: "Answer a few questions to discover your growth potential",
+      bonus: "Free audit of your advertising + launch strategy",
+      description: "Scale your e-commerce with 30-120 leads daily",
+      questions: [
+        {
+          question: "Store category?",
+          options: ["Clothing", "Home Goods", "Electronics", "Beauty & Care", "Other"],
+        },
+        {
+          question: "What's your average order value?",
+          options: ["Up to $50", "$50–$150", "$150–$500", "$500+"],
+        },
+        {
+          question: "What's your advertising budget?",
+          options: ["Up to $500", "$500–$2000", "$2000–$5000", "$5000+"],
+        },
+        {
+          question: "Do you have a sales funnel?",
+          options: ["Yes, fully set up", "Partially set up", "No, need help", "Not sure"],
+        },
+      ],
+    },
+    ru: {
+      title: "Хотите масштабировать свой интернет-магазин? Получайте 30-120 лидов ежедневно",
+      subtitle: "Ответьте на несколько вопросов, чтобы узнать свой потенциал роста",
+      bonus: "Бесплатный аудит вашей рекламы + стратегия запуска",
+      description: "Масштабируйте свой интернет-магазин с 30-120 лидами ежедневно",
+      questions: [
+        {
+          question: "Категория магазина?",
+          options: ["Одежда", "Товары для дома", "Электроника", "Красота и уход", "Другое"],
+        },
+        {
+          question: "Ваш средний чек?",
+          options: ["До $50", "$50–$150", "$150–$500", "$500+"],
+        },
+        {
+          question: "Ваш бюджет на рекламу?",
+          options: ["До $500", "$500–$2000", "$2000–$5000", "$5000+"],
+        },
+        {
+          question: "Есть ли у вас воронка продаж?",
+          options: ["Да, полностью настроена", "Частично настроена", "Нет, нужна помощь", "Не уверен"],
+        },
+      ],
+    },
+    pl: {
+      title: "Chcesz skalować swój e-commerce? Uzyskaj 30-120 leadów dziennie",
+      subtitle: "Odpowiedz na kilka pytań, aby odkryć swój potencjał wzrostu",
+      bonus: "Bezpłatny audyt Twojej reklamy + strategia uruchomienia",
+      description: "Skaluj swój e-commerce z 30-120 leadami dziennie",
+      questions: [
+        {
+          question: "Kategoria sklepu?",
+          options: ["Odzież", "Artykuły domowe", "Elektronika", "Uroda i pielęgnacja", "Inne"],
+        },
+        {
+          question: "Średnia wartość zamówienia?",
+          options: ["Do $50", "$50–$150", "$150–$500", "$500+"],
+        },
+        {
+          question: "Twój budżet reklamowy?",
+          options: ["Do $500", "$500–$2000", "$2000–$5000", "$5000+"],
+        },
+        {
+          question: "Czy masz lejek sprzedażowy?",
+          options: ["Tak, w pełni skonfigurowany", "Częściowo skonfigurowany", "Nie, potrzebuję pomocy", "Nie jestem pewien"],
+        },
+      ],
+    },
+    de: {
+      title: "Möchten Sie Ihren E-Commerce skalieren? Erhalten Sie 30-120 Leads täglich",
+      subtitle: "Beantworten Sie einige Fragen, um Ihr Wachstumspotenzial zu entdecken",
+      bonus: "Kostenloser Audit Ihrer Werbung + Startstrategie",
+      description: "Skalieren Sie Ihren E-Commerce mit 30-120 Leads täglich",
+      questions: [
+        {
+          question: "Shop-Kategorie?",
+          options: ["Kleidung", "Haushaltswaren", "Elektronik", "Schönheit & Pflege", "Anderes"],
+        },
+        {
+          question: "Ihr durchschnittlicher Bestellwert?",
+          options: ["Bis $50", "$50–$150", "$150–$500", "$500+"],
+        },
+        {
+          question: "Ihr Werbebudget?",
+          options: ["Bis $500", "$500–$2000", "$2000–$5000", "$5000+"],
+        },
+        {
+          question: "Haben Sie einen Verkaufstrichter?",
+          options: ["Ja, vollständig eingerichtet", "Teilweise eingerichtet", "Nein, brauche Hilfe", "Nicht sicher"],
+        },
+      ],
+    },
+  },
 };
 
 // Helper function to get quiz translation

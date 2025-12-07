@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import { trpc } from "@/lib/trpc";
 
 export type Language = "uk" | "ru" | "en" | "pl" | "de";
 
@@ -30,6 +31,18 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     // Auto-detect from browser
     return detectBrowserLanguage();
   });
+
+  // Try to detect language from IP geolocation
+  const { data: geoData } = trpc.auth.detectLanguage.useQuery(undefined, {
+    enabled: !localStorage.getItem("pikaleads_language"),
+    staleTime: Infinity,
+  });
+
+  useEffect(() => {
+    if (geoData && !localStorage.getItem("pikaleads_language")) {
+      setLanguageState(geoData.language);
+    }
+  }, [geoData]);
 
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);

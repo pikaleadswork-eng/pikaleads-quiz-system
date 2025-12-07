@@ -41,7 +41,7 @@ export default function ECommerceQuiz() {
 
   return (
     <QuizLanding
-      quizId="ecommerce"
+      quizId="e-commerce"
       onStartQuiz={() => setShowQuiz(true)}
     />
   );

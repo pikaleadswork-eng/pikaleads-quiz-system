@@ -447,3 +447,68 @@
 - [ ] Document environment variables configuration
 - [ ] Document deployment process
 - [ ] Document backup and maintenance procedures
+
+
+## Phase 12 - Multi-Language, SMS & Calendar
+
+### Multi-Language Support
+- [x] Create translation files for UA and EN (already exists with 5 languages)
+- [x] Add language switcher to header (already exists)
+- [x] Implement auto-detection based on IP geolocation
+- [x] Translate all UI text (Home, Quiz pages, Admin, CRM)
+- [x] Translate quiz questions and answers
+- [x] Store user language preference in localStorage
+- [ ] Add language parameter to URL for SEO (future enhancement)
+
+### SMS Notifications (Twilio)
+- [x] Install Twilio SDK
+- [x] Create SMS module with sendSMS function
+- [x] Add SMS notification when lead status changes
+- [x] Add SMS notification for appointment reminders
+- [x] Add SMS templates for different scenarios
+- [x] Add SMS to CRM messaging interface
+- [ ] Configure Twilio credentials (TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_PHONE_NUMBER)
+- [ ] Test SMS delivery with real account
+
+### Calendar Integration
+- [ ] Research Calendly vs Google Calendar API
+- [ ] Add calendar booking widget to CRM
+- [ ] Create appointment scheduling interface
+- [ ] Sync appointments with lead records
+- [ ] Send calendar invites to clients
+- [ ] Add appointment reminders (email + SMS)
+- [ ] Display upcoming appointments in Manager Dashboard
+
+## Phase 12 - Calendar Integration & Quiz Testing
+
+### Calendar Integration (Calendly/Google Calendar)
+- [x] Add appointments table to database schema
+- [x] Create calendar router with tRPC procedures
+- [x] Create AdminCalendar page for appointment booking
+- [x] Implement createAppointment mutation
+- [x] Implement getAppointments query
+- [x] Implement updateAppointmentStatus mutation
+- [x] Fix TypeScript errors in calendar implementation
+- [x] Test calendar functionality
+
+### Quiz Pages Testing
+- [x] Fix "Quiz not found" error on /quiz/furniture
+- [x] Fix "Quiz not found" error on /quiz/apartment-renovation
+- [x] Fix "Quiz not found" error on /quiz/e-commerce
+- [x] Add furniture quiz translations to quizTranslations.ts
+- [x] Add apartment-renovation quiz translations to quizTranslations.ts
+- [x] Add e-commerce quiz translations to quizTranslations.ts
+- [x] Test all three quiz pages with proper translations
+- [ ] Create test leads through all quiz types
+- [ ] Verify lead flow from quiz → Telegram/WhatsApp → CRM
+
+### Design Review
+- [ ] Review all page spacing and button positioning
+- [ ] Test responsive design on mobile/tablet/desktop
+- [ ] Fix admin panel spacing issues
+- [ ] Create comprehensive admin panel navigation page
+
+### Admin Panel Audit
+- [ ] List all admin panel URLs with descriptions
+- [ ] Document integration setup steps
+- [ ] Prepare deployment documentation for ukraine.com.ua

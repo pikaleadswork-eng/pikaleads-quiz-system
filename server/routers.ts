@@ -4,6 +4,7 @@ import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
+import { detectLanguageFromIP, getClientIP } from "./geolocation";
 
 const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
   if (ctx.user.role !== "admin") {
@@ -23,6 +24,11 @@ export const appRouter = router({
       return {
         success: true,
       } as const;
+    }),
+    detectLanguage: publicProcedure.query(({ ctx }) => {
+      const clientIP = getClientIP(ctx.req.headers);
+      const language = detectLanguageFromIP(clientIP);
+      return { language, ip: clientIP };
     }),
   }),
 
@@ -359,7 +365,7 @@ export const appRouter = router({
     sendMessage: protectedProcedure
       .input(z.object({
         leadId: z.number(),
-        platform: z.enum(['instagram', 'telegram', 'whatsapp']),
+        platform: z.enum(['instagram', 'telegram', 'whatsapp', 'sms']),
         message: z.string(),
         chatId: z.string().optional(),
       }))
@@ -405,6 +411,15 @@ export const appRouter = router({
             }
           } else {
             console.warn('[CRM] WhatsApp: Missing phone number');
+          }
+        } else if (input.platform === 'sms') {
+          const { sendSMS } = await import("./sms");
+          
+          if (input.chatId) {
+            const smsSuccess = await sendSMS({ to: input.chatId, message: input.message });
+            success = smsSuccess;
+          } else {
+            console.warn('[CRM] SMS: Missing phone number');
           }
         }
         
@@ -648,6 +663,42 @@ export const appRouter = router({
         });
         
         return stats;
+      }),
+  }),
+
+  calendar: router({
+    getAppointments: protectedProcedure.query(async () => {
+      const { getAppointments } = await import("./db");
+      return await getAppointments();
+    }),
+
+    createAppointment: protectedProcedure
+      .input(z.object({
+        leadId: z.number(),
+        title: z.string(),
+        description: z.string().optional(),
+        scheduledAt: z.string(),
+        duration: z.number(),
+        meetingLink: z.string().optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const { createAppointment } = await import("./db");
+        const appointmentId = await createAppointment({
+          ...input,
+          managerId: ctx.user.id,
+        });
+        return { success: true, appointmentId };
+      }),
+
+    updateAppointmentStatus: protectedProcedure
+      .input(z.object({
+        appointmentId: z.number(),
+        status: z.string(),
+      }))
+      .mutation(async ({ input }) => {
+        const { updateAppointmentStatus } = await import("./db");
+        await updateAppointmentStatus(input.appointmentId, input.status);
+        return { success: true };
       }),
   }),
 });
