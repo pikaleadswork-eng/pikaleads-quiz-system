@@ -10,7 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Download, Loader2, Settings } from "lucide-react";
+import { Download, Loader2, Settings, TrendingUp } from "lucide-react";
 import { Link } from "wouter";
 import { format } from "date-fns";
 
@@ -95,6 +95,12 @@ export default function Admin() {
               <Button variant="outline" className="gap-2">
                 <Settings className="w-4 h-4" />
                 Manage Quizzes
+              </Button>
+            </Link>
+            <Link href="/admin/ab-tests">
+              <Button variant="outline" className="gap-2">
+                <TrendingUp className="w-4 h-4" />
+                A/B Tests
               </Button>
             </Link>
             <Button

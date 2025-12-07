@@ -12,6 +12,7 @@ import { getQuizTranslation } from "@/lib/quizTranslations";
 import { translations } from "@/lib/translations";
 import { trackQuizStep as trackMetaStep, trackQuizComplete as trackMetaComplete, trackFormSubmit as trackMetaFormSubmit } from "@/lib/metaPixel";
 import { trackQuizStep as trackGA4Step, trackQuizComplete as trackGA4Complete, trackFormView, trackFormSubmit as trackGA4FormSubmit, trackDropOff } from "@/lib/googleAnalytics";
+import { getOrCreateSessionId, getCurrentAssignment, assignVariant } from "@/lib/abTesting";
 
 interface QuizProps {
   config: QuizConfig;
@@ -23,11 +24,39 @@ export default function Quiz({ config }: QuizProps) {
   const [currentStep, setCurrentStep] = useState(1);
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [selectedAnswer, setSelectedAnswer] = useState<string | undefined>();
+  const [sessionId] = useState(() => getOrCreateSessionId());
+  const [variantAssigned, setVariantAssigned] = useState(false);
+  
+  // A/B Testing
+  const { data: variants } = trpc.abTest.getVariants.useQuery({ quizId: config.id });
+  const assignVariantMutation = trpc.abTest.assignVariant.useMutation();
+  const trackConversionMutation = trpc.abTest.trackConversion.useMutation();
 
   const quizData = getQuizTranslation(config.id, language);
   const t = translations[language];
   const totalSteps = (quizData?.questions.length || config.questions.length) + 1;
   const isFormStep = currentStep > (quizData?.questions.length || config.questions.length);
+
+  // Assign A/B test variant on mount
+  useEffect(() => {
+    if (variants && variants.length > 0 && !variantAssigned) {
+      const assignment = getCurrentAssignment(config.id);
+      
+      if (!assignment) {
+        const assigned = assignVariant(sessionId, config.id, variants as any);
+        if (assigned) {
+          assignVariantMutation.mutate({
+            sessionId,
+            quizId: config.id,
+            variantId: assigned.id,
+            variantName: assigned.variantName,
+          });
+        }
+      }
+      
+      setVariantAssigned(true);
+    }
+  }, [variants, variantAssigned, sessionId, config.id, assignVariantMutation]);
 
   useEffect(() => {
     // Track drop-off when user leaves
@@ -42,6 +71,12 @@ export default function Quiz({ config }: QuizProps) {
 
   const submitLead = trpc.quiz.submitLead.useMutation({
     onSuccess: () => {
+      // Track conversion for A/B test
+      trackConversionMutation.mutate({
+        sessionId,
+        quizId: config.id,
+      });
+      
       toast.success("Thank you! Redirecting...");
       setTimeout(() => {
         setLocation("/thank-you");
