@@ -29,6 +29,20 @@
       "when": 1765117683306,
       "tag": "0003_lowly_tempest",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1765118749500,
+      "tag": "0004_sudden_bug",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1765118855282,
+      "tag": "0005_mighty_wild_pack",
+      "breakpoints": true
     }
   ]
 }

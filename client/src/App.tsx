@@ -20,6 +20,7 @@ import GoogleTelegram from "./pages/GoogleTelegram";
 import Admin from "./pages/Admin";
 import AdminQuizzes from "./pages/AdminQuizzes";
 import AdminABTests from "./pages/AdminABTests";
+import CRM from "./pages/CRM";
 
 function Router() {
   return (
@@ -45,6 +46,9 @@ function Router() {
       <Route path={"/admin"} component={Admin} />
       <Route path={"/admin/quizzes"} component={AdminQuizzes} />
       <Route path={"/admin/ab-tests"} component={AdminABTests} />
+      
+      {/* CRM */}
+      <Route path={"/crm"} component={CRM} />
       
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}

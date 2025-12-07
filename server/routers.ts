@@ -77,6 +77,155 @@ export const appRouter = router({
     }),
   }),
 
+  crm: router({
+    // Lead Statuses
+    getStatuses: publicProcedure.query(async () => {
+      const { getLeadStatuses } = await import("./db");
+      return await getLeadStatuses();
+    }),
+    
+    createStatus: adminProcedure
+      .input(z.object({
+        name: z.string(),
+        color: z.string(),
+        order: z.number(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const { createLeadStatus } = await import("./db");
+        await createLeadStatus({
+          ...input,
+          isDefault: 0,
+          createdBy: ctx.user.id,
+        });
+        return { success: true };
+      }),
+    
+    updateStatus: adminProcedure
+      .input(z.object({
+        id: z.number(),
+        name: z.string().optional(),
+        color: z.string().optional(),
+        order: z.number().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const { updateLeadStatus } = await import("./db");
+        const { id, ...updates } = input;
+        await updateLeadStatus(id, updates);
+        return { success: true };
+      }),
+    
+    deleteStatus: adminProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input }) => {
+        const { deleteLeadStatus } = await import("./db");
+        await deleteLeadStatus(input.id);
+        return { success: true };
+      }),
+    
+    // Lead Management
+    getLeads: protectedProcedure.query(async ({ ctx }) => {
+      const { getAllLeads } = await import("./db");
+      const allLeads = await getAllLeads();
+      
+      // Managers only see their assigned leads
+      if (ctx.user.role === 'manager') {
+        return allLeads.filter(lead => lead.assignedTo === ctx.user.id);
+      }
+      
+      return allLeads;
+    }),
+    
+    updateLeadStatus: protectedProcedure
+      .input(z.object({
+        leadId: z.number(),
+        statusId: z.number(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const { updateLeadStatusById } = await import("./db");
+        await updateLeadStatusById(input.leadId, input.statusId, ctx.user.id);
+        return { success: true };
+      }),
+    
+    assignLead: adminProcedure
+      .input(z.object({
+        leadId: z.number(),
+        managerId: z.number(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const { assignLeadToManager } = await import("./db");
+        await assignLeadToManager(input.leadId, input.managerId, ctx.user.id);
+        return { success: true };
+      }),
+    
+    // Comments
+    getComments: protectedProcedure
+      .input(z.object({ leadId: z.number() }))
+      .query(async ({ input }) => {
+        const { getLeadComments } = await import("./db");
+        return await getLeadComments(input.leadId);
+      }),
+    
+    addComment: protectedProcedure
+      .input(z.object({
+        leadId: z.number(),
+        comment: z.string(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const { createLeadComment, logActivity } = await import("./db");
+        await createLeadComment({
+          leadId: input.leadId,
+          userId: ctx.user.id,
+          comment: input.comment,
+        });
+        
+        await logActivity({
+          userId: ctx.user.id,
+          leadId: input.leadId,
+          action: 'comment_added',
+          details: null,
+        });
+        
+        return { success: true };
+      }),
+    
+    // Messages
+    getMessages: protectedProcedure
+      .input(z.object({ leadId: z.number() }))
+      .query(async ({ input }) => {
+        const { getLeadMessages } = await import("./db");
+        return await getLeadMessages(input.leadId);
+      }),
+    
+    sendMessage: protectedProcedure
+      .input(z.object({
+        leadId: z.number(),
+        platform: z.enum(['instagram', 'telegram']),
+        message: z.string(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const { createMessage, logActivity } = await import("./db");
+        await createMessage({
+          leadId: input.leadId,
+          platform: input.platform,
+          direction: 'outbound',
+          message: input.message,
+          sentBy: ctx.user.id,
+          externalId: null,
+        });
+        
+        await logActivity({
+          userId: ctx.user.id,
+          leadId: input.leadId,
+          action: 'message_sent',
+          details: JSON.stringify({ platform: input.platform }),
+        });
+        
+        // TODO: Actually send message via Instagram/Telegram API
+        
+        return { success: true };
+      }),
+  }),
+
   abTest: router({
     createVariant: adminProcedure
       .input(z.object({

@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, leads, InsertLead, abTestVariants, abTestAssignments, incompleteQuizSessions, InsertABTestVariant, InsertABTestAssignment, InsertIncompleteQuizSession } from "../drizzle/schema";
+import { InsertUser, users, leads, InsertLead, abTestVariants, abTestAssignments, incompleteQuizSessions, InsertABTestVariant, InsertABTestAssignment, InsertIncompleteQuizSession, leadStatuses, InsertLeadStatus, leadComments, InsertLeadComment, activityLog, InsertActivityLog, messages, InsertMessage } from "../drizzle/schema";
 import { sql } from "drizzle-orm";
 import { ENV } from './_core/env';
 
@@ -204,4 +204,88 @@ export async function incrementReminderCount(sessionId: string) {
       updatedAt: new Date()
     })
     .where(eq(incompleteQuizSessions.sessionId, sessionId));
+}
+
+// CRM Functions
+
+export async function getLeadStatuses() {
+  const db = await getDb();
+  if (!db) return [];
+  return await db.select().from(leadStatuses).orderBy(leadStatuses.order);
+}
+
+export async function createLeadStatus(status: InsertLeadStatus) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.insert(leadStatuses).values(status);
+}
+
+export async function updateLeadStatus(id: number, updates: Partial<InsertLeadStatus>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.update(leadStatuses).set(updates).where(eq(leadStatuses.id, id));
+}
+
+export async function deleteLeadStatus(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.delete(leadStatuses).where(eq(leadStatuses.id, id));
+}
+
+export async function getLeadComments(leadId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return await db.select().from(leadComments).where(eq(leadComments.leadId, leadId));
+}
+
+export async function createLeadComment(comment: InsertLeadComment) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.insert(leadComments).values(comment);
+}
+
+export async function logActivity(activity: InsertActivityLog) {
+  const db = await getDb();
+  if (!db) return;
+  await db.insert(activityLog).values(activity);
+}
+
+export async function getLeadMessages(leadId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return await db.select().from(messages).where(eq(messages.leadId, leadId)).orderBy(messages.createdAt);
+}
+
+export async function createMessage(message: InsertMessage) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.insert(messages).values(message);
+}
+
+export async function updateLeadStatusById(leadId: number, statusId: number, userId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.update(leads).set({ statusId }).where(eq(leads.id, leadId));
+  
+  // Log activity
+  await logActivity({
+    userId,
+    leadId,
+    action: "status_change",
+    details: JSON.stringify({ newStatusId: statusId }),
+  });
+}
+
+export async function assignLeadToManager(leadId: number, managerId: number, adminId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.update(leads).set({ assignedTo: managerId }).where(eq(leads.id, leadId));
+  
+  // Log activity
+  await logActivity({
+    userId: adminId,
+    leadId,
+    action: "lead_assigned",
+    details: JSON.stringify({ managerId }),
+  });
 }

@@ -147,3 +147,54 @@
 - [x] Test and fix Thank You page on all screen sizes
 - [x] Ensure all buttons and forms are touch-friendly on mobile
 - [x] Check font sizes and readability on small screens
+
+## Phase 5 - Custom CRM System
+
+### Role Management
+- [x] Add 'manager' role to user schema
+- [ ] Create manager registration/invitation system
+- [x] Implement role-based access control (RBAC)
+- [x] Restrict manager access to leads and comments only
+- [ ] Admin can manage users and assign roles
+
+### Lead Status Management
+- [x] Create lead_statuses table (id, name, color, order, createdBy)
+- [x] Admin UI for creating/editing/deleting statuses (via tRPC)
+- [ ] Seed default statuses: New, In Progress, Contacted, Qualified, Closed Won, Closed Lost
+- [x] Assign status to each lead
+- [x] Status change history tracking
+
+### Comments System
+- [x] Create lead_comments table (id, leadId, userId, comment, createdAt)
+- [x] Managers can add comments to leads
+- [x] Display comment history with timestamps and author
+- [ ] Real-time comment updates
+- [ ] Comment notifications
+
+### CRM Interface for Managers
+- [x] Create /crm route for managers
+- [x] Lead list view with filters (status, date, quiz)
+- [x] Lead detail view with full information
+- [x] Quick status change dropdown
+- [x] Comment input and history display
+- [x] Activity log for each lead
+
+### Instagram Direct Integration
+- [ ] Request Instagram API credentials from user
+- [x] Create Instagram messaging module (placeholder)
+- [x] Send messages to clients via Instagram username (UI ready)
+- [x] Store Instagram conversation history
+- [ ] Link Instagram account to lead
+
+### Telegram Integration for Client Communication
+- [ ] Create Telegram bot for two-way communication
+- [x] Link Telegram username to lead
+- [x] Send messages to clients via Telegram (UI ready)
+- [ ] Receive and display client replies in CRM
+- [x] Conversation history in lead detail view
+
+### Activity Logging
+- [x] Create activity_log table (id, userId, leadId, action, details, createdAt)
+- [x] Log all manager actions (status changes, comments, messages)
+- [x] Display activity timeline in lead detail
+- [x] Admin can view all activity across managers

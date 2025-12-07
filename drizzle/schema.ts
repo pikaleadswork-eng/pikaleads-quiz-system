@@ -16,7 +16,7 @@ export const users = mysqlTable("users", {
   name: text("name"),
   email: varchar("email", { length: 320 }),
   loginMethod: varchar("loginMethod", { length: 64 }),
-  role: mysqlEnum("role", ["user", "admin"]).default("user").notNull(),
+  role: mysqlEnum("role", ["user", "admin", "manager"]).default("user").notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
   lastSignedIn: timestamp("lastSignedIn").defaultNow().notNull(),
@@ -36,11 +36,76 @@ export const leads = mysqlTable("leads", {
   phone: varchar("phone", { length: 50 }).notNull(),
   telegram: varchar("telegram", { length: 100 }),
   language: varchar("language", { length: 10 }),
+  statusId: int("statusId").default(1), // link to leadStatuses
+  assignedTo: int("assignedTo"), // manager user id
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 });
 
 export type Lead = typeof leads.$inferSelect;
 export type InsertLead = typeof leads.$inferInsert;
+
+/**
+ * Lead Statuses table - customizable by admin
+ */
+export const leadStatuses = mysqlTable("lead_statuses", {
+  id: int("id").autoincrement().primaryKey(),
+  name: varchar("name", { length: 100 }).notNull(),
+  color: varchar("color", { length: 20 }).notNull(),
+  order: int("order").notNull(),
+  isDefault: int("isDefault").default(0).notNull(),
+  createdBy: int("createdBy").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type LeadStatus = typeof leadStatuses.$inferSelect;
+export type InsertLeadStatus = typeof leadStatuses.$inferInsert;
+
+/**
+ * Lead Comments table
+ */
+export const leadComments = mysqlTable("lead_comments", {
+  id: int("id").autoincrement().primaryKey(),
+  leadId: int("leadId").notNull(),
+  userId: int("userId").notNull(),
+  comment: text("comment").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type LeadComment = typeof leadComments.$inferSelect;
+export type InsertLeadComment = typeof leadComments.$inferInsert;
+
+/**
+ * Activity Log table
+ */
+export const activityLog = mysqlTable("activity_log", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  leadId: int("leadId"),
+  action: varchar("action", { length: 100 }).notNull(),
+  details: text("details"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type ActivityLog = typeof activityLog.$inferSelect;
+export type InsertActivityLog = typeof activityLog.$inferInsert;
+
+/**
+ * Messages table - Instagram and Telegram
+ */
+export const messages = mysqlTable("messages", {
+  id: int("id").autoincrement().primaryKey(),
+  leadId: int("leadId").notNull(),
+  platform: varchar("platform", { length: 20 }).notNull(),
+  direction: varchar("direction", { length: 10 }).notNull(),
+  message: text("message").notNull(),
+  sentBy: int("sentBy"),
+  externalId: varchar("externalId", { length: 255 }),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type Message = typeof messages.$inferSelect;
+export type InsertMessage = typeof messages.$inferInsert;
 
 /**
  * A/B Test Variants table
