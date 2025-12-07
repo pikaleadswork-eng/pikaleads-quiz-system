@@ -203,6 +203,38 @@ export const appRouter = router({
       const { getManagerPerformanceStats } = await import("./db");
       return await getManagerPerformanceStats();
     }),
+    
+    // Retargeting
+    getLowQualityLeads: adminProcedure.query(async () => {
+      const { getLowQualityLeads } = await import("./facebookRetargeting");
+      return await getLowQualityLeads();
+    }),
+    
+    exportToFacebook: adminProcedure
+      .input(z.object({
+        leadIds: z.array(z.number()),
+        audienceName: z.string(),
+      }))
+      .mutation(async ({ input }) => {
+        const { getAllLeads } = await import("./db");
+        const { exportToFacebookAudience } = await import("./facebookRetargeting");
+        
+        const allLeads = await getAllLeads();
+        const selectedLeads = allLeads.filter(lead => input.leadIds.includes(lead.id));
+        
+        const leadsData = selectedLeads.map(lead => ({
+          email: lead.email || undefined,
+          phone: lead.phone,
+          name: lead.name,
+        }));
+        
+        const result = await exportToFacebookAudience({
+          leads: leadsData,
+          audienceName: input.audienceName,
+        });
+        
+        return result;
+      }),
   }),
 
   crm: router({
@@ -327,7 +359,7 @@ export const appRouter = router({
     sendMessage: protectedProcedure
       .input(z.object({
         leadId: z.number(),
-        platform: z.enum(['instagram', 'telegram']),
+        platform: z.enum(['instagram', 'telegram', 'whatsapp']),
         message: z.string(),
         chatId: z.string().optional(),
       }))
@@ -360,6 +392,19 @@ export const appRouter = router({
             }
           } else {
             console.warn('[CRM] Instagram Direct: Missing chatId or access token');
+          }
+        } else if (input.platform === 'whatsapp') {
+          const { sendWhatsAppMessage } = await import("./whatsapp");
+          
+          if (input.chatId) {
+            const result = await sendWhatsAppMessage({ to: input.chatId, message: input.message });
+            
+            if (result.success) {
+              externalId = result.messageId || null;
+              success = true;
+            }
+          } else {
+            console.warn('[CRM] WhatsApp: Missing phone number');
           }
         }
         

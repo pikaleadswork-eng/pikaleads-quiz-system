@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import LanguageSwitcher from "./LanguageSwitcher";
+import Footer from "./Footer";
 
 interface QuizLayoutProps {
   children: ReactNode;
@@ -49,13 +50,7 @@ export default function QuizLayout({ children, title, subtitle }: QuizLayoutProp
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-border bg-card/30 mt-20">
-        <div className="container py-8">
-          <div className="text-center text-sm text-muted-foreground">
-            <p>© 2025 PIKALEADS Media Buying Team. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

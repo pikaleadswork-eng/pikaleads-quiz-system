@@ -571,3 +571,15 @@ export async function getManagerPerformanceStats() {
   // Sort by total processed (descending)
   return stats.sort((a, b) => b.totalProcessed - a.totalProcessed);
 }
+
+
+/**
+ * Find lead by phone number
+ */
+export async function getLeadByPhone(phone: string) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const result = await db.select().from(leads).where(eq(leads.phone, phone)).limit(1);
+  return result[0] || null;
+}

@@ -11,6 +11,10 @@ export default function FurnitureQuiz() {
   const [showQuiz, setShowQuiz] = useState(false);
   const config = quizzesMap["meta-furniture"];
 
+  if (!config) {
+    return <div className="min-h-screen bg-background flex items-center justify-center"><p className="text-foreground">Quiz not found</p></div>;
+  }
+
   // Capture UTM parameters from URL
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -28,10 +32,6 @@ export default function FurnitureQuiz() {
     };
     sessionStorage.setItem("utmParams", JSON.stringify(utmData));
   }, []);
-
-  if (!config) {
-    return <div>Quiz not found</div>;
-  }
 
   if (showQuiz) {
     return (

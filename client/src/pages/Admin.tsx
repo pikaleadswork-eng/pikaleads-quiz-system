@@ -13,6 +13,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Download, Loader2, Settings, TrendingUp, Users, BarChart3, Target, Award } from "lucide-react";
 import { Link } from "wouter";
 import { format } from "date-fns";
+import Footer from "@/components/Footer";
 
 export default function Admin() {
   const { data: leads, isLoading } = trpc.admin.getLeads.useQuery();
@@ -125,6 +126,12 @@ export default function Admin() {
               <Button variant="outline" className="gap-2">
                 <Award className="w-4 h-4" />
                 Performance
+              </Button>
+            </Link>
+            <Link href="/admin/retargeting">
+              <Button variant="outline" className="gap-2">
+                <Target className="w-4 h-4" />
+                Retargeting
               </Button>
             </Link>
             <Link href="/crm">
@@ -256,6 +263,7 @@ export default function Admin() {
           </CardContent>
         </Card>
       </div>
+      <Footer />
     </div>
   );
 }

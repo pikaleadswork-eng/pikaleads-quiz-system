@@ -9,7 +9,7 @@ export default function ApartmentRenovationQuiz() {
   const [, setLocation] = useLocation();
   const { language } = useLanguage();
   const [showQuiz, setShowQuiz] = useState(false);
-  const config = quizzesMap["meta-apartment-renovation"];
+  const config = quizzesMap["meta-repair"];
 
   // Capture UTM parameters from URL
   useEffect(() => {

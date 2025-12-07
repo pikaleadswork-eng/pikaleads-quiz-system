@@ -9,7 +9,7 @@ export default function ECommerceQuiz() {
   const [, setLocation] = useLocation();
   const { language } = useLanguage();
   const [showQuiz, setShowQuiz] = useState(false);
-  const config = quizzesMap["meta-ecommerce"];
+  const config = quizzesMap["meta-ecom"];
 
   // Capture UTM parameters from URL
   useEffect(() => {

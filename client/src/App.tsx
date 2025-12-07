@@ -25,6 +25,7 @@ import AdminManagers from "./pages/AdminManagers";
 import AdminAnalytics from "./pages/AdminAnalytics";
 import AdminAssignmentRules from "./pages/AdminAssignmentRules";
 import AdminPerformance from "./pages/AdminPerformance";
+import AdminRetargeting from "./pages/AdminRetargeting";
 import ManagerDashboard from "./pages/ManagerDashboard";
 import CRM from "./pages/CRM";
 import Privacy from "./pages/Privacy";
@@ -67,6 +68,7 @@ function Router() {
       <Route path={"/admin/analytics"} component={AdminAnalytics} />
       <Route path={"/admin/assignment-rules"} component={AdminAssignmentRules} />
       <Route path={"/admin/performance"} component={AdminPerformance} />
+      <Route path={"/admin/retargeting"} component={AdminRetargeting} />
       
       {/* CRM & Manager Dashboard */}
       <Route path={"/manager"} component={ManagerDashboard} />

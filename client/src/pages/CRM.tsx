@@ -32,6 +32,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
+import Footer from "@/components/Footer";
 import { Loader2, MessageSquare, Send, Filter, X } from "lucide-react";
 import { format } from "date-fns";
 import { useAuth } from "@/_core/hooks/useAuth";
@@ -614,6 +615,7 @@ export default function CRM() {
           </DialogContent>
         </Dialog>
       </div>
+      <Footer />
     </div>
   );
 }

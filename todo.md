@@ -406,3 +406,44 @@
 - [ ] Include lead details in notification (name, phone, quiz)
 - [ ] Add direct link to lead in CRM
 - [ ] Add notification history/log
+
+
+## Phase 11 - Bug Fixes, Footer, WhatsApp, Retargeting & VPS Deployment
+
+### Quiz Pages Bug Fixes
+- [x] Test all quiz pages (furniture, apartment-renovation, e-commerce)
+- [x] Fix broken quiz pages (wrong quizzesMap keys)
+- [x] Ensure all quizzes load correctly
+- [ ] Verify quiz submission works on all pages
+
+### Footer with Policies and Contacts
+- [x] Create Footer component with links to Privacy Policy and Contact
+- [x] Add footer to all pages (Home, Quiz pages, Admin, CRM)
+- [x] Ensure footer is visible on all routes
+- [x] Style footer to match site design
+
+### WhatsApp Business API Integration
+- [ ] Research WhatsApp Business API setup requirements
+- [ ] Create WhatsApp messaging module
+- [ ] Add WhatsApp to CRM messaging interface
+- [ ] Store WhatsApp conversation history
+- [ ] Add webhook endpoint for WhatsApp incoming messages
+- [ ] Test WhatsApp message sending
+
+### Lead Retargeting Automation
+- [ ] Create Facebook Custom Audiences export functionality
+- [ ] Filter leads by score (<40 for retargeting)
+- [ ] Generate CSV export in Facebook format (email, phone)
+- [ ] Add "Export for Retargeting" button in Admin panel
+- [ ] Add automated export scheduling option
+
+### VPS Deployment Guide
+- [ ] Write detailed VPS selection guide (specs, provider)
+- [ ] Document OS installation (Ubuntu 22.04 LTS recommended)
+- [ ] Document Node.js installation
+- [ ] Document MySQL/TiDB setup
+- [ ] Document domain configuration (ukraine.com.ua)
+- [ ] Document SSL certificate setup
+- [ ] Document environment variables configuration
+- [ ] Document deployment process
+- [ ] Document backup and maintenance procedures

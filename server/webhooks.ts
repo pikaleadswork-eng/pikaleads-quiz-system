@@ -120,3 +120,64 @@ export function handleInstagramWebhookVerification(req: Request, res: Response) 
     res.status(403).json({ error: "Forbidden" });
   }
 }
+
+/**
+ * WhatsApp Webhook Handler (POST)
+ * Receives incoming messages from WhatsApp Business API
+ */
+export async function handleWhatsAppWebhookPost(req: Request, res: Response) {
+  try {
+    const { processWhatsAppWebhook } = await import("./whatsapp");
+    const payload = req.body;
+    
+    const incomingMessage = processWhatsAppWebhook(payload);
+    
+    if (incomingMessage) {
+      console.log(`[Webhook] WhatsApp message from ${incomingMessage.from}: ${incomingMessage.message}`);
+      
+      // Try to find lead by phone number
+      const { getLeadByPhone } = await import("./db");
+      const lead = await getLeadByPhone(incomingMessage.from);
+      
+      if (lead) {
+        await createMessage({
+          leadId: lead.id,
+          platform: "whatsapp",
+          direction: "inbound",
+          message: incomingMessage.message,
+          sentBy: null,
+          externalId: incomingMessage.messageId,
+        });
+        
+        console.log(`[Webhook] Stored WhatsApp message for lead ${lead.id}`);
+      } else {
+        console.warn(`[Webhook] No lead found for WhatsApp number ${incomingMessage.from}`);
+      }
+    }
+    
+    res.status(200).json({ success: true });
+  } catch (error) {
+    console.error("[Webhook] WhatsApp webhook error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+
+/**
+ * WhatsApp Webhook Verification (GET request)
+ * Required by WhatsApp to verify webhook endpoint
+ */
+export function handleWhatsAppWebhookVerification(req: Request, res: Response) {
+  const { verifyWhatsAppWebhook } = require("./whatsapp");
+  
+  const mode = req.query["hub.mode"] as string;
+  const token = req.query["hub.verify_token"] as string;
+  const challenge = req.query["hub.challenge"] as string;
+  
+  const verifiedChallenge = verifyWhatsAppWebhook({ mode, token, challenge });
+  
+  if (verifiedChallenge) {
+    res.status(200).send(verifiedChallenge);
+  } else {
+    res.status(403).json({ error: "Forbidden" });
+  }
+}

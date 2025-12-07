@@ -37,10 +37,12 @@ async function startServer() {
   registerOAuthRoutes(app);
   
   // Webhook endpoints
-  const { handleTelegramWebhook, handleInstagramWebhookPost, handleInstagramWebhookVerification } = await import("../webhooks");
+  const { handleTelegramWebhook, handleInstagramWebhookPost, handleInstagramWebhookVerification, handleWhatsAppWebhookPost, handleWhatsAppWebhookVerification } = await import("../webhooks");
   app.post("/api/webhooks/telegram", handleTelegramWebhook);
   app.post("/api/webhooks/instagram", handleInstagramWebhookPost);
   app.get("/api/webhooks/instagram", handleInstagramWebhookVerification);
+  app.post("/api/webhooks/whatsapp", handleWhatsAppWebhookPost);
+  app.get("/api/webhooks/whatsapp", handleWhatsAppWebhookVerification);
   
   // tRPC API
   app.use(
