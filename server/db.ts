@@ -289,3 +289,48 @@ export async function assignLeadToManager(leadId: number, managerId: number, adm
     details: JSON.stringify({ managerId }),
   });
 }
+
+/**
+ * Manager Invitation functions
+ */
+import { managerInvitations, InsertManagerInvitation } from "../drizzle/schema";
+
+export async function createManagerInvitation(invitation: InsertManagerInvitation) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const result = await db.insert(managerInvitations).values(invitation);
+  return result;
+}
+
+export async function getManagerInvitationByToken(token: string) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const result = await db.select().from(managerInvitations).where(eq(managerInvitations.token, token));
+  return result[0] || null;
+}
+
+export async function updateManagerInvitationStatus(
+  id: number,
+  status: "pending" | "accepted" | "expired",
+  acceptedAt?: Date
+) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const updateData: any = { status };
+  if (acceptedAt) {
+    updateData.acceptedAt = acceptedAt;
+  }
+  
+  await db.update(managerInvitations).set(updateData).where(eq(managerInvitations.id, id));
+}
+
+export async function getAllManagerInvitations() {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const result = await db.select().from(managerInvitations);
+  return result;
+}

@@ -24,6 +24,7 @@ import AdminABTests from "./pages/AdminABTests";
 import CRM from "./pages/CRM";
 import Privacy from "./pages/Privacy";
 import Contact from "./pages/Contact";
+import RegisterManager from "./pages/RegisterManager";
 
 function Router() {
   return (
@@ -56,6 +57,9 @@ function Router() {
       {/* Legal Pages */}
       <Route path={"/privacy"} component={Privacy} />
       <Route path={"/contact"} component={Contact} />
+      
+      {/* Manager Registration */}
+      <Route path={"/register-manager"} component={RegisterManager} />
       
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}

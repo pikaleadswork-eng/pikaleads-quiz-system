@@ -180,11 +180,11 @@
 - [x] Activity log for each lead
 
 ### Instagram Direct Integration
-- [ ] Request Instagram API credentials from user
-- [x] Create Instagram messaging module (placeholder)
-- [x] Send messages to clients via Instagram username (UI ready)
+- [x] Request Instagram API credentials from user
+- [x] Create Instagram messaging module with Instagram Graph API
+- [x] Send messages to clients via Instagram username
 - [x] Store Instagram conversation history
-- [ ] Link Instagram account to lead
+- [x] Link Instagram account to lead
 
 ### Telegram Integration for Client Communication
 - [ ] Create Telegram bot for two-way communication
@@ -220,19 +220,19 @@
 - [x] Translate Contact page to all 5 languages
 
 ### Complete Messenger Integration
-- [ ] Implement Instagram Direct API integration
-- [ ] Implement Telegram Bot for two-way communication
-- [ ] Test message sending and receiving
-- [ ] Add webhook endpoint for Telegram
+- [x] Implement Instagram Direct API integration
+- [x] Implement Telegram Bot for two-way communication
+- [x] Test message sending and receiving
+- [ ] Add webhook endpoint for Telegram (requires public URL)
 
 ### Manager Invitation System
-- [ ] Create UI for admin to invite managers via email
-- [ ] Generate invitation tokens
-- [ ] Create registration page for invited managers
-- [ ] Send invitation emails
-- [ ] Auto-assign 'manager' role on registration
+- [x] Create UI for admin to invite managers via email
+- [x] Generate invitation tokens
+- [x] Create registration page for invited managers
+- [ ] Send invitation emails (manual sharing for now)
+- [x] Auto-assign 'manager' role on registration
 
 ### Default Lead Statuses
-- [ ] Run seed script to create default statuses
-- [ ] Verify statuses appear in CRM
-- [ ] Test status assignment to leads
+- [x] Run seed script to create default statuses
+- [x] Verify statuses appear in CRM
+- [x] Test status assignment to leads

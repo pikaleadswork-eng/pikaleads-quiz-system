@@ -170,3 +170,20 @@ export const incompleteQuizSessions = mysqlTable("incomplete_quiz_sessions", {
 
 export type IncompleteQuizSession = typeof incompleteQuizSessions.$inferSelect;
 export type InsertIncompleteQuizSession = typeof incompleteQuizSessions.$inferInsert;
+
+/**
+ * Manager Invitations table
+ */
+export const managerInvitations = mysqlTable("manager_invitations", {
+  id: int("id").autoincrement().primaryKey(),
+  email: varchar("email", { length: 320 }).notNull(),
+  token: varchar("token", { length: 64 }).notNull().unique(),
+  invitedBy: int("invitedBy").notNull(),
+  status: mysqlEnum("status", ["pending", "accepted", "expired"]).default("pending").notNull(),
+  expiresAt: timestamp("expiresAt").notNull(),
+  acceptedAt: timestamp("acceptedAt"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type ManagerInvitation = typeof managerInvitations.$inferSelect;
+export type InsertManagerInvitation = typeof managerInvitations.$inferInsert;

@@ -1,27 +1,14 @@
-import axios from "axios";
-
-const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
-const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
+import { sendTelegramMessage as sendTelegramBotMessage } from "./telegramBot";
+import { ENV } from "./_core/env";
 
 export async function sendTelegramMessage(message: string): Promise<boolean> {
-  if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
+  if (!ENV.telegramBotToken || !ENV.telegramChatId) {
     console.error("[Telegram] Missing credentials");
     return false;
   }
 
-  try {
-    const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
-    const response = await axios.post(url, {
-      chat_id: TELEGRAM_CHAT_ID,
-      text: message,
-      parse_mode: "HTML",
-    });
-
-    return response.data.ok === true;
-  } catch (error) {
-    console.error("[Telegram] Failed to send message:", error);
-    return false;
-  }
+  const result = await sendTelegramBotMessage(ENV.telegramChatId, message);
+  return result.success;
 }
 
 export function formatLeadMessage(data: {

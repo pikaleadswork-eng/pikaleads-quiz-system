@@ -43,6 +43,13 @@
       "when": 1765118855282,
       "tag": "0005_mighty_wild_pack",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1765119883205,
+      "tag": "0006_slow_stryfe",
+      "breakpoints": true
     }
   ]
 }

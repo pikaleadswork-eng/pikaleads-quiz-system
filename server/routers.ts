@@ -201,26 +201,166 @@ export const appRouter = router({
         leadId: z.number(),
         platform: z.enum(['instagram', 'telegram']),
         message: z.string(),
+        chatId: z.string().optional(),
       }))
       .mutation(async ({ input, ctx }) => {
         const { createMessage, logActivity } = await import("./db");
+        const { ENV } = await import("./_core/env");
+        
+        let externalId: string | null = null;
+        let success = false;
+        
+        if (input.platform === 'telegram') {
+          const { sendTelegramMessage } = await import("./telegramBot");
+          const chatId = input.chatId || ENV.telegramChatId;
+          const result = await sendTelegramMessage(chatId, input.message);
+          
+          if (result.success) {
+            externalId = result.messageId?.toString() || null;
+            success = true;
+          }
+        } else if (input.platform === 'instagram') {
+          const { sendInstagramMessage } = await import("./instagramDirect");
+          const instagramAccessToken = process.env.INSTAGRAM_ACCESS_TOKEN;
+          
+          if (input.chatId && instagramAccessToken) {
+            const result = await sendInstagramMessage(input.chatId, input.message, instagramAccessToken);
+            
+            if (result.success) {
+              externalId = result.messageId || null;
+              success = true;
+            }
+          } else {
+            console.warn('[CRM] Instagram Direct: Missing chatId or access token');
+          }
+        }
+        
         await createMessage({
           leadId: input.leadId,
           platform: input.platform,
           direction: 'outbound',
           message: input.message,
           sentBy: ctx.user.id,
-          externalId: null,
+          externalId,
         });
         
         await logActivity({
           userId: ctx.user.id,
           leadId: input.leadId,
           action: 'message_sent',
-          details: JSON.stringify({ platform: input.platform }),
+          details: JSON.stringify({ platform: input.platform, success }),
         });
         
-        // TODO: Actually send message via Instagram/Telegram API
+        return { success };
+      }),
+  }),
+
+  managers: router({
+    // Send invitation to manager
+    inviteManager: adminProcedure
+      .input(z.object({
+        email: z.string().email(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const { createManagerInvitation } = await import("./db");
+        const crypto = await import("crypto");
+        
+        // Generate unique token
+        const token = crypto.randomBytes(32).toString('hex');
+        
+        // Set expiration to 7 days from now
+        const expiresAt = new Date();
+        expiresAt.setDate(expiresAt.getDate() + 7);
+        
+        await createManagerInvitation({
+          email: input.email,
+          token,
+          invitedBy: ctx.user.id,
+          status: "pending",
+          expiresAt,
+        });
+        
+        // TODO: Send email with invitation link
+        // For now, return the token so admin can share it manually
+        const invitationUrl = `${process.env.VITE_APP_URL || 'http://localhost:3000'}/register-manager?token=${token}`;
+        
+        return { 
+          success: true, 
+          invitationUrl,
+          token 
+        };
+      }),
+    
+    // Get all invitations
+    getInvitations: adminProcedure.query(async () => {
+      const { getAllManagerInvitations } = await import("./db");
+      return await getAllManagerInvitations();
+    }),
+    
+    // Verify invitation token
+    verifyInvitation: publicProcedure
+      .input(z.object({ token: z.string() }))
+      .query(async ({ input }) => {
+        const { getManagerInvitationByToken } = await import("./db");
+        
+        const invitation = await getManagerInvitationByToken(input.token);
+        
+        if (!invitation) {
+          throw new TRPCError({ code: "NOT_FOUND", message: "Invitation not found" });
+        }
+        
+        if (invitation.status !== "pending") {
+          throw new TRPCError({ code: "BAD_REQUEST", message: "Invitation already used or expired" });
+        }
+        
+        if (new Date() > new Date(invitation.expiresAt)) {
+          throw new TRPCError({ code: "BAD_REQUEST", message: "Invitation expired" });
+        }
+        
+        return { 
+          valid: true, 
+          email: invitation.email 
+        };
+      }),
+    
+    // Accept invitation and create manager account
+    acceptInvitation: publicProcedure
+      .input(z.object({
+        token: z.string(),
+        openId: z.string(),
+        name: z.string(),
+        email: z.string(),
+      }))
+      .mutation(async ({ input }) => {
+        const { getManagerInvitationByToken, updateManagerInvitationStatus, upsertUser } = await import("./db");
+        const { users } = await import("../drizzle/schema");
+        const { getDb } = await import("./db");
+        const { eq } = await import("drizzle-orm");
+        
+        const invitation = await getManagerInvitationByToken(input.token);
+        
+        if (!invitation) {
+          throw new TRPCError({ code: "NOT_FOUND", message: "Invitation not found" });
+        }
+        
+        if (invitation.status !== "pending") {
+          throw new TRPCError({ code: "BAD_REQUEST", message: "Invitation already used" });
+        }
+        
+        if (new Date() > new Date(invitation.expiresAt)) {
+          throw new TRPCError({ code: "BAD_REQUEST", message: "Invitation expired" });
+        }
+        
+        // Create manager user
+        await upsertUser({
+          openId: input.openId,
+          name: input.name,
+          email: input.email,
+          role: "manager",
+        });
+        
+        // Mark invitation as accepted
+        await updateManagerInvitationStatus(invitation.id, "accepted", new Date());
         
         return { success: true };
       }),
