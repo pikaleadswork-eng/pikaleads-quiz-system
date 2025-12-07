@@ -54,8 +54,19 @@ export const appRouter = router({
       .mutation(async ({ input }) => {
         const { createLead, autoAssignLead } = await import("./db");
         const { sendTelegramMessage, formatLeadMessage } = await import("./telegram");
+        const { calculateLeadScore } = await import("./leadScoring");
         
-        // Save to database with UTM parameters
+        // Calculate lead quality score
+        const leadScore = calculateLeadScore({
+          answers: input.answers,
+          utmCampaign: input.utmCampaign,
+          utmKeyword: input.utmKeyword,
+          utmSource: input.utmSource,
+          email: input.email,
+          telegram: input.telegram,
+        });
+        
+        // Save to database with UTM parameters and score
         const leadId = await createLead({
           quizName: input.quizName,
           answers: input.answers,
@@ -74,6 +85,7 @@ export const appRouter = router({
           utmMedium: input.utmMedium || null,
           utmContent: input.utmContent || null,
           utmTerm: input.utmTerm || null,
+          leadScore,
         });
         
         // Send to Telegram with full details
@@ -122,6 +134,74 @@ export const appRouter = router({
     getUTMAnalytics: adminProcedure.query(async () => {
       const { getUTMAnalytics } = await import("./db");
       return await getUTMAnalytics();
+    }),
+    
+    // Assignment Rules
+    getAssignmentRules: adminProcedure.query(async () => {
+      const { getAllAssignmentRules } = await import("./db");
+      return await getAllAssignmentRules();
+    }),
+    
+    createAssignmentRule: adminProcedure
+      .input(z.object({
+        name: z.string(),
+        quizName: z.string(),
+        managerId: z.number(),
+        priority: z.number(),
+      }))
+      .mutation(async ({ input }) => {
+        const { createAssignmentRule } = await import("./db");
+        await createAssignmentRule({
+          ...input,
+          isActive: 1,
+        });
+        return { success: true };
+      }),
+    
+    updateAssignmentRule: adminProcedure
+      .input(z.object({
+        id: z.number(),
+        name: z.string(),
+        quizName: z.string(),
+        managerId: z.number(),
+        priority: z.number(),
+      }))
+      .mutation(async ({ input }) => {
+        const { updateAssignmentRule } = await import("./db");
+        const { id, ...updates } = input;
+        await updateAssignmentRule(id, updates);
+        return { success: true };
+      }),
+    
+    deleteAssignmentRule: adminProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input }) => {
+        const { deleteAssignmentRule } = await import("./db");
+        await deleteAssignmentRule(input.id);
+        return { success: true };
+      }),
+    
+    toggleAssignmentRule: adminProcedure
+      .input(z.object({
+        id: z.number(),
+        isActive: z.boolean(),
+      }))
+      .mutation(async ({ input }) => {
+        const { updateAssignmentRule } = await import("./db");
+        await updateAssignmentRule(input.id, { isActive: input.isActive ? 1 : 0 });
+        return { success: true };
+      }),
+    
+    // Managers
+    getManagers: adminProcedure.query(async () => {
+      const { getAllManagers } = await import("./db");
+      return await getAllManagers();
+    }),
+    
+    // Manager Performance
+    getManagerPerformance: adminProcedure.query(async () => {
+      const { getManagerPerformanceStats } = await import("./db");
+      return await getManagerPerformanceStats();
     }),
   }),
 

@@ -348,3 +348,61 @@
 - [ ] Provide login credentials and panel URLs to user
 - [ ] Test admin panel access
 - [ ] Test manager CRM access
+
+
+## Phase 10 - Advanced Management Features
+
+### Assignment Rules UI
+- [x] Create /admin/assignment-rules page
+- [x] Display list of all assignment rules with status
+- [x] Add "Create Rule" form (quiz name, manager, priority)
+- [x] Add "Edit Rule" functionality
+- [x] Add "Delete Rule" functionality
+- [x] Add "Enable/Disable Rule" toggle
+- [ ] Show rule statistics (how many leads assigned) - future enhancement
+
+### Manager Performance Dashboard
+- [x] Create /admin/performance page
+- [x] Display manager leaderboard with key metrics
+- [x] Show total leads assigned per manager
+- [x] Show total leads processed per manager
+- [x] Calculate conversion rate per manager
+- [x] Add export to CSV functionality
+- [ ] Calculate average response time per manager (requires activity log tracking)
+- [ ] Add date range filter for statistics - future enhancement
+
+### Lead Scoring System
+- [x] Add leadScore field to leads table (0-100)
+- [x] Create scoring algorithm based on quiz answers
+- [x] Add UTM quality scoring (branded vs generic keywords)
+- [x] Calculate final score on lead submission
+- [x] Display score in CRM lead list
+- [x] Add score-based sorting in CRM
+- [x] Add score badge/indicator in UI
+- [ ] Add score explanation tooltip (future enhancement)
+
+### Custom Quiz Content
+- [ ] Create unique value propositions for furniture quiz
+- [ ] Create unique value propositions for renovation quiz
+- [ ] Create unique value propositions for e-commerce quiz
+- [ ] Add custom hero images for each quiz
+- [ ] Update benefits section for each quiz
+- [ ] Add industry-specific testimonials
+- [ ] Customize CTA text per quiz
+
+### Manager Dashboard
+- [ ] Create /manager route for manager-only access
+- [ ] Show assigned leads count (today, this week, total)
+- [ ] Show processed leads count
+- [ ] Show average response time
+- [ ] Show personal conversion rate
+- [ ] Add quick actions (view leads, send message)
+- [ ] Add performance comparison with team average
+
+### Lead Notification System
+- [ ] Send Telegram notification to manager on lead assignment
+- [ ] Send email notification to manager on lead assignment
+- [ ] Add notification preferences in manager settings
+- [ ] Include lead details in notification (name, phone, quiz)
+- [ ] Add direct link to lead in CRM
+- [ ] Add notification history/log

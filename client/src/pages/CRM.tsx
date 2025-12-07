@@ -86,16 +86,18 @@ export default function CRM() {
     },
   });
 
-  // Filter leads based on UTM parameters
-  const filteredLeads = leads?.filter((lead) => {
-    if (filterCampaign && lead.utmCampaign !== filterCampaign) return false;
-    if (filterAdGroup && lead.utmAdGroup !== filterAdGroup) return false;
-    if (filterAd && lead.utmAd !== filterAd) return false;
-    if (filterPlacement && lead.utmPlacement !== filterPlacement) return false;
-    if (filterKeyword && lead.utmKeyword !== filterKeyword) return false;
-    if (filterSite && lead.utmSite !== filterSite) return false;
-    return true;
-  });
+  // Filter leads based on UTM parameters and sort by score
+  const filteredLeads = leads
+    ?.filter((lead) => {
+      if (filterCampaign && lead.utmCampaign !== filterCampaign) return false;
+      if (filterAdGroup && lead.utmAdGroup !== filterAdGroup) return false;
+      if (filterAd && lead.utmAd !== filterAd) return false;
+      if (filterPlacement && lead.utmPlacement !== filterPlacement) return false;
+      if (filterKeyword && lead.utmKeyword !== filterKeyword) return false;
+      if (filterSite && lead.utmSite !== filterSite) return false;
+      return true;
+    })
+    .sort((a, b) => (b.leadScore || 0) - (a.leadScore || 0)); // Sort by score descending
   
   const selectedLeadData = leads?.find((l) => l.id === selectedLead);
   
@@ -334,6 +336,7 @@ export default function CRM() {
                     <TableHead>Quiz</TableHead>
                     <TableHead>Name</TableHead>
                     <TableHead>Phone</TableHead>
+                    <TableHead>Score</TableHead>
                     <TableHead>Status</TableHead>
                     <TableHead>Actions</TableHead>
                   </TableRow>
@@ -354,6 +357,22 @@ export default function CRM() {
                         <TableCell>{lead.name}</TableCell>
                         <TableCell className="font-mono text-xs">
                           {lead.phone}
+                        </TableCell>
+                        <TableCell>
+                          <Badge
+                            variant="outline"
+                            className={`${
+                              (lead.leadScore || 0) >= 80
+                                ? "bg-green-500/10 text-green-500 border-green-500/20"
+                                : (lead.leadScore || 0) >= 60
+                                ? "bg-yellow-500/10 text-yellow-500 border-yellow-500/20"
+                                : (lead.leadScore || 0) >= 40
+                                ? "bg-orange-500/10 text-orange-500 border-orange-500/20"
+                                : "bg-red-500/10 text-red-500 border-red-500/20"
+                            }`}
+                          >
+                            {lead.leadScore || 0}
+                          </Badge>
                         </TableCell>
                         <TableCell>
                           <Select

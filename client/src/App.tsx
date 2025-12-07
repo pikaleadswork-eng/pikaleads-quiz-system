@@ -23,6 +23,9 @@ import AdminQuizzes from "./pages/AdminQuizzes";
 import AdminABTests from "./pages/AdminABTests";
 import AdminManagers from "./pages/AdminManagers";
 import AdminAnalytics from "./pages/AdminAnalytics";
+import AdminAssignmentRules from "./pages/AdminAssignmentRules";
+import AdminPerformance from "./pages/AdminPerformance";
+import ManagerDashboard from "./pages/ManagerDashboard";
 import CRM from "./pages/CRM";
 import Privacy from "./pages/Privacy";
 import Contact from "./pages/Contact";
@@ -62,8 +65,11 @@ function Router() {
       <Route path={"/admin/ab-tests"} component={AdminABTests} />
       <Route path={"/admin/managers"} component={AdminManagers} />
       <Route path={"/admin/analytics"} component={AdminAnalytics} />
+      <Route path={"/admin/assignment-rules"} component={AdminAssignmentRules} />
+      <Route path={"/admin/performance"} component={AdminPerformance} />
       
-      {/* CRM */}
+      {/* CRM & Manager Dashboard */}
+      <Route path={"/manager"} component={ManagerDashboard} />
       <Route path={"/crm"} component={CRM} />
       
       {/* Legal Pages */}

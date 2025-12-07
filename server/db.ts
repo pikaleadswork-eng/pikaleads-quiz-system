@@ -408,7 +408,7 @@ export async function getUTMAnalytics() {
 /**
  * Assignment Rules functions
  */
-export async function getAssignmentRules() {
+export async function getAllAssignmentRules() {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
   return await db.select().from(assignmentRules).orderBy(desc(assignmentRules.priority));
@@ -435,7 +435,7 @@ export async function deleteAssignmentRule(id: number) {
 /**
  * Get managers (users with role=manager)
  */
-export async function getManagers() {
+export async function getAllManagers() {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
   return await db.select().from(users).where(eq(users.role, "manager"));
@@ -507,6 +507,14 @@ export async function autoAssignLead(leadId: number, quizName: string) {
     assignedBy: null, // auto-assignment
   });
   
+  // Send notification to assigned manager
+  try {
+    const { notifyManagerAboutLead } = await import("./notifications");
+    await notifyManagerAboutLead(matchedRule.managerId, leadId);
+  } catch (error) {
+    console.warn("[AutoAssign] Failed to notify manager:", error);
+  }
+  
   return matchedRule.managerId;
 }
 
@@ -517,4 +525,49 @@ export async function getAssignmentHistory(leadId: number) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
   return await db.select().from(assignmentHistory).where(eq(assignmentHistory.leadId, leadId));
+}
+
+
+/**
+ * Get manager performance statistics
+ */
+export async function getManagerPerformanceStats() {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const managers = await db.select().from(users).where(eq(users.role, "manager"));
+  const allLeads = await db.select().from(leads);
+  
+  const stats = managers.map((manager) => {
+    const assignedLeads = allLeads.filter(lead => lead.assignedTo === manager.id);
+    const processedLeads = assignedLeads.filter(lead => lead.statusId !== null);
+    
+    // Calculate average response time (simplified - using createdAt as proxy)
+    // In production, you'd track actual response times in activity log
+    const responseTimes: number[] = [];
+    // For now, we'll use a placeholder calculation
+    // TODO: Track actual response times in activity log
+    
+    const avgResponseTime = responseTimes.length > 0
+      ? responseTimes.reduce((sum, time) => sum + time, 0) / responseTimes.length
+      : null;
+    
+    // Calculate conversion rate (processed / assigned)
+    const conversionRate = assignedLeads.length > 0
+      ? Math.round((processedLeads.length / assignedLeads.length) * 100)
+      : 0;
+    
+    return {
+      managerId: manager.id,
+      managerName: manager.name || "Unknown",
+      managerEmail: manager.email || "",
+      totalAssigned: assignedLeads.length,
+      totalProcessed: processedLeads.length,
+      avgResponseTime,
+      conversionRate,
+    };
+  });
+  
+  // Sort by total processed (descending)
+  return stats.sort((a, b) => b.totalProcessed - a.totalProcessed);
 }

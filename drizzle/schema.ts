@@ -50,6 +50,7 @@ export const leads = mysqlTable("leads", {
   utmTerm: varchar("utmTerm", { length: 255 }),
   statusId: int("statusId").default(1), // link to leadStatuses
   assignedTo: int("assignedTo"), // manager user id
+  leadScore: int("leadScore").default(0), // 0-100 quality score
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 });
 
