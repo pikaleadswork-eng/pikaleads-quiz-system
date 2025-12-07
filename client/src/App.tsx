@@ -27,12 +27,20 @@ import CRM from "./pages/CRM";
 import Privacy from "./pages/Privacy";
 import Contact from "./pages/Contact";
 import RegisterManager from "./pages/RegisterManager";
+import FurnitureQuiz from "./pages/FurnitureQuiz";
+import ApartmentRenovationQuiz from "./pages/ApartmentRenovationQuiz";
+import ECommerceQuiz from "./pages/ECommerceQuiz";
 
 function Router() {
   return (
     <Switch>
       <Route path={"/"} component={Home} />
       <Route path={"/thank-you"} component={ThankYou} />
+      
+      {/* New Quiz Pages with Offers */}
+      <Route path={"/quiz/furniture"} component={FurnitureQuiz} />
+      <Route path={"/quiz/apartment-renovation"} component={ApartmentRenovationQuiz} />
+      <Route path={"/quiz/e-commerce"} component={ECommerceQuiz} />
       
       {/* META Ads Quizzes */}
       <Route path={"/meta-furniture"} component={MetaFurniture} />

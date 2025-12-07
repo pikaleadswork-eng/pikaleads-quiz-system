@@ -16,19 +16,19 @@ const quizCardsConfig: QuizCard[] = [
   {
     title: "Furniture",
     descriptionKey: "metaFurnitureDesc",
-    path: "/meta-furniture",
+    path: "/quiz/furniture",
     platform: "meta",
   },
   {
     title: "Apartment Renovation",
     descriptionKey: "metaRepairDesc",
-    path: "/meta-repair",
+    path: "/quiz/apartment-renovation",
     platform: "meta",
   },
   {
     title: "E-Commerce",
     descriptionKey: "metaEcomDesc",
-    path: "/meta-ecom",
+    path: "/quiz/e-commerce",
     platform: "meta",
   },
   {
@@ -113,7 +113,7 @@ export default function Home() {
                     variant="default"
                     className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
                   >
-                    {t.startQuiz} →
+                    Дізнатись більше →
                   </Button>
                 </div>
               </Link>
@@ -146,7 +146,7 @@ export default function Home() {
                     variant="default"
                     className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
                   >
-                    {t.startQuiz} →
+                    Дізнатись більше →
                   </Button>
                 </div>
               </Link>

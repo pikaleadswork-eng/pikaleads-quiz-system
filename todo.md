@@ -323,3 +323,28 @@
 - [x] Auto-assign on lead submission
 - [ ] Send notification to assigned manager (future enhancement)
 - [ ] UI for viewing assignment history (future enhancement)
+
+
+## Phase 9 - Separate Quiz Pages & Test Users
+
+### Separate Quiz Landing Pages
+- [x] Create /quiz/furniture page with furniture-specific offer
+- [x] Create /quiz/apartment-renovation page with renovation offer
+- [x] Create /quiz/e-commerce page with e-commerce offer
+- [x] Each page should have unique value proposition and visuals
+- [x] Update home page to link to specific quiz pages
+- [x] Ensure UTM parameters are passed to quiz pages
+
+### Button Text Changes
+- [x] Replace "Почати квіз" with "Дізнатись більше" on home page
+- [x] Replace "Почати квіз" with "Дізнатись більше" on all quiz landing pages
+- [x] Update button text in Quiz component if needed
+
+### Test Users Creation
+- [x] Create admin user in database
+- [x] Create 2 manager users in database
+- [x] Create assignment rules for auto-assignment
+- [x] Enable auto-assignment in system settings
+- [ ] Provide login credentials and panel URLs to user
+- [ ] Test admin panel access
+- [ ] Test manager CRM access
