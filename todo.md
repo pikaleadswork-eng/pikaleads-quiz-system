@@ -198,3 +198,41 @@
 - [x] Log all manager actions (status changes, comments, messages)
 - [x] Display activity timeline in lead detail
 - [x] Admin can view all activity across managers
+
+## Phase 6 - Bug Fixes & Legal Pages
+
+### Bug Fixes
+- [x] Fix "Quiz not found" error on quiz pages
+- [x] Verify all quiz routes are working correctly
+
+### Privacy Policy & Cookie Consent
+- [x] Create Privacy Policy page with GDPR compliance
+- [x] Add Cookie Consent banner
+- [x] Store cookie preferences in localStorage
+- [x] Translate Privacy Policy to all 5 languages
+
+### Contact Page
+- [x] Create Contact page with company information
+- [x] Add contact details: ФОП "Грибук Роман Миколайович"
+- [x] Phone: 380992377117
+- [x] Email: info@pika-leads.com
+- [x] Address: вул. Незалежності 44а., м.Ківерці, Волинська обл
+- [x] Translate Contact page to all 5 languages
+
+### Complete Messenger Integration
+- [ ] Implement Instagram Direct API integration
+- [ ] Implement Telegram Bot for two-way communication
+- [ ] Test message sending and receiving
+- [ ] Add webhook endpoint for Telegram
+
+### Manager Invitation System
+- [ ] Create UI for admin to invite managers via email
+- [ ] Generate invitation tokens
+- [ ] Create registration page for invited managers
+- [ ] Send invitation emails
+- [ ] Auto-assign 'manager' role on registration
+
+### Default Lead Statuses
+- [ ] Run seed script to create default statuses
+- [ ] Verify statuses appear in CRM
+- [ ] Test status assignment to leads

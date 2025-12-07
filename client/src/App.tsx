@@ -1,6 +1,7 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
+import { CookieConsent } from "@/components/CookieConsent";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
@@ -21,6 +22,8 @@ import Admin from "./pages/Admin";
 import AdminQuizzes from "./pages/AdminQuizzes";
 import AdminABTests from "./pages/AdminABTests";
 import CRM from "./pages/CRM";
+import Privacy from "./pages/Privacy";
+import Contact from "./pages/Contact";
 
 function Router() {
   return (
@@ -50,6 +53,10 @@ function Router() {
       {/* CRM */}
       <Route path={"/crm"} component={CRM} />
       
+      {/* Legal Pages */}
+      <Route path={"/privacy"} component={Privacy} />
+      <Route path={"/contact"} component={Contact} />
+      
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
@@ -65,6 +72,7 @@ function App() {
           <TooltipProvider>
             <Toaster />
             <Router />
+            <CookieConsent />
           </TooltipProvider>
         </LanguageProvider>
       </ThemeProvider>
