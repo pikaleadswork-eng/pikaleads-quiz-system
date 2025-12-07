@@ -103,6 +103,12 @@ export default function Admin() {
                 A/B Tests
               </Button>
             </Link>
+            <Link href="/admin/managers">
+              <Button variant="outline" className="gap-2">
+                <Users className="w-4 h-4" />
+                Managers
+              </Button>
+            </Link>
             <Link href="/crm">
               <Button variant="outline" className="gap-2">
                 <Users className="w-4 h-4" />

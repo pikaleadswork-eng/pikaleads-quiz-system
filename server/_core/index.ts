@@ -35,6 +35,13 @@ async function startServer() {
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
   // OAuth callback under /api/oauth/callback
   registerOAuthRoutes(app);
+  
+  // Webhook endpoints
+  const { handleTelegramWebhook, handleInstagramWebhookPost, handleInstagramWebhookVerification } = await import("../webhooks");
+  app.post("/api/webhooks/telegram", handleTelegramWebhook);
+  app.post("/api/webhooks/instagram", handleInstagramWebhookPost);
+  app.get("/api/webhooks/instagram", handleInstagramWebhookVerification);
+  
   // tRPC API
   app.use(
     "/api/trpc",

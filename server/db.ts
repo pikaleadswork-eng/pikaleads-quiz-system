@@ -334,3 +334,28 @@ export async function getAllManagerInvitations() {
   const result = await db.select().from(managerInvitations);
   return result;
 }
+
+/**
+ * Find lead by Telegram username or chat ID
+ */
+export async function getLeadByTelegram(telegram: string) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const result = await db.select().from(leads).where(eq(leads.telegram, telegram));
+  return result[0] || null;
+}
+
+/**
+ * Find lead by Instagram username
+ * Note: You may need to add an instagram field to the leads table
+ */
+export async function getLeadByInstagram(instagram: string) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  // For now, search by telegram field (can be used for Instagram username too)
+  // In production, add a separate instagram field to the leads table
+  const result = await db.select().from(leads).where(eq(leads.telegram, instagram));
+  return result[0] || null;
+}

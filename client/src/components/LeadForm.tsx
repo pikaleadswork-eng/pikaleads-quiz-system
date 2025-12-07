@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 interface LeadFormProps {
-  onSubmit: (data: { name: string; phone: string; telegram: string }) => void;
+  onSubmit: (data: { name: string; phone: string; telegram: string; email: string }) => void;
   isLoading?: boolean;
 }
 
@@ -12,11 +12,12 @@ export default function LeadForm({ onSubmit, isLoading }: LeadFormProps) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [telegram, setTelegram] = useState("");
+  const [email, setEmail] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (name && phone) {
-      onSubmit({ name, phone, telegram });
+      onSubmit({ name, phone, telegram, email });
     }
   };
 
@@ -55,6 +56,19 @@ export default function LeadForm({ onSubmit, isLoading }: LeadFormProps) {
               onChange={(e) => setPhone(e.target.value)}
               required
               placeholder="+1 (555) 123-4567"
+              className="h-14 text-lg bg-input border-2 border-border focus:border-primary text-foreground"
+            />
+          </div>
+          <div>
+            <Label htmlFor="email" className="text-foreground font-semibold mb-2 block">
+              Email (Optional)
+            </Label>
+            <Input
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="your@email.com"
               className="h-14 text-lg bg-input border-2 border-border focus:border-primary text-foreground"
             />
           </div>

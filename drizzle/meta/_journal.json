@@ -50,6 +50,13 @@
       "when": 1765119883205,
       "tag": "0006_slow_stryfe",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "5",
+      "when": 1765120308537,
+      "tag": "0007_goofy_moondragon",
+      "breakpoints": true
     }
   ]
 }

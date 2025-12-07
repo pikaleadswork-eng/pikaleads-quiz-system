@@ -35,7 +35,19 @@ export const leads = mysqlTable("leads", {
   name: varchar("name", { length: 255 }).notNull(),
   phone: varchar("phone", { length: 50 }).notNull(),
   telegram: varchar("telegram", { length: 100 }),
+  email: varchar("email", { length: 320 }),
   language: varchar("language", { length: 10 }),
+  // UTM tracking parameters
+  utmCampaign: varchar("utmCampaign", { length: 255 }),
+  utmAdGroup: varchar("utmAdGroup", { length: 255 }),
+  utmAd: varchar("utmAd", { length: 255 }),
+  utmPlacement: varchar("utmPlacement", { length: 255 }),
+  utmKeyword: varchar("utmKeyword", { length: 255 }),
+  utmSite: varchar("utmSite", { length: 255 }),
+  utmSource: varchar("utmSource", { length: 100 }),
+  utmMedium: varchar("utmMedium", { length: 100 }),
+  utmContent: varchar("utmContent", { length: 255 }),
+  utmTerm: varchar("utmTerm", { length: 255 }),
   statusId: int("statusId").default(1), // link to leadStatuses
   assignedTo: int("assignedTo"), // manager user id
   createdAt: timestamp("createdAt").defaultNow().notNull(),

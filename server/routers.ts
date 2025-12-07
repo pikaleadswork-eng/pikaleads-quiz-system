@@ -32,33 +32,69 @@ export const appRouter = router({
         z.object({
           quizName: z.string(),
           answers: z.string(),
+          questions: z.string().optional(),
           name: z.string(),
           phone: z.string(),
           telegram: z.string().optional(),
+          email: z.string().optional(),
           language: z.string().optional(),
+          // UTM parameters
+          utmCampaign: z.string().optional(),
+          utmAdGroup: z.string().optional(),
+          utmAd: z.string().optional(),
+          utmPlacement: z.string().optional(),
+          utmKeyword: z.string().optional(),
+          utmSite: z.string().optional(),
+          utmSource: z.string().optional(),
+          utmMedium: z.string().optional(),
+          utmContent: z.string().optional(),
+          utmTerm: z.string().optional(),
         })
       )
       .mutation(async ({ input }) => {
         const { createLead } = await import("./db");
         const { sendTelegramMessage, formatLeadMessage } = await import("./telegram");
         
-        // Save to database
+        // Save to database with UTM parameters
         await createLead({
           quizName: input.quizName,
           answers: input.answers,
           name: input.name,
           phone: input.phone,
           telegram: input.telegram || null,
+          email: input.email || null,
           language: input.language || null,
+          utmCampaign: input.utmCampaign || null,
+          utmAdGroup: input.utmAdGroup || null,
+          utmAd: input.utmAd || null,
+          utmPlacement: input.utmPlacement || null,
+          utmKeyword: input.utmKeyword || null,
+          utmSite: input.utmSite || null,
+          utmSource: input.utmSource || null,
+          utmMedium: input.utmMedium || null,
+          utmContent: input.utmContent || null,
+          utmTerm: input.utmTerm || null,
         });
         
-        // Send to Telegram
+        // Send to Telegram with full details
         const message = formatLeadMessage({
           quizName: input.quizName,
           answers: input.answers,
+          questions: input.questions,
           name: input.name,
           phone: input.phone,
           telegram: input.telegram,
+          email: input.email,
+          utmCampaign: input.utmCampaign,
+          utmAdGroup: input.utmAdGroup,
+          utmAd: input.utmAd,
+          utmPlacement: input.utmPlacement,
+          utmKeyword: input.utmKeyword,
+          utmSite: input.utmSite,
+          utmSource: input.utmSource,
+          utmMedium: input.utmMedium,
+          utmContent: input.utmContent,
+          utmTerm: input.utmTerm,
         });
         
         const telegramSent = await sendTelegramMessage(message);
@@ -263,6 +299,7 @@ export const appRouter = router({
       }))
       .mutation(async ({ input, ctx }) => {
         const { createManagerInvitation } = await import("./db");
+        const { sendManagerInvitation } = await import("./email");
         const crypto = await import("crypto");
         
         // Generate unique token
@@ -280,14 +317,34 @@ export const appRouter = router({
           expiresAt,
         });
         
-        // TODO: Send email with invitation link
-        // For now, return the token so admin can share it manually
-        const invitationUrl = `${process.env.VITE_APP_URL || 'http://localhost:3000'}/register-manager?token=${token}`;
+        // Generate invitation URL
+        const baseUrl = process.env.VITE_APP_URL || 'http://localhost:3000';
+        const invitationUrl = `${baseUrl}/register-manager?token=${token}`;
+        
+        // Send email invitation
+        const emailResult = await sendManagerInvitation({
+          email: input.email,
+          invitationUrl,
+          invitedBy: ctx.user.name || 'Admin',
+        });
+        
+        if (!emailResult.success) {
+          console.warn('[Managers] Email send failed:', emailResult.error);
+          // Still return success since invitation was created
+          return {
+            success: true,
+            invitationUrl,
+            token,
+            emailSent: false,
+            emailError: emailResult.error,
+          };
+        }
         
         return { 
           success: true, 
           invitationUrl,
-          token 
+          token,
+          emailSent: true,
         };
       }),
     

@@ -13,6 +13,7 @@ import { translations } from "@/lib/translations";
 import { trackQuizStep as trackMetaStep, trackQuizComplete as trackMetaComplete, trackFormSubmit as trackMetaFormSubmit } from "@/lib/metaPixel";
 import { trackQuizStep as trackGA4Step, trackQuizComplete as trackGA4Complete, trackFormView, trackFormSubmit as trackGA4FormSubmit, trackDropOff } from "@/lib/googleAnalytics";
 import { getOrCreateSessionId, getCurrentAssignment, assignVariant } from "@/lib/abTesting";
+import { useUTMParams } from "@/hooks/useUTMParams";
 
 interface QuizProps {
   config: QuizConfig;
@@ -26,6 +27,7 @@ export default function Quiz({ config }: QuizProps) {
   const [selectedAnswer, setSelectedAnswer] = useState<string | undefined>();
   const [sessionId] = useState(() => getOrCreateSessionId());
   const [variantAssigned, setVariantAssigned] = useState(false);
+  const utmParams = useUTMParams();
   
   // A/B Testing
   const { data: variants } = trpc.abTest.getVariants.useQuery({ quizId: config.id });
@@ -111,10 +113,13 @@ export default function Quiz({ config }: QuizProps) {
     }, 300);
   };
 
-  const handleFormSubmit = (data: { name: string; phone: string; telegram: string }) => {
+  const handleFormSubmit = (data: { name: string; phone: string; telegram: string; email: string }) => {
     const answersArray = Object.entries(answers)
       .sort(([a], [b]) => Number(a) - Number(b))
       .map(([, answer]) => answer);
+    
+    // Get questions for Telegram message
+    const questionsArray = quizData?.questions.map(q => q.question) || [];
 
     // Track form submission
     trackMetaFormSubmit(config.id);
@@ -123,10 +128,14 @@ export default function Quiz({ config }: QuizProps) {
     submitLead.mutate({
       quizName: config.id,
       answers: JSON.stringify(answersArray),
+      questions: JSON.stringify(questionsArray),
       name: data.name,
       phone: data.phone,
       telegram: data.telegram || "",
+      email: data.email || "",
       language: language,
+      // Include UTM parameters
+      ...utmParams,
     });
   };
 

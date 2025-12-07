@@ -11,31 +11,94 @@ export async function sendTelegramMessage(message: string): Promise<boolean> {
   return result.success;
 }
 
-export function formatLeadMessage(data: {
+export interface LeadData {
   quizName: string;
   answers: string;
+  questions?: string; // JSON string of questions
   name: string;
   phone: string;
   telegram?: string | null;
-}): string {
+  email?: string | null;
+  // UTM parameters
+  utmCampaign?: string | null;
+  utmAdGroup?: string | null;
+  utmAd?: string | null;
+  utmPlacement?: string | null;
+  utmKeyword?: string | null;
+  utmSite?: string | null;
+  utmSource?: string | null;
+  utmMedium?: string | null;
+  utmContent?: string | null;
+  utmTerm?: string | null;
+}
+
+export function formatLeadMessage(data: LeadData): string {
   const answersArray = JSON.parse(data.answers);
-  const answersText = answersArray.map((answer: string, index: number) => 
-    `${index + 1}. ${answer}`
-  ).join("\n");
+  let questionsArray: string[] = [];
+  
+  // Parse questions if available
+  if (data.questions) {
+    try {
+      questionsArray = JSON.parse(data.questions);
+    } catch (e) {
+      console.warn("[Telegram] Failed to parse questions:", e);
+    }
+  }
+  
+  // Format Q&A section
+  let qaText = "";
+  if (questionsArray.length > 0 && questionsArray.length === answersArray.length) {
+    qaText = answersArray.map((answer: string, index: number) => 
+      `<b>Q${index + 1}:</b> ${questionsArray[index]}\n<b>A${index + 1}:</b> ${answer}`
+    ).join("\n\n");
+  } else {
+    // Fallback to just answers
+    qaText = answersArray.map((answer: string, index: number) => 
+      `${index + 1}. ${answer}`
+    ).join("\n");
+  }
+
+  // Build contact section
+  let contactInfo = `• 👤 <b>Ім'я:</b> ${data.name}\n`;
+  contactInfo += `• 📱 <b>Телефон:</b> ${data.phone}\n`;
+  if (data.email) {
+    contactInfo += `• 📧 <b>Email:</b> ${data.email}\n`;
+  }
+  if (data.telegram) {
+    contactInfo += `• 💬 <b>Telegram:</b> ${data.telegram}\n`;
+  }
+
+  // Build UTM section
+  let utmInfo = "";
+  const hasUtm = data.utmCampaign || data.utmAdGroup || data.utmAd || 
+                 data.utmPlacement || data.utmKeyword || data.utmSite ||
+                 data.utmSource || data.utmMedium || data.utmContent || data.utmTerm;
+  
+  if (hasUtm) {
+    utmInfo = "\n\n📊 <b>UTM Мітки:</b>\n";
+    if (data.utmCampaign) utmInfo += `• 🎯 <b>Кампанія:</b> ${data.utmCampaign}\n`;
+    if (data.utmAdGroup) utmInfo += `• 📁 <b>Група оголошень:</b> ${data.utmAdGroup}\n`;
+    if (data.utmAd) utmInfo += `• 📢 <b>Оголошення:</b> ${data.utmAd}\n`;
+    if (data.utmPlacement) utmInfo += `• 📍 <b>Плейсмент (Source):</b> ${data.utmPlacement}\n`;
+    if (data.utmKeyword) utmInfo += `• 🔑 <b>Ключовий запит:</b> ${data.utmKeyword}\n`;
+    if (data.utmSite) utmInfo += `• 🌐 <b>Сайт показу:</b> ${data.utmSite}\n`;
+    if (data.utmSource) utmInfo += `• 📤 <b>UTM Source:</b> ${data.utmSource}\n`;
+    if (data.utmMedium) utmInfo += `• 🔗 <b>UTM Medium:</b> ${data.utmMedium}\n`;
+    if (data.utmContent) utmInfo += `• 📝 <b>UTM Content:</b> ${data.utmContent}\n`;
+    if (data.utmTerm) utmInfo += `• 🏷 <b>UTM Term:</b> ${data.utmTerm}\n`;
+  }
 
   return `
-🎯 <b>New Lead from PIKALEADS Quiz</b>
+🎯 <b>Новий Лід з PIKALEADS Quiz</b>
 
-📋 <b>Quiz:</b> ${data.quizName}
+📋 <b>Квіз:</b> ${data.quizName}
 
-👤 <b>Contact Information:</b>
-• Name: ${data.name}
-• Phone: ${data.phone}
-${data.telegram ? `• Telegram: ${data.telegram}` : ""}
+👥 <b>Контактна інформація:</b>
+${contactInfo}
 
-💬 <b>Answers:</b>
-${answersText}
+💬 <b>Відповіді на питання:</b>
+${qaText}${utmInfo}
 
-⏰ <b>Time:</b> ${new Date().toLocaleString("en-US", { timeZone: "UTC" })}
+⏰ <b>Час:</b> ${new Date().toLocaleString("uk-UA", { timeZone: "Europe/Kiev" })}
   `.trim();
 }

@@ -236,3 +236,49 @@
 - [x] Run seed script to create default statuses
 - [x] Verify statuses appear in CRM
 - [x] Test status assignment to leads
+
+
+## Phase 7 - Enhanced Telegram Notifications & UTM Tracking
+
+### Telegram Message Enhancement
+- [x] Add all quiz question answers to Telegram message
+- [x] Add contact details (name, phone, email, telegram) to message
+- [x] Format message with clear sections and emojis
+- [x] Test message formatting with real data
+
+### UTM Parameters Tracking
+- [x] Add UTM fields to database schema (campaign, adgroup, ad, placement, keyword, site)
+- [x] Capture UTM parameters from URL query string
+- [x] Store UTM data with each lead submission
+- [x] Display UTM data in Telegram notification
+- [ ] Display UTM data in CRM lead details
+- [ ] Add UTM filters to CRM interface
+
+### Email Integration (SendGrid)
+- [x] Install SendGrid SDK
+- [x] Create email template for manager invitations
+- [x] Implement sendEmail function with SendGrid API
+- [x] Update inviteManager procedure to send email automatically
+- [ ] Add email configuration to environment variables (SENDGRID_API_KEY, SENDGRID_FROM_EMAIL)
+- [ ] Test email sending with real SendGrid credentials
+
+### Webhook Endpoints
+- [x] Create /api/webhooks/telegram endpoint for incoming messages
+- [x] Create /api/webhooks/instagram endpoint for incoming messages
+- [x] Implement webhook verification for Telegram
+- [x] Implement webhook verification for Instagram
+- [x] Store incoming messages in database
+- [x] Link incoming messages to existing leads
+- [ ] Test webhook endpoints with ngrok/public URL (requires public deployment)
+- [ ] Configure Telegram Bot webhook URL
+- [ ] Configure Instagram webhook URL
+
+### Admin Dashboard for Managers
+- [x] Create /admin/managers route
+- [x] Display list of all managers with status
+- [x] Add "Invite Manager" button with email form
+- [x] Show invitation history (pending/accepted/expired)
+- [ ] Add "Deactivate Manager" functionality (future enhancement)
+- [ ] Add "Assign Leads" bulk action (future enhancement)
+- [ ] Display manager activity statistics (future enhancement)
+- [ ] Add search and filter for managers (future enhancement)
