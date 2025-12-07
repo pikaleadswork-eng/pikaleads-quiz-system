@@ -10,7 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Download, Loader2, Settings, TrendingUp, Users } from "lucide-react";
+import { Download, Loader2, Settings, TrendingUp, Users, BarChart3 } from "lucide-react";
 import { Link } from "wouter";
 import { format } from "date-fns";
 
@@ -107,6 +107,12 @@ export default function Admin() {
               <Button variant="outline" className="gap-2">
                 <Users className="w-4 h-4" />
                 Managers
+              </Button>
+            </Link>
+            <Link href="/admin/analytics">
+              <Button variant="outline" className="gap-2">
+                <BarChart3 className="w-4 h-4" />
+                Analytics
               </Button>
             </Link>
             <Link href="/crm">

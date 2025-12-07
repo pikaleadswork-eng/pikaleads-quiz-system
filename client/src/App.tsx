@@ -22,6 +22,7 @@ import Admin from "./pages/Admin";
 import AdminQuizzes from "./pages/AdminQuizzes";
 import AdminABTests from "./pages/AdminABTests";
 import AdminManagers from "./pages/AdminManagers";
+import AdminAnalytics from "./pages/AdminAnalytics";
 import CRM from "./pages/CRM";
 import Privacy from "./pages/Privacy";
 import Contact from "./pages/Contact";
@@ -52,6 +53,7 @@ function Router() {
       <Route path={"/admin/quizzes"} component={AdminQuizzes} />
       <Route path={"/admin/ab-tests"} component={AdminABTests} />
       <Route path={"/admin/managers"} component={AdminManagers} />
+      <Route path={"/admin/analytics"} component={AdminAnalytics} />
       
       {/* CRM */}
       <Route path={"/crm"} component={CRM} />

@@ -282,3 +282,44 @@
 - [ ] Add "Assign Leads" bulk action (future enhancement)
 - [ ] Display manager activity statistics (future enhancement)
 - [ ] Add search and filter for managers (future enhancement)
+
+
+## Phase 8 - Design Fix & Advanced Features
+
+### Quiz Landing Design Fix
+- [x] Fix button layout - move "Start Quiz" button below bonus section
+- [x] Center button horizontally
+- [x] Ensure responsive design on mobile
+
+### UTM Analytics Dashboard
+- [x] Create /admin/analytics route
+- [x] Add database queries for UTM statistics
+- [x] Display top campaigns by conversion rate
+- [x] Display top ad groups by lead count
+- [x] Display top ads by conversion rate
+- [x] Display top placements/sources
+- [x] Display top keywords
+- [ ] Add date range filter (future enhancement)
+- [ ] Add charts/visualizations for UTM data (future enhancement)
+- [x] Add export to CSV functionality
+
+### CRM UTM Filters
+- [x] Add UTM filter dropdowns to CRM interface
+- [x] Filter by campaign
+- [x] Filter by ad group
+- [x] Filter by ad
+- [x] Filter by placement
+- [x] Filter by keyword
+- [x] Filter by site
+- [x] Add "Clear filters" button
+- [x] Display active filters count
+
+### Automated Lead Assignment
+- [x] Add assignment rules table to database
+- [ ] Create UI for configuring assignment rules (admin/assignment-rules page)
+- [x] Implement quiz-based assignment (furniture → furniture manager)
+- [x] Add auto-assignment toggle via system settings
+- [x] Log assignment history
+- [x] Auto-assign on lead submission
+- [ ] Send notification to assigned manager (future enhancement)
+- [ ] UI for viewing assignment history (future enhancement)

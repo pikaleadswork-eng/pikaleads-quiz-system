@@ -199,3 +199,47 @@ export const managerInvitations = mysqlTable("manager_invitations", {
 
 export type ManagerInvitation = typeof managerInvitations.$inferSelect;
 export type InsertManagerInvitation = typeof managerInvitations.$inferInsert;
+/**
+ * Assignment Rules table - configure automatic lead assignment
+ */
+export const assignmentRules = mysqlTable("assignment_rules", {
+  id: int("id").autoincrement().primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  quizName: varchar("quizName", { length: 100 }), // null = all quizzes
+  managerId: int("managerId").notNull(), // user id with role=manager
+  priority: int("priority").default(0).notNull(), // higher = higher priority
+  isActive: int("isActive").default(1).notNull(), // 0 = disabled, 1 = enabled
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type AssignmentRule = typeof assignmentRules.$inferSelect;
+export type InsertAssignmentRule = typeof assignmentRules.$inferInsert;
+
+/**
+ * Assignment History table - log all lead assignments
+ */
+export const assignmentHistory = mysqlTable("assignment_history", {
+  id: int("id").autoincrement().primaryKey(),
+  leadId: int("leadId").notNull(),
+  managerId: int("managerId").notNull(),
+  ruleId: int("ruleId"), // null if manual assignment
+  assignedBy: int("assignedBy"), // user id who triggered assignment (null for auto)
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type AssignmentHistory = typeof assignmentHistory.$inferSelect;
+export type InsertAssignmentHistory = typeof assignmentHistory.$inferInsert;
+
+/**
+ * System Settings table - for auto-assignment toggle and other settings
+ */
+export const systemSettings = mysqlTable("system_settings", {
+  id: int("id").autoincrement().primaryKey(),
+  settingKey: varchar("settingKey", { length: 100 }).notNull().unique(),
+  settingValue: text("settingValue").notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type SystemSetting = typeof systemSettings.$inferSelect;
+export type InsertSystemSetting = typeof systemSettings.$inferInsert;

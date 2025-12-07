@@ -1,6 +1,6 @@
-import { eq } from "drizzle-orm";
+import { eq, desc } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, leads, InsertLead, abTestVariants, abTestAssignments, incompleteQuizSessions, InsertABTestVariant, InsertABTestAssignment, InsertIncompleteQuizSession, leadStatuses, InsertLeadStatus, leadComments, InsertLeadComment, activityLog, InsertActivityLog, messages, InsertMessage } from "../drizzle/schema";
+import { InsertUser, users, leads, InsertLead, abTestVariants, abTestAssignments, incompleteQuizSessions, InsertABTestVariant, InsertABTestAssignment, InsertIncompleteQuizSession, leadStatuses, InsertLeadStatus, leadComments, InsertLeadComment, activityLog, InsertActivityLog, messages, InsertMessage, assignmentRules, InsertAssignmentRule, assignmentHistory, systemSettings } from "../drizzle/schema";
 import { sql } from "drizzle-orm";
 import { ENV } from './_core/env';
 
@@ -99,7 +99,9 @@ export async function createLead(lead: InsertLead) {
 
   try {
     const result = await db.insert(leads).values(lead);
-    return result;
+    // Get the inserted ID from the result
+    const insertId = (result as any).insertId || (result as any)[0]?.insertId;
+    return insertId as number;
   } catch (error) {
     console.error("[Database] Failed to create lead:", error);
     throw error;
@@ -358,4 +360,161 @@ export async function getLeadByInstagram(instagram: string) {
   // In production, add a separate instagram field to the leads table
   const result = await db.select().from(leads).where(eq(leads.telegram, instagram));
   return result[0] || null;
+}
+
+/**
+ * Get UTM analytics data
+ */
+export async function getUTMAnalytics() {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const allLeads = await db.select().from(leads);
+  const totalLeads = allLeads.length;
+  
+  // Helper to calculate stats
+  const calculateStats = (field: keyof typeof leads.$inferSelect) => {
+    const grouped = allLeads.reduce((acc, lead) => {
+      const value = lead[field] as string | null;
+      if (value) {
+        if (!acc[value]) {
+          acc[value] = 0;
+        }
+        acc[value]++;
+      }
+      return acc;
+    }, {} as Record<string, number>);
+    
+    return Object.entries(grouped)
+      .map(([name, count]) => ({
+        name,
+        count,
+        conversionRate: totalLeads > 0 ? Math.round((count / totalLeads) * 100) : 0,
+      }))
+      .sort((a, b) => b.count - a.count);
+  };
+  
+  return {
+    totalLeads,
+    topCampaigns: calculateStats('utmCampaign'),
+    topAdGroups: calculateStats('utmAdGroup'),
+    topAds: calculateStats('utmAd'),
+    topPlacements: calculateStats('utmPlacement'),
+    topKeywords: calculateStats('utmKeyword'),
+    topSites: calculateStats('utmSite'),
+  };
+}
+
+/**
+ * Assignment Rules functions
+ */
+export async function getAssignmentRules() {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  return await db.select().from(assignmentRules).orderBy(desc(assignmentRules.priority));
+}
+
+export async function createAssignmentRule(rule: InsertAssignmentRule) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.insert(assignmentRules).values(rule);
+}
+
+export async function updateAssignmentRule(id: number, updates: Partial<InsertAssignmentRule>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.update(assignmentRules).set(updates).where(eq(assignmentRules.id, id));
+}
+
+export async function deleteAssignmentRule(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.delete(assignmentRules).where(eq(assignmentRules.id, id));
+}
+
+/**
+ * Get managers (users with role=manager)
+ */
+export async function getManagers() {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  return await db.select().from(users).where(eq(users.role, "manager"));
+}
+
+/**
+ * System Settings functions
+ */
+export async function getSystemSetting(key: string) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const results = await db.select().from(systemSettings).where(eq(systemSettings.settingKey, key));
+  return results[0] || null;
+}
+
+export async function setSystemSetting(key: string, value: string) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const existing = await getSystemSetting(key);
+  if (existing) {
+    await db.update(systemSettings)
+      .set({ settingValue: value })
+      .where(eq(systemSettings.settingKey, key));
+  } else {
+    await db.insert(systemSettings).values({ settingKey: key, settingValue: value });
+  }
+}
+
+/**
+ * Auto-assign lead to manager based on rules
+ */
+export async function autoAssignLead(leadId: number, quizName: string) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  // Check if auto-assignment is enabled
+  const autoAssignSetting = await getSystemSetting("auto_assign_enabled");
+  if (autoAssignSetting?.settingValue !== "true") {
+    return null;
+  }
+  
+  // Get active rules, prioritize quiz-specific rules
+  const rules = await db.select()
+    .from(assignmentRules)
+    .where(eq(assignmentRules.isActive, 1))
+    .orderBy(desc(assignmentRules.priority));
+  
+  // Find matching rule (quiz-specific first, then general)
+  let matchedRule = rules.find(r => r.quizName === quizName);
+  if (!matchedRule) {
+    matchedRule = rules.find(r => !r.quizName); // general rule
+  }
+  
+  if (!matchedRule) {
+    return null;
+  }
+  
+  // Assign lead to manager
+  await db.update(leads)
+    .set({ assignedTo: matchedRule.managerId })
+    .where(eq(leads.id, leadId));
+  
+  // Log assignment history
+  await db.insert(assignmentHistory).values({
+    leadId,
+    managerId: matchedRule.managerId,
+    ruleId: matchedRule.id,
+    assignedBy: null, // auto-assignment
+  });
+  
+  return matchedRule.managerId;
+}
+
+/**
+ * Get assignment history for a lead
+ */
+export async function getAssignmentHistory(leadId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  return await db.select().from(assignmentHistory).where(eq(assignmentHistory.leadId, leadId));
 }

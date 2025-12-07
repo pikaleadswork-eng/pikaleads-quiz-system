@@ -32,7 +32,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { Loader2, MessageSquare, Send } from "lucide-react";
+import { Loader2, MessageSquare, Send, Filter, X } from "lucide-react";
 import { format } from "date-fns";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { toast } from "sonner";
@@ -43,6 +43,14 @@ export default function CRM() {
   const [newComment, setNewComment] = useState("");
   const [newMessage, setNewMessage] = useState("");
   const [messagePlatform, setMessagePlatform] = useState<"instagram" | "telegram">("telegram");
+  
+  // UTM Filters
+  const [filterCampaign, setFilterCampaign] = useState<string>("");
+  const [filterAdGroup, setFilterAdGroup] = useState<string>("");
+  const [filterAd, setFilterAd] = useState<string>("");
+  const [filterPlacement, setFilterPlacement] = useState<string>("");
+  const [filterKeyword, setFilterKeyword] = useState<string>("");
+  const [filterSite, setFilterSite] = useState<string>("");
 
   const { data: leads, isLoading: leadsLoading, refetch: refetchLeads } = trpc.crm.getLeads.useQuery();
   const { data: statuses } = trpc.crm.getStatuses.useQuery();
@@ -78,7 +86,37 @@ export default function CRM() {
     },
   });
 
+  // Filter leads based on UTM parameters
+  const filteredLeads = leads?.filter((lead) => {
+    if (filterCampaign && lead.utmCampaign !== filterCampaign) return false;
+    if (filterAdGroup && lead.utmAdGroup !== filterAdGroup) return false;
+    if (filterAd && lead.utmAd !== filterAd) return false;
+    if (filterPlacement && lead.utmPlacement !== filterPlacement) return false;
+    if (filterKeyword && lead.utmKeyword !== filterKeyword) return false;
+    if (filterSite && lead.utmSite !== filterSite) return false;
+    return true;
+  });
+  
   const selectedLeadData = leads?.find((l) => l.id === selectedLead);
+  
+  // Get unique values for filters
+  const uniqueCampaigns = Array.from(new Set(leads?.map(l => l.utmCampaign).filter(Boolean)));
+  const uniqueAdGroups = Array.from(new Set(leads?.map(l => l.utmAdGroup).filter(Boolean)));
+  const uniqueAds = Array.from(new Set(leads?.map(l => l.utmAd).filter(Boolean)));
+  const uniquePlacements = Array.from(new Set(leads?.map(l => l.utmPlacement).filter(Boolean)));
+  const uniqueKeywords = Array.from(new Set(leads?.map(l => l.utmKeyword).filter(Boolean)));
+  const uniqueSites = Array.from(new Set(leads?.map(l => l.utmSite).filter(Boolean)));
+  
+  const activeFiltersCount = [filterCampaign, filterAdGroup, filterAd, filterPlacement, filterKeyword, filterSite].filter(Boolean).length;
+  
+  const clearFilters = () => {
+    setFilterCampaign("");
+    setFilterAdGroup("");
+    setFilterAd("");
+    setFilterPlacement("");
+    setFilterKeyword("");
+    setFilterSite("");
+  };
 
   const getStatusColor = (statusId: number | null) => {
     const status = statuses?.find((s) => s.id === statusId);
@@ -123,12 +161,166 @@ export default function CRM() {
           </p>
         </div>
 
+        {/* UTM Filters */}
+        {uniqueCampaigns.length > 0 && (
+          <Card className="mb-6">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle className="flex items-center gap-2">
+                    <Filter className="w-5 h-5" />
+                    UTM Filters
+                  </CardTitle>
+                  <CardDescription>
+                    Filter leads by campaign parameters
+                    {activeFiltersCount > 0 && ` (${activeFiltersCount} active)`}
+                  </CardDescription>
+                </div>
+                {activeFiltersCount > 0 && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={clearFilters}
+                    className="gap-2"
+                  >
+                    <X className="w-4 h-4" />
+                    Clear Filters
+                  </Button>
+                )}
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {/* Campaign Filter */}
+                {uniqueCampaigns.length > 0 && (
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Campaign</label>
+                    <Select value={filterCampaign} onValueChange={setFilterCampaign}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="All campaigns" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="">All campaigns</SelectItem>
+                        {uniqueCampaigns.map((campaign) => (
+                          <SelectItem key={campaign as string} value={campaign as string}>
+                            {campaign}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                )}
+
+                {/* Ad Group Filter */}
+                {uniqueAdGroups.length > 0 && (
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Ad Group</label>
+                    <Select value={filterAdGroup} onValueChange={setFilterAdGroup}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="All ad groups" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="">All ad groups</SelectItem>
+                        {uniqueAdGroups.map((adGroup) => (
+                          <SelectItem key={adGroup as string} value={adGroup as string}>
+                            {adGroup}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                )}
+
+                {/* Ad Filter */}
+                {uniqueAds.length > 0 && (
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Ad</label>
+                    <Select value={filterAd} onValueChange={setFilterAd}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="All ads" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="">All ads</SelectItem>
+                        {uniqueAds.map((ad) => (
+                          <SelectItem key={ad as string} value={ad as string}>
+                            {ad}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                )}
+
+                {/* Placement Filter */}
+                {uniquePlacements.length > 0 && (
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Placement</label>
+                    <Select value={filterPlacement} onValueChange={setFilterPlacement}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="All placements" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="">All placements</SelectItem>
+                        {uniquePlacements.map((placement) => (
+                          <SelectItem key={placement as string} value={placement as string}>
+                            {placement}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                )}
+
+                {/* Keyword Filter */}
+                {uniqueKeywords.length > 0 && (
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Keyword</label>
+                    <Select value={filterKeyword} onValueChange={setFilterKeyword}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="All keywords" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="">All keywords</SelectItem>
+                        {uniqueKeywords.map((keyword) => (
+                          <SelectItem key={keyword as string} value={keyword as string}>
+                            {keyword}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                )}
+
+                {/* Site Filter */}
+                {uniqueSites.length > 0 && (
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Site</label>
+                    <Select value={filterSite} onValueChange={setFilterSite}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="All sites" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="">All sites</SelectItem>
+                        {uniqueSites.map((site) => (
+                          <SelectItem key={site as string} value={site as string}>
+                            {site}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
         {/* Leads Table */}
         <Card>
           <CardHeader>
             <CardTitle>Leads</CardTitle>
             <CardDescription>
-              {leads?.length || 0} total leads
+              {filteredLeads?.length || 0} of {leads?.length || 0} leads
               {user.role === "manager" && " (assigned to you)"}
             </CardDescription>
           </CardHeader>
@@ -147,8 +339,8 @@ export default function CRM() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {leads && leads.length > 0 ? (
-                    leads.map((lead) => (
+                  {filteredLeads && filteredLeads.length > 0 ? (
+                    filteredLeads.map((lead) => (
                       <TableRow key={lead.id}>
                         <TableCell className="font-mono text-xs">
                           {lead.id}

@@ -94,15 +94,17 @@ export default function QuizLanding({ quizId, onStartQuiz }: QuizLandingProps) {
             <p className="text-foreground font-semibold">{quizData.bonus}</p>
           </div>
 
-          {/* CTA Button */}
-          <Button
-            onClick={handleStart}
-            disabled={isStarting}
-            size="lg"
-            className="h-20 px-16 text-2xl font-black bg-primary hover:bg-primary/90 text-primary-foreground shadow-2xl hover:shadow-accent/50 transition-all duration-300 hover:scale-105"
-          >
-            {isStarting ? "..." : t.startQuiz + " →"}
-          </Button>
+          {/* CTA Button - centered below bonus */}
+          <div className="flex justify-center">
+            <Button
+              onClick={handleStart}
+              disabled={isStarting}
+              size="lg"
+              className="h-20 px-16 text-2xl font-black bg-primary hover:bg-primary/90 text-primary-foreground shadow-2xl hover:shadow-accent/50 transition-all duration-300 hover:scale-105"
+            >
+              {isStarting ? "..." : t.startQuiz + " →"}
+            </Button>
+          </div>
           
           <p className="text-sm text-muted-foreground mt-4">
             {language === "uk" ? "⏱️ Займе лише 2 хвилини" :

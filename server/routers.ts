@@ -52,11 +52,11 @@ export const appRouter = router({
         })
       )
       .mutation(async ({ input }) => {
-        const { createLead } = await import("./db");
+        const { createLead, autoAssignLead } = await import("./db");
         const { sendTelegramMessage, formatLeadMessage } = await import("./telegram");
         
         // Save to database with UTM parameters
-        await createLead({
+        const leadId = await createLead({
           quizName: input.quizName,
           answers: input.answers,
           name: input.name,
@@ -97,12 +97,19 @@ export const appRouter = router({
           utmTerm: input.utmTerm,
         });
         
+        // Auto-assign lead to manager if rules exist
+        try {
+          await autoAssignLead(leadId, input.quizName);
+        } catch (error) {
+          console.warn("[Quiz] Auto-assignment failed:", error);
+        }
+        
         const telegramSent = await sendTelegramMessage(message);
         if (!telegramSent) {
           console.warn("[Quiz] Lead saved but Telegram notification failed");
         }
         
-        return { success: true };
+        return { success: true, leadId };
       }),
   }),
 
@@ -110,6 +117,11 @@ export const appRouter = router({
     getLeads: adminProcedure.query(async () => {
       const { getAllLeads } = await import("./db");
       return await getAllLeads();
+    }),
+    
+    getUTMAnalytics: adminProcedure.query(async () => {
+      const { getUTMAnalytics } = await import("./db");
+      return await getUTMAnalytics();
     }),
   }),
 
