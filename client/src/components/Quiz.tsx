@@ -156,7 +156,7 @@ export default function Quiz({ config }: QuizProps) {
             selectedAnswer={selectedAnswer}
           />
         ) : (
-          <LeadForm onSubmit={handleFormSubmit} isLoading={submitLead.isPending} />
+          <LeadForm key={language} onSubmit={handleFormSubmit} isLoading={submitLead.isPending} />
         )}
       </div>
     </QuizLayout>
