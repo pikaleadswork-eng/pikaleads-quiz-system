@@ -132,6 +132,37 @@ export const appRouter = router({
   }),
 
   admin: router({
+    getDashboardStats: adminProcedure.query(async () => {
+      const { getAllLeads, getAllManagers, getActiveVariantsForQuiz } = await import("./db");
+      
+      const leads = await getAllLeads();
+      const managers = await getAllManagers();
+      
+      // Count active A/B tests by checking unique quiz IDs with variants
+      const quizIds = ['furniture', 'apartment-renovation', 'e-commerce'];
+      let activeTestsCount = 0;
+      for (const quizId of quizIds) {
+        const variants = await getActiveVariantsForQuiz(quizId);
+        if (variants.length > 0) activeTestsCount++;
+      }
+      const activeTests = { length: activeTestsCount };
+      
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const leadsToday = leads.filter(lead => {
+        const leadDate = new Date(lead.createdAt);
+        leadDate.setHours(0, 0, 0, 0);
+        return leadDate.getTime() === today.getTime();
+      }).length;
+      
+      return {
+        totalLeads: leads.length,
+        totalManagers: managers.length,
+        activeTests: activeTests.length,
+        leadsToday,
+      };
+    }),
+    
     getLeads: adminProcedure.query(async () => {
       const { getAllLeads } = await import("./db");
       return await getAllLeads();

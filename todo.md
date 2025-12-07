@@ -526,3 +526,28 @@
 - [x] Translate submit button text to all 5 languages
 - [x] Ensure form respects user's selected language throughout quiz flow
 - [x] Fix language key mismatch (ua → uk) in LeadForm and ThankYou components
+
+
+## Phase 14 - Admin Navigation & Deployment Documentation
+
+### Admin Navigation Dashboard
+- [x] Create /admin route with centralized navigation
+- [x] Add cards/links to all admin sections (CRM, Analytics, Assignment Rules, Performance, Manager Invitation)
+- [x] Add quick stats overview (total leads, managers, active tests)
+- [x] Style dashboard with consistent design
+- [x] Add role-based access control (admin only)
+
+### Deployment Documentation
+- [x] Create DEPLOYMENT_GUIDE.md with full setup instructions (Ukrainian)
+- [x] Create ADMIN_PANEL_GUIDE.md with all URLs and integrations (English)
+- [x] Document all admin panel URLs and their purposes
+- [x] Document SendGrid integration setup (API key, from email)
+- [x] Document Twilio integration setup (Account SID, Auth Token, Phone Number)
+- [x] Document WhatsApp Business API setup
+- [x] Document Facebook/Instagram API setup (App ID, App Secret, Access Token)
+- [x] Document Telegram Bot setup (Bot Token, Chat ID)
+- [x] Document domain configuration for ukraine.com.ua
+- [x] Document SSL certificate setup
+- [x] Document database migration process
+- [x] Document environment variables list
+- [x] Create step-by-step deployment checklist

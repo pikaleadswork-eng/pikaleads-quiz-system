@@ -18,7 +18,7 @@ import GoogleRepair from "./pages/GoogleRepair";
 import GoogleEcom from "./pages/GoogleEcom";
 import GoogleProducts from "./pages/GoogleProducts";
 import GoogleTelegram from "./pages/GoogleTelegram";
-import Admin from "./pages/Admin";
+import AdminDashboard from "./pages/AdminDashboard";
 import AdminQuizzes from "./pages/AdminQuizzes";
 import AdminABTests from "./pages/AdminABTests";
 import AdminManagers from "./pages/AdminManagers";
@@ -61,7 +61,7 @@ function Router() {
       <Route path={"/google-telegram"} component={GoogleTelegram} />
       
       {/* Admin Panel */}
-      <Route path={"/admin"} component={Admin} />
+      <Route path={"/admin"} component={AdminDashboard} />
       <Route path={"/admin/quizzes"} component={AdminQuizzes} />
       <Route path={"/admin/ab-tests"} component={AdminABTests} />
       <Route path={"/admin/managers"} component={AdminManagers} />
