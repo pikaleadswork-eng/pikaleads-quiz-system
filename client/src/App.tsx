@@ -4,6 +4,7 @@ import NotFound from "@/pages/NotFound";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import { LanguageProvider } from "./contexts/LanguageContext";
 import Home from "./pages/Home";
 import ThankYou from "./pages/ThankYou";
 import MetaFurniture from "./pages/MetaFurniture";
@@ -16,6 +17,7 @@ import GoogleRepair from "./pages/GoogleRepair";
 import GoogleEcom from "./pages/GoogleEcom";
 import GoogleProducts from "./pages/GoogleProducts";
 import GoogleTelegram from "./pages/GoogleTelegram";
+import Admin from "./pages/Admin";
 
 function Router() {
   return (
@@ -37,6 +39,9 @@ function Router() {
       <Route path={"/google-products"} component={GoogleProducts} />
       <Route path={"/google-telegram"} component={GoogleTelegram} />
       
+      {/* Admin Panel */}
+      <Route path={"/admin"} component={Admin} />
+      
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
@@ -48,10 +53,12 @@ function App() {
   return (
     <ErrorBoundary>
       <ThemeProvider defaultTheme="dark">
-        <TooltipProvider>
-          <Toaster />
-          <Router />
-        </TooltipProvider>
+        <LanguageProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Router />
+          </TooltipProvider>
+        </LanguageProvider>
       </ThemeProvider>
     </ErrorBoundary>
   );

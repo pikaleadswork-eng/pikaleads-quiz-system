@@ -12,7 +12,7 @@ export interface QuizConfig {
   questions: QuizQuestion[];
 }
 
-export const quizzes: Record<string, QuizConfig> = {
+export const quizzesMap: Record<string, QuizConfig> = {
   "meta-furniture": {
     id: "meta-furniture",
     title: "Want to Get 30+ Furniture Leads Daily?",
@@ -264,3 +264,5 @@ export const quizzes: Record<string, QuizConfig> = {
     ],
   },
 };
+
+export const quizzes: QuizConfig[] = Object.values(quizzesMap);

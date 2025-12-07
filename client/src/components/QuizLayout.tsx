@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 interface QuizLayoutProps {
   children: ReactNode;
@@ -12,12 +13,18 @@ export default function QuizLayout({ children, title, subtitle }: QuizLayoutProp
       {/* Header with Logo */}
       <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
         <div className="container py-4">
-          <div className="flex items-center justify-center">
-            <img
-              src="/pikaleads-logo.png"
-              alt="PIKALEADS"
-              className="h-16 md:h-20 w-auto"
-            />
+          <div className="flex items-center justify-between">
+            <div className="flex-1" />
+            <div className="flex items-center justify-center flex-1">
+              <img
+                src="/pikaleads-logo.png"
+                alt="PIKALEADS"
+                className="h-16 md:h-20 w-auto"
+              />
+            </div>
+            <div className="flex-1 flex justify-end">
+              <LanguageSwitcher />
+            </div>
           </div>
         </div>
       </header>

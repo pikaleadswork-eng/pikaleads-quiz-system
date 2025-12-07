@@ -2,85 +2,90 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import QuizLayout from "@/components/QuizLayout";
 import { Zap, Target } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/lib/translations";
 
 interface QuizCard {
   title: string;
-  description: string;
+  descriptionKey: string;
   path: string;
   platform: "meta" | "google";
 }
 
-const quizCards: QuizCard[] = [
+const quizCardsConfig: QuizCard[] = [
   {
     title: "Furniture",
-    description: "Get 30+ quality leads daily for your furniture business",
+    descriptionKey: "metaFurnitureDesc",
     path: "/meta-furniture",
     platform: "meta",
   },
   {
     title: "Apartment Renovation",
-    description: "5-15 hot leads daily for renovation services",
+    descriptionKey: "metaRepairDesc",
     path: "/meta-repair",
     platform: "meta",
   },
   {
     title: "E-Commerce",
-    description: "Scale your online store with 30-120 leads daily",
+    descriptionKey: "metaEcomDesc",
     path: "/meta-ecom",
     platform: "meta",
   },
   {
     title: "Product Sales",
-    description: "Boost your product sales with targeted advertising",
+    descriptionKey: "metaProductsDesc",
     path: "/meta-products",
     platform: "meta",
   },
   {
     title: "Telegram B2B",
-    description: "200-1200 new Telegram subscribers weekly",
+    descriptionKey: "metaTelegramDesc",
     path: "/meta-telegram",
     platform: "meta",
   },
   {
     title: "Furniture",
-    description: "Quality furniture leads from Google Search",
+    descriptionKey: "googleFurnitureDesc",
     path: "/google-furniture",
     platform: "google",
   },
   {
     title: "Apartment Renovation",
-    description: "Renovation leads from Google Search",
+    descriptionKey: "googleRepairDesc",
     path: "/google-repair",
     platform: "google",
   },
   {
     title: "E-Commerce",
-    description: "Grow your store with Google Ads & Shopping",
+    descriptionKey: "googleEcomDesc",
     path: "/google-ecom",
     platform: "google",
   },
   {
     title: "Product Sales",
-    description: "Sell more products with Google Ads",
+    descriptionKey: "googleProductsDesc",
     path: "/google-products",
     platform: "google",
   },
   {
     title: "Telegram B2B",
-    description: "Grow your channel with Google & YouTube",
+    descriptionKey: "googleTelegramDesc",
     path: "/google-telegram",
     platform: "google",
   },
 ];
 
 export default function Home() {
-  const metaQuizzes = quizCards.filter((q) => q.platform === "meta");
-  const googleQuizzes = quizCards.filter((q) => q.platform === "google");
+  const { language } = useLanguage();
+  const t = translations[language];
+
+  const metaQuizzes = quizCardsConfig.filter((q) => q.platform === "meta");
+  const googleQuizzes = quizCardsConfig.filter((q) => q.platform === "google");
 
   return (
     <QuizLayout
-      title="PIKALEADS Lead Engine"
-      subtitle="Choose your niche and platform to get started with a free marketing analysis"
+      title={t.homeTitle}
+      subtitle={t.homeSubtitle}
     >
       <div className="max-w-7xl mx-auto space-y-16">
         {/* META ADS Section */}
@@ -88,11 +93,11 @@ export default function Home() {
           <div className="flex items-center justify-center gap-3 mb-8">
             <Zap className="w-8 h-8 text-accent" />
             <h2 className="text-3xl md:text-4xl font-black text-foreground">
-              META ADS Quizzes
+              {t.metaAdsTitle}
             </h2>
           </div>
           <p className="text-center text-muted-foreground mb-8 text-lg">
-            Get stable flow of 30+ leads daily with precise targeting and optimization
+            {t.metaAdsSubtitle}
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {metaQuizzes.map((quiz) => (
@@ -101,12 +106,14 @@ export default function Home() {
                   <h3 className="text-2xl font-bold text-foreground mb-3">
                     {quiz.title}
                   </h3>
-                  <p className="text-muted-foreground mb-4">{quiz.description}</p>
+                  <p className="text-muted-foreground mb-4">
+                    {t[quiz.descriptionKey as keyof typeof t] as string}
+                  </p>
                   <Button
                     variant="default"
                     className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
                   >
-                    Start Quiz →
+                    {t.startQuiz} →
                   </Button>
                 </div>
               </Link>
@@ -119,11 +126,11 @@ export default function Home() {
           <div className="flex items-center justify-center gap-3 mb-8">
             <Target className="w-8 h-8 text-accent" />
             <h2 className="text-3xl md:text-4xl font-black text-foreground">
-              GOOGLE ADS Quizzes
+              {t.googleAdsTitle}
             </h2>
           </div>
           <p className="text-center text-muted-foreground mb-8 text-lg">
-            Get 20-50 quality leads daily from Google Search and YouTube
+            {t.googleAdsSubtitle}
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {googleQuizzes.map((quiz) => (
@@ -132,12 +139,14 @@ export default function Home() {
                   <h3 className="text-2xl font-bold text-foreground mb-3">
                     {quiz.title}
                   </h3>
-                  <p className="text-muted-foreground mb-4">{quiz.description}</p>
+                  <p className="text-muted-foreground mb-4">
+                    {t[quiz.descriptionKey as keyof typeof t] as string}
+                  </p>
                   <Button
                     variant="default"
                     className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
                   >
-                    Start Quiz →
+                    {t.startQuiz} →
                   </Button>
                 </div>
               </Link>

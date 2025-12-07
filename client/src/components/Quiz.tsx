@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import QuizLayout from "./QuizLayout";
 import ProgressBar from "./ProgressBar";
@@ -7,6 +7,11 @@ import LeadForm from "./LeadForm";
 import { QuizConfig } from "@/lib/quizData";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { getQuizTranslation } from "@/lib/quizTranslations";
+import { translations } from "@/lib/translations";
+import { trackQuizStep as trackMetaStep, trackQuizComplete as trackMetaComplete, trackFormSubmit as trackMetaFormSubmit } from "@/lib/metaPixel";
+import { trackQuizStep as trackGA4Step, trackQuizComplete as trackGA4Complete, trackFormView, trackFormSubmit as trackGA4FormSubmit, trackDropOff } from "@/lib/googleAnalytics";
 
 interface QuizProps {
   config: QuizConfig;
@@ -14,12 +19,26 @@ interface QuizProps {
 
 export default function Quiz({ config }: QuizProps) {
   const [, setLocation] = useLocation();
+  const { language } = useLanguage();
   const [currentStep, setCurrentStep] = useState(1);
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [selectedAnswer, setSelectedAnswer] = useState<string | undefined>();
 
-  const totalSteps = config.questions.length + 1; // questions + form
-  const isFormStep = currentStep > config.questions.length;
+  const quizData = getQuizTranslation(config.id, language);
+  const t = translations[language];
+  const totalSteps = (quizData?.questions.length || config.questions.length) + 1;
+  const isFormStep = currentStep > (quizData?.questions.length || config.questions.length);
+
+  useEffect(() => {
+    // Track drop-off when user leaves
+    const handleBeforeUnload = () => {
+      if (!isFormStep) {
+        trackDropOff(config.id, currentStep, totalSteps);
+      }
+    };
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, [currentStep, isFormStep, config.id, totalSteps]);
 
   const submitLead = trpc.quiz.submitLead.useMutation({
     onSuccess: () => {
@@ -37,13 +56,22 @@ export default function Quiz({ config }: QuizProps) {
     setSelectedAnswer(answer);
     setAnswers({ ...answers, [currentStep]: answer });
 
+    // Track step completion
+    trackMetaStep(config.id, currentStep, totalSteps);
+    trackGA4Step(config.id, currentStep, totalSteps, answer);
+
     // Auto-advance after selection
     setTimeout(() => {
-      if (currentStep < config.questions.length) {
+      const questionsLength = quizData?.questions.length || config.questions.length;
+      if (currentStep < questionsLength) {
         setCurrentStep(currentStep + 1);
         setSelectedAnswer(answers[currentStep + 1]);
       } else {
         setCurrentStep(currentStep + 1);
+        // Track form view
+        trackFormView(config.id);
+        trackMetaComplete(config.id);
+        trackGA4Complete(config.id, language);
       }
     }, 300);
   };
@@ -53,24 +81,33 @@ export default function Quiz({ config }: QuizProps) {
       .sort(([a], [b]) => Number(a) - Number(b))
       .map(([, answer]) => answer);
 
+    // Track form submission
+    trackMetaFormSubmit(config.id);
+    trackGA4FormSubmit(config.id, language);
+
     submitLead.mutate({
       quizName: config.id,
       answers: JSON.stringify(answersArray),
       name: data.name,
       phone: data.phone,
       telegram: data.telegram || "",
+      language: language,
     });
   };
 
+  if (!quizData) {
+    return <QuizLayout><div>Loading...</div></QuizLayout>;
+  }
+
   return (
-    <QuizLayout title={config.title} subtitle={config.subtitle}>
+    <QuizLayout title={quizData.title} subtitle={quizData.subtitle}>
       <div className="max-w-5xl mx-auto">
         <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
 
         {!isFormStep ? (
           <QuizQuestion
-            question={config.questions[currentStep - 1]!.question}
-            options={config.questions[currentStep - 1]!.options}
+            question={quizData.questions[currentStep - 1]!.question}
+            options={quizData.questions[currentStep - 1]!.options}
             onSelect={handleAnswerSelect}
             selectedAnswer={selectedAnswer}
           />

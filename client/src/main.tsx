@@ -7,6 +7,12 @@ import superjson from "superjson";
 import App from "./App";
 import { getLoginUrl } from "./const";
 import "./index.css";
+import { initMetaPixel } from "./lib/metaPixel";
+import { initGA4 } from "./lib/googleAnalytics";
+
+// Initialize analytics
+initMetaPixel();
+initGA4();
 
 const queryClient = new QueryClient();
 

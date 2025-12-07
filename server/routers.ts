@@ -1,8 +1,16 @@
 import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
-import { publicProcedure, router } from "./_core/trpc";
+import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
+import { TRPCError } from "@trpc/server";
 import { z } from "zod";
+
+const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
+  if (ctx.user.role !== "admin") {
+    throw new TRPCError({ code: "FORBIDDEN", message: "Admin access required" });
+  }
+  return next({ ctx });
+});
 
 export const appRouter = router({
     // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
@@ -27,6 +35,7 @@ export const appRouter = router({
           name: z.string(),
           phone: z.string(),
           telegram: z.string().optional(),
+          language: z.string().optional(),
         })
       )
       .mutation(async ({ input }) => {
@@ -40,6 +49,7 @@ export const appRouter = router({
           name: input.name,
           phone: input.phone,
           telegram: input.telegram || null,
+          language: input.language || null,
         });
         
         // Send to Telegram
@@ -58,6 +68,13 @@ export const appRouter = router({
         
         return { success: true };
       }),
+  }),
+
+  admin: router({
+    getLeads: adminProcedure.query(async () => {
+      const { getAllLeads } = await import("./db");
+      return await getAllLeads();
+    }),
   }),
 });
 

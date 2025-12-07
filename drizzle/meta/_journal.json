@@ -15,6 +15,13 @@
       "when": 1765115415929,
       "tag": "0001_flat_matthew_murdock",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1765116620903,
+      "tag": "0002_living_prowler",
+      "breakpoints": true
     }
   ]
 }
