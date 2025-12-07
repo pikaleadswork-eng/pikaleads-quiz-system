@@ -41,3 +41,67 @@ export const leads = mysqlTable("leads", {
 
 export type Lead = typeof leads.$inferSelect;
 export type InsertLead = typeof leads.$inferInsert;
+
+/**
+ * A/B Test Variants table
+ */
+export const abTestVariants = mysqlTable("ab_test_variants", {
+  id: int("id").autoincrement().primaryKey(),
+  quizId: varchar("quizId", { length: 100 }).notNull(),
+  variantName: varchar("variantName", { length: 100 }).notNull(),
+  isControl: int("isControl").default(0).notNull(), // 0 = variant, 1 = control
+  trafficPercentage: int("trafficPercentage").default(50).notNull(),
+  isActive: int("isActive").default(1).notNull(),
+  // Variant content (JSON)
+  title: text("title"),
+  subtitle: text("subtitle"),
+  bonus: text("bonus"),
+  questions: text("questions"), // JSON string
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type ABTestVariant = typeof abTestVariants.$inferSelect;
+export type InsertABTestVariant = typeof abTestVariants.$inferInsert;
+
+/**
+ * A/B Test Assignments table - tracks which variant each user saw
+ */
+export const abTestAssignments = mysqlTable("ab_test_assignments", {
+  id: int("id").autoincrement().primaryKey(),
+  sessionId: varchar("sessionId", { length: 255 }).notNull(),
+  quizId: varchar("quizId", { length: 100 }).notNull(),
+  variantId: int("variantId").notNull(),
+  converted: int("converted").default(0).notNull(), // 0 = no, 1 = yes
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type ABTestAssignment = typeof abTestAssignments.$inferSelect;
+export type InsertABTestAssignment = typeof abTestAssignments.$inferInsert;
+
+/**
+ * Incomplete Quiz Sessions table - for remarketing
+ */
+export const incompleteQuizSessions = mysqlTable("incomplete_quiz_sessions", {
+  id: int("id").autoincrement().primaryKey(),
+  sessionId: varchar("sessionId", { length: 255 }).notNull().unique(),
+  quizId: varchar("quizId", { length: 100 }).notNull(),
+  currentStep: int("currentStep").notNull(),
+  totalSteps: int("totalSteps").notNull(),
+  answers: text("answers"), // JSON string of partial answers
+  // Contact info (if provided)
+  name: varchar("name", { length: 255 }),
+  phone: varchar("phone", { length: 50 }),
+  email: varchar("email", { length: 255 }),
+  language: varchar("language", { length: 10 }),
+  // Remarketing tracking
+  remindersSent: int("remindersSent").default(0).notNull(),
+  lastReminderAt: timestamp("lastReminderAt"),
+  completed: int("completed").default(0).notNull(), // 0 = incomplete, 1 = completed
+  unsubscribed: int("unsubscribed").default(0).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type IncompleteQuizSession = typeof incompleteQuizSessions.$inferSelect;
+export type InsertIncompleteQuizSession = typeof incompleteQuizSessions.$inferInsert;

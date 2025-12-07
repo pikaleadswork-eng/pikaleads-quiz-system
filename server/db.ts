@@ -1,6 +1,7 @@
 import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, leads, InsertLead } from "../drizzle/schema";
+import { InsertUser, users, leads, InsertLead, abTestVariants, abTestAssignments, incompleteQuizSessions, InsertABTestVariant, InsertABTestAssignment, InsertIncompleteQuizSession } from "../drizzle/schema";
+import { sql } from "drizzle-orm";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -119,4 +120,88 @@ export async function getAllLeads() {
     console.error("[Database] Failed to get leads:", error);
     return [];
   }
+}
+
+// A/B Testing functions
+export async function createABTestVariant(variant: InsertABTestVariant) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.insert(abTestVariants).values(variant);
+  return result;
+}
+
+export async function getActiveVariantsForQuiz(quizId: string) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(abTestVariants)
+    .where(eq(abTestVariants.quizId, quizId));
+}
+
+export async function assignVariantToSession(assignment: InsertABTestAssignment) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  return db.insert(abTestAssignments).values(assignment);
+}
+
+export async function markConversion(sessionId: string, quizId: string) {
+  const db = await getDb();
+  if (!db) return;
+  await db.update(abTestAssignments)
+    .set({ converted: 1 })
+    .where(eq(abTestAssignments.sessionId, sessionId));
+}
+
+export async function getABTestStats(quizId: string) {
+  const db = await getDb();
+  if (!db) return [];
+  const assignments = await db.select()
+    .from(abTestAssignments)
+    .where(eq(abTestAssignments.quizId, quizId));
+  return assignments;
+}
+
+// Remarketing functions
+export async function saveIncompleteSession(session: InsertIncompleteQuizSession) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db.insert(incompleteQuizSessions).values(session)
+    .onDuplicateKeyUpdate({
+      set: {
+        currentStep: session.currentStep,
+        answers: session.answers,
+        name: session.name,
+        phone: session.phone,
+        email: session.email,
+        updatedAt: new Date(),
+      }
+    });
+}
+
+export async function getIncompleteSessions() {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return db.select().from(incompleteQuizSessions)
+    .where(eq(incompleteQuizSessions.completed, 0));
+}
+
+export async function markSessionCompleted(sessionId: string) {
+  const db = await getDb();
+  if (!db) return;
+  await db.update(incompleteQuizSessions)
+    .set({ completed: 1, updatedAt: new Date() })
+    .where(eq(incompleteQuizSessions.sessionId, sessionId));
+}
+
+export async function incrementReminderCount(sessionId: string) {
+  const db = await getDb();
+  if (!db) return;
+  await db.update(incompleteQuizSessions)
+    .set({ 
+      remindersSent: sql`${incompleteQuizSessions.remindersSent} + 1`,
+      lastReminderAt: new Date(),
+      updatedAt: new Date()
+    })
+    .where(eq(incompleteQuizSessions.sessionId, sessionId));
 }

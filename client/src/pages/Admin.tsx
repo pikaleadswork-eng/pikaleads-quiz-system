@@ -10,7 +10,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Download, Loader2 } from "lucide-react";
+import { Download, Loader2, Settings } from "lucide-react";
+import { Link } from "wouter";
 import { format } from "date-fns";
 
 export default function Admin() {
@@ -89,18 +90,26 @@ export default function Admin() {
             <h1 className="text-4xl font-black text-foreground mb-2">PIKALEADS Admin</h1>
             <p className="text-muted-foreground">Manage leads and view statistics</p>
           </div>
-          <Button
-            onClick={exportToCSV}
-            disabled={!leads || leads.length === 0 || exportingCSV}
-            className="gap-2"
-          >
-            {exportingCSV ? (
-              <Loader2 className="w-4 h-4 animate-spin" />
-            ) : (
-              <Download className="w-4 h-4" />
-            )}
-            Export to CSV
-          </Button>
+          <div className="flex gap-2">
+            <Link href="/admin/quizzes">
+              <Button variant="outline" className="gap-2">
+                <Settings className="w-4 h-4" />
+                Manage Quizzes
+              </Button>
+            </Link>
+            <Button
+              onClick={exportToCSV}
+              disabled={!leads || leads.length === 0 || exportingCSV}
+              className="gap-2"
+            >
+              {exportingCSV ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                <Download className="w-4 h-4" />
+              )}
+              Export to CSV
+            </Button>
+          </div>
         </div>
 
         {/* Statistics Cards */}

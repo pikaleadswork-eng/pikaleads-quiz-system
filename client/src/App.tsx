@@ -18,6 +18,7 @@ import GoogleEcom from "./pages/GoogleEcom";
 import GoogleProducts from "./pages/GoogleProducts";
 import GoogleTelegram from "./pages/GoogleTelegram";
 import Admin from "./pages/Admin";
+import AdminQuizzes from "./pages/AdminQuizzes";
 
 function Router() {
   return (
@@ -41,6 +42,7 @@ function Router() {
       
       {/* Admin Panel */}
       <Route path={"/admin"} component={Admin} />
+      <Route path={"/admin/quizzes"} component={AdminQuizzes} />
       
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
