@@ -85,7 +85,7 @@ export default function AdminDashboard() {
       title: "Messaging Center",
       description: "Send messages via Telegram, Instagram, WhatsApp",
       icon: MessageSquare,
-      href: "/crm",
+      href: "/admin/messaging",
       color: "text-red-500",
       bgColor: "bg-red-500/10"
     }
@@ -180,20 +180,20 @@ export default function AdminDashboard() {
             </CardHeader>
             <CardContent>
               <div className="flex flex-wrap gap-4">
-                <Link href="/crm">
-                  <a className="text-primary hover:underline">View All Leads</a>
+                <Link href="/crm" className="text-primary hover:underline">
+                  View All Leads
                 </Link>
-                <Link href="/admin/analytics">
-                  <a className="text-primary hover:underline">Campaign Analytics</a>
+                <Link href="/admin/analytics" className="text-primary hover:underline">
+                  Campaign Analytics
                 </Link>
-                <Link href="/admin/managers">
-                  <a className="text-primary hover:underline">Invite Manager</a>
+                <Link href="/admin/managers" className="text-primary hover:underline">
+                  Invite Manager
                 </Link>
-                <Link href="/admin/quizzes">
-                  <a className="text-primary hover:underline">Edit Quizzes</a>
+                <Link href="/admin/quizzes" className="text-primary hover:underline">
+                  Edit Quizzes
                 </Link>
-                <Link href="/">
-                  <a className="text-primary hover:underline">Back to Home</a>
+                <Link href="/" className="text-primary hover:underline">
+                  Back to Home
                 </Link>
               </div>
             </CardContent>
