@@ -342,6 +342,130 @@ export default function CRM() {
                     </Popover>
                   </div>
                 </div>
+                
+                {/* Divider */}
+                <div className="border-t border-zinc-800 my-2"></div>
+                <p className="text-xs text-gray-400 font-semibold uppercase tracking-wide">{t('crm.utmFilters')}</p>
+                
+                {/* UTM Campaign Filter */}
+                <div>
+                  <label className="text-sm font-medium mb-2 block">
+                    {t('crm.campaign')}
+                  </label>
+                  <Select value={filterCampaign} onValueChange={setFilterCampaign}>
+                    <SelectTrigger className="bg-zinc-800">
+                      <SelectValue placeholder={t('crm.allCampaigns')} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">{t('crm.allCampaigns')}</SelectItem>
+                      {uniqueCampaigns.map((campaign) => (
+                        <SelectItem key={campaign as string} value={campaign as string}>
+                          {campaign}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                
+                {/* UTM Ad Group Filter */}
+                <div>
+                  <label className="text-sm font-medium mb-2 block">
+                    {t('crm.adGroup')}
+                  </label>
+                  <Select value={filterAdGroup} onValueChange={setFilterAdGroup}>
+                    <SelectTrigger className="bg-zinc-800">
+                      <SelectValue placeholder={t('crm.allAdGroups')} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">{t('crm.allAdGroups')}</SelectItem>
+                      {uniqueAdGroups.map((adGroup) => (
+                        <SelectItem key={adGroup as string} value={adGroup as string}>
+                          {adGroup}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                
+                {/* UTM Ad Filter */}
+                <div>
+                  <label className="text-sm font-medium mb-2 block">
+                    {t('crm.ad')}
+                  </label>
+                  <Select value={filterAd} onValueChange={setFilterAd}>
+                    <SelectTrigger className="bg-zinc-800">
+                      <SelectValue placeholder={t('crm.allAds')} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">{t('crm.allAds')}</SelectItem>
+                      {uniqueAds.map((ad) => (
+                        <SelectItem key={ad as string} value={ad as string}>
+                          {ad}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                
+                {/* UTM Placement Filter */}
+                <div>
+                  <label className="text-sm font-medium mb-2 block">
+                    {t('crm.placement')}
+                  </label>
+                  <Select value={filterPlacement} onValueChange={setFilterPlacement}>
+                    <SelectTrigger className="bg-zinc-800">
+                      <SelectValue placeholder={t('crm.allPlacements')} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">{t('crm.allPlacements')}</SelectItem>
+                      {uniquePlacements.map((placement) => (
+                        <SelectItem key={placement as string} value={placement as string}>
+                          {placement}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                
+                {/* UTM Keyword Filter */}
+                <div>
+                  <label className="text-sm font-medium mb-2 block">
+                    {t('crm.keyword')}
+                  </label>
+                  <Select value={filterKeyword} onValueChange={setFilterKeyword}>
+                    <SelectTrigger className="bg-zinc-800">
+                      <SelectValue placeholder={t('crm.allKeywords')} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">{t('crm.allKeywords')}</SelectItem>
+                      {uniqueKeywords.map((keyword) => (
+                        <SelectItem key={keyword as string} value={keyword as string}>
+                          {keyword}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                
+                {/* UTM Site Filter */}
+                <div>
+                  <label className="text-sm font-medium mb-2 block">
+                    {t('crm.site')}
+                  </label>
+                  <Select value={filterSite} onValueChange={setFilterSite}>
+                    <SelectTrigger className="bg-zinc-800">
+                      <SelectValue placeholder={t('crm.allSites')} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">{t('crm.allSites')}</SelectItem>
+                      {uniqueSites.map((site) => (
+                        <SelectItem key={site as string} value={site as string}>
+                          {site}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
             </PopoverContent>
           </Popover>

@@ -247,7 +247,20 @@
     "leads": "Лиды",
     "view": "Просмотр",
     "edit": "Редактировать",
-    "noLeads": "Пока нет лидов"
+    "noLeads": "Пока нет лидов",
+    "utmFilters": "UTM Фильтры",
+    "campaign": "Кампания",
+    "allCampaigns": "Все кампании",
+    "adGroup": "Группа объявлений",
+    "allAdGroups": "Все группы",
+    "ad": "Объявление",
+    "allAds": "Все объявления",
+    "placement": "Размещение",
+    "allPlacements": "Все размещения",
+    "keyword": "Ключевое слово",
+    "allKeywords": "Все ключевые слова",
+    "site": "Сайт",
+    "allSites": "Все сайты"
   },
   "adminSettings": {
     "title": "Настройки системы",

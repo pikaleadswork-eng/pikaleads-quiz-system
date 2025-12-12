@@ -247,7 +247,20 @@
     "leads": "Ліди",
     "view": "Перегляд",
     "edit": "Редагувати",
-    "noLeads": "Поки немає лідів"
+    "noLeads": "Поки немає лідів",
+    "utmFilters": "UTM Фільтри",
+    "campaign": "Кампанія",
+    "allCampaigns": "Всі кампанії",
+    "adGroup": "Група оголошень",
+    "allAdGroups": "Всі групи",
+    "ad": "Оголошення",
+    "allAds": "Всі оголошення",
+    "placement": "Розміщення",
+    "allPlacements": "Всі розміщення",
+    "keyword": "Ключове слово",
+    "allKeywords": "Всі ключові слова",
+    "site": "Сайт",
+    "allSites": "Всі сайти"
   },
   "adminSettings": {
     "title": "Налаштування системи",

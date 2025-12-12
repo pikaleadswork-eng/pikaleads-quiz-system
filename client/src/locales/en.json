@@ -243,7 +243,20 @@
     "leads": "Leads",
     "view": "View",
     "edit": "Edit",
-    "noLeads": "No leads yet"
+    "noLeads": "No leads yet",
+    "utmFilters": "UTM Filters",
+    "campaign": "Campaign",
+    "allCampaigns": "All campaigns",
+    "adGroup": "Ad Group",
+    "allAdGroups": "All ad groups",
+    "ad": "Ad",
+    "allAds": "All ads",
+    "placement": "Placement",
+    "allPlacements": "All placements",
+    "keyword": "Keyword",
+    "allKeywords": "All keywords",
+    "site": "Site",
+    "allSites": "All sites"
   },
   "scripts": {
     "title": "Sales Scripts",
