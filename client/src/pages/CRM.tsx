@@ -44,6 +44,20 @@ export default function CRM() {
   const [newComment, setNewComment] = useState("");
   const [newMessage, setNewMessage] = useState("");
   const [messagePlatform, setMessagePlatform] = useState<"instagram" | "telegram">("telegram");
+  const [showCreateLeadModal, setShowCreateLeadModal] = useState(false);
+  
+  // Create lead form fields
+  const [createLeadForm, setCreateLeadForm] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    telegram: "",
+    source: "Manual",
+    quizName: "manual-entry",
+    utmCampaign: "",
+    utmSource: "",
+    utmMedium: "",
+  });
   
   // UTM Filters
   const [filterCampaign, setFilterCampaign] = useState<string>("all");
@@ -321,11 +335,18 @@ export default function CRM() {
         {/* Leads Table */}
         <Card>
           <CardHeader>
-            <CardTitle>Leads</CardTitle>
-            <CardDescription>
-              {filteredLeads?.length || 0} of {leads?.length || 0} leads
-              {user.role === "manager" && " (assigned to you)"}
-            </CardDescription>
+            <div className="flex items-center justify-between">
+              <div>
+                <CardTitle>Leads</CardTitle>
+                <CardDescription>
+                  {filteredLeads?.length || 0} of {leads?.length || 0} leads
+                  {user.role === "manager" && " (assigned to you)"}
+                </CardDescription>
+              </div>
+              <Button onClick={() => setShowCreateLeadModal(true)}>
+                Create Lead Manually
+              </Button>
+            </div>
           </CardHeader>
           <CardContent>
             <div className="rounded-md border overflow-x-auto">
@@ -334,9 +355,13 @@ export default function CRM() {
                   <TableRow>
                     <TableHead>ID</TableHead>
                     <TableHead>Date</TableHead>
+                    <TableHead>Source</TableHead>
                     <TableHead>Quiz</TableHead>
                     <TableHead>Name</TableHead>
                     <TableHead>Phone</TableHead>
+                    <TableHead>UTM Campaign</TableHead>
+                    <TableHead>UTM Source</TableHead>
+                    <TableHead>UTM Medium</TableHead>
                     <TableHead>Score</TableHead>
                     <TableHead>Status</TableHead>
                     <TableHead>Actions</TableHead>
@@ -352,12 +377,26 @@ export default function CRM() {
                         <TableCell className="text-xs">
                           {format(new Date(lead.createdAt), "MMM dd, HH:mm")}
                         </TableCell>
+                        <TableCell>
+                          <Badge variant="secondary">
+                            {lead.source || "Unknown"}
+                          </Badge>
+                        </TableCell>
                         <TableCell className="font-medium">
                           {lead.quizName}
                         </TableCell>
                         <TableCell>{lead.name}</TableCell>
                         <TableCell className="font-mono text-xs">
                           {lead.phone}
+                        </TableCell>
+                        <TableCell className="text-xs">
+                          {lead.utmCampaign || "-"}
+                        </TableCell>
+                        <TableCell className="text-xs">
+                          {lead.utmSource || "-"}
+                        </TableCell>
+                        <TableCell className="text-xs">
+                          {lead.utmMedium || "-"}
                         </TableCell>
                         <TableCell>
                           <Badge
@@ -612,6 +651,131 @@ export default function CRM() {
                 </Card>
               </div>
             )}
+          </DialogContent>
+        </Dialog>
+
+        {/* Create Lead Modal */}
+        <Dialog open={showCreateLeadModal} onOpenChange={setShowCreateLeadModal}>
+          <DialogContent className="max-w-2xl">
+            <DialogHeader>
+              <DialogTitle>Create Lead Manually</DialogTitle>
+              <DialogDescription>
+                Add a new lead to the system manually
+              </DialogDescription>
+            </DialogHeader>
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="text-sm font-medium">Name *</label>
+                  <input
+                    type="text"
+                    className="w-full px-3 py-2 border rounded-md"
+                    value={createLeadForm.name}
+                    onChange={(e) => setCreateLeadForm({...createLeadForm, name: e.target.value})}
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium">Phone *</label>
+                  <input
+                    type="text"
+                    className="w-full px-3 py-2 border rounded-md"
+                    value={createLeadForm.phone}
+                    onChange={(e) => setCreateLeadForm({...createLeadForm, phone: e.target.value})}
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium">Email</label>
+                  <input
+                    type="email"
+                    className="w-full px-3 py-2 border rounded-md"
+                    value={createLeadForm.email}
+                    onChange={(e) => setCreateLeadForm({...createLeadForm, email: e.target.value})}
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium">Telegram</label>
+                  <input
+                    type="text"
+                    className="w-full px-3 py-2 border rounded-md"
+                    value={createLeadForm.telegram}
+                    onChange={(e) => setCreateLeadForm({...createLeadForm, telegram: e.target.value})}
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium">Source *</label>
+                  <Select
+                    value={createLeadForm.source}
+                    onValueChange={(value) => setCreateLeadForm({...createLeadForm, source: value})}
+                  >
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Manual">Manual</SelectItem>
+                      <SelectItem value="Facebook">Facebook</SelectItem>
+                      <SelectItem value="Google">Google</SelectItem>
+                      <SelectItem value="YouTube">YouTube</SelectItem>
+                      <SelectItem value="Email">Email</SelectItem>
+                      <SelectItem value="Cold Lead">Cold Lead</SelectItem>
+                      <SelectItem value="Referral">Referral</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <label className="text-sm font-medium">UTM Campaign</label>
+                  <input
+                    type="text"
+                    className="w-full px-3 py-2 border rounded-md"
+                    value={createLeadForm.utmCampaign}
+                    onChange={(e) => setCreateLeadForm({...createLeadForm, utmCampaign: e.target.value})}
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium">UTM Source</label>
+                  <input
+                    type="text"
+                    className="w-full px-3 py-2 border rounded-md"
+                    value={createLeadForm.utmSource}
+                    onChange={(e) => setCreateLeadForm({...createLeadForm, utmSource: e.target.value})}
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium">UTM Medium</label>
+                  <input
+                    type="text"
+                    className="w-full px-3 py-2 border rounded-md"
+                    value={createLeadForm.utmMedium}
+                    onChange={(e) => setCreateLeadForm({...createLeadForm, utmMedium: e.target.value})}
+                  />
+                </div>
+              </div>
+              <div className="flex justify-end gap-2">
+                <Button variant="outline" onClick={() => setShowCreateLeadModal(false)}>
+                  Cancel
+                </Button>
+                <Button
+                  onClick={() => {
+                    // TODO: Add create lead mutation
+                    toast.success("Lead created successfully");
+                    setShowCreateLeadModal(false);
+                    setCreateLeadForm({
+                      name: "",
+                      phone: "",
+                      email: "",
+                      telegram: "",
+                      source: "Manual",
+                      quizName: "manual-entry",
+                      utmCampaign: "",
+                      utmSource: "",
+                      utmMedium: "",
+                    });
+                  }}
+                  disabled={!createLeadForm.name || !createLeadForm.phone}
+                >
+                  Create Lead
+                </Button>
+              </div>
+            </div>
           </DialogContent>
         </Dialog>
       </div>

@@ -320,6 +320,31 @@ export const appRouter = router({
       }),
     
     // Lead Management
+    createLead: protectedProcedure
+      .input(z.object({
+        name: z.string(),
+        phone: z.string(),
+        email: z.string().optional(),
+        telegram: z.string().optional(),
+        source: z.string(),
+        quizName: z.string(),
+        utmCampaign: z.string().optional(),
+        utmSource: z.string().optional(),
+        utmMedium: z.string().optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const { createLead } = await import("./db");
+        const leadId = await createLead({
+          ...input,
+          answers: JSON.stringify([]),
+          language: "en",
+          leadScore: 0,
+          statusId: 1,
+          assignedTo: ctx.user.role === "manager" ? ctx.user.id : null,
+        });
+        return { success: true, leadId };
+      }),
+    
     getLeads: protectedProcedure.query(async ({ ctx }) => {
       const { getAllLeads } = await import("./db");
       const allLeads = await getAllLeads();

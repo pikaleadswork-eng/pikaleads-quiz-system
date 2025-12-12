@@ -30,7 +30,7 @@ import ManagerDashboard from "./pages/ManagerDashboard";
 import CRM from "./pages/CRM";
 import Privacy from "./pages/Privacy";
 import Contact from "./pages/Contact";
-import RegisterManager from "./pages/RegisterManager";
+
 import FurnitureQuiz from "./pages/FurnitureQuiz";
 import ApartmentRenovationQuiz from "./pages/ApartmentRenovationQuiz";
 import ECommerceQuiz from "./pages/ECommerceQuiz";
@@ -80,8 +80,7 @@ function Router() {
       <Route path={"/privacy"} component={Privacy} />
       <Route path={"/contact"} component={Contact} />
       
-      {/* Manager Registration */}
-      <Route path={"/register-manager"} component={RegisterManager} />
+
       
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}

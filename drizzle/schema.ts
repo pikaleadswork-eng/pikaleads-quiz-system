@@ -44,6 +44,7 @@ export const leads = mysqlTable("leads", {
   utmKeyword: varchar("utmKeyword", { length: 255 }),
   utmSite: varchar("utmSite", { length: 255 }),
   utmSource: varchar("utmSource", { length: 100 }),
+  source: varchar("source", { length: 100 }), // Lead source: Facebook, Google, YouTube, Email, Cold Lead, Manual
   utmMedium: varchar("utmMedium", { length: 100 }),
   utmContent: varchar("utmContent", { length: 255 }),
   utmTerm: varchar("utmTerm", { length: 255 }),

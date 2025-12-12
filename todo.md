@@ -620,3 +620,74 @@
 - [x] Create .env.example with correct credentials
 - [x] Package final working version (pikaleads_final.zip - 2.0MB)
 - [ ] Deliver to user
+
+
+## Phase 12 - Major CRM & Admin Improvements (December 12, 2025)
+
+### Remove Manus OAuth Completely
+- [x] Remove OAuth redirect from /admin route
+- [x] Delete all Manus OAuth related code from _core/
+- [x] Ensure only /login works for authentication
+- [x] Remove "Powered by Manus" from all pages
+
+### CRM Enhancements
+- [ ] Add inline edit functionality for leads (click to edit) - TODO
+- [x] Add "Source" column to leads table (Facebook, Google, YouTube, Email, Cold Lead, Manual)
+- [x] Add "Create Lead Manually" button with modal form
+- [x] Display all UTM fields in leads table (campaign, source, medium, content, term)
+- [x] Make UTM columns sortable and filterable
+- [ ] Add bulk actions (delete, assign, change status)
+
+### Custom Roles System
+- [ ] Create roles management page (/admin/roles)
+- [ ] Allow creating custom roles (Manager, Admin, Technical Specialist, etc.)
+- [ ] Define permissions per role (view leads, edit leads, delete leads, manage users, etc.)
+- [ ] Assign roles to users
+- [ ] Implement role-based access control throughout the app
+
+### Multi-language Support (UA/RU/EN)
+- [ ] Install i18next library
+- [ ] Create translation files for Ukrainian, Russian, English
+- [ ] Add language switcher in header (flags or dropdown)
+- [ ] Translate all admin panel pages
+- [ ] Translate all CRM pages
+- [ ] Translate all quiz pages
+- [ ] Ensure quiz editing updates all 3 language versions
+- [ ] Store language preference in user settings
+
+### Fix Broken Admin Modules
+- [ ] Fix A/B Testing page (/admin/ab-testing) - currently not working
+- [ ] Fix Calendar Integration page (/admin/calendar) - currently not working
+- [ ] Fix Messaging Center page (/admin/messaging) - currently not working
+- [ ] Add Telegram inbox to CRM (view client messages)
+- [ ] Add Instagram inbox to CRM (view client messages)
+- [ ] Add WhatsApp inbox to CRM (view client messages)
+- [ ] Add messaging settings page (connect accounts, API keys)
+
+### Quiz Management Improvements
+- [ ] Fix layout and design issues on Quiz Management page
+- [ ] Add live preview panel (show quiz as user sees it)
+- [ ] Make quiz editor more intuitive
+- [ ] Add drag-and-drop for question reordering
+- [ ] Add image upload for quiz questions
+- [ ] Test mobile responsiveness of quiz editor
+
+### UI/UX Polish
+- [ ] Review all pages for consistent spacing (padding, margins)
+- [ ] Fix all modal/popup spacing and layout
+- [ ] Ensure all buttons have consistent styling
+- [ ] Test mobile responsiveness on all pages (320px, 375px, 414px)
+- [ ] Test tablet responsiveness (768px, 1024px)
+- [ ] Test desktop responsiveness (1280px, 1920px, 2560px)
+- [ ] Add loading states to all async actions
+- [ ] Add error messages for failed actions
+- [ ] Add success toasts for completed actions
+
+### Testing & Quality Assurance
+- [ ] Test all CRM features (view, edit, create, delete, filter, sort)
+- [ ] Test all admin features (users, roles, settings, analytics)
+- [ ] Test language switching on all pages
+- [ ] Test mobile version on real devices
+- [ ] Test all forms for validation
+- [ ] Test all API endpoints
+- [ ] Fix any console errors or warnings
