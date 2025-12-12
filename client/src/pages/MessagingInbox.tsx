@@ -12,26 +12,10 @@ import CRMLayout from "@/components/CRMLayout";
 import { Link } from "wouter";
 import { cn } from "@/lib/utils";
 import { LeadInfoPanel } from "@/components/LeadInfoPanel";
+import { useTranslation } from "react-i18next";
 
 export default function MessagingInbox() {
-  // Detect language from localStorage
-  const [language, setLanguage] = useState(() => {
-    return localStorage.getItem('language') || 'uk';
-  });
-
-  useEffect(() => {
-    const handleLanguageChange = () => {
-      setLanguage(localStorage.getItem('language') || 'uk');
-    };
-    window.addEventListener('languageChanged', handleLanguageChange);
-    return () => window.removeEventListener('languageChanged', handleLanguageChange);
-  }, []);
-
-  const t = (uk: string, ru: string, en: string) => {
-    if (language === 'ru') return ru;
-    if (language === 'en') return en;
-    return uk;
-  };
+  const { t } = useTranslation();
 
   const { user, loading: authLoading } = useAuth();
   const [channelFilter, setChannelFilter] = useState<string>("all");
@@ -64,10 +48,10 @@ export default function MessagingInbox() {
   if (user.role !== "admin") {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
-        <h1 className="text-2xl font-bold mb-4">{t('Доступ заборонено', 'Доступ запрещен', 'Access Denied')}</h1>
-        <p className="text-muted-foreground mb-4">{t('Потрібні права адміністратора', 'Требуются права администратора', 'You need admin privileges to access this page.')}</p>
+        <h1 className="text-2xl font-bold mb-4">{t("common.error")}</h1>
+        <p className="text-muted-foreground mb-4">{t("common.error")}</p>
         <Link href="/admin">
-          <Button>{t('Повернутися', 'Вернуться', 'Return Home')}</Button>
+          <Button>{t("common.cancel")}</Button>
         </Link>
       </div>
     );
@@ -76,7 +60,7 @@ export default function MessagingInbox() {
   // Group messages by recipient to create chat list
   const chatList = messages?.reduce((acc, msg) => {
     const recipientId = `msg-${msg.id}`;
-    const recipientName = msg.sentBy || t('Невідомий контакт', 'Неизвестный контакт', 'Unknown Contact');
+    const recipientName = msg.sentBy || t("leadInfo.name");
     const existingChat = acc.find(c => c.recipientId === recipientId);
     if (existingChat) {
       if (msg.sentAt > existingChat.lastMessageTime) {
@@ -166,17 +150,17 @@ export default function MessagingInbox() {
         {/* Header */}
         <div className="mb-6">
           <h1 className="text-3xl font-bold text-white mb-2">
-            {t('Вхідні повідомлення', 'Входящие сообщения', 'Messaging Inbox')}
+            {t("messaging.title")}
           </h1>
           <p className="text-gray-400">
-            {t('Всі повідомлення з Telegram, WhatsApp, Email та Instagram в одному місці', 'Все сообщения из Telegram, WhatsApp, Email и Instagram в одном месте', 'All messages from Telegram, WhatsApp, Email, and Instagram in one place')}
+            {t("messaging.subtitle")}
           </p>
         </div>
 
         {/* Tabs */}
         <Tabs value={channelFilter} onValueChange={setChannelFilter} className="mb-4">
           <TabsList className="bg-zinc-900 border-zinc-800">
-            <TabsTrigger value="all">{t('Всі повідомлення', 'Все сообщения', 'All Messages')}</TabsTrigger>
+            <TabsTrigger value="all">{t("messaging.allMessages")}</TabsTrigger>
             <TabsTrigger value="telegram">Telegram</TabsTrigger>
             <TabsTrigger value="whatsapp">WhatsApp</TabsTrigger>
             <TabsTrigger value="email">Email</TabsTrigger>
@@ -193,7 +177,7 @@ export default function MessagingInbox() {
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
                 <Input
-                  placeholder={t('Пошук чатів...', 'Поиск чатов...', 'Search chats...')}
+                  placeholder={t("messaging.searchChats")}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="pl-10 bg-zinc-800 border-zinc-700"
@@ -246,7 +230,7 @@ export default function MessagingInbox() {
               ) : (
                 <div className="flex flex-col items-center justify-center h-full text-gray-400">
                   <MessageSquare className="w-12 h-12 mb-2" />
-                  <p>{t('Немає повідомлень', 'Нет сообщений', 'No messages')}</p>
+                  <p>{t("common.loading")}</p>
                 </div>
               )}
             </div>
@@ -299,7 +283,7 @@ export default function MessagingInbox() {
                     ))
                   ) : (
                     <div className="flex items-center justify-center h-full text-gray-400">
-                      <p>{t('Завантаження повідомлень...', 'Загрузка сообщений...', 'Loading messages...')}</p>
+                      <p>{t("common.loading")}</p>
                     </div>
                   )}
                 </div>
@@ -308,7 +292,7 @@ export default function MessagingInbox() {
                 <div className="p-4 border-t border-zinc-800">
                   <div className="flex gap-2">
                     <Input
-                      placeholder={t('Введіть повідомлення...', 'Введите сообщение...', 'Type a message...')}
+                      placeholder={t("messaging.typeMessage")}
                       value={messageInput}
                       onChange={(e) => setMessageInput(e.target.value)}
                       onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
@@ -331,8 +315,8 @@ export default function MessagingInbox() {
             ) : (
               <div className="flex flex-col items-center justify-center h-full text-gray-400">
                 <MessageSquare className="w-16 h-16 mb-4" />
-                <h3 className="text-lg font-semibold mb-2">{t('Виберіть чат', 'Выберите чат', 'Select a chat')}</h3>
-                <p className="text-sm">{t('Оберіть розмову зі списку зліва', 'Выберите разговор из списка слева', 'Choose a conversation from the list on the left')}</p>
+                <h3 className="text-lg font-semibold mb-2">{t("messaging.selectChat")}</h3>
+                <p className="text-sm">{t("messaging.selectChatDescription")}</p>
               </div>
             )}
           </Card>
@@ -347,11 +331,7 @@ export default function MessagingInbox() {
               <div className="text-center text-gray-400 p-6">
                 <User className="w-12 h-12 mx-auto mb-3 opacity-50" />
                 <p className="text-sm">
-                  {t(
-                    'Виберіть чат, щоб побачити інформацію про ліда',
-                    'Выберите чат, чтобы увидеть информацию о лиде',
-                    'Select a chat to view lead information'
-                  )}
+                  {t("leadInfo.selectLead")}
                 </p>
               </div>
             </Card>

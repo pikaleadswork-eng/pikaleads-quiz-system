@@ -258,3 +258,53 @@
 - [ ] Add screenshots to guides (TODO)
 - [x] Link guides from Settings pages
 - [x] Add "How to integrate" buttons
+
+
+## Phase 35 - Complete Translation Integration (100% Coverage)
+
+### Translation Files Enhancement
+- [x] Add all missing translations to ua.json (DashboardLayout, CRM, Leads, etc.)
+- [x] Add all missing translations to ru.json (DashboardLayout, CRM, Leads, etc.)
+- [x] Ensure en.json has all keys
+
+### DashboardLayout Translation
+- [x] Add useTranslation hook to CRMLayout (main navigation)
+- [x] Translate all menu items (Messaging, Leads, Services, Sales, Scripts, Settings)
+- [x] Translate menu descriptions
+- [x] Translate logout button
+
+### MessagingInbox Translation
+- [x] Add useTranslation hook to MessagingInbox
+- [x] Translate page title and subtitle
+- [x] Translate channel tabs (All Messages, Telegram, WhatsApp, Email, Instagram)
+- [x] Translate search placeholder
+- [x] Translate "Select chat" message
+- [x] Translate message input placeholder
+
+### LeadInfoPanel Translation
+- [x] Add useTranslation hook to LeadInfoPanel
+- [x] Translate all section titles (Contact Information, Status, Schedule, Notes, Activity Timeline)
+- [x] Translate all field labels (Name, Phone, Email, Telegram, Quiz, Lead Score)
+- [x] Translate all buttons (Call, Schedule Call, Schedule Message, Schedule Meeting, Add Note)
+- [x] Translate status options (New, Contacted, Qualified, Won, Lost)
+
+### CRM/Leads Page Translation
+- [ ] Add useTranslation hook to CRM page
+- [ ] Translate page title and description
+- [ ] Translate table headers (Source, Quiz, Name, Phone, Email, Status, Score, Date, Actions)
+- [ ] Translate filter labels and buttons
+- [ ] Translate "Create Lead Manually" button
+- [ ] Translate lead sources (Manual, Facebook, Google, etc.)
+
+### AdminSettings Translation
+- [ ] Add useTranslation hook to AdminSettings
+- [ ] Translate settings categories
+- [ ] Add navigation links to Roles, Lead Statuses, IP Telephony pages
+- [ ] Translate all settings descriptions
+
+### Other Components Translation
+- [ ] AdminDashboard - translate stats cards and titles
+- [ ] ServicesManagement - translate service fields
+- [ ] SalesStatistics - translate chart labels
+- [ ] SalesScripts - translate script fields
+- [ ] AdminCalendar - translate calendar labels

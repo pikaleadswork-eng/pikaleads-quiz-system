@@ -196,5 +196,99 @@
       "activeManagers": "Активных менеджеров",
       "conversionRate": "Коэффициент конверсии"
     }
+  },
+  "crm": {
+    "title": "Управление лидами",
+    "description": "Отслеживайте и управляйте всеми лидами из квизов",
+    "createLeadManually": "Создать лид вручную",
+    "tableHeaders": {
+      "source": "Источник",
+      "quiz": "Квиз",
+      "name": "Имя",
+      "phone": "Телефон",
+      "email": "Email",
+      "telegram": "Telegram",
+      "status": "Статус",
+      "score": "Оценка",
+      "date": "Дата",
+      "actions": "Действия",
+      "assignedTo": "Ответственный"
+    },
+    "filters": {
+      "all": "Все",
+      "status": "Статус",
+      "source": "Источник",
+      "dateRange": "Период"
+    },
+    "sources": {
+      "manual": "Вручную",
+      "facebook": "Facebook",
+      "google": "Google",
+      "youtube": "YouTube",
+      "email": "Email",
+      "coldLead": "Холодный лид",
+      "referral": "Реферал"
+    },
+    "actions": {
+      "view": "Просмотреть",
+      "edit": "Редактировать",
+      "delete": "Удалить",
+      "assign": "Назначить",
+      "convertToSale": "Конвертировать в продажу"
+    },
+    "comments": "Комментарии",
+    "messages": "Сообщения",
+    "addComment": "Добавить комментарий",
+    "sendMessage": "Отправить сообщение",
+    "utm": {
+      "campaign": "UTM Кампания",
+      "source": "UTM Источник",
+      "medium": "UTM Канал",
+      "content": "UTM Контент",
+      "term": "UTM Термин"
+    }
+  },
+  "adminSettings": {
+    "title": "Настройки системы",
+    "description": "Управляйте настройками CRM",
+    "categories": {
+      "general": "Общие настройки",
+      "integrations": "Интеграции",
+      "rolesPermissions": "Роли и права доступа",
+      "leadStatuses": "Статусы лидов",
+      "ipTelephony": "IP-телефония",
+      "notifications": "Уведомления"
+    }
+  },
+  "services": {
+    "title": "Управление услугами",
+    "description": "Описание",
+    "addService": "Добавить услугу",
+    "serviceName": "Название услуги",
+    "price": "Цена",
+    "isActive": "Активна"
+  },
+  "sales": {
+    "title": "Статистика продаж",
+    "description": "Доход и транзакции",
+    "totalRevenue": "Общий доход",
+    "totalSales": "Всего продаж",
+    "averageOrderValue": "Средний чек",
+    "conversionRate": "Конверсия"
+  },
+  "scripts": {
+    "title": "Скрипты продаж",
+    "description": "Библиотека скриптов для звонков",
+    "addScript": "Добавить скрипт",
+    "scriptName": "Название скрипта",
+    "content": "Содержание"
+  },
+  "calendar": {
+    "title": "Календарь",
+    "description": "Запланированные встречи и звонки",
+    "today": "Сегодня",
+    "week": "Неделя",
+    "month": "Месяц",
+    "addEvent": "Добавить событие"
   }
 }

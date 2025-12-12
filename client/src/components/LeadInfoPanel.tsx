@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { trpc } from "@/lib/trpc";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -21,6 +22,7 @@ interface LeadInfoPanelProps {
 }
 
 export function LeadInfoPanel({ leadId }: LeadInfoPanelProps) {
+  const { t } = useTranslation();
   const [scheduleMessageOpen, setScheduleMessageOpen] = useState(false);
   const [scheduleCallOpen, setScheduleCallOpen] = useState(false);
   const [scheduleMeetingOpen, setScheduleMeetingOpen] = useState(false);
@@ -396,7 +398,7 @@ export function LeadInfoPanel({ leadId }: LeadInfoPanelProps) {
             <Textarea
               value={noteText}
               onChange={(e) => setNoteText(e.target.value)}
-              placeholder="Type your note..."
+              placeholder={t("leadInfo.typeNote")}
               className="bg-zinc-800 border-zinc-700 text-white"
             />
             <Button

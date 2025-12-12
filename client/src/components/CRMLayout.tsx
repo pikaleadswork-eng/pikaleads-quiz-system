@@ -3,6 +3,7 @@ import { Link, useLocation } from "wouter";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { useTranslation } from "react-i18next";
 import {
   MessageSquare,
   Users,
@@ -22,25 +23,7 @@ interface CRMLayoutProps {
 }
 
 export default function CRMLayout({ children }: CRMLayoutProps) {
-
-  // Detect language from localStorage
-  const [language, setLanguage] = useState(() => {
-    return localStorage.getItem('language') || 'uk';
-  });
-
-  useEffect(() => {
-    const handleLanguageChange = () => {
-      setLanguage(localStorage.getItem('language') || 'uk');
-    };
-    window.addEventListener('languageChanged', handleLanguageChange);
-    return () => window.removeEventListener('languageChanged', handleLanguageChange);
-  }, []);
-
-  const t = (uk: string, ru: string, en: string) => {
-    if (language === 'ru') return ru;
-    if (language === 'en') return en;
-    return uk;
-  };
+  const { t } = useTranslation();
 
 
   const { user, loading: authLoading } = useAuth();
@@ -49,40 +32,40 @@ export default function CRMLayout({ children }: CRMLayoutProps) {
 
   const navItems = [
     {
-      title: "Messaging",
+      title: t("nav.messaging"),
       icon: MessageSquare,
       href: "/admin/inbox",
-      description: "Email, Telegram, WhatsApp",
+      description: t("nav.emailTelegramWhatsApp"),
     },
     {
-      title: "Leads",
+      title: t("nav.leads"),
       icon: Users,
       href: "/crm",
-      description: "Manage all leads",
+      description: t("nav.manageAllLeads"),
     },
     {
-      title: "Services",
+      title: t("nav.services"),
       icon: Package,
       href: "/admin/services",
-      description: "Pricing & offerings",
+      description: t("nav.pricingOfferings"),
     },
     {
-      title: "Sales",
+      title: t("nav.sales"),
       icon: DollarSign,
       href: "/admin/sales",
-      description: "Revenue & transactions",
+      description: t("nav.revenueTransactions"),
     },
     {
-      title: "Scripts",
+      title: t("nav.scripts"),
       icon: ScrollText,
       href: "/admin/scripts",
-      description: "Call scripts library",
+      description: t("nav.callScriptsLibrary"),
     },
     {
-      title: "Settings",
+      title: t("nav.settings"),
       icon: Settings,
       href: "/admin/settings",
-      description: "Integrations & API",
+      description: t("nav.integrationsAPI"),
     },
   ];
 
@@ -185,7 +168,7 @@ export default function CRMLayout({ children }: CRMLayoutProps) {
               }}
             >
               <LogOut className="w-4 h-4" />
-              Logout
+              {t("common.logout")}
             </Button>
           </div>
         </div>

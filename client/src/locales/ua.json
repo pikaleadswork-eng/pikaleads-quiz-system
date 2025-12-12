@@ -196,5 +196,100 @@
       "activeManagers": "Активних менеджерів",
       "conversionRate": "Коефіцієнт конверсії"
     }
+  },
+  "crm": {
+    "title": "Управління лідами",
+    "description": "Відстежуйте та керуйте всіма лідами з квізів",
+    "createLeadManually": "Створити лід вручну",
+    "tableHeaders": {
+      "source": "Джерело",
+      "quiz": "Квіз",
+      "name": "Ім'я",
+      "phone": "Телефон",
+      "email": "Email",
+      "telegram": "Telegram",
+      "status": "Статус",
+      "score": "Оцінка",
+      "date": "Дата",
+      "actions": "Дії",
+      "assignedTo": "Відповідальний"
+    },
+    "filters": {
+      "all": "Всі",
+      "status": "Статус",
+      "source": "Джерело",
+      "dateRange": "Період"
+    },
+    "sources": {
+      "manual": "Вручну",
+      "facebook": "Facebook",
+      "google": "Google",
+      "youtube": "YouTube",
+      "email": "Email",
+      "coldLead": "Холодний лід",
+      "referral": "Реферал"
+    },
+    "actions": {
+      "view": "Переглянути",
+      "edit": "Редагувати",
+      "delete": "Видалити",
+      "assign": "Призначити",
+      "convertToSale": "Конвертувати в продаж"
+    },
+    "comments": "Коментарі",
+    "messages": "Повідомлення",
+    "addComment": "Додати коментар",
+    "sendMessage": "Відправити повідомлення",
+    "utm": {
+      "campaign": "UTM Кампанія",
+      "source": "UTM Джерело",
+      "medium": "UTM Канал",
+      "content": "UTM Контент",
+      "term": "UTM Термін"
+    }
+  },
+  "adminSettings": {
+    "title": "Налаштування системи",
+    "description": "Керуйте налаштуваннями CRM",
+    "categories": {
+      "general": "Загальні налаштування",
+      "integrations": "Інтеграції",
+      "rolesPermissions": "Ролі та права доступу",
+      "leadStatuses": "Статуси лідів",
+      "ipTelephony": "IP-телефонія",
+      "notifications": "Сповіщення"
+    }
+  },
+  "services": {
+    "title": "Управління послугами",
+    "description": "Налаштуйте послуги та ціни",
+    "addService": "Додати послугу",
+    "serviceName": "Назва послуги",
+    "price": "Ціна",
+    "description": "Опис",
+    "isActive": "Активна"
+  },
+  "sales": {
+    "title": "Статистика продажів",
+    "description": "Дохід та транзакції",
+    "totalRevenue": "Загальний дохід",
+    "totalSales": "Всього продажів",
+    "averageOrderValue": "Середній чек",
+    "conversionRate": "Конверсія"
+  },
+  "scripts": {
+    "title": "Скрипти продажів",
+    "description": "Бібліотека скриптів для дзвінків",
+    "addScript": "Додати скрипт",
+    "scriptName": "Назва скрипта",
+    "content": "Зміст"
+  },
+  "calendar": {
+    "title": "Календар",
+    "description": "Заплановані зустрічі та дзвінки",
+    "today": "Сьогодні",
+    "week": "Тиждень",
+    "month": "Місяць",
+    "addEvent": "Додати подію"
   }
 }
