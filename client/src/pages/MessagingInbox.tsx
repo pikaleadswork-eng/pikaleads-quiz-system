@@ -180,13 +180,13 @@ export default function MessagingInbox() {
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="text-sm font-medium mb-2 block">Channel</label>
+                <label className="text-sm font-medium mb-2 block">{t('Канал', 'Канал', 'Channel')}</label>
                 <Select value={channelFilter} onValueChange={setChannelFilter}>
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="all">All Channels</SelectItem>
+                    <SelectItem value="all">{t('Всі канали', 'Все каналы', 'All Channels')}</SelectItem>
                     <SelectItem value="telegram">Telegram</SelectItem>
                     <SelectItem value="whatsapp">WhatsApp</SelectItem>
                     <SelectItem value="email">Email</SelectItem>
@@ -195,9 +195,9 @@ export default function MessagingInbox() {
                 </Select>
               </div>
               <div>
-                <label className="text-sm font-medium mb-2 block">Search</label>
+                <label className="text-sm font-medium mb-2 block">{t('Пошук', 'Поиск', 'Search')}</label>
                 <Input
-                  placeholder="Search messages..."
+                  placeholder={t('Пошук повідомлень...', 'Поиск сообщений...', 'Search messages...')}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="bg-zinc-800 border-zinc-700"
@@ -210,7 +210,7 @@ export default function MessagingInbox() {
         {/* Messages Table */}
         <Card className="bg-zinc-900 border-zinc-800">
           <CardHeader>
-            <CardTitle>Recent Messages</CardTitle>
+            <CardTitle>{t('Останні повідомлення', 'Последние сообщения', 'Recent Messages')}</CardTitle>
             <CardDescription>
               {filteredMessages?.length || 0} messages
             </CardDescription>
@@ -225,13 +225,13 @@ export default function MessagingInbox() {
                 <Table>
                   <TableHeader>
                      <TableRow>
-                      <TableHead>Date</TableHead>
-                      <TableHead>Channel</TableHead>
-                      <TableHead>Message</TableHead>
-                      <TableHead>Recipients</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Sent By</TableHead>
-                      <TableHead>Actions</TableHead>
+                      <TableHead>{t('Дата', 'Дата', 'Date')}</TableHead>
+                      <TableHead>{t('Канал', 'Канал', 'Channel')}</TableHead>
+                      <TableHead>{t('Повідомлення', 'Сообщение', 'Message')}</TableHead>
+                      <TableHead>{t('Отримувачі', 'Получатели', 'Recipients')}</TableHead>
+                      <TableHead>{t('Статус', 'Статус', 'Status')}</TableHead>
+                      <TableHead>{t('Відправник', 'Отправитель', 'Sent By')}</TableHead>
+                      <TableHead>{t('Дії', 'Действия', 'Actions')}</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>

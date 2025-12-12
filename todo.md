@@ -236,3 +236,37 @@
 - [x] Test English translations
 - [x] Test language switching on all pages
 - [ ] Create checkpoint v27.0
+
+
+## Phase 29 - Fix Language Switching & Chat Functionality
+
+### MessagingInbox Translations
+- [x] Wrap page title "Messaging Inbox" in t()
+- [x] Wrap description text in t()
+- [x] Wrap channel card names (Telegram, WhatsApp, Email, Instagram) in t()
+- [x] Wrap "Filters" label in t()
+- [x] Wrap "Channel" and "Search" labels in t()
+- [x] Wrap "All Channels" in t()
+- [x] Wrap "Recent Messages" in t()
+- [x] Wrap table headers (Date, Channel, Message, Recipients, Status, Sent By, Actions) in t()
+- [x] Wrap "View Chat" button text in t()
+
+### CRMLayout Sidebar Translations
+- [x] Wrap "Messaging" menu item in t()
+- [x] Wrap "Leads" menu item in t()
+- [x] Wrap "Services" menu item in t()
+- [x] Wrap "Sales" menu item in t()
+- [x] Wrap "Scripts" menu item in t()
+- [x] Wrap "Settings" menu item in t()
+- [x] Wrap "Logout" button in t()
+
+### Chat Window Testing
+- [ ] Test "View Chat" button opens modal
+- [ ] Test chat window displays conversation
+- [ ] Test message sending works
+- [ ] Test chat window closes properly
+
+### Final Testing
+- [ ] Test language switching Ukrainian → Russian → English
+- [ ] Verify all text changes when language switches
+- [ ] Create checkpoint v28.0
