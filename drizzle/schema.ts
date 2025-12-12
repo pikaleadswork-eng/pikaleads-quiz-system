@@ -268,3 +268,71 @@ export const appointments = mysqlTable("appointments", {
 
 export type Appointment = typeof appointments.$inferSelect;
 export type InsertAppointment = typeof appointments.$inferInsert;
+
+/**
+ * Services table - products/services offered by the business
+ */
+export const services = mysqlTable("services", {
+  id: int("id").autoincrement().primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  type: varchar("type", { length: 100 }).notNull(), // e.g., "Consultation", "Development", "Marketing"
+  price: int("price").notNull(), // price in cents to avoid decimal issues
+  description: text("description"),
+  isActive: boolean("isActive").default(true).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Service = typeof services.$inferSelect;
+export type InsertService = typeof services.$inferInsert;
+
+/**
+ * Additional Services table - add-ons like banner creation, extra features
+ */
+export const additionalServices = mysqlTable("additional_services", {
+  id: int("id").autoincrement().primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  price: int("price").notNull(), // price in cents
+  description: text("description"),
+  isActive: boolean("isActive").default(true).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type AdditionalService = typeof additionalServices.$inferSelect;
+export type InsertAdditionalService = typeof additionalServices.$inferInsert;
+
+/**
+ * Sales table - track closed deals with revenue
+ */
+export const sales = mysqlTable("sales", {
+  id: int("id").autoincrement().primaryKey(),
+  leadId: int("leadId").notNull(),
+  serviceId: int("serviceId").notNull(),
+  additionalServices: text("additionalServices"), // JSON array of additional service IDs
+  totalAmount: int("totalAmount").notNull(), // total price in cents
+  managerId: int("managerId").notNull(), // who closed the sale
+  saleDate: timestamp("saleDate").defaultNow().notNull(),
+  notes: text("notes"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Sale = typeof sales.$inferSelect;
+export type InsertSale = typeof sales.$inferInsert;
+
+/**
+ * Sales Scripts table - reusable sales scripts for different scenarios
+ */
+export const salesScripts = mysqlTable("sales_scripts", {
+  id: int("id").autoincrement().primaryKey(),
+  title: varchar("title", { length: 255 }).notNull(),
+  category: varchar("category", { length: 100 }).notNull(), // "Cold Call", "Follow-up", "Objection Handling", "Closing"
+  content: text("content").notNull(),
+  createdBy: int("createdBy").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type SalesScript = typeof salesScripts.$inferSelect;
+export type InsertSalesScript = typeof salesScripts.$inferInsert;

@@ -639,3 +639,187 @@ export async function updateAppointmentStatus(appointmentId: number, status: str
   if (!db) throw new Error("Database not available");
   await db.update(appointments).set({ status }).where(eq(appointments.id, appointmentId));
 }
+
+
+// ==================== Services Management ====================
+
+export async function getAllServices() {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const { services } = await import("../drizzle/schema");
+  return db.select().from(services).where(eq(services.isActive, true)).orderBy(services.name);
+}
+
+export async function getServiceById(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const { services } = await import("../drizzle/schema");
+  const result = await db.select().from(services).where(eq(services.id, id)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function createService(data: { name: string; type: string; price: number; description?: string }) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const { services } = await import("../drizzle/schema");
+  const result = await db.insert(services).values(data);
+  return result[0].insertId;
+}
+
+export async function updateService(id: number, updates: { name?: string; type?: string; price?: number; description?: string; isActive?: boolean }) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const { services } = await import("../drizzle/schema");
+  await db.update(services).set(updates).where(eq(services.id, id));
+}
+
+export async function deleteService(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const { services } = await import("../drizzle/schema");
+  await db.update(services).set({ isActive: false }).where(eq(services.id, id));
+}
+
+// ==================== Additional Services Management ====================
+
+export async function getAllAdditionalServices() {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const { additionalServices } = await import("../drizzle/schema");
+  return db.select().from(additionalServices).where(eq(additionalServices.isActive, true)).orderBy(additionalServices.name);
+}
+
+export async function createAdditionalService(data: { name: string; price: number; description?: string }) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const { additionalServices } = await import("../drizzle/schema");
+  const result = await db.insert(additionalServices).values(data);
+  return result[0].insertId;
+}
+
+export async function updateAdditionalService(id: number, updates: { name?: string; price?: number; description?: string; isActive?: boolean }) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const { additionalServices } = await import("../drizzle/schema");
+  await db.update(additionalServices).set(updates).where(eq(additionalServices.id, id));
+}
+
+export async function deleteAdditionalService(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const { additionalServices } = await import("../drizzle/schema");
+  await db.update(additionalServices).set({ isActive: false }).where(eq(additionalServices.id, id));
+}
+
+// ==================== Sales Management ====================
+
+export async function createSale(data: {
+  leadId: number;
+  serviceId: number;
+  additionalServices?: number[];
+  totalAmount: number;
+  managerId: number;
+  notes?: string;
+}) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const { sales } = await import("../drizzle/schema");
+  const result = await db.insert(sales).values({
+    leadId: data.leadId,
+    serviceId: data.serviceId,
+    additionalServices: data.additionalServices ? JSON.stringify(data.additionalServices) : null,
+    totalAmount: data.totalAmount,
+    managerId: data.managerId,
+    notes: data.notes,
+  });
+  return result[0].insertId;
+}
+
+export async function getAllSales() {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const { sales } = await import("../drizzle/schema");
+  return db.select().from(sales).orderBy(desc(sales.saleDate));
+}
+
+export async function getSalesByManager(managerId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const { sales } = await import("../drizzle/schema");
+  return db.select().from(sales).where(eq(sales.managerId, managerId)).orderBy(desc(sales.saleDate));
+}
+
+export async function getSalesStats() {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const { sales } = await import("../drizzle/schema");
+  
+  const allSales = await db.select().from(sales);
+  const totalRevenue = allSales.reduce((sum, sale) => sum + sale.totalAmount, 0);
+  const totalSales = allSales.length;
+  
+  // Group by manager
+  const byManager = allSales.reduce((acc, sale) => {
+    if (!acc[sale.managerId]) {
+      acc[sale.managerId] = { count: 0, revenue: 0 };
+    }
+    acc[sale.managerId].count++;
+    acc[sale.managerId].revenue += sale.totalAmount;
+    return acc;
+  }, {} as Record<number, { count: number; revenue: number }>);
+  
+  // Group by service
+  const byService = allSales.reduce((acc, sale) => {
+    if (!acc[sale.serviceId]) {
+      acc[sale.serviceId] = { count: 0, revenue: 0 };
+    }
+    acc[sale.serviceId].count++;
+    acc[sale.serviceId].revenue += sale.totalAmount;
+    return acc;
+  }, {} as Record<number, { count: number; revenue: number }>);
+  
+  return {
+    totalRevenue,
+    totalSales,
+    byManager,
+    byService,
+  };
+}
+
+// ==================== Sales Scripts Management ====================
+
+export async function getAllSalesScripts() {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const { salesScripts } = await import("../drizzle/schema");
+  return db.select().from(salesScripts).orderBy(salesScripts.category, salesScripts.title);
+}
+
+export async function getSalesScriptsByCategory(category: string) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const { salesScripts } = await import("../drizzle/schema");
+  return db.select().from(salesScripts).where(eq(salesScripts.category, category)).orderBy(salesScripts.title);
+}
+
+export async function createSalesScript(data: { title: string; category: string; content: string; createdBy: number }) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const { salesScripts } = await import("../drizzle/schema");
+  const result = await db.insert(salesScripts).values(data);
+  return result[0].insertId;
+}
+
+export async function updateSalesScript(id: number, updates: { title?: string; category?: string; content?: string }) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const { salesScripts } = await import("../drizzle/schema");
+  await db.update(salesScripts).set(updates).where(eq(salesScripts.id, id));
+}
+
+export async function deleteSalesScript(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const { salesScripts } = await import("../drizzle/schema");
+  await db.delete(salesScripts).where(eq(salesScripts.id, id));
+}

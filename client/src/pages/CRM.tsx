@@ -33,6 +33,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import Footer from "@/components/Footer";
+import { EditLeadForm } from "@/components/EditLeadForm";
 import { Loader2, MessageSquare, Send, Filter, X } from "lucide-react";
 import { format } from "date-fns";
 import { useAuth } from "@/_core/hooks/useAuth";
@@ -45,6 +46,8 @@ export default function CRM() {
   const [newMessage, setNewMessage] = useState("");
   const [messagePlatform, setMessagePlatform] = useState<"instagram" | "telegram">("telegram");
   const [showCreateLeadModal, setShowCreateLeadModal] = useState(false);
+  const [showEditLeadModal, setShowEditLeadModal] = useState(false);
+  const [editingLead, setEditingLead] = useState<any>(null);
   
   // Create lead form fields
   const [createLeadForm, setCreateLeadForm] = useState({
@@ -454,14 +457,26 @@ export default function CRM() {
                           </Select>
                         </TableCell>
                         <TableCell>
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            onClick={() => setSelectedLead(lead.id)}
-                          >
-                            <MessageSquare className="w-4 h-4 mr-2" />
-                            View
-                          </Button>
+                          <div className="flex gap-2">
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => setSelectedLead(lead.id)}
+                            >
+                              <MessageSquare className="w-4 h-4 mr-2" />
+                              View
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              onClick={() => {
+                                setEditingLead(lead);
+                                setShowEditLeadModal(true);
+                              }}
+                            >
+                              Edit
+                            </Button>
+                          </div>
                         </TableCell>
                       </TableRow>
                     ))
@@ -776,6 +791,32 @@ export default function CRM() {
                 </Button>
               </div>
             </div>
+          </DialogContent>
+        </Dialog>
+
+        {/* Edit Lead Modal */}
+        <Dialog open={showEditLeadModal} onOpenChange={setShowEditLeadModal}>
+          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle>Edit Lead</DialogTitle>
+              <DialogDescription>
+                Update lead information and assign services
+              </DialogDescription>
+            </DialogHeader>
+            {editingLead && (
+              <EditLeadForm
+                lead={editingLead}
+                onClose={() => {
+                  setShowEditLeadModal(false);
+                  setEditingLead(null);
+                }}
+                onSuccess={() => {
+                  refetchLeads();
+                  setShowEditLeadModal(false);
+                  setEditingLead(null);
+                }}
+              />
+            )}
           </DialogContent>
         </Dialog>
       </div>

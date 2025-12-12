@@ -6,6 +6,9 @@ import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { detectLanguageFromIP, getClientIP } from "./geolocation";
 import { messagingRouter } from "./routers/messaging";
+import { servicesRouter } from "./routers/services";
+import { salesRouter } from "./routers/sales";
+import { salesScriptsRouter } from "./routers/salesScripts";
 
 const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
   if (ctx.user.role !== "admin") {
@@ -380,6 +383,24 @@ export const appRouter = router({
         return { success: true };
       }),
     
+    updateLead: protectedProcedure
+      .input(z.object({
+        leadId: z.number(),
+        name: z.string().optional(),
+        phone: z.string().optional(),
+        email: z.string().optional(),
+        telegram: z.string().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const db = await import("./db").then(m => m.getDb());
+        if (!db) throw new Error("Database not available");
+        const { leads } = await import("../drizzle/schema");
+        const { eq } = await import("drizzle-orm");
+        const { leadId, ...updates } = input;
+        await db.update(leads).set(updates).where(eq(leads.id, leadId));
+        return { success: true };
+      }),
+    
     // Comments
     getComments: protectedProcedure
       .input(z.object({ leadId: z.number() }))
@@ -685,6 +706,9 @@ export const appRouter = router({
   }),
 
   messaging: messagingRouter,
+  services: servicesRouter,
+  sales: salesRouter,
+  salesScripts: salesScriptsRouter,
 
   calendar: router({
     getAppointments: protectedProcedure.query(async () => {

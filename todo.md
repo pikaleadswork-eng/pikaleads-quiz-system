@@ -764,3 +764,142 @@
 - [ ] Test navigation menu on small screens
 - [ ] Check all buttons are clickable on mobile
 - [ ] Verify AdminCalendar responsive design
+
+
+## Phase 20 - CRM Complete Redesign
+
+### Fix Broken Routes & Language Switcher
+- [x] Fix /admin/calendar route (route exists, published site needs republish)
+- [x] Fix /admin/ab-testing route (added alias)
+- [x] Add language switcher component to header (already exists in QuizLayout)
+- [x] Implement language switching functionality (UA/EN) (already implemented)
+- [ ] Fix Quiz Management layout issues
+
+### Services Database
+- [x] Create services table in schema (id, name, type, price, description)
+- [x] Create additional_services table (id, name, price, description)
+- [x] Add tRPC procedures for services CRUD
+- [ ] Create Services Management page (/crm/services) - TODO next phase
+- [ ] Add service creation form - TODO next phase
+- [ ] Add service editing functionality - TODO next phase
+- [ ] Add service deletion with confirmation - TODO next phase
+
+### Lead Editing & Service Assignment
+- [ ] Add Edit button to CRM leads table
+- [ ] Create Edit Lead modal/page
+- [ ] Add service selection dropdown (pulls from services DB)
+- [ ] Auto-populate price when service selected
+- [ ] Add additional services multi-select
+- [ ] Calculate total price (service + additional services)
+- [ ] Add "sold_service_id" field to leads table
+- [ ] Add "additional_services" JSON field to leads table
+- [ ] Add "total_price" field to leads table
+- [ ] Update lead with service and price info
+
+### Messaging Inbox (Unified Communications)
+- [ ] Create messages table (id, lead_id, channel, message, direction, timestamp)
+- [ ] Create Inbox page (/crm/inbox)
+- [ ] Display all messages from Email, Telegram, WhatsApp in one feed
+- [ ] Add channel icons (Email, Telegram, WhatsApp)
+- [ ] Add reply functionality
+- [ ] Add message filtering by channel
+- [ ] Add message search
+- [ ] Link messages to leads
+
+### Sales Tracking & Statistics
+- [ ] Create sales table (id, lead_id, service_id, amount, date, manager_id)
+- [ ] Add "Convert to Sale" button in lead details
+- [ ] Create Sales Statistics page (/crm/sales-stats)
+- [ ] Display total revenue
+- [ ] Display revenue by service
+- [ ] Display revenue by manager
+- [ ] Display revenue by time period (day/week/month)
+- [ ] Add charts for sales visualization
+
+### Sales Scripts Database
+- [ ] Create sales_scripts table (id, title, content, category, created_at, updated_at)
+- [ ] Create Sales Scripts page (/crm/scripts)
+- [ ] Add script creation form
+- [ ] Add script editing functionality
+- [ ] Add script categories (Cold Call, Follow-up, Objection Handling, Closing)
+- [ ] Add script search
+- [ ] Display scripts in organized list
+
+### CRM Navigation Redesign
+- [ ] Redesign CRM sidebar navigation
+- [ ] Add "Messengers" section (Inbox, Settings)
+- [ ] Add "Leads" section (All Leads, Create Lead)
+- [ ] Add "Statistics" section (Leads Stats, Manager Stats, Sales Stats)
+- [ ] Add "Services" section (All Services, Create Service)
+- [ ] Add "Scripts" section (All Scripts, Create Script)
+- [ ] Update CRM landing page with new structure
+- [ ] Test all navigation links
+
+
+## Phase 20 - CRM Complete Redesign ✅ COMPLETED
+
+### Routes & Language
+- [x] Fix /admin/calendar route
+- [x] Fix /admin/ab-testing route (added alias)
+- [x] Language switcher already exists in QuizLayout
+
+### Services Database
+- [x] Create services table (id, name, type, price, description, isActive)
+- [x] Create additional_services table (id, name, price, description, isActive)
+- [x] Create sales table (leadId, serviceId, additionalServices, totalAmount, managerId, saleDate, notes)
+- [x] Create sales_scripts table (id, title, category, content, createdBy, createdAt)
+- [x] Add 20+ db.ts functions for CRUD operations
+- [x] Create services tRPC router with 8 procedures
+- [x] Create sales tRPC router with 4 procedures
+- [x] Create salesScripts tRPC router with 6 procedures
+
+### Lead Editing
+- [x] Add Edit button to CRM leads table
+- [x] Create EditLeadForm component with service assignment
+- [x] Add service selection dropdown with auto-price
+- [x] Add additional services checkboxes
+- [x] Auto-calculate total amount
+- [x] Add "Convert to Sale" button with notes field
+- [x] Add crm.updateLead tRPC procedure
+
+### Messaging Inbox
+- [x] Create MessagingInbox page (/admin/inbox)
+- [x] Display all messages from all channels (Telegram, WhatsApp, Email)
+- [x] Add 4 statistics cards (Total, Telegram, WhatsApp, Email)
+- [x] Add channel filter dropdown
+- [x] Add search functionality
+- [x] Link to /admin/messaging for bulk sending
+
+### Sales Tracking
+- [x] Create SalesStatistics page (/admin/sales)
+- [x] Display 4 overview cards (Total Revenue, Total Sales, Average Sale, Active Managers)
+- [x] Sales by Manager table with revenue breakdown
+- [x] Sales by Service table with revenue breakdown
+- [x] Recent Sales table with last 20 transactions
+
+### Sales Scripts
+- [x] Create SalesScripts page (/admin/scripts)
+- [x] Add 4 categories (Cold Call, Follow-up, Objection Handling, Closing)
+- [x] Create/Edit/Delete scripts functionality
+- [x] Category filter dropdown
+- [x] Grid layout with color-coded badges
+
+### Services Management
+- [x] Create ServicesManagement page (/admin/services)
+- [x] Main Services table with CRUD
+- [x] Additional Services table with CRUD
+- [x] Create/Edit dialogs for both types
+
+### CRM Navigation Redesign
+- [x] Create CRMDashboard page (/crm-dashboard)
+- [x] Add 4 quick stats cards
+- [x] Add 7 navigation cards:
+  - Messengers → /admin/inbox
+  - Leads → /crm
+  - Lead Statistics → /admin/analytics
+  - Manager Stats → /admin/performance
+  - Sales Statistics → /admin/sales
+  - Services → /admin/services
+  - Sales Scripts → /admin/scripts
+- [x] Add Quick Actions section with 5 buttons
+- [x] Gradient header design

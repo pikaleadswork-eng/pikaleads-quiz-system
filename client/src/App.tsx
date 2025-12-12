@@ -27,6 +27,11 @@ import AdminAssignmentRules from "./pages/AdminAssignmentRules";
 import AdminPerformance from "./pages/AdminPerformance";
 import AdminRetargeting from "./pages/AdminRetargeting";
 import AdminMessaging from "./pages/AdminMessaging";
+import MessagingInbox from "./pages/MessagingInbox";
+import SalesStatistics from "./pages/SalesStatistics";
+import SalesScripts from "./pages/SalesScripts";
+import ServicesManagement from "./pages/ServicesManagement";
+import CRMDashboard from "./pages/CRMDashboard";
 import AdminCalendar from "./pages/AdminCalendar";
 import ManagerDashboard from "./pages/ManagerDashboard";
 import CRM from "./pages/CRM";
@@ -68,16 +73,22 @@ function Router() {
       <Route path={"/admin"} component={AdminDashboard} />
       <Route path={"/admin/quizzes"} component={AdminQuizzes} />
       <Route path={"/admin/ab-tests"} component={AdminABTests} />
+      <Route path={"/admin/ab-testing"} component={AdminABTests} />
       <Route path={"/admin/managers"} component={AdminManagers} />
       <Route path={"/admin/analytics"} component={AdminAnalytics} />
       <Route path={"/admin/assignment-rules"} component={AdminAssignmentRules} />
       <Route path={"/admin/performance"} component={AdminPerformance} />
       <Route path={"/admin/retargeting"} component={AdminRetargeting} />
       <Route path={"/admin/messaging"} component={AdminMessaging} />
+      <Route path={"/admin/inbox"} component={MessagingInbox} />
+      <Route path={"/admin/sales"} component={SalesStatistics} />
+      <Route path={"/admin/scripts"} component={SalesScripts} />
+      <Route path={"/admin/services"} component={ServicesManagement} />
       <Route path={"/admin/calendar"} component={AdminCalendar} />
       
       {/* CRM & Manager Dashboard */}
       <Route path={"/manager"} component={ManagerDashboard} />
+      <Route path={"/crm-dashboard"} component={CRMDashboard} />
       <Route path={"/crm"} component={CRM} />
       
       {/* Legal Pages */}
