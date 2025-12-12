@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { trpc } from "@/lib/trpc";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Filter, Calendar as CalendarIcon, TrendingUp, DollarSign, Users, Clock } from "lucide-react";
+import { Filter, Calendar as CalendarIcon, TrendingUp, DollarSign, Users, Clock, RefreshCw, Pause, Play } from "lucide-react";
 import { Bar, Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -47,9 +47,11 @@ export default function AdminAnalytics() {
   const [selectedSource, setSelectedSource] = useState<string>("all");
   const [selectedCampaign, setSelectedCampaign] = useState<string>("all");
   const [showFilters, setShowFilters] = useState(false);
+  const [lastUpdate, setLastUpdate] = useState<Date>(new Date());
+  const [isAutoRefreshPaused, setIsAutoRefreshPaused] = useState(false);
 
   // Fetch analytics data
-  const { data: analyticsData, isLoading } = trpc.admin.getAnalyticsData.useQuery({
+  const { data: analyticsData, isLoading, refetch } = trpc.admin.getAnalyticsData.useQuery({
     dateRange: dateRange,
     startDate: customStartDate?.toISOString(),
     endDate: customEndDate?.toISOString(),
@@ -57,6 +59,18 @@ export default function AdminAnalytics() {
     source: selectedSource !== "all" ? selectedSource : undefined,
     campaign: selectedCampaign !== "all" ? selectedCampaign : undefined,
   });
+
+  // Auto-refresh every 30 seconds
+  useEffect(() => {
+    if (isAutoRefreshPaused) return;
+
+    const interval = setInterval(() => {
+      refetch();
+      setLastUpdate(new Date());
+    }, 30000); // 30 seconds
+
+    return () => clearInterval(interval);
+  }, [refetch, isAutoRefreshPaused]);
 
   // Fetch leads for filter options
   const { data: allLeads } = trpc.admin.getLeads.useQuery();
@@ -168,10 +182,37 @@ export default function AdminAnalytics() {
           <div>
             <h1 className="text-3xl font-bold text-white mb-2">{t("analytics.title")}</h1>
             <p className="text-zinc-400">{t("analytics.description")}</p>
+            <div className="flex items-center gap-2 mt-2 text-sm text-zinc-500">
+              <RefreshCw className="w-3 h-3" />
+              <span>
+                {t("analytics.lastUpdate")}: {lastUpdate.toLocaleTimeString()}
+              </span>
+            </div>
           </div>
           
-          {/* Filters Button */}
-          <Popover open={showFilters} onOpenChange={setShowFilters}>
+          <div className="flex gap-2">
+            {/* Auto-refresh toggle */}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setIsAutoRefreshPaused(!isAutoRefreshPaused)}
+              className="bg-zinc-800 border-zinc-700"
+            >
+              {isAutoRefreshPaused ? (
+                <>
+                  <Play className="w-4 h-4 mr-2" />
+                  {t("analytics.resume")}
+                </>
+              ) : (
+                <>
+                  <Pause className="w-4 h-4 mr-2" />
+                  {t("analytics.pause")}
+                </>
+              )}
+            </Button>
+            
+            {/* Filters Button */}
+            <Popover open={showFilters} onOpenChange={setShowFilters}>
             <PopoverTrigger asChild>
               <Button variant="outline" className="bg-zinc-800 border-zinc-700">
                 <Filter className="w-4 h-4 mr-2" />
@@ -290,6 +331,7 @@ export default function AdminAnalytics() {
               </div>
             </PopoverContent>
           </Popover>
+          </div>
         </div>
 
         {/* Summary Cards */}

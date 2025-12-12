@@ -400,6 +400,9 @@
     "to": "До",
     "applyFilters": "Застосувати фільтри",
     "clearFilters": "Очистити фільтри",
+    "lastUpdate": "Останнє оновлення",
+    "pause": "Призупинити",
+    "resume": "Відновити",
     "summaryCards": {
       "totalLeads": "Всього лідів",
       "conversionRate": "Конверсія",

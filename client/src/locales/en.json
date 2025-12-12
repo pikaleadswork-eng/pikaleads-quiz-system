@@ -355,6 +355,9 @@
     "to": "To",
     "applyFilters": "Apply Filters",
     "clearFilters": "Clear Filters",
+    "lastUpdate": "Last Update",
+    "pause": "Pause",
+    "resume": "Resume",
     "summaryCards": {
       "totalLeads": "Total Leads",
       "conversionRate": "Conversion Rate",

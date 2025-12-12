@@ -400,6 +400,9 @@
     "to": "До",
     "applyFilters": "Применить фильтры",
     "clearFilters": "Очистить фильтры",
+    "lastUpdate": "Последнее обновление",
+    "pause": "Приостановить",
+    "resume": "Возобновить",
     "summaryCards": {
       "totalLeads": "Всего лидов",
       "conversionRate": "Конверсия",
