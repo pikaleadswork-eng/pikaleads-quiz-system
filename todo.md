@@ -843,3 +843,35 @@
 - [x] Add calendar page translations to en.json
 - [x] Test all admin pages have language switcher
 - [x] Verify all translations work correctly
+
+
+## Phase 14: Fix AdminScripts & AdminQuizzes + Export + Webhooks - IN PROGRESS 🚀
+
+### AdminScripts & AdminQuizzes Fixes
+- [x] Wrap AdminScripts with DashboardLayout
+- [x] Add scripts page translations (UK/RU/EN)
+- [x] Wrap AdminQuizzes with DashboardLayout
+- [x] Add quizzes page translations (UK/RU/EN)
+- [x] Fix AdminQuizzes responsive design (mobile/tablet)
+- [x] Test all breakpoints work correctly
+
+### Marquiz Research & Quiz Management
+- [x] Research Marquiz quiz builder features
+- [x] Document question types (single/multiple choice, text, image)
+- [x] Document answer types (text, images, conditional logic)
+- [x] Plan quiz editor improvements based on Marquiz
+
+### Analytics Export
+- [x] Add Excel export button to analytics page
+- [x] Implement Excel generation with metrics and charts
+- [x] Add PDF export button to analytics page
+- [x] Implement PDF generation with formatted report
+- [x] Test export functionality
+
+### Webhook Integrations
+- [ ] Create webhook settings page
+- [ ] Add HubSpot webhook configuration
+- [ ] Add Salesforce webhook configuration
+- [ ] Implement webhook sending on new lead
+- [ ] Add webhook retry logic
+- [ ] Test webhook integrations

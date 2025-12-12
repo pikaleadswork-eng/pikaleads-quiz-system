@@ -392,6 +392,27 @@
     "responseTime": "Час відповіді (год)",
     "conversionRate": "Конверсія (%)"
   },
+  "scripts": {
+    "title": "Скрипти продажів",
+    "subtitle": "Управління скриптами та шаблонами",
+    "backToAdmin": "Назад до адмінки",
+    "createScript": "Створити скрипт",
+    "deleteConfirm": "Ви впевнені, що хочете видалити цей скрипт?",
+    "accessDenied": "Доступ заборонено",
+    "needAdminPrivileges": "Вам потрібні права адміністратора",
+    "returnHome": "Повернутися на головну"
+  },
+  "quizzes": {
+    "title": "Управління квізами",
+    "backToAdmin": "Назад до адмінки",
+    "editMode": "Режим редагування",
+    "preview": "Попередній перегляд",
+    "saveChanges": "Зберегти зміни",
+    "selectQuiz": "Оберіть квіз",
+    "accessDenied": "Доступ заборонено",
+    "needAdminPrivileges": "Вам потрібні права адміністратора",
+    "returnHome": "Повернутися на головну"
+  },
   "calendar": {
     "title": "Календар і зустрічі",
     "description": "Плануйте зустрічі з лідами та керуйте записами",
@@ -425,10 +446,12 @@
     "pause": "Призупинити",
     "resume": "Відновити",
     "compareWithPrevious": "Порівняти з попереднім періодом",
-    "sendReport": "Відправити звіт",
-    "sending": "Відправлення...",
-    "reportSent": "Звіт успішно відправлено!",
-    "reportFailed": "Помилка відправки звіту. Спробуйте ще раз.",
+    "sendReport": "Надіслати звіт",
+    "sending": "Надсилання...",
+    "reportSent": "Звіт надіслано!",
+    "reportFailed": "Помилка надсилання звіту",
+    "exportExcel": "Експорт Excel",
+    "exportPDF": "Експорт PDF",
     "summaryCards": {
       "totalLeads": "Всього лідів",
       "conversionRate": "Конверсія",

@@ -9,7 +9,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Filter, Calendar as CalendarIcon, TrendingUp, DollarSign, Users, Clock, RefreshCw, Pause, Play, ArrowUp, ArrowDown, Mail } from "lucide-react";
+import { Filter, Calendar as CalendarIcon, TrendingUp, DollarSign, Users, Clock, RefreshCw, Pause, Play, ArrowUp, ArrowDown, Mail, FileDown, FileSpreadsheet } from "lucide-react";
+import * as XLSX from "xlsx";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 import { Bar, Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -76,6 +79,162 @@ export default function AdminAnalytics() {
       source: selectedSource !== "all" ? selectedSource : undefined,
       campaign: selectedCampaign !== "all" ? selectedCampaign : undefined,
     });
+  };
+  
+  // Export to Excel
+  const handleExportExcel = () => {
+    if (!analyticsData) return;
+    const data = analyticsData;
+    
+    // Create workbook
+    const wb = XLSX.utils.book_new();
+    
+    // Summary sheet
+    const summaryData = [
+      ["Metric", "Value"],
+      ["Total Leads", data.summary.totalLeads],
+      ["Conversion Rate", `${data.summary.conversionRate}%`],
+      ["ROMI", `${data.summary.romi}%`],
+      ["ROAS", `${data.summary.roas}x`],
+      ["Avg Time on Site", `${Math.floor(data.summary.avgTimeOnSite / 60)}m ${data.summary.avgTimeOnSite % 60}s`],
+      ["Total Spent", `$${data.summary.totalSpent}`],
+      ["Total Revenue", `$${data.summary.totalRevenue}`],
+      ["Cost Per Lead", `$${data.summary.costPerLead}`],
+    ];
+    const wsSummary = XLSX.utils.aoa_to_sheet(summaryData);
+    XLSX.utils.book_append_sheet(wb, wsSummary, "Summary");
+    
+    // Top Campaigns sheet
+    const campaignsData = [
+      ["Campaign", "Leads", "Revenue", "Spent", "ROMI", "ROAS"],
+      ...data.topCampaigns.map(c => [
+        c.campaign,
+        c.leads,
+        `$${c.revenue}`,
+        `$${c.spent}`,
+        `${c.romi}%`,
+        `${c.roas}x`
+      ])
+    ];
+    const wsCampaigns = XLSX.utils.aoa_to_sheet(campaignsData);
+    XLSX.utils.book_append_sheet(wb, wsCampaigns, "Top Campaigns");
+    
+    // Top Ads sheet
+    const adsData = [
+      ["Ad", "Leads", "Conversions", "CTR"],
+      ...data.topAds.map((a: any) => [
+        a.ad,
+        a.leads,
+        a.conversions,
+        `${a.ctr}%`
+      ])
+    ];
+    const wsAds = XLSX.utils.aoa_to_sheet(adsData);
+    XLSX.utils.book_append_sheet(wb, wsAds, "Top Ads");
+    
+    // Top Keywords sheet
+    const keywordsData = [
+      ["Keyword", "Impressions", "Leads", "Clicks"],
+      ...data.topKeywords.map((k: any) => [
+        k.keyword,
+        k.impressions,
+        k.leads,
+        k.clicks
+      ])
+    ];
+    const wsKeywords = XLSX.utils.aoa_to_sheet(keywordsData);
+    XLSX.utils.book_append_sheet(wb, wsKeywords, "Top Keywords");
+    
+    // Download
+    XLSX.writeFile(wb, `analytics_${new Date().toISOString().split('T')[0]}.xlsx`);
+  };
+  
+  // Export to PDF
+  const handleExportPDF = () => {
+    if (!analyticsData) return;
+    const data = analyticsData;
+    
+    const doc = new jsPDF();
+    
+    // Title
+    doc.setFontSize(20);
+    doc.text("PIKALEADS Analytics Report", 14, 20);
+    
+    // Date
+    doc.setFontSize(10);
+    doc.text(`Generated: ${new Date().toLocaleDateString()}`, 14, 28);
+    
+    // Summary metrics
+    doc.setFontSize(14);
+    doc.text("Summary Metrics", 14, 40);
+    
+    autoTable(doc, {
+      startY: 45,
+      head: [["Metric", "Value"]],
+      body: [
+        ["Total Leads", data.summary.totalLeads.toString()],
+        ["Conversion Rate", `${data.summary.conversionRate}%`],
+        ["ROMI", `${data.summary.romi}%`],
+        ["ROAS", `${data.summary.roas}x`],
+        ["Avg Time on Site", `${Math.floor(data.summary.avgTimeOnSite / 60)}m ${data.summary.avgTimeOnSite % 60}s`],
+        ["Total Spent", `$${data.summary.totalSpent}`],
+        ["Total Revenue", `$${data.summary.totalRevenue}`],
+        ["Cost Per Lead", `$${data.summary.costPerLead}`],
+      ],
+    });
+    
+    // Top Campaigns
+    doc.addPage();
+    doc.setFontSize(14);
+    doc.text("Top Campaigns", 14, 20);
+    
+    autoTable(doc, {
+      startY: 25,
+      head: [["Campaign", "Leads", "Revenue", "Spent", "ROMI", "ROAS"]],
+      body: data.topCampaigns.map(c => [
+        c.campaign,
+        c.leads.toString(),
+        `$${c.revenue}`,
+        `$${c.spent}`,
+        `${c.romi}%`,
+        `${c.roas}x`
+      ]),
+    });
+    
+    // Top Ads
+    const finalY1 = (doc as any).lastAutoTable.finalY || 25;
+    doc.setFontSize(14);
+    doc.text("Top Ads", 14, finalY1 + 15);
+    
+    autoTable(doc, {
+      startY: finalY1 + 20,
+      head: [["Ad", "Leads", "Conversions", "CTR"]],
+      body: data.topAds.map((a: any) => [
+        a.ad,
+        a.leads.toString(),
+        a.conversions.toString(),
+        `${a.ctr}%`
+      ]),
+    });
+    
+    // Top Keywords
+    const finalY2 = (doc as any).lastAutoTable.finalY || 25;
+    doc.setFontSize(14);
+    doc.text("Top Keywords", 14, finalY2 + 15);
+    
+    autoTable(doc, {
+      startY: finalY2 + 20,
+      head: [["Keyword", "Impressions", "Leads", "Clicks"]],
+      body: data.topKeywords.map((k: any) => [
+        k.keyword,
+        k.impressions.toString(),
+        k.leads.toString(),
+        k.clicks.toString()
+      ]),
+    });
+    
+    // Save
+    doc.save(`analytics_${new Date().toISOString().split('T')[0]}.pdf`);
   };
 
   // Calculate previous period dates
@@ -304,6 +463,30 @@ export default function AdminAnalytics() {
                   {t("analytics.pause")}
                 </>
               )}
+            </Button>
+            
+            {/* Export Excel Button */}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleExportExcel}
+              disabled={!analyticsData}
+              className="bg-green-600 border-green-500 hover:bg-green-700"
+            >
+              <FileSpreadsheet className="w-4 h-4 mr-2" />
+              {t("analytics.exportExcel")}
+            </Button>
+            
+            {/* Export PDF Button */}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleExportPDF}
+              disabled={!analyticsData}
+              className="bg-red-600 border-red-500 hover:bg-red-700"
+            >
+              <FileDown className="w-4 h-4 mr-2" />
+              {t("analytics.exportPDF")}
             </Button>
             
             {/* Send Report Button */}

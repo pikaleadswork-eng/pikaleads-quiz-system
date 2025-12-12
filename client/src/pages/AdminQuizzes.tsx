@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "@/_core/hooks/useAuth";
+import { useTranslation } from "react-i18next";
+import DashboardLayout from "@/components/DashboardLayout";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -21,6 +23,7 @@ interface QuizContent {
 }
 
 export default function AdminQuizzes() {
+  const { t } = useTranslation();
   const { user, loading } = useAuth();
   const [selectedQuiz, setSelectedQuiz] = useState<string>("meta-furniture");
   const [editedContent, setEditedContent] = useState<QuizContent | null>(null);
@@ -79,10 +82,9 @@ export default function AdminQuizzes() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b border-border bg-card">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+    <DashboardLayout>
+      <div className="space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div className="flex items-center gap-4">
             <Link href="/admin">
               <Button variant="ghost" size="sm">
@@ -107,9 +109,8 @@ export default function AdminQuizzes() {
             </Button>
           </div>
         </div>
-      </header>
 
-      <div className="container mx-auto px-4 py-8">
+        {/* Main Content */}
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Quiz Selector Sidebar */}
           <div className="lg:col-span-1">
@@ -284,6 +285,6 @@ export default function AdminQuizzes() {
           </div>
         </div>
       </div>
-    </div>
+    </DashboardLayout>
   );
 }

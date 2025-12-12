@@ -28,7 +28,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Loader2, Plus, Edit, Trash2, FileText } from "lucide-react";
 import { useAuth } from "@/_core/hooks/useAuth";
-import CRMLayout from "@/components/CRMLayout";
+import DashboardLayout from "@/components/DashboardLayout";
 import { Link } from "wouter";
 import { toast } from "sonner";
 import { useTranslation } from 'react-i18next';
@@ -184,7 +184,7 @@ export default function SalesScripts() {
   };
 
   return (
-    <CRMLayout>
+    <DashboardLayout>
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
@@ -390,6 +390,6 @@ export default function SalesScripts() {
             </div>
           </DialogContent>
         </Dialog>
-    </CRMLayout>
+    </DashboardLayout>
   );
 }

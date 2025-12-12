@@ -347,6 +347,27 @@
     "responseTime": "Response Time (hours)",
     "conversionRate": "Conversion Rate (%)"
   },
+  "scripts": {
+    "title": "Sales Scripts",
+    "subtitle": "Manage scripts and templates",
+    "backToAdmin": "Back to Admin",
+    "createScript": "Create Script",
+    "deleteConfirm": "Are you sure you want to delete this script?",
+    "accessDenied": "Access Denied",
+    "needAdminPrivileges": "You need administrator privileges",
+    "returnHome": "Return Home"
+  },
+  "quizzes": {
+    "title": "Quiz Management",
+    "backToAdmin": "Back to Admin",
+    "editMode": "Edit Mode",
+    "preview": "Preview",
+    "saveChanges": "Save Changes",
+    "selectQuiz": "Select Quiz",
+    "accessDenied": "Access Denied",
+    "needAdminPrivileges": "You need administrator privileges",
+    "returnHome": "Return Home"
+  },
   "calendar": {
     "title": "Calendar & Appointments",
     "description": "Schedule meetings with leads and manage appointments",
@@ -380,10 +401,12 @@
     "pause": "Pause",
     "resume": "Resume",
     "compareWithPrevious": "Compare with previous period",
-    "sendReport": "Send Report",
+        "sendReport": "Send Report",
     "sending": "Sending...",
-    "reportSent": "Report sent successfully!",
-    "reportFailed": "Failed to send report. Please try again.",
+    "reportSent": "Report sent!",
+    "reportFailed": "Failed to send report",
+    "exportExcel": "Export Excel",
+    "exportPDF": "Export PDF",
     "summaryCards": {
       "totalLeads": "Total Leads",
       "conversionRate": "Conversion Rate",

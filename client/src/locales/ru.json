@@ -392,6 +392,27 @@
     "responseTime": "Время ответа (час)",
     "conversionRate": "Конверсия (%)"
   },
+  "scripts": {
+    "title": "Скрипты продаж",
+    "subtitle": "Управление скриптами и шаблонами",
+    "backToAdmin": "Назад в админку",
+    "createScript": "Создать скрипт",
+    "deleteConfirm": "Вы уверены, что хотите удалить этот скрипт?",
+    "accessDenied": "Доступ запрещен",
+    "needAdminPrivileges": "Вам нужны права администратора",
+    "returnHome": "Вернуться на главную"
+  },
+  "quizzes": {
+    "title": "Управление квизами",
+    "backToAdmin": "Назад в админку",
+    "editMode": "Режим редактирования",
+    "preview": "Предпросмотр",
+    "saveChanges": "Сохранить изменения",
+    "selectQuiz": "Выберите квиз",
+    "accessDenied": "Доступ запрещен",
+    "needAdminPrivileges": "Вам нужны права администратора",
+    "returnHome": "Вернуться на главную"
+  },
   "calendar": {
     "title": "Календарь и встречи",
     "description": "Планируйте встречи с лидами и управляйте записями",
@@ -427,8 +448,10 @@
     "compareWithPrevious": "Сравнить с предыдущим периодом",
     "sendReport": "Отправить отчет",
     "sending": "Отправка...",
-    "reportSent": "Отчет успешно отправлен!",
-    "reportFailed": "Ошибка отправки отчета. Попробуйте еще раз.",
+    "reportSent": "Отчет отправлен!",
+    "reportFailed": "Ошибка отправки отчета",
+    "exportExcel": "Экспорт Excel",
+    "exportPDF": "Экспорт PDF",
     "summaryCards": {
       "totalLeads": "Всего лидов",
       "conversionRate": "Конверсия",
