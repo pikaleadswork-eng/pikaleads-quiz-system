@@ -903,3 +903,56 @@
   - Sales Scripts → /admin/scripts
 - [x] Add Quick Actions section with 5 buttons
 - [x] Gradient header design
+
+
+## Phase 21 - Real API Integration & Mobile App
+
+### Instagram Graph API Integration
+- [x] Create Admin Settings page for API credentials
+- [ ] Create Instagram API helper functions (TODO)
+- [ ] Implement sendInstagramMessage function (TODO)
+- [ ] Implement getInstagramConversations function (TODO)
+- [ ] Update messaging router to use real Instagram API (TODO)
+- [ ] Test Instagram message sending (TODO)
+
+### WhatsApp Business API Integration
+- [ ] Request WhatsApp Business API credentials (Phone Number ID, Access Token)
+- [ ] Create WhatsApp API helper functions
+- [ ] Implement sendWhatsAppMessage function
+- [ ] Implement getWhatsAppConversations function
+- [ ] Update messaging router to use real WhatsApp API
+- [ ] Test WhatsApp message sending
+
+### Email SMTP Integration
+- [ ] Request SMTP credentials (already have SENDGRID_API_KEY)
+- [ ] Create email helper functions with SendGrid
+- [ ] Implement sendEmail function for bulk messages
+- [ ] Update messaging router to use real Email API
+- [ ] Test email sending
+
+### Google Calendar API Integration
+- [ ] Request Google Calendar API credentials (Client ID, Client Secret)
+- [ ] Setup OAuth2 flow for Google Calendar
+- [ ] Create Google Calendar helper functions
+- [ ] Implement createCalendarEvent function
+- [ ] Implement updateCalendarEvent function
+- [ ] Implement deleteCalendarEvent function
+- [ ] Add two-way sync (CRM ↔ Google Calendar)
+- [ ] Update AdminCalendar page with sync button
+- [ ] Test calendar sync
+
+### React Native Mobile App
+- [ ] Initialize Expo React Native project
+- [ ] Setup project structure (screens, components, navigation)
+- [ ] Install dependencies (expo-router, react-native-paper, axios)
+- [ ] Create authentication screen (login)
+- [ ] Implement tRPC client for mobile
+- [ ] Create bottom tab navigation
+- [ ] Create Leads List screen with filters
+- [ ] Create Lead Detail screen
+- [ ] Add quick actions (call, SMS, update status)
+- [ ] Integrate Expo Push Notifications
+- [ ] Setup push notification backend endpoint
+- [ ] Test push notifications on new lead creation
+- [ ] Create APK/IPA build instructions
+- [ ] Test mobile app on iOS and Android

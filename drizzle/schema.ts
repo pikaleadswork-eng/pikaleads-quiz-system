@@ -336,3 +336,18 @@ export const salesScripts = mysqlTable("sales_scripts", {
 
 export type SalesScript = typeof salesScripts.$inferSelect;
 export type InsertSalesScript = typeof salesScripts.$inferInsert;
+
+/**
+ * Integration settings table for storing API credentials
+ */
+export const integrationSettings = mysqlTable("integration_settings", {
+  id: int("id").autoincrement().primaryKey(),
+  provider: varchar("provider", { length: 50 }).notNull().unique(), // instagram, whatsapp, email, google_calendar
+  credentials: text("credentials").notNull(), // JSON string of encrypted credentials
+  isActive: boolean("isActive").default(false).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type IntegrationSetting = typeof integrationSettings.$inferSelect;
+export type InsertIntegrationSetting = typeof integrationSettings.$inferInsert;

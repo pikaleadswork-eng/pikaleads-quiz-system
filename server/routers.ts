@@ -9,6 +9,7 @@ import { messagingRouter } from "./routers/messaging";
 import { servicesRouter } from "./routers/services";
 import { salesRouter } from "./routers/sales";
 import { salesScriptsRouter } from "./routers/salesScripts";
+import { integrationsRouter } from "./routers/integrations";
 
 const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
   if (ctx.user.role !== "admin") {
@@ -709,6 +710,7 @@ export const appRouter = router({
   services: servicesRouter,
   sales: salesRouter,
   salesScripts: salesScriptsRouter,
+  integrations: integrationsRouter,
 
   calendar: router({
     getAppointments: protectedProcedure.query(async () => {

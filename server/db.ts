@@ -823,3 +823,62 @@ export async function deleteSalesScript(id: number) {
   const { salesScripts } = await import("../drizzle/schema");
   await db.delete(salesScripts).where(eq(salesScripts.id, id));
 }
+
+// ==================== Integration Settings Management ====================
+
+export async function getAllIntegrationSettings() {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const { integrationSettings } = await import("../drizzle/schema");
+  return db.select().from(integrationSettings);
+}
+
+export async function getIntegrationSettingByProvider(provider: string) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const { integrationSettings } = await import("../drizzle/schema");
+  const results = await db
+    .select()
+    .from(integrationSettings)
+    .where(eq(integrationSettings.provider, provider));
+  return results[0];
+}
+
+export async function saveIntegrationSetting(data: {
+  provider: string;
+  credentials: string;
+  isActive: boolean;
+}) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const { integrationSettings } = await import("../drizzle/schema");
+  
+  // Check if setting already exists
+  const existing = await getIntegrationSettingByProvider(data.provider);
+  
+  if (existing) {
+    // Update existing
+    await db
+      .update(integrationSettings)
+      .set({
+        credentials: data.credentials,
+        isActive: data.isActive,
+        updatedAt: new Date(),
+      })
+      .where(eq(integrationSettings.provider, data.provider));
+    return getIntegrationSettingByProvider(data.provider);
+  } else {
+    // Insert new
+    await db.insert(integrationSettings).values(data);
+    return getIntegrationSettingByProvider(data.provider);
+  }
+}
+
+export async function deleteIntegrationSetting(provider: string) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const { integrationSettings } = await import("../drizzle/schema");
+  await db
+    .delete(integrationSettings)
+    .where(eq(integrationSettings.provider, provider));
+}
