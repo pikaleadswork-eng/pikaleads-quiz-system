@@ -200,7 +200,7 @@ export default function AdminSettings() {
         </div>
 
         {/* Quick Links to Settings Pages */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <Link href="/admin/settings/roles">
             <Card className="bg-zinc-900 border-zinc-800 hover:border-purple-500 transition-all cursor-pointer">
               <CardHeader>
@@ -244,6 +244,22 @@ export default function AdminSettings() {
                 </CardTitle>
                 <CardDescription>
                   {t('common.connect_zadarma_for_in_crm_calling')}
+                </CardDescription>
+              </CardHeader>
+            </Card>
+          </Link>
+
+          <Link href="/admin/settings/lead-assignment">
+            <Card className="bg-zinc-900 border-zinc-800 hover:border-green-500 transition-all cursor-pointer">
+              <CardHeader>
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <svg className="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  {t('assignmentRules.title')}
+                </CardTitle>
+                <CardDescription>
+                  {t('assignmentRules.description')}
                 </CardDescription>
               </CardHeader>
             </Card>

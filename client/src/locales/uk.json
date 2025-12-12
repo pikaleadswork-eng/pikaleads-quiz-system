@@ -47,7 +47,8 @@
     "messaging_integrations": "Інтеграції месенджерів",
     "configure_api_credentials_for_instagram_whatsapp_email_and_google_calendar_integration": "Налаштуйте API ключі для інтеграції з Instagram, WhatsApp, Email та Google Calendar",
     "name": "Ім'я",
-    "learnMore": "Дізнатись більше →"
+    "learnMore": "Дізнатись більше →",
+    "create": "Створити"
   },
   "nav": {
     "messaging": "Повідомлення",
@@ -476,5 +477,48 @@
     "messageSent": "Повідомлення надіслано",
     "commentAdded": "Коментар додано",
     "noActivity": "Активності ще немає"
+  },
+  "assignmentRules": {
+    "title": "Автоматичне призначення лідів",
+    "description": "Налаштуйте правила для автоматичного розподілу лідів між менеджерами",
+    "createRule": "Створити правило",
+    "rulesListTitle": "Список правил",
+    "rulesListDescription": "Правила обробляються за пріоритетом (вищий номер = вища пріоритет)",
+    "noRules": "Немає правил. Створіть перше правило для автоматичного призначення.",
+    "created": "Правило успішно створено",
+    "updated": "Правило успішно оновлено",
+    "deleted": "Правило видалено",
+    "toggled": "Статус правила змінено",
+    "nameRequired": "Назва правила обов'язкова",
+    "managerRequired": "Виберіть менеджера для призначення",
+    "confirmDelete": "Ви впевнені, що хочете видалити це правило?",
+    "editRule": "Редагувати правило",
+    "dialogDescription": "Налаштуйте умови та дії для автоматичного призначення лідів",
+    "ruleName": "Назва правила",
+    "ruleNamePlaceholder": "напр., Facebook ліди Івану",
+    "ruleType": "Тип правила",
+    "type": {
+      "manual": "Ручне",
+      "workload": "Балансування навантаження",
+      "source": "За джерелом",
+      "campaign": "За кампанією"
+    },
+    "assignmentStrategy": "Стратегія призначення",
+    "strategy": {
+      "specific": "Конкретний менеджер",
+      "balanceWorkload": "Балансувати навантаження"
+    },
+    "selectManager": "Виберіть менеджера",
+    "selectManagerPlaceholder": "Оберіть менеджера...",
+    "conditionsHelp": "Вкажіть умови для застосування цього правила",
+    "sourceCondition": "Джерело (source)",
+    "campaignCondition": "Кампанія (campaign)",
+    "priority": "Пріоритет",
+    "priorityHelp": "Вищий номер = вища пріоритет. Правила з вищим пріоритетом обробляються першими.",
+    "active": "Активне",
+    "inactive": "Неактивне",
+    "assignTo": "Призначити",
+    "balanceWorkload": "Балансування навантаження між менеджерами",
+    "conditions": "Умови"
   }
 }

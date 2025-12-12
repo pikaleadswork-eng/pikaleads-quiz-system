@@ -47,7 +47,8 @@
     "messaging_integrations": "Интеграции мессенджеров",
     "configure_api_credentials_for_instagram_whatsapp_email_and_google_calendar_integration": "Настройте API ключи для интеграции с Instagram, WhatsApp, Email и Google Calendar",
     "name": "Имя",
-    "learnMore": "Узнать больше →"
+    "learnMore": "Узнать больше →",
+    "create": "Создать"
   },
   "nav": {
     "messaging": "Сообщения",
@@ -476,5 +477,48 @@
     "messageSent": "Сообщение отправлено",
     "commentAdded": "Комментарий добавлен",
     "noActivity": "Активности еще нет"
+  },
+  "assignmentRules": {
+    "title": "Автоматическое назначение лидов",
+    "description": "Настройте правила для автоматического распределения лидов между менеджерами",
+    "createRule": "Создать правило",
+    "rulesListTitle": "Список правил",
+    "rulesListDescription": "Правила обрабатываются по приоритету (больший номер = выше приоритет)",
+    "noRules": "Нет правил. Создайте первое правило для автоматического назначения.",
+    "created": "Правило успешно создано",
+    "updated": "Правило успешно обновлено",
+    "deleted": "Правило удалено",
+    "toggled": "Статус правила изменен",
+    "nameRequired": "Название правила обязательно",
+    "managerRequired": "Выберите менеджера для назначения",
+    "confirmDelete": "Вы уверены, что хотите удалить это правило?",
+    "editRule": "Редактировать правило",
+    "dialogDescription": "Настройте условия и действия для автоматического назначения лидов",
+    "ruleName": "Название правила",
+    "ruleNamePlaceholder": "напр., Facebook лиды Ивану",
+    "ruleType": "Тип правила",
+    "type": {
+      "manual": "Ручное",
+      "workload": "Балансировка нагрузки",
+      "source": "По источнику",
+      "campaign": "По кампании"
+    },
+    "assignmentStrategy": "Стратегия назначения",
+    "strategy": {
+      "specific": "Конкретный менеджер",
+      "balanceWorkload": "Балансировать нагрузку"
+    },
+    "selectManager": "Выберите менеджера",
+    "selectManagerPlaceholder": "Выберите менеджера...",
+    "conditionsHelp": "Укажите условия для применения этого правила",
+    "sourceCondition": "Источник (source)",
+    "campaignCondition": "Кампания (campaign)",
+    "priority": "Приоритет",
+    "priorityHelp": "Больший номер = выше приоритет. Правила с более высоким приоритетом обрабатываются первыми.",
+    "active": "Активное",
+    "inactive": "Неактивное",
+    "assignTo": "Назначить",
+    "balanceWorkload": "Балансировка нагрузки между менеджерами",
+    "conditions": "Условия"
   }
 }

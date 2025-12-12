@@ -47,7 +47,8 @@
     "messaging_integrations": "Messaging Integrations",
     "configure_api_credentials_for_instagram_whatsapp_email_and_google_calendar_integration": "Configure API credentials for Instagram, WhatsApp, Email and Google Calendar integration",
     "name": "Name",
-    "learnMore": "Learn More →"
+    "learnMore": "Learn More →",
+    "create": "Create"
   },
   "nav": {
     "messaging": "Messaging",
@@ -492,5 +493,48 @@
     "messageSent": "Message Sent",
     "commentAdded": "Comment Added",
     "noActivity": "No activity yet"
+  },
+  "assignmentRules": {
+    "title": "Lead Assignment Automation",
+    "description": "Configure rules to automatically distribute leads among managers",
+    "createRule": "Create Rule",
+    "rulesListTitle": "Rules List",
+    "rulesListDescription": "Rules are processed by priority (higher number = higher priority)",
+    "noRules": "No rules yet. Create your first rule for automatic assignment.",
+    "created": "Rule created successfully",
+    "updated": "Rule updated successfully",
+    "deleted": "Rule deleted",
+    "toggled": "Rule status changed",
+    "nameRequired": "Rule name is required",
+    "managerRequired": "Please select a manager to assign",
+    "confirmDelete": "Are you sure you want to delete this rule?",
+    "editRule": "Edit Rule",
+    "dialogDescription": "Configure conditions and actions for automatic lead assignment",
+    "ruleName": "Rule Name",
+    "ruleNamePlaceholder": "e.g., Facebook leads to John",
+    "ruleType": "Rule Type",
+    "type": {
+      "manual": "Manual",
+      "workload": "Workload Balancing",
+      "source": "By Source",
+      "campaign": "By Campaign"
+    },
+    "assignmentStrategy": "Assignment Strategy",
+    "strategy": {
+      "specific": "Specific Manager",
+      "balanceWorkload": "Balance Workload"
+    },
+    "selectManager": "Select Manager",
+    "selectManagerPlaceholder": "Choose manager...",
+    "conditionsHelp": "Specify conditions for this rule to apply",
+    "sourceCondition": "Source",
+    "campaignCondition": "Campaign",
+    "priority": "Priority",
+    "priorityHelp": "Higher number = higher priority. Rules with higher priority are processed first.",
+    "active": "Active",
+    "inactive": "Inactive",
+    "assignTo": "Assign to",
+    "balanceWorkload": "Balance workload among managers",
+    "conditions": "Conditions"
   }
 }

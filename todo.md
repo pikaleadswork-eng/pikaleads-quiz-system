@@ -757,3 +757,38 @@
 - [ ] Implement date range selector
 - [ ] Add export analytics data functionality
 - [ ] Add translations for analytics page
+
+
+## Phase 8: Complete Lead Assignment UI - COMPLETED ✅
+- [x] Add assignmentRules translations to uk.json
+- [x] Add assignmentRules translations to ru.json
+- [x] Add assignmentRules translations to en.json
+- [x] Add route to App.tsx for /admin/settings/lead-assignment
+- [x] Add navigation card in AdminSettings page
+- [x] Fix common.create translation
+- [x] Test Lead Assignment page loads correctly
+- [ ] Test creating assignment rule (next)
+- [ ] Test activating/deactivating rule (next)
+- [ ] Test rule with real lead (next)
+
+## Phase 9: Analytics Dashboard - PENDING ⏳
+- [ ] Install Chart.js and react-chartjs-2
+- [ ] Create Analytics page component
+- [ ] Add tRPC procedures for analytics data
+- [ ] Implement conversion rate chart by source
+- [ ] Implement conversion rate chart by campaign
+- [ ] Implement manager performance metrics
+- [ ] Implement revenue trends visualization
+- [ ] Add date range selector
+- [ ] Add translations for analytics page
+- [ ] Add route and navigation for Analytics
+
+## Phase 10: Filter Preset Management - PENDING ⏳
+- [ ] Add delete button to preset dropdown items
+- [ ] Add confirmation dialog for preset deletion
+- [ ] Add rename button to preset dropdown items
+- [ ] Add rename dialog with input field
+- [ ] Update tRPC procedures if needed
+- [ ] Add translations for delete/rename actions
+- [ ] Test delete preset functionality
+- [ ] Test rename preset functionality
