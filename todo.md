@@ -78,3 +78,33 @@
 - [ ] Test admin login
 - [ ] Test all admin cards navigation
 - [ ] Create checkpoint v23.0
+
+
+## Phase 25 - Create Unified CRM Layout with Sidebar
+
+### Create CRMLayout Component
+- [x] Create CRMLayout.tsx with sidebar navigation
+- [x] Add 6 main sections to sidebar:
+  * Messaging Inbox
+  * Leads Management
+  * Services Management
+  * Sales Statistics
+  * Sales Scripts
+  * Settings
+- [x] Apply dark theme (black + purple/yellow)
+- [x] Add language switcher to header
+- [x] Add user profile section
+
+### Integrate All CRM Pages
+- [x] Wrap CRM.tsx in CRMLayout
+- [x] Wrap MessagingInbox.tsx in CRMLayout
+- [x] Wrap ServicesManagement.tsx in CRMLayout
+- [x] Wrap SalesStatistics.tsx in CRMLayout
+- [x] Wrap SalesScripts.tsx in CRMLayout
+- [x] Wrap AdminSettings.tsx in CRMLayout
+
+### Test & Polish
+- [x] Test sidebar navigation works
+- [x] Test all pages load correctly
+- [x] Verify dark theme consistency
+- [ ] Create checkpoint v24.0

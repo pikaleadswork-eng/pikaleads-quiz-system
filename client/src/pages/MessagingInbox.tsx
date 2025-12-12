@@ -28,7 +28,7 @@ import { Input } from "@/components/ui/input";
 import { Loader2, MessageSquare, Mail, Send, Filter } from "lucide-react";
 import { format } from "date-fns";
 import { useAuth } from "@/_core/hooks/useAuth";
-import LanguageSwitcher from "@/components/LanguageSwitcher";
+import CRMLayout from "@/components/CRMLayout";
 import { Link } from "wouter";
 
 export default function MessagingInbox() {
@@ -59,7 +59,6 @@ export default function MessagingInbox() {
         <Link href="/admin">
           <Button>Return Home</Button>
         </Link>
-            <LanguageSwitcher />
       </div>
     );
   }
@@ -82,31 +81,15 @@ export default function MessagingInbox() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white">
-      <div className="container mx-auto py-8">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <Link href="/admin">
-              <Button variant="ghost" className="mb-4">
-                ← Back to Admin
-              </Button>
-            </Link>
-            <LanguageSwitcher />
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-yellow-400 bg-clip-text text-transparent">
-              Messaging Inbox
-            </h1>
-            <p className="text-gray-400 mt-2">
-              All messages from Telegram, WhatsApp, Email, and Instagram in one place
-            </p>
-          </div>
-          <Link href="/admin/messaging">
-            <Button>
-              <Send className="w-4 h-4 mr-2" />
-              Send Bulk Message
-            </Button>
-          </Link>
-        </div>
+    <CRMLayout>
+      <div className="mb-8">
+        <h1 className="text-4xl font-bold text-white mb-2">
+          Messaging Inbox
+        </h1>
+        <p className="text-gray-400 mt-2">
+          All messages from Telegram, WhatsApp, Email, and Instagram in one place
+        </p>
+      </div>
 
         {/* Channel Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
@@ -287,7 +270,6 @@ export default function MessagingInbox() {
             )}
           </CardContent>
         </Card>
-      </div>
-    </div>
+    </CRMLayout>
   );
 }

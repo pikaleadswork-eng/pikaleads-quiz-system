@@ -34,7 +34,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import Footer from "@/components/Footer";
 import { EditLeadForm } from "@/components/EditLeadForm";
-import LanguageSwitcher from "@/components/LanguageSwitcher";
+import CRMLayout from "@/components/CRMLayout";
 import { Loader2, MessageSquare, Send, Filter, X } from "lucide-react";
 import { format } from "date-fns";
 import { useAuth } from "@/_core/hooks/useAuth";
@@ -171,19 +171,15 @@ export default function CRM() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="container py-8">
-        <div className="mb-8 flex items-start justify-between">
-          <div>
-            <h1 className="text-4xl font-black text-foreground mb-2">
-              CRM Dashboard
-            </h1>
-            <p className="text-muted-foreground">
-              Manage your leads and communicate with clients
-            </p>
-          </div>
-          <LanguageSwitcher />
-        </div>
+    <CRMLayout>
+      <div className="mb-8">
+        <h1 className="text-4xl font-black text-white mb-2">
+          Leads Management
+        </h1>
+        <p className="text-gray-400">
+          Manage your leads and communicate with clients
+        </p>
+      </div>
 
         {/* UTM Filters */}
         {uniqueCampaigns.length > 0 && (
@@ -823,8 +819,7 @@ export default function CRM() {
             )}
           </DialogContent>
         </Dialog>
-      </div>
       <Footer />
-    </div>
+    </CRMLayout>
   );
 }

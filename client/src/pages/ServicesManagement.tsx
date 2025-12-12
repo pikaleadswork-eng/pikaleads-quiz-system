@@ -29,7 +29,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Loader2, Plus, Edit, Trash2, Package } from "lucide-react";
 import { useAuth } from "@/_core/hooks/useAuth";
-import LanguageSwitcher from "@/components/LanguageSwitcher";
+import CRMLayout from "@/components/CRMLayout";
 import { Link } from "wouter";
 import { toast } from "sonner";
 
@@ -229,14 +229,12 @@ export default function ServicesManagement() {
         <Link href="/admin">
           <Button>Return Home</Button>
         </Link>
-            <LanguageSwitcher />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-black text-white">
-      <div className="container mx-auto py-8">
+    <CRMLayout>
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
@@ -245,7 +243,6 @@ export default function ServicesManagement() {
                 ← Back to Admin
               </Button>
             </Link>
-            <LanguageSwitcher />
             <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
               Services Management
             </h1>
@@ -594,7 +591,6 @@ export default function ServicesManagement() {
             </div>
           </DialogContent>
         </Dialog>
-      </div>
-    </div>
+    </CRMLayout>
   );
 }

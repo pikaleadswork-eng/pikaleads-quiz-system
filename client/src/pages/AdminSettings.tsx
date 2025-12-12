@@ -13,7 +13,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Loader2, Instagram, MessageCircle, Mail, Calendar, Save, CheckCircle2 } from "lucide-react";
 import { useAuth } from "@/_core/hooks/useAuth";
-import LanguageSwitcher from "@/components/LanguageSwitcher";
+import CRMLayout from "@/components/CRMLayout";
 import { Link } from "wouter";
 import { toast } from "sonner";
 
@@ -151,18 +151,8 @@ export default function AdminSettings() {
   const googleCalendarSettings = settings?.find((s: any) => s.provider === "google_calendar");
 
   return (
-    <div className="min-h-screen bg-black text-white">
-      <div className="container mx-auto py-8">
-        {/* Header */}
+    <CRMLayout>
         <div className="mb-8">
-          <div className="flex items-center justify-between mb-4">
-            <Link href="/admin">
-              <Button variant="ghost">
-                ← Back to Admin
-              </Button>
-            </Link>
-            <LanguageSwitcher />
-          </div>
           <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent">
             Integration Settings
           </h1>
@@ -449,7 +439,6 @@ export default function AdminSettings() {
             </Card>
           </TabsContent>
         </Tabs>
-      </div>
-    </div>
+    </CRMLayout>
   );
 }
