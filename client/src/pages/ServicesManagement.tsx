@@ -29,6 +29,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Loader2, Plus, Edit, Trash2, Package } from "lucide-react";
 import { useAuth } from "@/_core/hooks/useAuth";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { Link } from "wouter";
 import { toast } from "sonner";
 
@@ -228,6 +229,7 @@ export default function ServicesManagement() {
         <Link href="/admin">
           <Button>Return Home</Button>
         </Link>
+            <LanguageSwitcher />
       </div>
     );
   }
@@ -243,6 +245,7 @@ export default function ServicesManagement() {
                 ← Back to Admin
               </Button>
             </Link>
+            <LanguageSwitcher />
             <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
               Services Management
             </h1>

@@ -28,6 +28,7 @@ import { Input } from "@/components/ui/input";
 import { Loader2, MessageSquare, Mail, Send, Filter } from "lucide-react";
 import { format } from "date-fns";
 import { useAuth } from "@/_core/hooks/useAuth";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { Link } from "wouter";
 
 export default function MessagingInbox() {
@@ -58,6 +59,7 @@ export default function MessagingInbox() {
         <Link href="/admin">
           <Button>Return Home</Button>
         </Link>
+            <LanguageSwitcher />
       </div>
     );
   }
@@ -90,6 +92,7 @@ export default function MessagingInbox() {
                 ← Back to Admin
               </Button>
             </Link>
+            <LanguageSwitcher />
             <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-yellow-400 bg-clip-text text-transparent">
               Messaging Inbox
             </h1>

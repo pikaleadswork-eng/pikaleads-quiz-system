@@ -28,6 +28,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Loader2, Plus, Edit, Trash2, FileText } from "lucide-react";
 import { useAuth } from "@/_core/hooks/useAuth";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { Link } from "wouter";
 import { toast } from "sonner";
 
@@ -144,6 +145,7 @@ export default function SalesScripts() {
         <Link href="/admin">
           <Button>Return Home</Button>
         </Link>
+            <LanguageSwitcher />
       </div>
     );
   }
@@ -186,6 +188,7 @@ export default function SalesScripts() {
                 ← Back to Admin
               </Button>
             </Link>
+            <LanguageSwitcher />
             <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
               Sales Scripts
             </h1>

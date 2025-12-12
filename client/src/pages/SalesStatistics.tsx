@@ -19,6 +19,7 @@ import { Badge } from "@/components/ui/badge";
 import { Loader2, DollarSign, TrendingUp, ShoppingCart, Users } from "lucide-react";
 import { format } from "date-fns";
 import { useAuth } from "@/_core/hooks/useAuth";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { Link } from "wouter";
 
 export default function SalesStatistics() {
@@ -50,6 +51,7 @@ export default function SalesStatistics() {
         <Link href="/admin">
           <Button>Return Home</Button>
         </Link>
+            <LanguageSwitcher />
       </div>
     );
   }
@@ -82,6 +84,7 @@ export default function SalesStatistics() {
                 ← Back to Admin
               </Button>
             </Link>
+            <LanguageSwitcher />
             <h1 className="text-4xl font-bold bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text text-transparent">
               Sales Statistics
             </h1>

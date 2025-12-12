@@ -13,6 +13,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Loader2, Instagram, MessageCircle, Mail, Calendar, Save, CheckCircle2 } from "lucide-react";
 import { useAuth } from "@/_core/hooks/useAuth";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { Link } from "wouter";
 import { toast } from "sonner";
 
@@ -154,11 +155,14 @@ export default function AdminSettings() {
       <div className="container mx-auto py-8">
         {/* Header */}
         <div className="mb-8">
-          <Link href="/admin">
-            <Button variant="ghost" className="mb-4">
-              ← Back to Admin
-            </Button>
-          </Link>
+          <div className="flex items-center justify-between mb-4">
+            <Link href="/admin">
+              <Button variant="ghost">
+                ← Back to Admin
+              </Button>
+            </Link>
+            <LanguageSwitcher />
+          </div>
           <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent">
             Integration Settings
           </h1>
