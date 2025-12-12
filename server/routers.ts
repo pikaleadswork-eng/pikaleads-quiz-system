@@ -5,6 +5,7 @@ import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { detectLanguageFromIP, getClientIP } from "./geolocation";
+import { messagingRouter } from "./routers/messaging";
 
 const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
   if (ctx.user.role !== "admin") {
@@ -682,6 +683,8 @@ export const appRouter = router({
         return stats;
       }),
   }),
+
+  messaging: messagingRouter,
 
   calendar: router({
     getAppointments: protectedProcedure.query(async () => {
