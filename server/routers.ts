@@ -122,15 +122,49 @@ export const appRouter = router({
         });
         
         // Auto-assign lead to manager if rules exist
+        let assignedManagerName: string | undefined;
         try {
-          await autoAssignLead(leadId, input.quizName);
+          const managerId = await autoAssignLead(leadId, input.quizName);
+          if (managerId) {
+            const { users } = await import("../drizzle/schema");
+            const { getDb } = await import("./db");
+            const { eq } = await import("drizzle-orm");
+            const db = await getDb();
+            if (db) {
+              const manager = await db.select().from(users).where(eq(users.id, managerId)).limit(1);
+              assignedManagerName = manager[0]?.name;
+            }
+          }
         } catch (error) {
           console.warn("[Quiz] Auto-assignment failed:", error);
         }
         
+        // Send new format Telegram notification
+        const { sendLeadNotification } = await import("./_core/telegramNotifications");
+        try {
+          await sendLeadNotification({
+            quizName: input.quizName,
+            firstName: input.name.split(" ")[0] || input.name,
+            lastName: input.name.split(" ").slice(1).join(" ") || undefined,
+            phone: input.phone,
+            telegram: input.telegram,
+            email: input.email,
+            utmSource: input.utmSource,
+            utmMedium: input.utmMedium,
+            utmCampaign: input.utmCampaign,
+            utmContent: input.utmContent,
+            utmTerm: input.utmTerm,
+            assignedManager: assignedManagerName,
+            leadScore,
+          });
+        } catch (error) {
+          console.warn("[Quiz] New Telegram notification failed:", error);
+        }
+        
+        // Keep old format for backward compatibility
         const telegramSent = await sendTelegramMessage(message);
         if (!telegramSent) {
-          console.warn("[Quiz] Lead saved but Telegram notification failed");
+          console.warn("[Quiz] Lead saved but old Telegram notification failed");
         }
         
         return { success: true, leadId };

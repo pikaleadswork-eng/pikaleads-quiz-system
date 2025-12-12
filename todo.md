@@ -142,3 +142,69 @@
 - [x] Services database
 - [x] Sales tracking
 - [x] Sales scripts database
+
+
+## Phase 33 - Final CRM Features: Manager Assignment, IP Telephony, Meetings & Notifications (CURRENT)
+
+### Manager Assignment Tracking
+- [x] Add assignedManagerId to conversations table
+- [x] Add assignedManagerId to leads table (already exists as 'assignedTo')
+- [x] Create tRPC procedure for assigning manager (messaging.assignManager)
+- [ ] Show assigned manager in chat list
+- [ ] Show assigned manager in lead info panel
+- [ ] Add dropdown to assign/change manager
+- [ ] Track assignment history in interaction_history
+
+### Zadarma IP Telephony Integration
+- [x] Add Zadarma settings to integration_settings table (already exists)
+- [x] Create Zadarma API helper functions (initiate call, get call status)
+- [x] Add call_logs table (leadId, managerId, phone, duration, status, recordingUrl)
+- [x] Create tRPC procedures for Zadarma calls (messaging.initiateCall)
+- [x] Add "Call" button with yellow background next to phone number
+- [x] Show channel selector (Telegram/Phone/WhatsApp) with icons
+- [ ] Implement in-CRM call widget (Zadarma SIP) (requires Zadarma account setup)
+- [x] Log all calls to database
+
+### Meeting Scheduling (Google Meet & Zoom)
+- [x] Add Google Meet OAuth integration (helper functions created)
+- [x] Add Zoom OAuth integration (helper functions created)
+- [x] Create meetings table (leadId, managerId, platform, meetingUrl, scheduledAt)
+- [x] Create tRPC procedure for scheduling meetings (messaging.scheduleMeeting)
+- [x] Add "Schedule Meeting" button in LeadInfoPanel
+- [x] Meeting type selector (Google Meet / Zoom)
+- [x] Date/time picker for meeting
+- [x] Auto-generate meeting link (done in backend)
+- [ ] Send meeting link to lead via selected channel (TODO: integrate with messaging)
+
+### Reminder Calendar & Notifications
+- [x] Create reminders table (leadId, managerId, type, message, scheduledAt, status)
+- [x] Create tRPC procedures (messaging.createReminder, messaging.getUpcomingReminders)
+- [ ] Add calendar view for reminders
+- [ ] Add "Schedule Reminder" button
+- [ ] Implement browser notification when reminder triggers
+- [ ] Add sound alert in CRM when time to contact lead
+- [ ] Show upcoming reminders in dashboard
+
+### Telegram Bot Notifications
+- [x] Create Telegram bot notification function
+- [x] Send notification when new lead created (integrated into quiz submission)
+- [x] Notification format:
+  * Квіз: {quizName}
+  * Ім'я: {firstName}
+  * Прізвище: {lastName}
+  * Телефон: {phone}
+  * Telegram: {telegram}
+  * Email: {email}
+  * UTM мітки: {utmSource, utmMedium, utmCampaign}
+  * Менеджер: {assignedManager}
+- [ ] Add notification for scheduled call reminders (TODO: create cron job)
+- [ ] Add notification for scheduled meeting reminders (TODO: create cron job)
+
+### UI Updates
+- [x] Update LeadInfoPanel with call buttons
+- [x] Add channel selector UI (Telegram/Phone/WhatsApp icons)
+- [x] Style call button with yellow background (#FFD93D)
+- [ ] Add manager assignment dropdown (TODO)
+- [ ] Show assigned manager badge (TODO)
+- [x] Add meeting scheduling modal
+- [ ] Add reminder calendar widget (TODO)

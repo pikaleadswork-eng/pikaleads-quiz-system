@@ -358,6 +358,7 @@ export type InsertIntegrationSetting = typeof integrationSettings.$inferInsert;
 export const conversations = mysqlTable("conversations", {
   id: int("id").autoincrement().primaryKey(),
   leadId: int("leadId").notNull(), // Reference to leads table
+  assignedManagerId: int("assignedManagerId"), // Manager assigned to this conversation
   channel: varchar("channel", { length: 50 }).notNull(), // whatsapp, instagram, telegram
   externalId: varchar("externalId", { length: 255 }).notNull(), // Phone number, Instagram username, Telegram chat ID
   lastMessageAt: timestamp("lastMessageAt").defaultNow().notNull(),
@@ -445,3 +446,67 @@ export const interactionHistory = mysqlTable("interaction_history", {
 
 export type InteractionHistory = typeof interactionHistory.$inferSelect;
 export type InsertInteractionHistory = typeof interactionHistory.$inferInsert;
+
+/**
+ * Call Logs table for tracking all phone calls
+ */
+export const callLogs = mysqlTable("call_logs", {
+  id: int("id").autoincrement().primaryKey(),
+  leadId: int("leadId").notNull(), // Reference to leads table
+  managerId: int("managerId").notNull(), // Manager who made the call
+  phone: varchar("phone", { length: 50 }).notNull(), // Phone number called
+  provider: varchar("provider", { length: 50 }).notNull(), // zadarma, twilio, etc.
+  callId: varchar("callId", { length: 255 }), // External call ID from provider
+  duration: int("duration").default(0), // Call duration in seconds
+  status: varchar("status", { length: 50 }).notNull(), // initiated, ringing, answered, completed, failed, missed
+  recordingUrl: varchar("recordingUrl", { length: 500 }), // URL to call recording
+  notes: text("notes"), // Call notes
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  completedAt: timestamp("completedAt"),
+});
+
+export type CallLog = typeof callLogs.$inferSelect;
+export type InsertCallLog = typeof callLogs.$inferInsert;
+
+/**
+ * Meetings table for scheduled video calls
+ */
+export const meetings = mysqlTable("meetings", {
+  id: int("id").autoincrement().primaryKey(),
+  leadId: int("leadId").notNull(), // Reference to leads table
+  managerId: int("managerId").notNull(), // Manager who scheduled the meeting
+  platform: varchar("platform", { length: 50 }).notNull(), // google_meet, zoom
+  meetingUrl: varchar("meetingUrl", { length: 500 }).notNull(), // Meeting link
+  externalId: varchar("externalId", { length: 255 }), // External meeting ID from provider
+  title: varchar("title", { length: 255 }).notNull(),
+  description: text("description"),
+  scheduledAt: timestamp("scheduledAt").notNull(),
+  duration: int("duration").default(30), // Duration in minutes
+  status: varchar("status", { length: 50 }).default("scheduled").notNull(), // scheduled, completed, cancelled, no_show
+  notes: text("notes"), // Meeting notes
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Meeting = typeof meetings.$inferSelect;
+export type InsertMeeting = typeof meetings.$inferInsert;
+
+/**
+ * Reminders table for scheduled notifications
+ */
+export const reminders = mysqlTable("reminders", {
+  id: int("id").autoincrement().primaryKey(),
+  leadId: int("leadId"), // Reference to leads table (optional - can be general reminder)
+  managerId: int("managerId").notNull(), // Manager who created the reminder
+  type: varchar("type", { length: 50 }).notNull(), // call, meeting, follow_up, task
+  title: varchar("title", { length: 255 }).notNull(),
+  message: text("message"),
+  scheduledAt: timestamp("scheduledAt").notNull(),
+  status: varchar("status", { length: 50 }).default("pending").notNull(), // pending, sent, dismissed
+  notifyVia: varchar("notifyVia", { length: 50 }).default("crm").notNull(), // crm, telegram, email
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  sentAt: timestamp("sentAt"),
+});
+
+export type Reminder = typeof reminders.$inferSelect;
+export type InsertReminder = typeof reminders.$inferInsert;

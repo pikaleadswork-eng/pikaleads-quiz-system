@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, Clock, MessageSquare, Phone, User, Mail } from "lucide-react";
+import { Calendar, Clock, MessageSquare, Phone, User, Mail, Video } from "lucide-react";
 import { toast } from "sonner";
 
 interface LeadInfoPanelProps {
@@ -23,7 +23,9 @@ interface LeadInfoPanelProps {
 export function LeadInfoPanel({ leadId }: LeadInfoPanelProps) {
   const [scheduleMessageOpen, setScheduleMessageOpen] = useState(false);
   const [scheduleCallOpen, setScheduleCallOpen] = useState(false);
+  const [scheduleMeetingOpen, setScheduleMeetingOpen] = useState(false);
   const [noteText, setNoteText] = useState("");
+  const [selectedChannel, setSelectedChannel] = useState<"phone" | "telegram" | "whatsapp">("phone");
 
   // Fetch lead info
   const { data: leadInfo, isLoading, refetch } = trpc.messaging.getLeadInfo.useQuery({ leadId });
@@ -71,6 +73,27 @@ export function LeadInfoPanel({ leadId }: LeadInfoPanelProps) {
     onSuccess: () => {
       toast.success("Note added");
       setNoteText("");
+      refetch();
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
+  const initiateCall = trpc.messaging.initiateCall.useMutation({
+    onSuccess: () => {
+      toast.success("Call initiated");
+      refetch();
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
+  const scheduleMeeting = trpc.messaging.scheduleMeeting.useMutation({
+    onSuccess: () => {
+      toast.success("Meeting scheduled");
+      setScheduleMeetingOpen(false);
       refetch();
     },
     onError: (error) => {
@@ -127,7 +150,40 @@ export function LeadInfoPanel({ leadId }: LeadInfoPanelProps) {
             </div>
             <div>
               <Label className="text-zinc-400 text-xs">Phone</Label>
-              <p className="text-white">{leadInfo.phone}</p>
+              <div className="flex items-center gap-2 mt-1">
+                <p className="text-white flex-1">{leadInfo.phone}</p>
+                <div className="flex gap-1">
+                  <Button
+                    size="sm"
+                    onClick={() => {
+                      setSelectedChannel("phone");
+                      initiateCall.mutate({ leadId, phone: leadInfo.phone });
+                    }}
+                    className="bg-yellow-500 hover:bg-yellow-600 text-black h-7 px-2"
+                  >
+                    <Phone className="w-3 h-3 mr-1" />
+                    Call
+                  </Button>
+                  {leadInfo.telegram && (
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => setSelectedChannel("telegram")}
+                      className="h-7 px-2 border-blue-500 text-blue-400 hover:bg-blue-500/20"
+                    >
+                      <MessageSquare className="w-3 h-3" />
+                    </Button>
+                  )}
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => setSelectedChannel("whatsapp")}
+                    className="h-7 px-2 border-green-500 text-green-400 hover:bg-green-500/20"
+                  >
+                    <MessageSquare className="w-3 h-3" />
+                  </Button>
+                </div>
+              </div>
             </div>
             {leadInfo.email && (
               <div>
@@ -221,6 +277,59 @@ export function LeadInfoPanel({ leadId }: LeadInfoPanelProps) {
                     }}
                   />
                 </div>
+              </div>
+            )}
+
+            <Button
+              onClick={() => setScheduleMeetingOpen(!scheduleMeetingOpen)}
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+              size="sm"
+            >
+              <Video className="w-4 h-4 mr-2" />
+              Schedule Meeting
+            </Button>
+            {scheduleMeetingOpen && (
+              <div className="space-y-3 p-3 bg-zinc-800 rounded-lg">
+                <div>
+                  <Label className="text-white text-xs">Platform</Label>
+                  <Select defaultValue="google_meet">
+                    <SelectTrigger className="bg-zinc-900 border-zinc-700 text-white mt-1">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-zinc-900 border-zinc-800">
+                      <SelectItem value="google_meet" className="text-white">
+                        Google Meet
+                      </SelectItem>
+                      <SelectItem value="zoom" className="text-white">
+                        Zoom
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <Label className="text-white text-xs">Title</Label>
+                  <Input
+                    placeholder="Meeting title"
+                    className="bg-zinc-900 border-zinc-700 text-white mt-1"
+                  />
+                </div>
+                <div>
+                  <Label className="text-white text-xs">Date & Time</Label>
+                  <Input
+                    type="datetime-local"
+                    className="bg-zinc-900 border-zinc-700 text-white mt-1"
+                  />
+                </div>
+                <Button
+                  size="sm"
+                  className="w-full bg-purple-600 hover:bg-purple-700"
+                  onClick={() => {
+                    // Will implement with proper state management
+                    toast.info("Meeting scheduling coming soon");
+                  }}
+                >
+                  Create Meeting
+                </Button>
               </div>
             )}
 

@@ -490,4 +490,246 @@ export const messagingRouter = router({
 
       return { success: true };
     }),
+
+  /**
+   * Initiate call via Zadarma
+   */
+  initiateCall: adminProcedure
+    .input(
+      z.object({
+        leadId: z.number(),
+        phone: z.string(),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      const { getIntegrationSettingByProvider } = await import("../db");
+      const { initiateCall } = await import("../_core/zadarma");
+      
+      // Get Zadarma credentials
+      const zadarmaSettings = await getIntegrationSettingByProvider("zadarma");
+      if (!zadarmaSettings || !zadarmaSettings.isActive) {
+        throw new TRPCError({
+          code: "PRECONDITION_FAILED",
+          message: "Zadarma integration not configured",
+        });
+      }
+
+      const credentials = JSON.parse(zadarmaSettings.credentials);
+      
+      // Initiate call
+      const callResult = await initiateCall(credentials, input.phone);
+      
+      // Log call to database
+      const { callLogs } = await import("../../drizzle/schema");
+      const { getDb } = await import("../db");
+      const db = await getDb();
+      if (db) {
+        await db.insert(callLogs).values({
+          leadId: input.leadId,
+          managerId: ctx.user.id,
+          phone: input.phone,
+          provider: "zadarma",
+          callId: callResult.callId,
+          status: "initiated",
+        });
+      }
+      
+      // Log to interaction history
+      const { createInteractionHistory } = await import("../db");
+      await createInteractionHistory({
+        leadId: input.leadId,
+        type: "call",
+        channel: "phone",
+        message: `Call initiated to ${input.phone}`,
+        direction: "outbound",
+        userId: ctx.user.id,
+      });
+
+      return callResult;
+    }),
+
+  /**
+   * Schedule a meeting (Google Meet or Zoom)
+   */
+  scheduleMeeting: adminProcedure
+    .input(
+      z.object({
+        leadId: z.number(),
+        platform: z.enum(["google_meet", "zoom"]),
+        title: z.string(),
+        description: z.string().optional(),
+        scheduledAt: z.date(),
+        duration: z.number().default(30),
+        attendeeEmail: z.string().optional(),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      const { getIntegrationSettingByProvider } = await import("../db");
+      const { createGoogleMeet, createZoomMeeting, generateSimpleMeetLink } = await import("../_core/meetings");
+      
+      let meetingUrl: string;
+      let externalId: string | undefined;
+
+      if (input.platform === "google_meet") {
+        const settings = await getIntegrationSettingByProvider("google_meet");
+        if (settings && settings.isActive) {
+          const credentials = JSON.parse(settings.credentials);
+          const result = await createGoogleMeet(credentials, {
+            title: input.title,
+            description: input.description,
+            startTime: input.scheduledAt,
+            duration: input.duration,
+            attendeeEmail: input.attendeeEmail,
+          });
+          meetingUrl = result.meetingUrl;
+          externalId = result.eventId;
+        } else {
+          // Fallback to simple meet link
+          meetingUrl = await generateSimpleMeetLink();
+        }
+      } else {
+        const settings = await getIntegrationSettingByProvider("zoom");
+        if (!settings || !settings.isActive) {
+          throw new TRPCError({
+            code: "PRECONDITION_FAILED",
+            message: "Zoom integration not configured",
+          });
+        }
+        const credentials = JSON.parse(settings.credentials);
+        const result = await createZoomMeeting(credentials, {
+          title: input.title,
+          description: input.description,
+          startTime: input.scheduledAt,
+          duration: input.duration,
+        });
+        meetingUrl = result.meetingUrl;
+        externalId = result.meetingId;
+      }
+
+      // Save meeting to database
+      const { meetings } = await import("../../drizzle/schema");
+      const { getDb } = await import("../db");
+      const db = await getDb();
+      if (db) {
+        await db.insert(meetings).values({
+          leadId: input.leadId,
+          managerId: ctx.user.id,
+          platform: input.platform,
+          meetingUrl,
+          externalId,
+          title: input.title,
+          description: input.description,
+          scheduledAt: input.scheduledAt,
+          duration: input.duration,
+          status: "scheduled",
+        });
+      }
+
+      // Log to interaction history
+      const { createInteractionHistory } = await import("../db");
+      await createInteractionHistory({
+        leadId: input.leadId,
+        type: "meeting",
+        message: `Meeting scheduled: ${input.title}`,
+        userId: ctx.user.id,
+        metadata: JSON.stringify({ platform: input.platform, meetingUrl }),
+      });
+
+      return { meetingUrl, externalId };
+    }),
+
+  /**
+   * Create a reminder
+   */
+  createReminder: adminProcedure
+    .input(
+      z.object({
+        leadId: z.number().optional(),
+        type: z.enum(["call", "meeting", "follow_up", "task"]),
+        title: z.string(),
+        message: z.string().optional(),
+        scheduledAt: z.date(),
+        notifyVia: z.enum(["crm", "telegram", "email"]).default("crm"),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      const { reminders } = await import("../../drizzle/schema");
+      const { getDb } = await import("../db");
+      const db = await getDb();
+      
+      if (!db) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Database not available",
+        });
+      }
+
+      const result = await db.insert(reminders).values({
+        leadId: input.leadId,
+        managerId: ctx.user.id,
+        type: input.type,
+        title: input.title,
+        message: input.message,
+        scheduledAt: input.scheduledAt,
+        status: "pending",
+        notifyVia: input.notifyVia,
+      });
+
+      return { id: (result as any).insertId, ...input };
+    }),
+
+  /**
+   * Get upcoming reminders for current user
+   */
+  getUpcomingReminders: adminProcedure.query(async ({ ctx }) => {
+    const { reminders } = await import("../../drizzle/schema");
+    const { getDb } = await import("../db");
+    const { eq, and, gte } = await import("drizzle-orm");
+    const db = await getDb();
+    
+    if (!db) return [];
+
+    return db
+      .select()
+      .from(reminders)
+      .where(
+        and(
+          eq(reminders.managerId, ctx.user.id),
+          eq(reminders.status, "pending"),
+          gte(reminders.scheduledAt, new Date())
+        )
+      )
+      .orderBy(reminders.scheduledAt);
+  }),
+
+  /**
+   * Assign manager to conversation
+   */
+  assignManager: adminProcedure
+    .input(
+      z.object({
+        conversationId: z.number(),
+        managerId: z.number(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const { conversations } = await import("../../drizzle/schema");
+      const { getDb } = await import("../db");
+      const { eq } = await import("drizzle-orm");
+      const db = await getDb();
+      
+      if (!db) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Database not available",
+        });
+      }
+
+      await db
+        .update(conversations)
+        .set({ assignedManagerId: input.managerId })
+        .where(eq(conversations.id, input.conversationId));
+
+      return { success: true };
+    }),
 });

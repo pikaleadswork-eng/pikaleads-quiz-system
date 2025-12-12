@@ -127,6 +127,13 @@
       "when": 1765548555926,
       "tag": "0017_wise_blizzard",
       "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "5",
+      "when": 1765549112798,
+      "tag": "0018_friendly_shocker",
+      "breakpoints": true
     }
   ]
 }
