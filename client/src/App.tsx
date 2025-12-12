@@ -38,6 +38,7 @@ import ServicesManagement from "./pages/ServicesManagement";
 import LeadAssignment from "./pages/LeadAssignment";
 import CRMDashboard from "./pages/CRMDashboard";
 import AdminCalendar from "./pages/AdminCalendar";
+import AdminWebhooks from "./pages/AdminWebhooks";
 import ManagerDashboard from "./pages/ManagerDashboard";
 import CRM from "./pages/CRM";
 import Privacy from "./pages/Privacy";
@@ -95,6 +96,7 @@ function Router() {
       <Route path={"/admin/settings/ip-telephony"} component={SettingsIPTelephony} />
       <Route path={"/admin/settings/lead-assignment"} component={LeadAssignment} />
       <Route path={"/admin/calendar"} component={AdminCalendar} />
+      <Route path={"/admin/webhooks"} component={AdminWebhooks} />
       
       {/* CRM & Manager Dashboard */}
       <Route path={"/manager"} component={ManagerDashboard} />

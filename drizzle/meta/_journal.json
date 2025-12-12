@@ -169,6 +169,13 @@
       "when": 1765580390102,
       "tag": "0023_milky_sheva_callister",
       "breakpoints": true
+    },
+    {
+      "idx": 24,
+      "version": "5",
+      "when": 1765580962152,
+      "tag": "0024_wealthy_squirrel_girl",
+      "breakpoints": true
     }
   ]
 }

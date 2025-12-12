@@ -897,7 +897,8 @@
 - [x] Add custom webhook configuration
 - [x] Add webhook test button
 - [x] Add translations for webhooks page (UK)
-- [ ] Add translations for webhooks page (RU/EN)
+- [x] Add translations for webhooks page (RU/EN)
+- [x] Add webhook route to App.tsx
 - [ ] Create webhook trigger on new lead creation
 - [ ] Add HubSpot API integration helper
 - [ ] Add Salesforce API integration helper
@@ -929,6 +930,8 @@
 
 
 ### Advanced Quiz Editor
+- [x] Extend quiz schema with new question types (quizzes, quiz_questions, quiz_answer_options)
+- [x] Push database schema changes
 - [ ] Extend quiz schema with new question types (image_choice, slider, rating, file_upload)
 - [ ] Add conditional logic fields to questions (show_if, hide_if)
 - [ ] Add question branching/skip logic

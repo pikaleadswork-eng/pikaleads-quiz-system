@@ -612,3 +612,67 @@ export const webhookLogs = mysqlTable("webhookLogs", {
 
 export type WebhookLog = typeof webhookLogs.$inferSelect;
 export type InsertWebhookLog = typeof webhookLogs.$inferInsert;
+
+
+/**
+ * Quizzes table - store quiz templates
+ */
+export const quizzes = mysqlTable("quizzes", {
+  id: int("id").autoincrement().primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  slug: varchar("slug", { length: 255 }).notNull().unique(), // URL-friendly identifier
+  description: text("description"),
+  isActive: boolean("isActive").default(true).notNull(),
+  createdBy: int("createdBy").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Quiz = typeof quizzes.$inferSelect;
+export type InsertQuiz = typeof quizzes.$inferInsert;
+
+/**
+ * Quiz Questions table - store questions with various types
+ */
+export const quizQuestions = mysqlTable("quiz_questions", {
+  id: int("id").autoincrement().primaryKey(),
+  quizId: int("quizId").notNull(), // Reference to quizzes table
+  questionText: text("questionText").notNull(),
+  questionType: mysqlEnum("questionType", [
+    "single_choice",      // Radio buttons
+    "multiple_choice",    // Checkboxes
+    "image_choice",       // Choice with images
+    "text_input",         // Short text
+    "textarea",           // Long text
+    "slider",             // Range slider
+    "rating",             // Star rating
+    "file_upload",        // File upload
+    "email",              // Email input
+    "phone",              // Phone input
+  ]).notNull(),
+  order: int("order").notNull(), // Display order
+  isRequired: boolean("isRequired").default(true).notNull(),
+  config: text("config"), // JSON for question-specific config (e.g., slider min/max, rating stars count)
+  conditionalLogic: text("conditionalLogic"), // JSON for conditional display rules
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type QuizQuestion = typeof quizQuestions.$inferSelect;
+export type InsertQuizQuestion = typeof quizQuestions.$inferInsert;
+
+/**
+ * Quiz Answer Options table - store answer choices for choice-based questions
+ */
+export const quizAnswerOptions = mysqlTable("quiz_answer_options", {
+  id: int("id").autoincrement().primaryKey(),
+  questionId: int("questionId").notNull(), // Reference to quiz_questions table
+  optionText: varchar("optionText", { length: 500 }).notNull(),
+  imageUrl: varchar("imageUrl", { length: 500 }), // For image_choice questions
+  order: int("order").notNull(),
+  score: int("score").default(0), // For scoring/lead qualification
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type QuizAnswerOption = typeof quizAnswerOptions.$inferSelect;
+export type InsertQuizAnswerOption = typeof quizAnswerOptions.$inferInsert;
