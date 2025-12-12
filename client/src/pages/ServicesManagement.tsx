@@ -451,6 +451,7 @@ export default function ServicesManagement() {
               <div>
                 <Label htmlFor="service-name" className="mb-2 block">Service Name *</Label>
                 <Input
+                  className="bg-zinc-800 border-zinc-700"
                   id="service-name"
                   value={serviceFormData.name}
                   onChange={(e) => setServiceFormData({ ...serviceFormData, name: e.target.value })}
@@ -461,6 +462,7 @@ export default function ServicesManagement() {
               <div>
                 <Label htmlFor="service-type" className="mb-2 block">Service Type *</Label>
                 <Input
+                  className="bg-zinc-800 border-zinc-700"
                   id="service-type"
                   value={serviceFormData.type}
                   onChange={(e) => setServiceFormData({ ...serviceFormData, type: e.target.value })}
@@ -471,6 +473,7 @@ export default function ServicesManagement() {
               <div>
                 <Label htmlFor="service-price" className="mb-2 block">Price ($) *</Label>
                 <Input
+                  className="bg-zinc-800 border-zinc-700"
                   id="service-price"
                   type="number"
                   value={serviceFormData.price}
@@ -482,6 +485,7 @@ export default function ServicesManagement() {
               <div>
                 <Label htmlFor="service-description" className="mb-2 block">Description</Label>
                 <Textarea
+                  className="bg-zinc-800 border-zinc-700"
                   id="service-description"
                   value={serviceFormData.description}
                   onChange={(e) => setServiceFormData({ ...serviceFormData, description: e.target.value })}
@@ -542,6 +546,7 @@ export default function ServicesManagement() {
               <div>
                 <Label htmlFor="additional-name" className="mb-2 block">Service Name *</Label>
                 <Input
+                  className="bg-zinc-800 border-zinc-700"
                   id="additional-name"
                   value={additionalFormData.name}
                   onChange={(e) => setAdditionalFormData({ ...additionalFormData, name: e.target.value })}
@@ -552,6 +557,7 @@ export default function ServicesManagement() {
               <div>
                 <Label htmlFor="additional-price" className="mb-2 block">Price ($) *</Label>
                 <Input
+                  className="bg-zinc-800 border-zinc-700"
                   id="additional-price"
                   type="number"
                   value={additionalFormData.price}
@@ -563,6 +569,7 @@ export default function ServicesManagement() {
               <div>
                 <Label htmlFor="additional-description" className="mb-2 block">Description</Label>
                 <Textarea
+                  className="bg-zinc-800 border-zinc-700"
                   id="additional-description"
                   value={additionalFormData.description}
                   onChange={(e) => setAdditionalFormData({ ...additionalFormData, description: e.target.value })}

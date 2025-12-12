@@ -19,7 +19,9 @@ import { toast } from "sonner";
 export function SettingsLeadStatuses() {
   const { t } = useTranslation();
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [newStatus, setNewStatus] = useState({ name: "", color: "#3B82F6", order: 0, isDefault: false });
+  const [editingStatus, setEditingStatus] = useState<any>(null);
 
   const { data: statuses, refetch: refetchStatuses } = trpc.settings.getLeadStatuses.useQuery();
   
@@ -28,6 +30,18 @@ export function SettingsLeadStatuses() {
       toast.success(t("common.success"));
       setIsCreateDialogOpen(false);
       setNewStatus({ name: "", color: "#3B82F6", order: 0, isDefault: false });
+      refetchStatuses();
+    },
+    onError: (error: any) => {
+      toast.error(error.message);
+    },
+  });
+
+  const updateStatusMutation = trpc.settings.updateLeadStatus.useMutation({
+    onSuccess: () => {
+      toast.success(t("common.success"));
+      setIsEditDialogOpen(false);
+      setEditingStatus(null);
       refetchStatuses();
     },
     onError: (error: any) => {
@@ -51,6 +65,22 @@ export function SettingsLeadStatuses() {
       color: newStatus.color,
       order: statuses ? statuses.length : 0,
       isDefault: newStatus.isDefault,
+    });
+  };
+
+  const handleEditStatus = (status: any) => {
+    setEditingStatus(status);
+    setIsEditDialogOpen(true);
+  };
+
+  const handleUpdateStatus = () => {
+    if (!editingStatus) return;
+    updateStatusMutation.mutate({
+      id: editingStatus.id,
+      name: editingStatus.name,
+      color: editingStatus.color,
+      order: editingStatus.order,
+      isDefault: editingStatus.isDefault,
     });
   };
 
@@ -87,7 +117,11 @@ export function SettingsLeadStatuses() {
                   {status.name}
                 </div>
                 <div className="flex gap-2">
-                  <Button variant="ghost" size="icon">
+                  <Button 
+                    variant="ghost" 
+                    size="icon"
+                    onClick={() => handleEditStatus(status)}
+                  >
                     <Edit className="h-4 w-4" />
                   </Button>
                   <Button 
@@ -121,8 +155,9 @@ export function SettingsLeadStatuses() {
           </DialogHeader>
           <div className="space-y-4">
             <div>
-              <Label htmlFor="statusName">{t("leadStatuses.statusName")}</Label>
+              <Label htmlFor="statusName" className="mb-2 block">{t("leadStatuses.statusName")}</Label>
               <Input
+                className="bg-zinc-800 border-zinc-700"
                 id="statusName"
                 value={newStatus.name}
                 onChange={(e) => setNewStatus({ ...newStatus, name: e.target.value })}
@@ -130,16 +165,17 @@ export function SettingsLeadStatuses() {
               />
             </div>
             <div>
-              <Label htmlFor="statusColor">{t("leadStatuses.statusColor")}</Label>
+              <Label htmlFor="statusColor" className="mb-2 block">{t("leadStatuses.statusColor")}</Label>
               <div className="flex gap-2">
                 <Input
                   id="statusColor"
                   type="color"
                   value={newStatus.color}
                   onChange={(e) => setNewStatus({ ...newStatus, color: e.target.value })}
-                  className="w-20 h-10"
+                  className="w-20 h-10 bg-zinc-800 border-zinc-700"
                 />
                 <Input
+                  className="bg-zinc-800 border-zinc-700"
                   value={newStatus.color}
                   onChange={(e) => setNewStatus({ ...newStatus, color: e.target.value })}
                   placeholder="#3B82F6"
@@ -162,6 +198,63 @@ export function SettingsLeadStatuses() {
             </Button>
             <Button onClick={handleCreateStatus} disabled={createStatusMutation.isPending}>
               {t("common.create")}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Edit Status Dialog */}
+      <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+        <DialogContent className="bg-zinc-900 border-zinc-800">
+          <DialogHeader>
+            <DialogTitle>{t("leadStatuses.editStatus")}</DialogTitle>
+            <DialogDescription>{t("leadStatuses.description")}</DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="editStatusName" className="mb-2 block">{t("leadStatuses.statusName")}</Label>
+              <Input
+                className="bg-zinc-800 border-zinc-700"
+                id="editStatusName"
+                value={editingStatus?.name || ""}
+                onChange={(e) => setEditingStatus({ ...editingStatus, name: e.target.value })}
+                placeholder="e.g., Qualified"
+              />
+            </div>
+            <div>
+              <Label htmlFor="editStatusColor" className="mb-2 block">{t("leadStatuses.statusColor")}</Label>
+              <div className="flex gap-2">
+                <Input
+                  id="editStatusColor"
+                  type="color"
+                  value={editingStatus?.color || "#3B82F6"}
+                  onChange={(e) => setEditingStatus({ ...editingStatus, color: e.target.value })}
+                  className="w-20 h-10 bg-zinc-800 border-zinc-700"
+                />
+                <Input
+                  className="bg-zinc-800 border-zinc-700"
+                  value={editingStatus?.color || "#3B82F6"}
+                  onChange={(e) => setEditingStatus({ ...editingStatus, color: e.target.value })}
+                  placeholder="#3B82F6"
+                />
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                id="editIsDefault"
+                checked={editingStatus?.isDefault || false}
+                onChange={(e) => setEditingStatus({ ...editingStatus, isDefault: e.target.checked })}
+              />
+              <Label htmlFor="editIsDefault">{t("leadStatuses.isDefault")}</Label>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsEditDialogOpen(false)}>
+              {t("common.cancel")}
+            </Button>
+            <Button onClick={handleUpdateStatus} disabled={updateStatusMutation.isPending}>
+              {t("common.update")}
             </Button>
           </DialogFooter>
         </DialogContent>

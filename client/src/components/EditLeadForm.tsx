@@ -156,21 +156,21 @@ export function EditLeadForm({ lead, onClose, onSuccess }: EditLeadFormProps) {
         <h3 className="text-lg font-semibold mb-4">{t('Контактна інформація', 'Контактная информация', 'Contact Information')}</h3>
         <div className="grid grid-cols-2 gap-4 mb-4">
           <div>
-            <Label htmlFor="name">{t('Ім\'я *', 'Имя *', 'Name *')}</Label>
+            <Label htmlFor="name" className="mb-2 block">{t('Ім\'я *', 'Имя *', 'Name *')}</Label>
             <Input className="bg-zinc-800 border-zinc-700" id="name"
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             />
           </div>
           <div>
-            <Label htmlFor="phone">{t('Телефон *', 'Телефон *', 'Phone *')}</Label>
+            <Label htmlFor="phone" className="mb-2 block">{t('Телефон *', 'Телефон *', 'Phone *')}</Label>
             <Input className="bg-zinc-800 border-zinc-700" id="phone"
               value={formData.phone}
               onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
             />
           </div>
           <div>
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email" className="mb-2 block">Email</Label>
             <Input className="bg-zinc-800 border-zinc-700" id="email"
               type="email"
               value={formData.email}
@@ -178,7 +178,7 @@ export function EditLeadForm({ lead, onClose, onSuccess }: EditLeadFormProps) {
             />
           </div>
           <div>
-            <Label htmlFor="telegram">Telegram</Label>
+            <Label htmlFor="telegram" className="mb-2 block">Telegram</Label>
             <Input className="bg-zinc-800 border-zinc-700" id="telegram"
               value={formData.telegram}
               onChange={(e) => setFormData({ ...formData, telegram: e.target.value })}
@@ -232,7 +232,7 @@ export function EditLeadForm({ lead, onClose, onSuccess }: EditLeadFormProps) {
         <h3 className="text-lg font-semibold mb-4">{t('Призначення послуг', 'Назначение услуг', 'Service Assignment')}</h3>
         <div className="space-y-4">
           <div>
-            <Label htmlFor="service">{t('Основна послуга', 'Основная услуга', 'Main Service')}</Label>
+            <Label htmlFor="service" className="mb-2 block">{t('Основна послуга', 'Основная услуга', 'Main Service')}</Label>
             <Select
               value={formData.serviceId?.toString() || ""}
               onValueChange={(value) => setFormData({ ...formData, serviceId: parseInt(value) })}
@@ -253,7 +253,7 @@ export function EditLeadForm({ lead, onClose, onSuccess }: EditLeadFormProps) {
           {/* Additional Services */}
           {additionalServices && additionalServices.length > 0 && (
             <div>
-              <Label>{t('Додаткові послуги', 'Дополнительные услуги', 'Additional Services')}</Label>
+              <Label className="mb-2 block">{t('Додаткові послуги', 'Дополнительные услуги', 'Additional Services')}</Label>
               <div className="mt-2 space-y-2 border rounded-md p-4">
                 {additionalServices.map((service) => (
                   <div key={service.id} className="flex items-center space-x-2">
@@ -310,7 +310,7 @@ export function EditLeadForm({ lead, onClose, onSuccess }: EditLeadFormProps) {
 
           {/* Sale Notes */}
           <div>
-            <Label htmlFor="notes">{t('Примітки до продажу', 'Примечания к продаже', 'Sale Notes')}</Label>
+            <Label htmlFor="notes" className="mb-2 block">{t('Примітки до продажу', 'Примечания к продаже', 'Sale Notes')}</Label>
             <Textarea className="bg-zinc-800 border-zinc-700" id="notes"
               value={formData.notes}
               onChange={(e) => setFormData({ ...formData, notes: e.target.value })}

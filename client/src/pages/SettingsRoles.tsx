@@ -15,13 +15,25 @@ import {
 } from "@/components/ui/dialog";
 import { trpc } from "@/lib/trpc";
 import { Plus, Edit, Trash2, Users } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
 
 export function SettingsRoles() {
   const { t } = useTranslation();
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [isInviteDialogOpen, setIsInviteDialogOpen] = useState(false);
-  const [newRole, setNewRole] = useState({ name: "", description: "", permissions: "" });
+  const [newRole, setNewRole] = useState({ 
+    name: "", 
+    description: "", 
+    permissions: {
+      leads: { read: false, write: false },
+      messaging: { read: false, write: false },
+      sales: { read: false, write: false },
+      services: { read: false, write: false },
+      analytics: { read: false, write: false },
+      settings: { read: false, write: false }
+    }
+  });
   const [inviteEmail, setInviteEmail] = useState("");
   const [selectedRole, setSelectedRole] = useState("");
 
@@ -32,7 +44,18 @@ export function SettingsRoles() {
     onSuccess: () => {
       toast.success(t("common.success"));
       setIsCreateDialogOpen(false);
-      setNewRole({ name: "", description: "", permissions: "" });
+      setNewRole({ 
+        name: "", 
+        description: "", 
+        permissions: {
+          leads: { read: false, write: false },
+          messaging: { read: false, write: false },
+          sales: { read: false, write: false },
+          services: { read: false, write: false },
+          analytics: { read: false, write: false },
+          settings: { read: false, write: false }
+        }
+      });
       refetchRoles();
     },
     onError: (error: any) => {
@@ -56,8 +79,21 @@ export function SettingsRoles() {
     createRoleMutation.mutate({
       name: newRole.name,
       description: newRole.description,
-      permissions: newRole.permissions,
+      permissions: JSON.stringify(newRole.permissions),
     });
+  };
+  
+  const togglePermission = (module: string, action: 'read' | 'write') => {
+    setNewRole(prev => ({
+      ...prev,
+      permissions: {
+        ...prev.permissions,
+        [module]: {
+          ...prev.permissions[module as keyof typeof prev.permissions],
+          [action]: !prev.permissions[module as keyof typeof prev.permissions][action]
+        }
+      }
+    }));
   };
 
   const handleInviteUser = () => {
@@ -152,8 +188,9 @@ export function SettingsRoles() {
           </DialogHeader>
           <div className="space-y-4">
             <div>
-              <Label htmlFor="roleName">{t("roles.roleName")}</Label>
+              <Label htmlFor="roleName" className="mb-2 block">{t("roles.roleName")}</Label>
               <Input
+                className="bg-zinc-800 border-zinc-700"
                 id="roleName"
                 value={newRole.name}
                 onChange={(e) => setNewRole({ ...newRole, name: e.target.value })}
@@ -161,8 +198,9 @@ export function SettingsRoles() {
               />
             </div>
             <div>
-              <Label htmlFor="roleDescription">Description</Label>
+              <Label htmlFor="roleDescription" className="mb-2 block">Description</Label>
               <Textarea
+                className="bg-zinc-800 border-zinc-700"
                 id="roleDescription"
                 value={newRole.description}
                 onChange={(e) => setNewRole({ ...newRole, description: e.target.value })}
@@ -170,13 +208,42 @@ export function SettingsRoles() {
               />
             </div>
             <div>
-              <Label htmlFor="permissions">{t("roles.permissions")} (JSON)</Label>
-              <Textarea
-                id="permissions"
-                value={newRole.permissions}
-                onChange={(e) => setNewRole({ ...newRole, permissions: e.target.value })}
-                placeholder='{"leads": "read", "messaging": "write"}'
-              />
+              <Label className="mb-3 block">{t("roles.permissions")}</Label>
+              <div className="space-y-4 border border-zinc-700 rounded-lg p-4 bg-zinc-800/50">
+                {Object.keys(newRole.permissions).map((module) => (
+                  <div key={module} className="space-y-2">
+                    <h4 className="font-medium text-sm capitalize">{module}</h4>
+                    <div className="flex gap-6 ml-4">
+                      <div className="flex items-center space-x-2">
+                        <Checkbox
+                          id={`${module}-read`}
+                          checked={newRole.permissions[module as keyof typeof newRole.permissions].read}
+                          onCheckedChange={() => togglePermission(module, 'read')}
+                        />
+                        <label
+                          htmlFor={`${module}-read`}
+                          className="text-sm font-normal cursor-pointer"
+                        >
+                          Read
+                        </label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Checkbox
+                          id={`${module}-write`}
+                          checked={newRole.permissions[module as keyof typeof newRole.permissions].write}
+                          onCheckedChange={() => togglePermission(module, 'write')}
+                        />
+                        <label
+                          htmlFor={`${module}-write`}
+                          className="text-sm font-normal cursor-pointer"
+                        >
+                          Write
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
           <DialogFooter>

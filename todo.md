@@ -439,3 +439,58 @@
 - [ ] Verify language switcher updates all text immediately
 - [ ] Verify no hardcoded text remains
 
+
+## UI/UX Fixes (Reported Dec 12, 2025)
+
+### CRM Page Filters
+- [ ] Add Manager filter dropdown to CRM page
+- [ ] Add Source filter dropdown to CRM page  
+- [ ] Add Date filter with modern popup design (icon + date range picker)
+- [ ] Make filters more compact and user-friendly
+- [ ] Show active date filter visibly
+
+### Input Field Visibility Issues
+- [ ] Fix EditLeadForm - add bg-zinc-800 to all input fields
+- [ ] Fix EditLeadForm - add mb-2 spacing to all Label elements
+- [ ] Fix Services dialog - add bg-zinc-800 to all input fields
+- [ ] Fix Services dialog - add mb-2 spacing to all Label elements
+- [ ] Fix Roles dialog - add bg-zinc-800 to all input fields
+- [ ] Fix Roles dialog - add mb-2 spacing to all Label elements
+- [ ] Fix Lead Statuses dialog - add bg-zinc-800 to all input fields
+- [ ] Fix Lead Statuses dialog - add mb-2 spacing to all Label elements
+
+### Roles Management
+- [ ] Replace JSON editor with checkbox-based permissions UI
+- [ ] Add checkboxes for each permission (leads: read/write, messaging: read/write, etc.)
+- [ ] Make role creation user-friendly without code editing
+
+### Lead Statuses CRUD
+- [ ] Enable Edit functionality for existing statuses
+- [ ] Enable Create functionality for new statuses
+- [ ] Enable Delete functionality for statuses
+- [ ] Fix input field backgrounds in status dialogs
+- [ ] Fix label spacing in status dialogs
+
+## Completed Items (Dec 12, 2025)
+
+- [x] Add Manager filter dropdown to CRM page
+- [x] Add Source filter dropdown to CRM page  
+- [x] Add Date filter with modern popup design (icon + date range picker)
+- [x] Make filters more compact and user-friendly
+- [x] Show active date filter visibly
+- [x] Fix EditLeadForm - add bg-zinc-800 to all input fields
+- [x] Fix EditLeadForm - add mb-2 spacing to all Label elements
+- [x] Fix Services dialog - add bg-zinc-800 to all input fields
+- [x] Fix Services dialog - add mb-2 spacing to all Label elements
+- [x] Fix Roles dialog - add bg-zinc-800 to all input fields
+- [x] Fix Roles dialog - add mb-2 spacing to all Label elements
+- [x] Fix Lead Statuses dialog - add bg-zinc-800 to all input fields
+- [x] Fix Lead Statuses dialog - add mb-2 spacing to all Label elements
+- [x] Replace JSON editor with checkbox-based permissions UI
+- [x] Add checkboxes for each permission (leads: read/write, messaging: read/write, etc.)
+- [x] Make role creation user-friendly without code editing
+- [x] Enable Edit functionality for existing statuses
+- [x] Enable Create functionality for new statuses
+- [x] Enable Delete functionality for statuses
+- [x] Fix input field backgrounds in status dialogs
+- [x] Fix label spacing in status dialogs

@@ -35,7 +35,10 @@ import { Badge } from "@/components/ui/badge";
 import Footer from "@/components/Footer";
 import { EditLeadForm } from "@/components/EditLeadForm";
 import CRMLayout from "@/components/CRMLayout";
-import { Loader2, MessageSquare, Send, Filter, X } from "lucide-react";
+import { Loader2, MessageSquare, Send, Filter, X, Calendar, Users, Tag } from "lucide-react";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar as CalendarComponent } from "@/components/ui/calendar";
+import { addDays, format as formatDate } from "date-fns";
 import { format } from "date-fns";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { useTranslation } from 'react-i18next';
@@ -79,6 +82,13 @@ export default function CRM() {
     utmMedium: "",
   });
   
+  // Filters
+  const [filterManager, setFilterManager] = useState<string>("all");
+  const [filterSource, setFilterSource] = useState<string>("all");
+  const [filterDateFrom, setFilterDateFrom] = useState<Date | undefined>();
+  const [filterDateTo, setFilterDateTo] = useState<Date | undefined>();
+  const [showFiltersPopover, setShowFiltersPopover] = useState(false);
+  
   // UTM Filters
   const [filterCampaign, setFilterCampaign] = useState<string>("all");
   const [filterAdGroup, setFilterAdGroup] = useState<string>("all");
@@ -88,6 +98,7 @@ export default function CRM() {
   const [filterSite, setFilterSite] = useState<string>("all");
 
   const { data: leads, isLoading: leadsLoading, refetch: refetchLeads } = trpc.crm.getLeads.useQuery();
+  const { data: managers } = trpc.auth.getAllUsers.useQuery();
   const { data: statuses } = trpc.crm.getStatuses.useQuery();
   const { data: comments, refetch: refetchComments } = trpc.crm.getComments.useQuery(
     { leadId: selectedLead! },
@@ -137,6 +148,7 @@ export default function CRM() {
   const selectedLeadData = leads?.find((l) => l.id === selectedLead);
   
   // Get unique values for filters
+  const uniqueSources = Array.from(new Set(leads?.map(l => l.source).filter(Boolean)));
   const uniqueCampaigns = Array.from(new Set(leads?.map(l => l.utmCampaign).filter(Boolean)));
   const uniqueAdGroups = Array.from(new Set(leads?.map(l => l.utmAdGroup).filter(Boolean)));
   const uniqueAds = Array.from(new Set(leads?.map(l => l.utmAd).filter(Boolean)));
@@ -144,15 +156,30 @@ export default function CRM() {
   const uniqueKeywords = Array.from(new Set(leads?.map(l => l.utmKeyword).filter(Boolean)));
   const uniqueSites = Array.from(new Set(leads?.map(l => l.utmSite).filter(Boolean)));
   
-  const activeFiltersCount = [filterCampaign, filterAdGroup, filterAd, filterPlacement, filterKeyword, filterSite].filter(Boolean).length;
+  const activeFiltersCount = [
+    filterManager !== "all" ? filterManager : null,
+    filterSource !== "all" ? filterSource : null,
+    filterDateFrom,
+    filterDateTo,
+    filterCampaign !== "all" ? filterCampaign : null,
+    filterAdGroup !== "all" ? filterAdGroup : null,
+    filterAd !== "all" ? filterAd : null,
+    filterPlacement !== "all" ? filterPlacement : null,
+    filterKeyword !== "all" ? filterKeyword : null,
+    filterSite !== "all" ? filterSite : null
+  ].filter(Boolean).length;
   
   const clearFilters = () => {
-    setFilterCampaign("");
-    setFilterAdGroup("");
-    setFilterAd("");
-    setFilterPlacement("");
-    setFilterKeyword("");
-    setFilterSite("");
+    setFilterManager("all");
+    setFilterSource("all");
+    setFilterDateFrom(undefined);
+    setFilterDateTo(undefined);
+    setFilterCampaign("all");
+    setFilterAdGroup("all");
+    setFilterAd("all");
+    setFilterPlacement("all");
+    setFilterKeyword("all");
+    setFilterSite("all");
   };
 
   const getStatusColor = (statusId: number | null) => {
@@ -188,13 +215,141 @@ export default function CRM() {
 
   return (
     <CRMLayout>
-      <div className="mb-8">
-        <h1 className="text-4xl font-black text-white mb-2">
-          Leads Management
-        </h1>
-        <p className="text-gray-400">
-          Manage your leads and communicate with clients
-        </p>
+      <div className="mb-8 flex items-center justify-between">
+        <div>
+          <h1 className="text-4xl font-black text-white mb-2">
+            Leads Management
+          </h1>
+          <p className="text-gray-400">
+            Manage your leads and communicate with clients
+          </p>
+        </div>
+        
+        {/* Compact Filters Button */}
+        <div className="flex items-center gap-3">
+          {/* Date Filter Display */}
+          {(filterDateFrom || filterDateTo) && (
+            <Badge variant="secondary" className="gap-2">
+              <Calendar className="w-3 h-3" />
+              {filterDateFrom && formatDate(filterDateFrom, "MMM d")} - {filterDateTo && formatDate(filterDateTo, "MMM d")}
+            </Badge>
+          )}
+          
+          <Popover open={showFiltersPopover} onOpenChange={setShowFiltersPopover}>
+            <PopoverTrigger asChild>
+              <Button variant="outline" className="gap-2">
+                <Filter className="w-4 h-4" />
+                Filters
+                {activeFiltersCount > 0 && (
+                  <Badge variant="default" className="ml-1">{activeFiltersCount}</Badge>
+                )}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-96 bg-zinc-900 border-zinc-800" align="end">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="font-semibold text-white">Filters</h3>
+                  {activeFiltersCount > 0 && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={clearFilters}
+                      className="h-8 text-xs"
+                    >
+                      Clear All
+                    </Button>
+                  )}
+                </div>
+                
+                {/* Manager Filter */}
+                <div>
+                  <label className="text-sm font-medium mb-2 block flex items-center gap-2">
+                    <Users className="w-4 h-4" />
+                    Manager
+                  </label>
+                  <Select value={filterManager} onValueChange={setFilterManager}>
+                    <SelectTrigger className="bg-zinc-800">
+                      <SelectValue placeholder="All managers" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All managers</SelectItem>
+                      {managers?.map((manager) => (
+                        <SelectItem key={manager.id} value={manager.id.toString()}>
+                          {manager.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                
+                {/* Source Filter */}
+                <div>
+                  <label className="text-sm font-medium mb-2 block flex items-center gap-2">
+                    <Tag className="w-4 h-4" />
+                    Source
+                  </label>
+                  <Select value={filterSource} onValueChange={setFilterSource}>
+                    <SelectTrigger className="bg-zinc-800">
+                      <SelectValue placeholder="All sources" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All sources</SelectItem>
+                      {uniqueSources.map((source) => (
+                        <SelectItem key={source as string} value={source as string}>
+                          {source}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                
+                {/* Date Range Filter */}
+                <div>
+                  <label className="text-sm font-medium mb-2 block flex items-center gap-2">
+                    <Calendar className="w-4 h-4" />
+                    Date Range
+                  </label>
+                  <div className="grid grid-cols-2 gap-2">
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button variant="outline" className="justify-start text-left font-normal bg-zinc-800">
+                          {filterDateFrom ? formatDate(filterDateFrom, "MMM d, yyyy") : "From"}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0 bg-zinc-900 border-zinc-800" align="start">
+                        <CalendarComponent
+                          mode="single"
+                          selected={filterDateFrom}
+                          onSelect={setFilterDateFrom}
+                          initialFocus
+                        />
+                      </PopoverContent>
+                    </Popover>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button variant="outline" className="justify-start text-left font-normal bg-zinc-800">
+                          {filterDateTo ? formatDate(filterDateTo, "MMM d, yyyy") : "To"}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0 bg-zinc-900 border-zinc-800" align="start">
+                        <CalendarComponent
+                          mode="single"
+                          selected={filterDateTo}
+                          onSelect={setFilterDateTo}
+                          initialFocus
+                        />
+                      </PopoverContent>
+                    </Popover>
+                  </div>
+                </div>
+              </div>
+            </PopoverContent>
+          </Popover>
+          
+          <Button onClick={() => setShowCreateLeadModal(true)} className="bg-purple-600 hover:bg-purple-700">
+            {t('common.create_lead_manually')}
+          </Button>
+        </div>
       </div>
 
         {/* UTM Filters */}
