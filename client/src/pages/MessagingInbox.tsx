@@ -5,12 +5,13 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Loader2, MessageSquare, Mail, Send, Search } from "lucide-react";
+import { Loader2, MessageSquare, Mail, Send, Search, User } from "lucide-react";
 import { format } from "date-fns";
 import { useAuth } from "@/_core/hooks/useAuth";
 import CRMLayout from "@/components/CRMLayout";
 import { Link } from "wouter";
 import { cn } from "@/lib/utils";
+import { LeadInfoPanel } from "@/components/LeadInfoPanel";
 
 export default function MessagingInbox() {
   // Detect language from localStorage
@@ -183,10 +184,10 @@ export default function MessagingInbox() {
           </TabsList>
         </Tabs>
 
-        {/* 2-Column Layout */}
+        {/* 3-Column Layout */}
         <div className="flex gap-4 flex-1 overflow-hidden">
-          {/* Left Sidebar - Chat List */}
-          <Card className="w-1/3 bg-zinc-900 border-zinc-800 flex flex-col">
+          {/* Left Sidebar - Chat List (25%) */}
+          <Card className="w-1/4 bg-zinc-900 border-zinc-800 flex flex-col">
             {/* Search */}
             <div className="p-4 border-b border-zinc-800">
               <div className="relative">
@@ -251,8 +252,8 @@ export default function MessagingInbox() {
             </div>
           </Card>
 
-          {/* Right Panel - Conversation View */}
-          <Card className="flex-1 bg-zinc-900 border-zinc-800 flex flex-col">
+          {/* Center Panel - Conversation View (50%) */}
+          <Card className="w-1/2 bg-zinc-900 border-zinc-800 flex flex-col">
             {selectedChatId ? (
               <>
                 {/* Conversation Header */}
@@ -335,6 +336,26 @@ export default function MessagingInbox() {
               </div>
             )}
           </Card>
+
+          {/* Right Panel - Lead Info (25%) */}
+          {selectedChatId ? (
+            <div className="w-1/4">
+              <LeadInfoPanel leadId={1} />
+            </div>
+          ) : (
+            <Card className="w-1/4 bg-zinc-900 border-zinc-800 flex items-center justify-center">
+              <div className="text-center text-gray-400 p-6">
+                <User className="w-12 h-12 mx-auto mb-3 opacity-50" />
+                <p className="text-sm">
+                  {t(
+                    'Виберіть чат, щоб побачити інформацію про ліда',
+                    'Выберите чат, чтобы увидеть информацию о лиде',
+                    'Select a chat to view lead information'
+                  )}
+                </p>
+              </div>
+            </Card>
+          )}
         </div>
       </div>
     </CRMLayout>

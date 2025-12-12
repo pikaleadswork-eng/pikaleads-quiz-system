@@ -333,4 +333,161 @@ export const messagingRouter = router({
       },
     };
   }),
+
+  /**
+   * Get full lead information by ID
+   */
+  getLeadInfo: adminProcedure
+    .input(z.object({ leadId: z.number() }))
+    .query(async ({ input, ctx }) => {
+      const { getLeadById, getLeadStatus } = await import("../db");
+      const lead = await getLeadById(input.leadId);
+      
+      if (!lead) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Lead not found",
+        });
+      }
+
+      // Get status details
+      const status = lead.statusId ? await getLeadStatus(lead.statusId) : null;
+
+      return {
+        ...lead,
+        status,
+      };
+    }),
+
+  /**
+   * Update lead status
+   */
+  updateLeadStatus: adminProcedure
+    .input(
+      z.object({
+        leadId: z.number(),
+        statusId: z.number(),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      const { updateLeadStatusOnly } = await import("../db");
+      await updateLeadStatusOnly(input.leadId, input.statusId);
+
+      // Log interaction
+      const { createInteractionHistory } = await import("../db");
+      await createInteractionHistory({
+        leadId: input.leadId,
+        type: "status_change",
+        userId: ctx.user.id,
+        metadata: JSON.stringify({ statusId: input.statusId }),
+      });
+
+      return { success: true };
+    }),
+
+  /**
+   * Schedule a message for later sending
+   */
+  scheduleMessage: adminProcedure
+    .input(
+      z.object({
+        leadId: z.number(),
+        channel: z.enum(["telegram", "whatsapp", "email"]),
+        message: z.string().min(1),
+        scheduledAt: z.date(),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      const { createScheduledMessage } = await import("../db");
+      
+      const scheduledMessage = await createScheduledMessage({
+        leadId: input.leadId,
+        channel: input.channel,
+        message: input.message,
+        scheduledAt: input.scheduledAt,
+        createdBy: ctx.user.id,
+      });
+
+      // Log interaction
+      const { createInteractionHistory } = await import("../db");
+      await createInteractionHistory({
+        leadId: input.leadId,
+        type: "message",
+        channel: input.channel,
+        message: `Scheduled: ${input.message}`,
+        direction: "outbound",
+        userId: ctx.user.id,
+      });
+
+      return scheduledMessage;
+    }),
+
+  /**
+   * Schedule a call with a lead
+   */
+  scheduleCall: adminProcedure
+    .input(
+      z.object({
+        leadId: z.number(),
+        scheduledAt: z.date(),
+        duration: z.number().default(30),
+        notes: z.string().optional(),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      const { createScheduledCall } = await import("../db");
+      
+      const scheduledCall = await createScheduledCall({
+        leadId: input.leadId,
+        scheduledAt: input.scheduledAt,
+        duration: input.duration,
+        notes: input.notes,
+        createdBy: ctx.user.id,
+      });
+
+      // Log interaction
+      const { createInteractionHistory } = await import("../db");
+      await createInteractionHistory({
+        leadId: input.leadId,
+        type: "call",
+        message: `Scheduled call for ${input.scheduledAt.toLocaleString()}`,
+        userId: ctx.user.id,
+        metadata: JSON.stringify({ duration: input.duration, notes: input.notes }),
+      });
+
+      return scheduledCall;
+    }),
+
+  /**
+   * Get interaction history for a lead
+   */
+  getInteractionHistory: adminProcedure
+    .input(z.object({ leadId: z.number() }))
+    .query(async ({ input }) => {
+      const { getInteractionHistory } = await import("../db");
+      return await getInteractionHistory(input.leadId);
+    }),
+
+  /**
+   * Add a note to lead
+   */
+  addNote: adminProcedure
+    .input(
+      z.object({
+        leadId: z.number(),
+        note: z.string().min(1),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      const { createInteractionHistory } = await import("../db");
+      
+      await createInteractionHistory({
+        leadId: input.leadId,
+        type: "note",
+        message: input.note,
+        userId: ctx.user.id,
+      });
+
+      return { success: true };
+    }),
 });

@@ -387,3 +387,61 @@ export const inboundMessages = mysqlTable("inbound_messages", {
 
 export type InboundMessage = typeof inboundMessages.$inferSelect;
 export type InsertInboundMessage = typeof inboundMessages.$inferInsert;
+
+/**
+ * Scheduled Messages table for delayed message sending
+ */
+export const scheduledMessages = mysqlTable("scheduled_messages", {
+  id: int("id").autoincrement().primaryKey(),
+  leadId: int("leadId").notNull(), // Reference to leads table
+  channel: varchar("channel", { length: 50 }).notNull(), // telegram, whatsapp, email
+  message: text("message").notNull(), // Message content
+  scheduledAt: timestamp("scheduledAt").notNull(), // When to send
+  status: varchar("status", { length: 20 }).default("pending").notNull(), // pending, sent, failed, cancelled
+  sentAt: timestamp("sentAt"), // Actual send time
+  errorMessage: text("errorMessage"), // Error details if failed
+  createdBy: int("createdBy").notNull(), // Manager who scheduled
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type ScheduledMessage = typeof scheduledMessages.$inferSelect;
+export type InsertScheduledMessage = typeof scheduledMessages.$inferInsert;
+
+/**
+ * Scheduled Calls table for call reminders and planning
+ */
+export const scheduledCalls = mysqlTable("scheduled_calls", {
+  id: int("id").autoincrement().primaryKey(),
+  leadId: int("leadId").notNull(), // Reference to leads table
+  scheduledAt: timestamp("scheduledAt").notNull(), // When to call
+  duration: int("duration").default(30).notNull(), // Expected duration in minutes
+  notes: text("notes"), // Call notes or agenda
+  status: varchar("status", { length: 20 }).default("scheduled").notNull(), // scheduled, completed, missed, cancelled
+  completedAt: timestamp("completedAt"), // Actual call time
+  outcome: text("outcome"), // Call result notes
+  createdBy: int("createdBy").notNull(), // Manager who scheduled
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type ScheduledCall = typeof scheduledCalls.$inferSelect;
+export type InsertScheduledCall = typeof scheduledCalls.$inferInsert;
+
+/**
+ * Interaction History table for tracking all lead interactions
+ */
+export const interactionHistory = mysqlTable("interaction_history", {
+  id: int("id").autoincrement().primaryKey(),
+  leadId: int("leadId").notNull(), // Reference to leads table
+  type: varchar("type", { length: 50 }).notNull(), // message, call, email, status_change, note, meeting
+  channel: varchar("channel", { length: 50 }), // telegram, whatsapp, email, phone (null for non-message types)
+  message: text("message"), // Message content or interaction description
+  direction: varchar("direction", { length: 10 }), // inbound, outbound (for messages)
+  userId: int("userId"), // Manager who performed the action
+  metadata: text("metadata"), // JSON for additional data (e.g., status change details)
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type InteractionHistory = typeof interactionHistory.$inferSelect;
+export type InsertInteractionHistory = typeof interactionHistory.$inferInsert;

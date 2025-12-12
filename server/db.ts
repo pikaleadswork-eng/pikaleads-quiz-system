@@ -940,3 +940,160 @@ export async function markConversationAsRead(conversationId: number) {
     .set({ unreadCount: 0 })
     .where(eq(conversations.id, conversationId));
 }
+
+// ===== Lead Info & Status Management =====
+
+export async function getLeadById(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const result = await db.select().from(leads).where(eq(leads.id, id)).limit(1);
+  return result.length > 0 ? result[0] : null;
+}
+
+export async function getLeadStatus(statusId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const result = await db.select().from(leadStatuses).where(eq(leadStatuses.id, statusId)).limit(1);
+  return result.length > 0 ? result[0] : null;
+}
+
+export async function updateLeadStatusOnly(leadId: number, statusId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db.update(leads).set({ statusId }).where(eq(leads.id, leadId));
+}
+
+// ===== Scheduled Messages =====
+
+export async function createScheduledMessage(data: {
+  leadId: number;
+  channel: string;
+  message: string;
+  scheduledAt: Date;
+  createdBy: number;
+}) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const { scheduledMessages } = await import("../drizzle/schema");
+  
+  const result = await db.insert(scheduledMessages).values({
+    leadId: data.leadId,
+    channel: data.channel,
+    message: data.message,
+    scheduledAt: data.scheduledAt,
+    status: "pending",
+    createdBy: data.createdBy,
+  });
+  
+  return { id: (result as any).insertId, ...data };
+}
+
+export async function getScheduledMessages(leadId?: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const { scheduledMessages } = await import("../drizzle/schema");
+  
+  if (leadId) {
+    return db.select().from(scheduledMessages).where(eq(scheduledMessages.leadId, leadId));
+  }
+  
+  return db.select().from(scheduledMessages);
+}
+
+export async function updateScheduledMessageStatus(id: number, status: string, sentAt?: Date, errorMessage?: string) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const { scheduledMessages } = await import("../drizzle/schema");
+  
+  await db.update(scheduledMessages)
+    .set({ status, sentAt, errorMessage })
+    .where(eq(scheduledMessages.id, id));
+}
+
+// ===== Scheduled Calls =====
+
+export async function createScheduledCall(data: {
+  leadId: number;
+  scheduledAt: Date;
+  duration?: number;
+  notes?: string;
+  createdBy: number;
+}) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const { scheduledCalls } = await import("../drizzle/schema");
+  
+  const result = await db.insert(scheduledCalls).values({
+    leadId: data.leadId,
+    scheduledAt: data.scheduledAt,
+    duration: data.duration || 30,
+    notes: data.notes,
+    status: "scheduled",
+    createdBy: data.createdBy,
+  });
+  
+  return { id: (result as any).insertId, ...data };
+}
+
+export async function getScheduledCalls(leadId?: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const { scheduledCalls } = await import("../drizzle/schema");
+  
+  if (leadId) {
+    return db.select().from(scheduledCalls).where(eq(scheduledCalls.leadId, leadId));
+  }
+  
+  return db.select().from(scheduledCalls);
+}
+
+export async function updateScheduledCallStatus(id: number, status: string, completedAt?: Date, outcome?: string) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const { scheduledCalls } = await import("../drizzle/schema");
+  
+  await db.update(scheduledCalls)
+    .set({ status, completedAt, outcome })
+    .where(eq(scheduledCalls.id, id));
+}
+
+// ===== Interaction History =====
+
+export async function createInteractionHistory(data: {
+  leadId: number;
+  type: string;
+  channel?: string;
+  message?: string;
+  direction?: string;
+  userId?: number;
+  metadata?: string;
+}) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const { interactionHistory } = await import("../drizzle/schema");
+  
+  await db.insert(interactionHistory).values({
+    leadId: data.leadId,
+    type: data.type,
+    channel: data.channel,
+    message: data.message,
+    direction: data.direction,
+    userId: data.userId,
+    metadata: data.metadata,
+  });
+}
+
+export async function getInteractionHistory(leadId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const { interactionHistory } = await import("../drizzle/schema");
+  
+  return db
+    .select()
+    .from(interactionHistory)
+    .where(eq(interactionHistory.leadId, leadId))
+    .orderBy(interactionHistory.createdAt);
+}
