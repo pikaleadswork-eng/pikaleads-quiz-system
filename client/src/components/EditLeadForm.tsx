@@ -154,27 +154,24 @@ export function EditLeadForm({ lead, onClose, onSuccess }: EditLeadFormProps) {
       {/* Contact & Messaging */}
       <div>
         <h3 className="text-lg font-semibold mb-4">{t('Контактна інформація', 'Контактная информация', 'Contact Information')}</h3>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-4 mb-4">
           <div>
             <Label htmlFor="name">{t('Ім\'я *', 'Имя *', 'Name *')}</Label>
-            <Input
-              id="name"
+            <Input className="bg-zinc-800 border-zinc-700" id="name"
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             />
           </div>
           <div>
             <Label htmlFor="phone">{t('Телефон *', 'Телефон *', 'Phone *')}</Label>
-            <Input
-              id="phone"
+            <Input className="bg-zinc-800 border-zinc-700" id="phone"
               value={formData.phone}
               onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
             />
           </div>
           <div>
             <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
+            <Input className="bg-zinc-800 border-zinc-700" id="email"
               type="email"
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -182,8 +179,7 @@ export function EditLeadForm({ lead, onClose, onSuccess }: EditLeadFormProps) {
           </div>
           <div>
             <Label htmlFor="telegram">Telegram</Label>
-            <Input
-              id="telegram"
+            <Input className="bg-zinc-800 border-zinc-700" id="telegram"
               value={formData.telegram}
               onChange={(e) => setFormData({ ...formData, telegram: e.target.value })}
             />
@@ -241,7 +237,7 @@ export function EditLeadForm({ lead, onClose, onSuccess }: EditLeadFormProps) {
               value={formData.serviceId?.toString() || ""}
               onValueChange={(value) => setFormData({ ...formData, serviceId: parseInt(value) })}
             >
-              <SelectTrigger>
+              <SelectTrigger className="bg-zinc-800 border-zinc-700">
                 <SelectValue placeholder={t('Оберіть послугу', 'Выберите услугу', 'Select a service')} />
               </SelectTrigger>
               <SelectContent>
@@ -279,11 +275,10 @@ export function EditLeadForm({ lead, onClose, onSuccess }: EditLeadFormProps) {
           )}
 
           {/* Total Amount */}
-          <div className="space-y-2">
+          <div className="space-y-2 mb-4">
             <Label htmlFor="manual-amount">{t('Загальна сума (Ручне введення)', 'Общая сумма (Ручной ввод)', 'Total Amount (Manual Override)')}</Label>
             <div className="flex gap-2 items-center">
-              <Input
-                id="manual-amount"
+              <Input className="bg-zinc-800 border-zinc-700" id="manual-amount"
                 type="number"
                 placeholder={t('Залиште порожнім для авто-розрахунку', 'Оставьте пустым для авто-расчета', 'Leave empty for auto-calculation')}
                 value={formData.manualAmount || ""}
@@ -316,8 +311,7 @@ export function EditLeadForm({ lead, onClose, onSuccess }: EditLeadFormProps) {
           {/* Sale Notes */}
           <div>
             <Label htmlFor="notes">{t('Примітки до продажу', 'Примечания к продаже', 'Sale Notes')}</Label>
-            <Textarea
-              id="notes"
+            <Textarea className="bg-zinc-800 border-zinc-700" id="notes"
               value={formData.notes}
               onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
               placeholder={t('Додайте примітки про цей продаж...', 'Добавьте примечания об этой продаже...', 'Add notes about this sale...')}

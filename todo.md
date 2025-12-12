@@ -308,3 +308,62 @@
 - [ ] Test message sending updates conversation
 - [ ] Test filters and tabs work correctly
 - [ ] Create checkpoint v29.0
+
+
+## Phase 31 - Fix EditLeadForm Styling & Complete ALL Translations
+
+### EditLeadForm Styling Fixes
+- [x] Add bg-zinc-800 to all Input fields
+- [x] Add proper spacing (mb-4) between form sections
+- [x] Fix textarea background color
+- [x] Add border colors to make fields visible
+- [x] Test form visibility on dark background
+
+### Complete CRM Translations
+- [ ] Translate "Leads Management" title
+- [ ] Translate "UTM Filters" section
+- [ ] Translate filter labels (Campaign, Placement, Site, Status)
+- [ ] Translate "Clear Filters" button
+- [ ] Translate table headers (ID, Date, Source, Quiz, Name, Phone, Email, Telegram, Score, Status, Actions)
+- [ ] Translate action buttons (View, Edit, Convert to Sale)
+- [ ] Translate "Create Lead Manually" button
+- [ ] Translate status badges (New, Contacted, Qualified, Converted, Lost)
+
+### Complete Services Translations
+- [ ] Translate "Services Management" title
+- [ ] Translate "Main Services" and "Additional Services" section titles
+- [ ] Translate table headers (Service Name, Category, Price, Description, Actions)
+- [ ] Translate buttons (Add Service, Edit, Delete, Save, Cancel)
+- [ ] Translate form labels in Add/Edit Service modal
+
+### Complete Sales Translations
+- [ ] Translate "Sales Statistics" title
+- [ ] Translate metric cards (Total Revenue, Total Sales, Average Deal Size, Conversion Rate)
+- [ ] Translate table headers (Date, Lead Name, Service, Amount, Manager, Status)
+- [ ] Translate filter options
+
+### Complete Scripts Translations
+- [ ] Translate "Sales Scripts" title
+- [ ] Translate category tabs (Cold Call, Follow-up, Objection Handling, Closing)
+- [ ] Translate table headers (Title, Category, Last Updated, Actions)
+- [ ] Translate buttons (Add Script, Edit, Delete, View, Save, Cancel)
+
+### Complete Settings Translations
+- [ ] Translate "Integration Settings" title
+- [ ] Translate tab labels (Instagram, WhatsApp, Email, Google Calendar)
+- [ ] Translate form labels (API Key, Bot Token, SMTP Host, Port, Username, Password, From Email)
+- [ ] Translate buttons (Save Settings, Test Connection)
+- [ ] Translate status messages
+
+### Complete AdminDashboard Translations
+- [ ] Translate "Admin Dashboard" title
+- [ ] Translate all 12 card titles (CRM System, Analytics, Assignment Rules, etc.)
+- [ ] Translate card descriptions
+- [ ] Translate "Go to" link text
+
+### Testing
+- [ ] Test EditLeadForm fields are visible
+- [ ] Test language switching on all pages
+- [ ] Verify all buttons translate
+- [ ] Verify all popups translate
+- [ ] Create checkpoint v30.0
