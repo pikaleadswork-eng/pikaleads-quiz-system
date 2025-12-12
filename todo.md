@@ -137,3 +137,42 @@
 - [x] Test Edit Lead with all new features
 - [x] Test Ukrainian translations display correctly
 - [ ] Create checkpoint v25.0
+
+
+## Phase 27 - Add Chat Functionality & Russian Translations
+
+### Chat Window Component
+- [x] Create ChatWindow.tsx component
+- [x] Add conversation view (messages from both sides)
+- [x] Add message bubbles (sent/received styling)
+- [x] Add timestamp display
+- [x] Add sender info (name, channel icon)
+- [x] Add scroll to bottom functionality
+
+### Reply Functionality
+- [x] Add message input field at bottom
+- [x] Add "Send" button
+- [x] Add backend procedure to send messages
+- [x] Connect to Telegram/WhatsApp/Email APIs
+- [x] Show sending status (pending/sent/failed)
+
+### Integration
+- [x] Add "View Chat" button in MessagingInbox table
+- [x] Open chat window as modal/sidebar
+- [x] Load conversation history for selected contact
+- [x] Update message list after sending
+- [ ] Add unread message indicators
+
+### Russian Translations
+- [x] Translate EditLeadForm to Russian
+- [ ] Translate CRM table headers to Russian
+- [ ] Translate MessagingInbox to Russian
+- [ ] Translate Settings page to Russian
+- [ ] Translate AdminDashboard to Russian
+
+### Testing
+- [x] Test chat window opens correctly
+- [x] Test message sending works
+- [x] Test conversation history loads
+- [x] Test Russian translations display
+- [ ] Create checkpoint v26.0

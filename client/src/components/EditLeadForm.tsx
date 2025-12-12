@@ -22,6 +22,26 @@ interface EditLeadFormProps {
 }
 
 export function EditLeadForm({ lead, onClose, onSuccess }: EditLeadFormProps) {
+
+  // Detect language from localStorage or default to Ukrainian
+  const [language, setLanguage] = useState(() => {
+    return localStorage.getItem('language') || 'uk';
+  });
+
+  useEffect(() => {
+    const handleLanguageChange = () => {
+      setLanguage(localStorage.getItem('language') || 'uk');
+    };
+    window.addEventListener('languageChanged', handleLanguageChange);
+    return () => window.removeEventListener('languageChanged', handleLanguageChange);
+  }, []);
+
+  const t = (uk: string, ru: string, en: string) => {
+    if (language === 'ru') return ru;
+    if (language === 'en') return en;
+    return uk;
+  };
+
   const [formData, setFormData] = useState({
     name: lead.name || "",
     phone: lead.phone || "",
@@ -133,10 +153,10 @@ export function EditLeadForm({ lead, onClose, onSuccess }: EditLeadFormProps) {
     <div className="space-y-6">
       {/* Contact & Messaging */}
       <div>
-        <h3 className="text-lg font-semibold mb-4">Контактна інформація</h3>
+        <h3 className="text-lg font-semibold mb-4">{t('Контактна інформація', 'Контактная информация', 'Contact Information')}</h3>
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <Label htmlFor="name">Ім'я *</Label>
+            <Label htmlFor="name">{t('Ім\'я *', 'Имя *', 'Name *')}</Label>
             <Input
               id="name"
               value={formData.name}
@@ -144,7 +164,7 @@ export function EditLeadForm({ lead, onClose, onSuccess }: EditLeadFormProps) {
             />
           </div>
           <div>
-            <Label htmlFor="phone">Телефон *</Label>
+            <Label htmlFor="phone">{t('Телефон *', 'Телефон *', 'Phone *')}</Label>
             <Input
               id="phone"
               value={formData.phone}
@@ -213,16 +233,16 @@ export function EditLeadForm({ lead, onClose, onSuccess }: EditLeadFormProps) {
 
       {/* Service Assignment */}
       <div>
-        <h3 className="text-lg font-semibold mb-4">Призначення послуг</h3>
+        <h3 className="text-lg font-semibold mb-4">{t('Призначення послуг', 'Назначение услуг', 'Service Assignment')}</h3>
         <div className="space-y-4">
           <div>
-            <Label htmlFor="service">Основна послуга</Label>
+            <Label htmlFor="service">{t('Основна послуга', 'Основная услуга', 'Main Service')}</Label>
             <Select
               value={formData.serviceId?.toString() || ""}
               onValueChange={(value) => setFormData({ ...formData, serviceId: parseInt(value) })}
             >
               <SelectTrigger>
-                <SelectValue placeholder="Оберіть послугу" />
+                <SelectValue placeholder={t('Оберіть послугу', 'Выберите услугу', 'Select a service')} />
               </SelectTrigger>
               <SelectContent>
                 {services?.map((service) => (
@@ -237,7 +257,7 @@ export function EditLeadForm({ lead, onClose, onSuccess }: EditLeadFormProps) {
           {/* Additional Services */}
           {additionalServices && additionalServices.length > 0 && (
             <div>
-              <Label>Додаткові послуги</Label>
+              <Label>{t('Додаткові послуги', 'Дополнительные услуги', 'Additional Services')}</Label>
               <div className="mt-2 space-y-2 border rounded-md p-4">
                 {additionalServices.map((service) => (
                   <div key={service.id} className="flex items-center space-x-2">
@@ -260,12 +280,12 @@ export function EditLeadForm({ lead, onClose, onSuccess }: EditLeadFormProps) {
 
           {/* Total Amount */}
           <div className="space-y-2">
-            <Label htmlFor="manual-amount">Загальна сума (Ручне введення)</Label>
+            <Label htmlFor="manual-amount">{t('Загальна сума (Ручне введення)', 'Общая сумма (Ручной ввод)', 'Total Amount (Manual Override)')}</Label>
             <div className="flex gap-2 items-center">
               <Input
                 id="manual-amount"
                 type="number"
-                placeholder="Залиште порожнім для авто-розрахунку"
+                placeholder={t('Залиште порожнім для авто-розрахунку', 'Оставьте пустым для авто-расчета', 'Leave empty for auto-calculation')}
                 value={formData.manualAmount || ""}
                 onChange={(e) => setFormData({ ...formData, manualAmount: e.target.value ? parseFloat(e.target.value) : null })}
               />
@@ -282,25 +302,25 @@ export function EditLeadForm({ lead, onClose, onSuccess }: EditLeadFormProps) {
             </div>
             <div className="bg-muted p-4 rounded-md">
               <div className="flex justify-between items-center">
-                <span className="text-lg font-semibold">Загальна сума:</span>
+                <span className="text-lg font-semibold">{t('Загальна сума:', 'Общая сумма:', 'Total Amount:')}</span>
                 <span className="text-2xl font-bold text-primary">
                   ${formData.totalAmount}
                 </span>
               </div>
               {formData.manualAmount !== null && (
-                <p className="text-xs text-muted-foreground mt-1">Активне ручне введення</p>
+                <p className="text-xs text-muted-foreground mt-1">{t('Активне ручне введення', 'Активен ручной ввод', 'Manual override active')}</p>
               )}
             </div>
           </div>
 
           {/* Sale Notes */}
           <div>
-            <Label htmlFor="notes">Примітки до продажу</Label>
+            <Label htmlFor="notes">{t('Примітки до продажу', 'Примечания к продаже', 'Sale Notes')}</Label>
             <Textarea
               id="notes"
               value={formData.notes}
               onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-              placeholder="Додайте примітки про цей продаж..."
+              placeholder={t('Додайте примітки про цей продаж...', 'Добавьте примечания об этой продаже...', 'Add notes about this sale...')}
               rows={3}
             />
           </div>

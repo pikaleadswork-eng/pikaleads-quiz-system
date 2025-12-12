@@ -25,16 +25,22 @@ import {
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { Loader2, MessageSquare, Mail, Send, Filter } from "lucide-react";
+import { Loader2, MessageSquare, Mail, Send, Filter, MessageCircle } from "lucide-react";
 import { format } from "date-fns";
 import { useAuth } from "@/_core/hooks/useAuth";
 import CRMLayout from "@/components/CRMLayout";
+import { ChatWindow } from "@/components/ChatWindow";
 import { Link } from "wouter";
 
 export default function MessagingInbox() {
   const { user, loading: authLoading } = useAuth();
   const [channelFilter, setChannelFilter] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedChat, setSelectedChat] = useState<{
+    recipientId: string;
+    recipientName: string;
+    channel: "telegram" | "whatsapp" | "email" | "instagram";
+  } | null>(null);
 
   const { data: messages, isLoading } = trpc.messaging.getRecentMessages.useQuery({ limit: 100, channel: "all" });
 
@@ -197,13 +203,14 @@ export default function MessagingInbox() {
               <div className="overflow-x-auto">
                 <Table>
                   <TableHeader>
-                    <TableRow>
+                     <TableRow>
                       <TableHead>Date</TableHead>
                       <TableHead>Channel</TableHead>
                       <TableHead>Message</TableHead>
                       <TableHead>Recipients</TableHead>
                       <TableHead>Status</TableHead>
                       <TableHead>Sent By</TableHead>
+                      <TableHead>Actions</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -252,12 +259,27 @@ export default function MessagingInbox() {
                           <TableCell className="text-xs text-gray-400">
                             {msg.sentBy}
                           </TableCell>
+                          <TableCell>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => setSelectedChat({
+                                recipientId: `msg_${msg.id}`,
+                                recipientName: `Recipient ${msg.id}`,
+                                channel: msg.channel as "telegram" | "whatsapp" | "email" | "instagram",
+                              })}
+                              className="flex items-center gap-1"
+                            >
+                              <MessageCircle className="w-3 h-3" />
+                              View Chat
+                            </Button>
+                          </TableCell>
                         </TableRow>
                       ))
                     ) : (
-                      <TableRow>
+                       <TableRow>
                         <TableCell
-                          colSpan={6}
+                          colSpan={7}
                           className="text-center text-muted-foreground py-8"
                         >
                           No messages found
@@ -270,6 +292,16 @@ export default function MessagingInbox() {
             )}
           </CardContent>
         </Card>
+
+      {/* Chat Window Modal */}
+      {selectedChat && (
+        <ChatWindow
+          recipientId={selectedChat.recipientId}
+          recipientName={selectedChat.recipientName}
+          channel={selectedChat.channel}
+          onClose={() => setSelectedChat(null)}
+        />
+      )}
     </CRMLayout>
   );
 }

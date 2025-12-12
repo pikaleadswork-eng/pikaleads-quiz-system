@@ -206,6 +206,112 @@ export const messagingRouter = router({
     }),
 
   /**
+   * Get conversation history with a specific recipient
+   */
+  getConversation: adminProcedure
+    .input(
+      z.object({
+        recipientId: z.string(),
+        channel: z.enum(["telegram", "whatsapp", "email", "instagram"]),
+      })
+    )
+    .query(async ({ input }) => {
+      // Mock conversation data - replace with actual database query
+      const mockConversation = [
+        {
+          id: 1,
+          recipientId: input.recipientId,
+          channel: input.channel,
+          content: "Hello! I'm interested in your furniture quiz.",
+          direction: "received" as const,
+          createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000),
+        },
+        {
+          id: 2,
+          recipientId: input.recipientId,
+          channel: input.channel,
+          content: "Great! Let me send you the quiz link.",
+          direction: "sent" as const,
+          createdAt: new Date(Date.now() - 1.5 * 60 * 60 * 1000),
+        },
+        {
+          id: 3,
+          recipientId: input.recipientId,
+          channel: input.channel,
+          content: "Thank you! I'll complete it now.",
+          direction: "received" as const,
+          createdAt: new Date(Date.now() - 1 * 60 * 60 * 1000),
+        },
+      ];
+
+      return mockConversation;
+    }),
+
+  /**
+   * Send a message to a specific recipient
+   */
+  sendMessage: adminProcedure
+    .input(
+      z.object({
+        recipientId: z.string(),
+        channel: z.enum(["telegram", "whatsapp", "email", "instagram"]),
+        message: z.string().min(1, "Message cannot be empty"),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const { recipientId, channel, message } = input;
+
+      // Send message via selected channel
+      switch (channel) {
+        case "telegram":
+          if (!ENV.telegramBotToken) {
+            throw new TRPCError({
+              code: "INTERNAL_SERVER_ERROR",
+              message: "Telegram Bot Token not configured",
+            });
+          }
+
+          const result = await sendTelegramMessage(recipientId, message);
+          if (!result.success) {
+            throw new TRPCError({
+              code: "INTERNAL_SERVER_ERROR",
+              message: result.error || "Failed to send Telegram message",
+            });
+          }
+          break;
+
+        case "instagram":
+          throw new TRPCError({
+            code: "NOT_IMPLEMENTED",
+            message: "Instagram messaging not yet implemented",
+          });
+
+        case "whatsapp":
+          throw new TRPCError({
+            code: "NOT_IMPLEMENTED",
+            message: "WhatsApp messaging not yet implemented",
+          });
+
+        case "email":
+          throw new TRPCError({
+            code: "NOT_IMPLEMENTED",
+            message: "Email messaging not yet implemented",
+          });
+
+        default:
+          throw new TRPCError({
+            code: "BAD_REQUEST",
+            message: `Unsupported channel: ${channel}`,
+          });
+      }
+
+      return {
+        success: true,
+        sentAt: new Date(),
+      };
+    }),
+
+  /**
    * Get messaging statistics
    */
   getMessagingStats: adminProcedure.query(async () => {
