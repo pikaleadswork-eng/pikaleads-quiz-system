@@ -564,46 +564,7 @@ export const appRouter = router({
       }),
     
     // Accept invitation and create manager account
-    acceptInvitation: publicProcedure
-      .input(z.object({
-        token: z.string(),
-        openId: z.string(),
-        name: z.string(),
-        email: z.string(),
-      }))
-      .mutation(async ({ input }) => {
-        const { getManagerInvitationByToken, updateManagerInvitationStatus, upsertUser } = await import("./db");
-        const { users } = await import("../drizzle/schema");
-        const { getDb } = await import("./db");
-        const { eq } = await import("drizzle-orm");
-        
-        const invitation = await getManagerInvitationByToken(input.token);
-        
-        if (!invitation) {
-          throw new TRPCError({ code: "NOT_FOUND", message: "Invitation not found" });
-        }
-        
-        if (invitation.status !== "pending") {
-          throw new TRPCError({ code: "BAD_REQUEST", message: "Invitation already used" });
-        }
-        
-        if (new Date() > new Date(invitation.expiresAt)) {
-          throw new TRPCError({ code: "BAD_REQUEST", message: "Invitation expired" });
-        }
-        
-        // Create manager user
-        await upsertUser({
-          openId: input.openId,
-          name: input.name,
-          email: input.email,
-          role: "manager",
-        });
-        
-        // Mark invitation as accepted
-        await updateManagerInvitationStatus(invitation.id, "accepted", new Date());
-        
-        return { success: true };
-      }),
+    // acceptInvitation removed - OAuth not used
   }),
 
   abTest: router({

@@ -558,3 +558,65 @@
 - [x] Fix duplicate key `/crm` error in navigation (changed Messaging Center href to /admin/messaging)
 - [x] Test /admin page for console errors
 - [x] Verify all navigation links work correctly
+
+
+## Phase 17 - Domain & SSL Configuration for pika-leads.com
+- [x] Prepare Nginx configuration for pika-leads.com
+- [x] Create SSL certificate installation guide
+- [x] Document Cloudflare DNS settings
+- [x] Provide step-by-step deployment commands
+- [ ] Test domain configuration (requires user to execute on server)
+- [ ] Verify SSL certificate installation (requires user to execute on server)
+
+
+## Phase 18 - Add Simple Admin Login (Keep Manus OAuth)
+- [x] Create admin_users table with email/password (using existing users table with fake openId)
+- [x] Add bcrypt for password hashing (already installed)
+- [x] Create /vps-login page with password form
+- [x] Create simple cookie-based authentication for VPS
+- [x] Update context to support VPS bypass cookie
+- [x] Create SQL script to add admin user (01_create_admin_user.sql)
+- [x] Create deployment package for VPS (VPS_DEPLOYMENT_PACKAGE.tar.gz)
+- [x] Write deployment instructions (README_VPS_DEPLOYMENT.md + QUICK_START.md)
+- [ ] User to test on VPS server
+
+
+## Phase 19 - Complete VPS Deployment Package (No Manus OAuth)
+- [x] Create admin_users table schema with bcrypt passwords (using VPS bypass approach)
+- [x] Create login page with email/password (VPSLogin.tsx)
+- [x] Create VPS authentication bypass (context.ts + vps-auth.ts)
+- [x] Create SQL scripts with admin and manager users (01_database_setup.sql)
+- [x] Create complete project archive for VPS (pikaleads_vps_deploy.tar.gz)
+- [x] Create Nginx configuration for pika-leads.com with SSL (02_nginx_config.conf)
+- [x] Create PM2 ecosystem file (03_ecosystem.config.js)
+- [x] Write complete deployment guide (README_DEPLOYMENT.md + QUICK_START.md)
+- [x] Create .env template (04_env_template.txt)
+- [x] Package and deliver (1.9MB archive ready)
+
+
+## Phase 20 - Fix VPS Deployment with Bcrypt Passwords
+- [x] Create SQL script with bcrypt password hashes in database (01_create_database.sql)
+- [x] Update VPS authentication to verify bcrypt passwords from DB (context.ts + vps-auth.ts)
+- [x] Simplify deployment guide (DEPLOYMENT_GUIDE.md)
+- [x] Package final version (pikaleads_final.tar.gz - 1.9MB)
+- [ ] User to deploy and test on VPS
+
+
+## Phase 21 - Create Complete ZIP Archive with Simple Guide
+- [ ] Prepare project with all VPS patches pre-applied
+- [ ] Create ultra-simple deployment guide (copy-paste commands)
+- [ ] Create SQL script with bcrypt passwords
+- [ ] Create .env template
+- [ ] Create Nginx config
+- [ ] Create PM2 config
+- [ ] Package as ZIP archive
+- [ ] Deliver to user
+
+
+## Phase 22 - Create Verified Deployment Package (Fix All Errors)
+- [x] Review all PM2 commands and fix tsx interpreter issues
+- [x] Create verified installation guide with tested commands (SETUP.md)
+- [x] Create database.sql with bcrypt password hashes
+- [x] Create .env.example with correct credentials
+- [x] Package final working version (pikaleads_final.zip - 2.0MB)
+- [ ] Deliver to user

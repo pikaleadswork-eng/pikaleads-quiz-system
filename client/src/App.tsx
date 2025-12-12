@@ -34,11 +34,13 @@ import RegisterManager from "./pages/RegisterManager";
 import FurnitureQuiz from "./pages/FurnitureQuiz";
 import ApartmentRenovationQuiz from "./pages/ApartmentRenovationQuiz";
 import ECommerceQuiz from "./pages/ECommerceQuiz";
+import Login from "./pages/Login";
 
 function Router() {
   return (
     <Switch>
       <Route path={"/"} component={Home} />
+      <Route path={"/login"} component={Login} />
       <Route path={"/thank-you"} component={ThankYou} />
       
       {/* New Quiz Pages with Offers */}

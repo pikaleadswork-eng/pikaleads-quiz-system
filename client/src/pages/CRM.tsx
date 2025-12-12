@@ -46,12 +46,12 @@ export default function CRM() {
   const [messagePlatform, setMessagePlatform] = useState<"instagram" | "telegram">("telegram");
   
   // UTM Filters
-  const [filterCampaign, setFilterCampaign] = useState<string>("");
-  const [filterAdGroup, setFilterAdGroup] = useState<string>("");
-  const [filterAd, setFilterAd] = useState<string>("");
-  const [filterPlacement, setFilterPlacement] = useState<string>("");
-  const [filterKeyword, setFilterKeyword] = useState<string>("");
-  const [filterSite, setFilterSite] = useState<string>("");
+  const [filterCampaign, setFilterCampaign] = useState<string>("all");
+  const [filterAdGroup, setFilterAdGroup] = useState<string>("all");
+  const [filterAd, setFilterAd] = useState<string>("all");
+  const [filterPlacement, setFilterPlacement] = useState<string>("all");
+  const [filterKeyword, setFilterKeyword] = useState<string>("all");
+  const [filterSite, setFilterSite] = useState<string>("all");
 
   const { data: leads, isLoading: leadsLoading, refetch: refetchLeads } = trpc.crm.getLeads.useQuery();
   const { data: statuses } = trpc.crm.getStatuses.useQuery();
@@ -90,12 +90,12 @@ export default function CRM() {
   // Filter leads based on UTM parameters and sort by score
   const filteredLeads = leads
     ?.filter((lead) => {
-      if (filterCampaign && lead.utmCampaign !== filterCampaign) return false;
-      if (filterAdGroup && lead.utmAdGroup !== filterAdGroup) return false;
-      if (filterAd && lead.utmAd !== filterAd) return false;
-      if (filterPlacement && lead.utmPlacement !== filterPlacement) return false;
-      if (filterKeyword && lead.utmKeyword !== filterKeyword) return false;
-      if (filterSite && lead.utmSite !== filterSite) return false;
+      if (filterCampaign && filterCampaign !== "all" && lead.utmCampaign !== filterCampaign) return false;
+      if (filterAdGroup && filterAdGroup !== "all" && lead.utmAdGroup !== filterAdGroup) return false;
+      if (filterAd && filterAd !== "all" && lead.utmAd !== filterAd) return false;
+      if (filterPlacement && filterPlacement !== "all" && lead.utmPlacement !== filterPlacement) return false;
+      if (filterKeyword && filterKeyword !== "all" && lead.utmKeyword !== filterKeyword) return false;
+      if (filterSite && filterSite !== "all" && lead.utmSite !== filterSite) return false;
       return true;
     })
     .sort((a, b) => (b.leadScore || 0) - (a.leadScore || 0)); // Sort by score descending
@@ -203,7 +203,7 @@ export default function CRM() {
                         <SelectValue placeholder="All campaigns" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="">All campaigns</SelectItem>
+                        <SelectItem value="all">All campaigns</SelectItem>
                         {uniqueCampaigns.map((campaign) => (
                           <SelectItem key={campaign as string} value={campaign as string}>
                             {campaign}
@@ -223,7 +223,7 @@ export default function CRM() {
                         <SelectValue placeholder="All ad groups" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="">All ad groups</SelectItem>
+                        <SelectItem value="all">All ad groups</SelectItem>
                         {uniqueAdGroups.map((adGroup) => (
                           <SelectItem key={adGroup as string} value={adGroup as string}>
                             {adGroup}
@@ -243,7 +243,7 @@ export default function CRM() {
                         <SelectValue placeholder="All ads" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="">All ads</SelectItem>
+                        <SelectItem value="all">All ads</SelectItem>
                         {uniqueAds.map((ad) => (
                           <SelectItem key={ad as string} value={ad as string}>
                             {ad}
@@ -263,7 +263,7 @@ export default function CRM() {
                         <SelectValue placeholder="All placements" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="">All placements</SelectItem>
+                        <SelectItem value="all">All placements</SelectItem>
                         {uniquePlacements.map((placement) => (
                           <SelectItem key={placement as string} value={placement as string}>
                             {placement}
@@ -283,7 +283,7 @@ export default function CRM() {
                         <SelectValue placeholder="All keywords" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="">All keywords</SelectItem>
+                        <SelectItem value="all">All keywords</SelectItem>
                         {uniqueKeywords.map((keyword) => (
                           <SelectItem key={keyword as string} value={keyword as string}>
                             {keyword}
@@ -303,7 +303,7 @@ export default function CRM() {
                         <SelectValue placeholder="All sites" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="">All sites</SelectItem>
+                        <SelectItem value="all">All sites</SelectItem>
                         {uniqueSites.map((site) => (
                           <SelectItem key={site as string} value={site as string}>
                             {site}
