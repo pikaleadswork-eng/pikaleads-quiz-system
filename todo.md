@@ -548,3 +548,38 @@
 - ✅ Edit Lead Form (EditLeadForm.tsx)
 - ⚠️ AdminDashboard, CRMDashboard, AdminAnalytics, etc. - have useTranslation but need text replacement
 - ❌ Quiz pages (not needed for admin panel)
+
+## Phase 41 - CRM Enhancements (Dec 12)
+- [x] Connect Manager filter to backend (trpc.crm.getLeads)
+- [x] Connect Source filter to backend (trpc.crm.getLeads)
+- [x] Connect Date Range filter to backend (trpc.crm.getLeads)
+- [x] Update CRM.tsx to pass filter parameters to query
+- [x] Complete AdminDashboard.tsx translations
+- [x] Complete CRMDashboard.tsx translations
+- [ ] Complete AdminAnalytics.tsx translations
+- [ ] Complete AdminCalendar.tsx translations
+- [ ] Complete AdminManagers.tsx translations
+- [ ] Complete AdminPerformance.tsx translations
+- [ ] Add checkbox column to leads table
+- [ ] Add "Select All" checkbox in table header
+- [ ] Add bulk actions toolbar (appears when leads selected)
+- [ ] Implement bulk assign manager action
+- [ ] Implement bulk change status action
+- [ ] Implement bulk delete action
+- [ ] Add confirmation dialogs for bulk operations
+- [ ] Test all filters work correctly
+- [ ] Test all translations display properly
+- [ ] Test bulk operations work correctly
+
+## Phase 41 - CRM Enhancements (Completed)
+- [x] Connect CRM filters to backend (Manager, Source, Date Range)
+- [x] Complete admin page translations (AdminDashboard, CRMDashboard)
+- [x] Implement bulk lead operations
+  - [x] Add checkbox column to leads table
+  - [x] Add Select All checkbox in header
+  - [x] Add bulk actions toolbar
+  - [x] Add bulk assign manager functionality
+  - [x] Add bulk change status functionality
+  - [x] Add bulk delete functionality
+  - [x] Add bulk actions dialog
+  - [x] Add translation keys for bulk operations

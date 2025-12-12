@@ -253,7 +253,18 @@
     "edit": "Редактировать",
     "showing": "Показано",
     "of": "из",
-    "leads": "лидов"
+    "leads": "лидов",
+    "leadsSelected": "лидов выбрано",
+    "assignManager": "Назначить менеджера",
+    "changeStatus": "Изменить статус",
+    "bulkAssignSuccess": "Менеджер назначен",
+    "bulkStatusSuccess": "Статус обновлен",
+    "bulkDeleteSuccess": "Лиды удалены",
+    "bulkActionTitle": "Массовая операция",
+    "bulkAssignDescription": "Выберите менеджера для назначения",
+    "bulkStatusDescription": "Выберите новый статус",
+    "bulkDeleteDescription": "Вы уверены? Это удалит все выбранные лиды.",
+    "execute": "Выполнить"
   },
   "adminSettings": {
     "title": "Настройки системы",

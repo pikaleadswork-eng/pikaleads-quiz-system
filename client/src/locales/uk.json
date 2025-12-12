@@ -253,7 +253,18 @@
     "edit": "Редагувати",
     "showing": "Показано",
     "of": "з",
-    "leads": "лідів"
+    "leads": "лідів",
+    "leadsSelected": "лідів вибрано",
+    "assignManager": "Призначити менеджера",
+    "changeStatus": "Змінити статус",
+    "bulkAssignSuccess": "Менеджера призначено",
+    "bulkStatusSuccess": "Статус оновлено",
+    "bulkDeleteSuccess": "Ліди видалено",
+    "bulkActionTitle": "Масова операція",
+    "bulkAssignDescription": "Виберіть менеджера для призначення",
+    "bulkStatusDescription": "Виберіть новий статус",
+    "bulkDeleteDescription": "Ви впевнені? Це видалить всі вибрані ліди.",
+    "execute": "Виконати"
   },
   "adminSettings": {
     "title": "Налаштування системи",

@@ -408,17 +408,52 @@ export const appRouter = router({
         return { success: true, leadId };
       }),
     
-    getLeads: protectedProcedure.query(async ({ ctx }) => {
-      const { getAllLeads } = await import("./db");
-      const allLeads = await getAllLeads();
-      
-      // Managers only see their assigned leads
-      if (ctx.user.role === 'manager') {
-        return allLeads.filter(lead => lead.assignedTo === ctx.user.id);
-      }
-      
-      return allLeads;
-    }),
+    getLeads: protectedProcedure
+      .input(z.object({
+        managerId: z.number().optional(),
+        source: z.string().optional(),
+        dateFrom: z.string().optional(), // ISO date string
+        dateTo: z.string().optional(),   // ISO date string
+      }).optional())
+      .query(async ({ ctx, input }) => {
+        const { getAllLeads } = await import("./db");
+        let allLeads = await getAllLeads();
+        
+        // Managers only see their assigned leads
+        if (ctx.user.role === 'manager') {
+          allLeads = allLeads.filter(lead => lead.assignedTo === ctx.user.id);
+        }
+        
+        // Apply filters if provided
+        if (input) {
+          if (input.managerId) {
+            allLeads = allLeads.filter(lead => lead.assignedTo === input.managerId);
+          }
+          
+          if (input.source) {
+            allLeads = allLeads.filter(lead => 
+              lead.utmSource?.toLowerCase() === input.source?.toLowerCase()
+            );
+          }
+          
+          if (input.dateFrom) {
+            const fromDate = new Date(input.dateFrom);
+            allLeads = allLeads.filter(lead => 
+              new Date(lead.createdAt) >= fromDate
+            );
+          }
+          
+          if (input.dateTo) {
+            const toDate = new Date(input.dateTo);
+            toDate.setHours(23, 59, 59, 999); // End of day
+            allLeads = allLeads.filter(lead => 
+              new Date(lead.createdAt) <= toDate
+            );
+          }
+        }
+        
+        return allLeads;
+      }),
     
     updateLeadStatus: protectedProcedure
       .input(z.object({
@@ -458,6 +493,46 @@ export const appRouter = router({
         const { leadId, ...updates } = input;
         await db.update(leads).set(updates).where(eq(leads.id, leadId));
         return { success: true };
+      }),
+    
+    // Bulk operations
+    bulkAssignLeads: adminProcedure
+      .input(z.object({
+        leadIds: z.array(z.number()),
+        managerId: z.number(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const { assignLeadToManager } = await import("./db");
+        for (const leadId of input.leadIds) {
+          await assignLeadToManager(leadId, input.managerId, ctx.user.id);
+        }
+        return { success: true, count: input.leadIds.length };
+      }),
+    
+    bulkUpdateStatus: protectedProcedure
+      .input(z.object({
+        leadIds: z.array(z.number()),
+        statusId: z.number(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const { updateLeadStatusById } = await import("./db");
+        for (const leadId of input.leadIds) {
+          await updateLeadStatusById(leadId, input.statusId, ctx.user.id);
+        }
+        return { success: true, count: input.leadIds.length };
+      }),
+    
+    bulkDeleteLeads: adminProcedure
+      .input(z.object({
+        leadIds: z.array(z.number()),
+      }))
+      .mutation(async ({ input }) => {
+        const db = await import("./db").then(m => m.getDb());
+        if (!db) throw new Error("Database not available");
+        const { leads } = await import("../drizzle/schema");
+        const { inArray } = await import("drizzle-orm");
+        await db.delete(leads).where(inArray(leads.id, input.leadIds));
+        return { success: true, count: input.leadIds.length };
       }),
     
     // Comments

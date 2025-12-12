@@ -22,17 +22,17 @@ export default function CRMDashboard() {
 
   const navItems = [
     {
-      title: "Messengers",
+      title: t("nav.messaging"),
       icon: MessageSquare,
       href: "/admin/inbox",
-      description: "Email, Telegram, WhatsApp",
+      description: t("nav.emailTelegramWhatsApp"),
       color: "text-blue-500",
     },
     {
-      title: "Leads",
+      title: t("nav.leads"),
       icon: Users,
       href: "/crm",
-      description: "Manage all leads",
+      description: t("nav.manageAllLeads"),
       color: "text-green-500",
     },
     {
@@ -53,11 +53,11 @@ export default function CRMDashboard() {
       title: "Sales Statistics",
       icon: DollarSign,
       href: "/admin/sales",
-      description: "Revenue & transactions",
+      description: t("nav.revenueTransactions"),
       color: "text-yellow-500",
     },
     {
-      title: "Services",
+      title: t("nav.services"),
       icon: Package,
       href: "/admin/services",
       description: "Manage pricing",
@@ -67,7 +67,7 @@ export default function CRMDashboard() {
       title: "Sales Scripts",
       icon: FileText,
       href: "/admin/scripts",
-      description: "Call scripts library",
+      description: t("nav.callScriptsLibrary"),
       color: "text-pink-500",
     },
   ];

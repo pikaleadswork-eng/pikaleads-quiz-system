@@ -249,7 +249,18 @@
     "edit": "Edit",
     "showing": "Showing",
     "of": "of",
-    "leads": "leads"
+    "leads": "leads",
+    "leadsSelected": "leads selected",
+    "assignManager": "Assign Manager",
+    "changeStatus": "Change Status",
+    "bulkAssignSuccess": "Manager assigned",
+    "bulkStatusSuccess": "Status updated",
+    "bulkDeleteSuccess": "Leads deleted",
+    "bulkActionTitle": "Bulk Action",
+    "bulkAssignDescription": "Select a manager to assign",
+    "bulkStatusDescription": "Select new status",
+    "bulkDeleteDescription": "Are you sure? This will delete all selected leads.",
+    "execute": "Execute"
   },
   "scripts": {
     "title": "Sales Scripts",
