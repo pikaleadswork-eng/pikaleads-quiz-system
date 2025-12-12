@@ -261,5 +261,112 @@
     "deleteScript": "Delete Script",
     "noScripts": "No scripts found",
     "createFirstScript": "Create your first script"
+  },
+  "adminDashboard": {
+    "title": "Admin Dashboard",
+    "welcome": "Welcome to Admin Dashboard",
+    "overview": "System Overview",
+    "quickActions": "Quick Actions",
+    "recentActivity": "Recent Activity",
+    "systemHealth": "System Health",
+    "viewAll": "View All"
+  },
+  "crmDashboard": {
+    "title": "CRM Dashboard",
+    "leadsOverview": "Leads Overview",
+    "conversionFunnel": "Conversion Funnel",
+    "topPerformers": "Top Performers",
+    "recentLeads": "Recent Leads",
+    "leadsByStatus": "Leads by Status",
+    "leadsBySource": "Leads by Source"
+  },
+  "analytics": {
+    "title": "Analytics",
+    "description": "Detailed analytics and reports",
+    "dateRange": "Date Range",
+    "metrics": "Metrics",
+    "charts": "Charts",
+    "export": "Export",
+    "refresh": "Refresh"
+  },
+  "calendar": {
+    "title": "Calendar",
+    "description": "Scheduled events and meetings",
+    "today": "Today",
+    "week": "Week",
+    "month": "Month",
+    "addEvent": "Add Event",
+    "upcomingEvents": "Upcoming Events",
+    "noEvents": "No scheduled events"
+  },
+  "managers": {
+    "title": "Managers",
+    "description": "Manage your team of managers",
+    "addManager": "Add Manager",
+    "activeManagers": "Active Managers",
+    "performance": "Performance",
+    "assignedLeads": "Assigned Leads",
+    "closedDeals": "Closed Deals"
+  },
+  "performance": {
+    "title": "Performance",
+    "description": "Team performance analysis",
+    "topPerformers": "Top Performers",
+    "conversionRate": "Conversion Rate",
+    "averageResponseTime": "Average Response Time",
+    "customerSatisfaction": "Customer Satisfaction"
+  },
+  "editLead": {
+    "title": "Edit Lead",
+    "contactInfo": "Contact Information",
+    "name": "Name",
+    "phone": "Phone",
+    "email": "Email",
+    "telegram": "Telegram",
+    "whatsapp": "WhatsApp",
+    "serviceAssignment": "Service Assignment",
+    "mainService": "Main Service",
+    "selectService": "Select Service",
+    "totalAmount": "Total Amount",
+    "autoCalculated": "Auto-calculated",
+    "salesNotes": "Sales Notes",
+    "addNotes": "Add notes about this sale...",
+    "cancel": "Cancel",
+    "updateLead": "Update Lead",
+    "convertToSale": "Convert to Sale",
+    "additionalServices": "Additional Services",
+    "manualOverride": "Manual Override",
+    "manualOverrideActive": "Manual override active"
+  },
+  "filters": {
+    "title": "Filters",
+    "manager": "Manager",
+    "source": "Source",
+    "dateRange": "Date Range",
+    "from": "From",
+    "to": "To",
+    "apply": "Apply",
+    "clear": "Clear",
+    "clearAll": "Clear All",
+    "activeFilters": "Active Filters"
+  },
+  "table": {
+    "id": "ID",
+    "date": "Date",
+    "source": "Source",
+    "name": "Name",
+    "phone": "Phone",
+    "status": "Status",
+    "manager": "Manager",
+    "score": "Score",
+    "actions": "Actions",
+    "view": "View",
+    "edit": "Edit",
+    "delete": "Delete",
+    "noData": "No data",
+    "loading": "Loading...",
+    "showing": "Showing",
+    "of": "of",
+    "entries": "entries"
   }
 }

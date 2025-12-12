@@ -296,10 +296,109 @@
   },
   "calendar": {
     "title": "Календарь",
-    "description": "Запланированные встречи и звонки",
+    "description": "Запланированные события и встречи",
     "today": "Сегодня",
     "week": "Неделя",
     "month": "Месяц",
-    "addEvent": "Добавить событие"
+    "addEvent": "Добавить событие",
+    "upcomingEvents": "Предстоящие события",
+    "noEvents": "Нет запланированных событий"
+  },
+  "adminDashboard": {
+    "title": "Панель администратора",
+    "welcome": "Добро пожаловать в панель администратора",
+    "overview": "Обзор системы",
+    "quickActions": "Быстрые действия",
+    "recentActivity": "Последняя активность",
+    "systemHealth": "Состояние системы",
+    "viewAll": "Просмотреть все"
+  },
+  "crmDashboard": {
+    "title": "CRM Дашборд",
+    "leadsOverview": "Обзор лидов",
+    "conversionFunnel": "Воронка конверсии",
+    "topPerformers": "Топ менеджеров",
+    "recentLeads": "Последние лиды",
+    "leadsByStatus": "Лиды по статусу",
+    "leadsBySource": "Лиды по источнику"
+  },
+  "analytics": {
+    "title": "Аналитика",
+    "description": "Детальная аналитика и отчеты",
+    "dateRange": "Период",
+    "metrics": "Метрики",
+    "charts": "Графики",
+    "export": "Экспортировать",
+    "refresh": "Обновить"
+  },
+  "managers": {
+    "title": "Менеджеры",
+    "description": "Управление командой менеджеров",
+    "addManager": "Добавить менеджера",
+    "activeManagers": "Активные менеджеры",
+    "performance": "Продуктивность",
+    "assignedLeads": "Назначенные лиды",
+    "closedDeals": "Закрытые сделки"
+  },
+  "performance": {
+    "title": "Продуктивность",
+    "description": "Анализ продуктивности команды",
+    "topPerformers": "Топ исполнителей",
+    "conversionRate": "Конверсия",
+    "averageResponseTime": "Среднее время ответа",
+    "customerSatisfaction": "Удовлетворенность клиентов"
+  },
+  "editLead": {
+    "title": "Редактировать лида",
+    "contactInfo": "Контактная информация",
+    "name": "Имя",
+    "phone": "Телефон",
+    "email": "Email",
+    "telegram": "Telegram",
+    "whatsapp": "WhatsApp",
+    "serviceAssignment": "Назначение услуги",
+    "mainService": "Основная услуга",
+    "selectService": "Выберите услугу",
+    "totalAmount": "Общая сумма",
+    "autoCalculated": "Авто-расчет",
+    "salesNotes": "Примечания к продаже",
+    "addNotes": "Добавьте примечания об этой продаже...",
+    "cancel": "Отменить",
+    "updateLead": "Обновить лида",
+    "convertToSale": "Конвертировать в продажу",
+    "additionalServices": "Дополнительные услуги",
+    "manualOverride": "Ручной ввод",
+    "manualOverrideActive": "Активен ручной ввод"
+  },
+  "filters": {
+    "title": "Фильтры",
+    "manager": "Менеджер",
+    "source": "Источник",
+    "dateRange": "Период дат",
+    "from": "От",
+    "to": "До",
+    "apply": "Применить",
+    "clear": "Очистить",
+    "clearAll": "Очистить все",
+    "activeFilters": "Активные фильтры"
+  },
+  "table": {
+    "id": "ID",
+    "date": "Дата",
+    "source": "Источник",
+    "name": "Имя",
+    "phone": "Телефон",
+    "status": "Статус",
+    "manager": "Менеджер",
+    "score": "Оценка",
+    "actions": "Действия",
+    "view": "Просмотреть",
+    "edit": "Редактировать",
+    "delete": "Удалить",
+    "noData": "Нет данных",
+    "loading": "Загрузка...",
+    "showing": "Показано",
+    "of": "из",
+    "entries": "записей"
   }
 }

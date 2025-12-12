@@ -1,4 +1,5 @@
 import { useLocation } from "wouter";
+import { useTranslation } from "react-i18next";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -14,6 +15,7 @@ import { ArrowLeft, Download, Trophy, TrendingUp, Clock } from "lucide-react";
 import { format } from "date-fns";
 
 export default function AdminPerformance() {
+  const { t } = useTranslation();
   const [, setLocation] = useLocation();
   const { data: performance, isLoading } = trpc.admin.getManagerPerformance.useQuery();
 

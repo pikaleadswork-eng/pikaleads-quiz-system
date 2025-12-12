@@ -296,10 +296,109 @@
   },
   "calendar": {
     "title": "Календар",
-    "description": "Заплановані зустрічі та дзвінки",
+    "description": "Заплановані події та зустрічі",
     "today": "Сьогодні",
     "week": "Тиждень",
     "month": "Місяць",
-    "addEvent": "Додати подію"
+    "addEvent": "Додати подію",
+    "upcomingEvents": "Майбутні події",
+    "noEvents": "Немає запланованих подій"
+  },
+  "adminDashboard": {
+    "title": "Панель адміністратора",
+    "welcome": "Ласкаво просимо до панелі адміністратора",
+    "overview": "Огляд системи",
+    "quickActions": "Швидкі дії",
+    "recentActivity": "Остання активність",
+    "systemHealth": "Стан системи",
+    "viewAll": "Переглянути все"
+  },
+  "crmDashboard": {
+    "title": "CRM Дашборд",
+    "leadsOverview": "Огляд лідів",
+    "conversionFunnel": "Воронка конверсії",
+    "topPerformers": "Топ менеджерів",
+    "recentLeads": "Останні ліди",
+    "leadsByStatus": "Ліди за статусом",
+    "leadsBySource": "Ліди за джерелом"
+  },
+  "analytics": {
+    "title": "Аналітика",
+    "description": "Детальна аналітика та звіти",
+    "dateRange": "Період",
+    "metrics": "Метрики",
+    "charts": "Графіки",
+    "export": "Експортувати",
+    "refresh": "Оновити"
+  },
+  "managers": {
+    "title": "Менеджери",
+    "description": "Управління командою менеджерів",
+    "addManager": "Додати менеджера",
+    "activeManagers": "Активні менеджери",
+    "performance": "Продуктивність",
+    "assignedLeads": "Призначені ліди",
+    "closedDeals": "Закриті угоди"
+  },
+  "performance": {
+    "title": "Продуктивність",
+    "description": "Аналіз продуктивності команди",
+    "topPerformers": "Топ виконавців",
+    "conversionRate": "Конверсія",
+    "averageResponseTime": "Середній час відповіді",
+    "customerSatisfaction": "Задоволеність клієнтів"
+  },
+  "editLead": {
+    "title": "Редагувати ліда",
+    "contactInfo": "Контактна інформація",
+    "name": "Ім'я",
+    "phone": "Телефон",
+    "email": "Email",
+    "telegram": "Telegram",
+    "whatsapp": "WhatsApp",
+    "serviceAssignment": "Призначення послуги",
+    "mainService": "Основна послуга",
+    "selectService": "Оберіть послугу",
+    "totalAmount": "Загальна сума",
+    "autoCalculated": "Авто-розрахунок",
+    "salesNotes": "Примітки до продажу",
+    "addNotes": "Додайте примітки про цей продаж...",
+    "cancel": "Скасувати",
+    "updateLead": "Оновити ліда",
+    "convertToSale": "Конвертувати в продаж",
+    "additionalServices": "Додаткові послуги",
+    "manualOverride": "Ручне введення",
+    "manualOverrideActive": "Активне ручне введення"
+  },
+  "filters": {
+    "title": "Фільтри",
+    "manager": "Менеджер",
+    "source": "Джерело",
+    "dateRange": "Період дат",
+    "from": "Від",
+    "to": "До",
+    "apply": "Застосувати",
+    "clear": "Очистити",
+    "clearAll": "Очистити все",
+    "activeFilters": "Активні фільтри"
+  },
+  "table": {
+    "id": "ID",
+    "date": "Дата",
+    "source": "Джерело",
+    "name": "Ім'я",
+    "phone": "Телефон",
+    "status": "Статус",
+    "manager": "Менеджер",
+    "score": "Оцінка",
+    "actions": "Дії",
+    "view": "Переглянути",
+    "edit": "Редагувати",
+    "delete": "Видалити",
+    "noData": "Немає даних",
+    "loading": "Завантаження...",
+    "showing": "Показано",
+    "of": "з",
+    "entries": "записів"
   }
 }

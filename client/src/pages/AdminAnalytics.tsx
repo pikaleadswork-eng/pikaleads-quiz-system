@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { trpc } from "@/lib/trpc";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -15,6 +16,7 @@ import { Loader2, TrendingUp, Target, Zap, Globe, Key, BarChart3, Download } fro
 import { Link } from "wouter";
 
 export default function AdminAnalytics() {
+  const { t } = useTranslation();
   const { data: analytics, isLoading } = trpc.admin.getUTMAnalytics.useQuery();
 
   const exportToCSV = () => {

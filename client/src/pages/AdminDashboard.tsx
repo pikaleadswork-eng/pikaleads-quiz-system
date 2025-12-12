@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { trpc } from "@/lib/trpc";
 import { 
   Users, 
@@ -22,6 +23,7 @@ import { Link } from "wouter";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 export default function AdminDashboard() {
+  const { t } = useTranslation();
   const { user, loading: authLoading } = useAuth();
   const { data: stats } = trpc.admin.getDashboardStats.useQuery();
 

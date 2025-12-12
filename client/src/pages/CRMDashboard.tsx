@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,6 +16,7 @@ import { Link, useLocation } from "wouter";
 import { cn } from "@/lib/utils";
 
 export default function CRMDashboard() {
+  const { t } = useTranslation();
   const { user, loading: authLoading } = useAuth();
   const [location] = useLocation();
 

@@ -14,6 +14,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
 import { Loader2, Send, MessageCircle, Mail } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface EditLeadFormProps {
   lead: any;
@@ -22,25 +23,7 @@ interface EditLeadFormProps {
 }
 
 export function EditLeadForm({ lead, onClose, onSuccess }: EditLeadFormProps) {
-
-  // Detect language from localStorage or default to Ukrainian
-  const [language, setLanguage] = useState(() => {
-    return localStorage.getItem('language') || 'uk';
-  });
-
-  useEffect(() => {
-    const handleLanguageChange = () => {
-      setLanguage(localStorage.getItem('language') || 'uk');
-    };
-    window.addEventListener('languageChanged', handleLanguageChange);
-    return () => window.removeEventListener('languageChanged', handleLanguageChange);
-  }, []);
-
-  const t = (uk: string, ru: string, en: string) => {
-    if (language === 'ru') return ru;
-    if (language === 'en') return en;
-    return uk;
-  };
+  const { t } = useTranslation();
 
   const [formData, setFormData] = useState({
     name: lead.name || "",
@@ -153,17 +136,17 @@ export function EditLeadForm({ lead, onClose, onSuccess }: EditLeadFormProps) {
     <div className="space-y-6">
       {/* Contact & Messaging */}
       <div>
-        <h3 className="text-lg font-semibold mb-4">{t('Контактна інформація', 'Контактная информация', 'Contact Information')}</h3>
+        <h3 className="text-lg font-semibold mb-4">{t('editLead.contactInfo')}</h3>
         <div className="grid grid-cols-2 gap-4 mb-4">
           <div>
-            <Label htmlFor="name" className="mb-2 block">{t('Ім\'я *', 'Имя *', 'Name *')}</Label>
+            <Label htmlFor="name" className="mb-2 block">{t('editLead.name') + ' *'}</Label>
             <Input className="bg-zinc-800 border-zinc-700" id="name"
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             />
           </div>
           <div>
-            <Label htmlFor="phone" className="mb-2 block">{t('Телефон *', 'Телефон *', 'Phone *')}</Label>
+            <Label htmlFor="phone" className="mb-2 block">{t('editLead.phone') + ' *'}</Label>
             <Input className="bg-zinc-800 border-zinc-700" id="phone"
               value={formData.phone}
               onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
@@ -229,16 +212,16 @@ export function EditLeadForm({ lead, onClose, onSuccess }: EditLeadFormProps) {
 
       {/* Service Assignment */}
       <div>
-        <h3 className="text-lg font-semibold mb-4">{t('Призначення послуг', 'Назначение услуг', 'Service Assignment')}</h3>
+        <h3 className="text-lg font-semibold mb-4">{t('editLead.serviceAssignment')}</h3>
         <div className="space-y-4">
           <div>
-            <Label htmlFor="service" className="mb-2 block">{t('Основна послуга', 'Основная услуга', 'Main Service')}</Label>
+            <Label htmlFor="service" className="mb-2 block">{t('editLead.mainService')}</Label>
             <Select
               value={formData.serviceId?.toString() || ""}
               onValueChange={(value) => setFormData({ ...formData, serviceId: parseInt(value) })}
             >
               <SelectTrigger className="bg-zinc-800 border-zinc-700">
-                <SelectValue placeholder={t('Оберіть послугу', 'Выберите услугу', 'Select a service')} />
+                <SelectValue placeholder={t('editLead.selectService')} />
               </SelectTrigger>
               <SelectContent>
                 {services?.map((service) => (
@@ -253,7 +236,7 @@ export function EditLeadForm({ lead, onClose, onSuccess }: EditLeadFormProps) {
           {/* Additional Services */}
           {additionalServices && additionalServices.length > 0 && (
             <div>
-              <Label className="mb-2 block">{t('Додаткові послуги', 'Дополнительные услуги', 'Additional Services')}</Label>
+              <Label className="mb-2 block">{t('editLead.additionalServices')}</Label>
               <div className="mt-2 space-y-2 border rounded-md p-4">
                 {additionalServices.map((service) => (
                   <div key={service.id} className="flex items-center space-x-2">
@@ -276,11 +259,11 @@ export function EditLeadForm({ lead, onClose, onSuccess }: EditLeadFormProps) {
 
           {/* Total Amount */}
           <div className="space-y-2 mb-4">
-            <Label htmlFor="manual-amount" className="mb-2 block">{t('Загальна сума (Ручне введення)', 'Общая сумма (Ручной ввод)', 'Total Amount (Manual Override)')}</Label>
+            <Label htmlFor="manual-amount" className="mb-2 block">{t('editLead.totalAmount') + ' (' + t('editLead.manualOverride') + ')'}</Label>
             <div className="flex gap-2 items-center">
               <Input className="bg-zinc-800 border-zinc-700" id="manual-amount"
                 type="number"
-                placeholder={t('Авто-розрахунок', 'Авто-расчет', 'Auto-calculate')}
+                placeholder={t('editLead.autoCalculated')}
                 value={formData.manualAmount || ""}
                 onChange={(e) => setFormData({ ...formData, manualAmount: e.target.value ? parseFloat(e.target.value) : null })}
               />
@@ -297,24 +280,24 @@ export function EditLeadForm({ lead, onClose, onSuccess }: EditLeadFormProps) {
             </div>
             <div className="bg-muted p-4 rounded-md">
               <div className="flex justify-between items-center">
-                <span className="text-lg font-semibold">{t('Загальна сума:', 'Общая сумма:', 'Total Amount:')}</span>
+                <span className="text-lg font-semibold">{t('editLead.totalAmount') + ':'}</span>
                 <span className="text-2xl font-bold text-primary">
                   ${formData.totalAmount}
                 </span>
               </div>
               {formData.manualAmount !== null && (
-                <p className="text-xs text-muted-foreground mt-1">{t('Активне ручне введення', 'Активен ручной ввод', 'Manual override active')}</p>
+                <p className="text-xs text-muted-foreground mt-1">{t('editLead.manualOverrideActive')}</p>
               )}
             </div>
           </div>
 
           {/* Sale Notes */}
           <div>
-            <Label htmlFor="notes" className="mb-2 block">{t('Примітки до продажу', 'Примечания к продаже', 'Sale Notes')}</Label>
+            <Label htmlFor="notes" className="mb-2 block">{t('editLead.salesNotes')}</Label>
             <Textarea className="bg-zinc-800 border-zinc-700" id="notes"
               value={formData.notes}
               onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-              placeholder={t('Додайте примітки про цей продаж...', 'Добавьте примечания об этой продаже...', 'Add notes about this sale...')}
+              placeholder={t('editLead.addNotes')}
               rows={3}
             />
           </div>

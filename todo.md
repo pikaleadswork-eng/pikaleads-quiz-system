@@ -494,3 +494,57 @@
 - [x] Enable Delete functionality for statuses
 - [x] Fix input field backgrounds in status dialogs
 - [x] Fix label spacing in status dialogs
+
+## Translation Issues (Dec 12, 2025 - CRITICAL)
+
+### Problems Reported:
+- [ ] Ukrainian language selected but displays Russian text
+- [ ] Russian language option shows English text (mixed languages)
+- [ ] MessagingInbox page not translated at all
+- [ ] CRM page not fully translated
+- [ ] Admin pages not translated
+- [ ] DashboardLayout sidebar menu not translated (Сообщения, Ліди, etc.)
+- [ ] Missing translations for headers, subheaders, buttons, popups
+- [ ] Language switcher doesn't work properly
+
+### Components Missing Translation Integration:
+- [ ] DashboardLayout.tsx - sidebar menu items
+- [ ] MessagingInbox.tsx - all UI text
+- [ ] CRM.tsx - headers, buttons, table columns
+- [ ] EditLeadForm.tsx - form labels and buttons
+- [ ] AdminDashboard.tsx - all content
+- [ ] AdminAnalytics.tsx - all content
+- [ ] AdminCalendar.tsx - all content
+- [ ] CRMDashboard.tsx - all content
+- [ ] SalesStatistics.tsx - filters and labels
+- [ ] All other admin pages
+
+### Required Actions:
+- [ ] Fix language detection logic (uk should show Ukrainian, not Russian)
+- [ ] Add complete translation keys for ALL components
+- [ ] Add useTranslation() to ALL components
+- [ ] Replace ALL hardcoded text with t() calls
+- [ ] Test language switching on every page
+
+## Phase 40 - Translation System Complete (Dec 12)
+- [x] Fixed language code mismatch (ua → uk)
+- [x] Added comprehensive translation keys for admin panel
+- [x] Integrated useTranslation into EditLeadForm
+- [x] Added useTranslation to AdminDashboard, CRMDashboard, AdminAnalytics, AdminCalendar, AdminManagers, AdminPerformance
+- [x] Fixed duplicate useTranslation imports
+- [x] Tested language switching - Ukrainian displays correctly
+- [x] Homepage fully translated
+- [x] CRM sidebar menu translated
+- [x] MessagingInbox translated
+
+## Translation Coverage Status
+- ✅ Homepage (Home.tsx)
+- ✅ CRM Layout (CRMLayout.tsx) - sidebar menu
+- ✅ CRM Leads Management (CRM.tsx)
+- ✅ Messaging Inbox (MessagingInbox.tsx)
+- ✅ Sales Scripts (SalesScripts.tsx)
+- ✅ Services Management (ServicesManagement.tsx)
+- ✅ Settings pages (SettingsRoles, SettingsLeadStatuses, SettingsIntegrations, SettingsTelephony, SettingsMessaging)
+- ✅ Edit Lead Form (EditLeadForm.tsx)
+- ⚠️ AdminDashboard, CRMDashboard, AdminAnalytics, etc. - have useTranslation but need text replacement
+- ❌ Quiz pages (not needed for admin panel)

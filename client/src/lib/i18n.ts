@@ -4,12 +4,12 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 
 import en from '../locales/en.json';
 import ru from '../locales/ru.json';
-import ua from '../locales/ua.json';
+import uk from '../locales/uk.json';
 
 const resources = {
   en: { translation: en },
   ru: { translation: ru },
-  ua: { translation: ua },
+  uk: { translation: uk },
 };
 
 i18n
@@ -18,7 +18,7 @@ i18n
   .init({
     resources,
     fallbackLng: 'en',
-    supportedLngs: ['en', 'ru', 'ua'],
+    supportedLngs: ['en', 'ru', 'uk'],
     interpolation: {
       escapeValue: false,
     },

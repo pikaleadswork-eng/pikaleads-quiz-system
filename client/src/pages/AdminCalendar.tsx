@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
 import { Link } from "wouter";
@@ -11,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Calendar, Clock, User, Link as LinkIcon } from "lucide-react";
 
 export default function AdminCalendar() {
+  const { t } = useTranslation();
   const { user, loading } = useAuth();
   const [selectedLead, setSelectedLead] = useState<number | null>(null);
   const [title, setTitle] = useState("");
