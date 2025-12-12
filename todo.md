@@ -709,3 +709,32 @@
 - [ ] Implement delete preset functionality
 - [ ] Store presets in database
 - [ ] Add translations for presets
+
+
+## Phase 5: Complete Filter Presets UI - IN PROGRESS 🚧
+- [ ] Add preset dropdown next to Filters button
+- [ ] Add "Save Current Filters" button
+- [ ] Create SavePresetDialog component
+- [ ] Implement load preset functionality
+- [ ] Implement delete preset functionality
+- [ ] Add translations for preset UI elements
+- [ ] Test saving and loading presets
+
+## Phase 6: Lead Assignment Automation - PENDING ⏳
+- [ ] Create assignment rules UI in Settings
+- [ ] Add rule conditions (source, campaign, workload)
+- [ ] Implement auto-assignment logic in backend
+- [ ] Add assignment history tracking
+- [ ] Test automation with different rules
+
+## Phase 7: Analytics Dashboard - PENDING ⏳
+- [ ] Create Analytics page component
+- [ ] Add conversion rate charts by source/campaign
+- [ ] Add manager performance metrics
+- [ ] Add revenue trends visualization
+- [ ] Add date range selector for analytics
+- [ ] Add export analytics data functionality
+
+
+## Bug Fixes - COMPLETED ✅
+- [x] Fix Filters popover scrolling - add max-height and overflow-y-auto

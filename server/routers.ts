@@ -887,6 +887,7 @@ export const appRouter = router({
   filterPresets: router({
     list: protectedProcedure.query(async ({ ctx }) => {
       const db = await getDb();
+      if (!db) throw new Error("Database connection failed");
       const { filterPresets } = await import("../drizzle/schema");
       const { eq } = await import("drizzle-orm");
       
@@ -916,6 +917,7 @@ export const appRouter = router({
       }))
       .mutation(async ({ input, ctx }) => {
         const db = await getDb();
+        if (!db) throw new Error("Database connection failed");
         const { filterPresets } = await import("../drizzle/schema");
         const { eq } = await import("drizzle-orm");
         
@@ -940,6 +942,7 @@ export const appRouter = router({
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input, ctx }) => {
         const db = await getDb();
+        if (!db) throw new Error("Database connection failed");
         const { filterPresets } = await import("../drizzle/schema");
         const { eq, and } = await import("drizzle-orm");
         
@@ -957,6 +960,7 @@ export const appRouter = router({
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input, ctx }) => {
         const db = await getDb();
+        if (!db) throw new Error("Database connection failed");
         const { filterPresets } = await import("../drizzle/schema");
         const { eq, and } = await import("drizzle-orm");
         

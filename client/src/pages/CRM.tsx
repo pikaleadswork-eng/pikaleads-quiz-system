@@ -98,6 +98,11 @@ export default function CRM() {
   const [filterDateTo, setFilterDateTo] = useState<Date | undefined>();
   const [showFiltersPopover, setShowFiltersPopover] = useState(false);
   
+  // Filter Presets
+  const [showSavePresetDialog, setShowSavePresetDialog] = useState(false);
+  const [presetName, setPresetName] = useState("");
+  const [presetIsDefault, setPresetIsDefault] = useState(false);
+  
   // UTM Filters
   const [filterCampaign, setFilterCampaign] = useState<string>("all");
   const [filterAdGroup, setFilterAdGroup] = useState<string>("all");
@@ -138,6 +143,26 @@ export default function CRM() {
       toast.success("Message sent");
       setNewMessage("");
       refetchMessages();
+    },
+  });
+
+  // Filter Presets
+  const { data: filterPresets, refetch: refetchPresets } = trpc.filterPresets.list.useQuery();
+  
+  const savePresetMutation = trpc.filterPresets.create.useMutation({
+    onSuccess: () => {
+      toast.success(t('crm.presetSaved') || 'Preset saved');
+      setShowSavePresetDialog(false);
+      setPresetName("");
+      setPresetIsDefault(false);
+      refetchPresets();
+    },
+  });
+  
+  const deletePresetMutation = trpc.filterPresets.delete.useMutation({
+    onSuccess: () => {
+      toast.success(t('crm.presetDeleted') || 'Preset deleted');
+      refetchPresets();
     },
   });
 
@@ -189,6 +214,48 @@ export default function CRM() {
     setFilterPlacement("all");
     setFilterKeyword("all");
     setFilterSite("all");
+  };
+  
+  // Filter Preset handlers
+  const getCurrentFilters = () => ({
+    manager: filterManager !== "all" ? filterManager : undefined,
+    source: filterSource !== "all" ? filterSource : undefined,
+    dateFrom: filterDateFrom ? filterDateFrom.toISOString() : undefined,
+    dateTo: filterDateTo ? filterDateTo.toISOString() : undefined,
+    campaign: filterCampaign !== "all" ? filterCampaign : undefined,
+    adGroup: filterAdGroup !== "all" ? filterAdGroup : undefined,
+    ad: filterAd !== "all" ? filterAd : undefined,
+    placement: filterPlacement !== "all" ? filterPlacement : undefined,
+    keyword: filterKeyword !== "all" ? filterKeyword : undefined,
+    site: filterSite !== "all" ? filterSite : undefined,
+  });
+  
+  const saveCurrentFilters = () => {
+    if (!presetName.trim()) {
+      toast.error(t('crm.presetNameRequired') || 'Please enter a preset name');
+      return;
+    }
+    
+    savePresetMutation.mutate({
+      name: presetName,
+      filters: getCurrentFilters(),
+      isDefault: presetIsDefault,
+    });
+  };
+  
+  const loadPreset = (preset: any) => {
+    const filters = preset.filters;
+    setFilterManager(filters.manager || "all");
+    setFilterSource(filters.source || "all");
+    setFilterDateFrom(filters.dateFrom ? new Date(filters.dateFrom) : undefined);
+    setFilterDateTo(filters.dateTo ? new Date(filters.dateTo) : undefined);
+    setFilterCampaign(filters.campaign || "all");
+    setFilterAdGroup(filters.adGroup || "all");
+    setFilterAd(filters.ad || "all");
+    setFilterPlacement(filters.placement || "all");
+    setFilterKeyword(filters.keyword || "all");
+    setFilterSite(filters.site || "all");
+    toast.success(t('crm.presetLoaded') || `Loaded preset: ${preset.name}`);
   };
   
   // Bulk action handlers
@@ -339,6 +406,37 @@ export default function CRM() {
             </Badge>
           )}
           
+          {/* Filter Presets Dropdown */}
+          {filterPresets && filterPresets.length > 0 && (
+            <Select onValueChange={(value) => {
+              const preset = filterPresets.find(p => p.id.toString() === value);
+              if (preset) loadPreset(preset);
+            }}>
+              <SelectTrigger className="w-[200px]">
+                <SelectValue placeholder={t('crm.loadPreset') || 'Load preset...'} />
+              </SelectTrigger>
+              <SelectContent>
+                {filterPresets.map((preset) => (
+                  <SelectItem key={preset.id} value={preset.id.toString()}>
+                    {preset.name} {preset.isDefault && '⭐'}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          )}
+          
+          {/* Save Current Filters Button */}
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setShowSavePresetDialog(true)}
+            disabled={activeFiltersCount === 0}
+            className="gap-2"
+          >
+            <Tag className="w-4 h-4" />
+            {t('crm.saveFilters') || 'Save Filters'}
+          </Button>
+          
           <Popover open={showFiltersPopover} onOpenChange={setShowFiltersPopover}>
             <PopoverTrigger asChild>
               <Button variant="outline" className="gap-2">
@@ -349,7 +447,7 @@ export default function CRM() {
                 )}
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-96 bg-zinc-900 border-zinc-800" align="end">
+            <PopoverContent className="w-96 bg-zinc-900 border-zinc-800 max-h-[80vh] overflow-y-auto" align="end">
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <h3 className="font-semibold text-white">{t('crm.filters')}</h3>
@@ -1092,6 +1190,59 @@ export default function CRM() {
         comments={[]}
         messages={[]}
       />
+
+      {/* Save Preset Dialog */}
+      <Dialog open={showSavePresetDialog} onOpenChange={setShowSavePresetDialog}>
+        <DialogContent className="bg-zinc-900 border-zinc-800">
+          <DialogHeader>
+            <DialogTitle>{t('crm.savePreset') || 'Save Filter Preset'}</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div>
+              <label className="text-sm font-medium mb-2 block">
+                {t('crm.presetName') || 'Preset Name'}
+              </label>
+              <input
+                type="text"
+                value={presetName}
+                onChange={(e) => setPresetName(e.target.value)}
+                placeholder={t('crm.presetNamePlaceholder') || 'e.g., High-value leads'}
+                className="w-full px-3 py-2 bg-zinc-800 border border-zinc-700 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                id="isDefault"
+                checked={presetIsDefault}
+                onChange={(e) => setPresetIsDefault(e.target.checked)}
+                className="w-4 h-4"
+              />
+              <label htmlFor="isDefault" className="text-sm">
+                {t('crm.setAsDefault') || 'Set as default (auto-apply on page load)'}
+              </label>
+            </div>
+          </div>
+          <div className="flex justify-end gap-2">
+            <Button
+              variant="ghost"
+              onClick={() => {
+                setShowSavePresetDialog(false);
+                setPresetName("");
+                setPresetIsDefault(false);
+              }}
+            >
+              {t('common.cancel') || 'Cancel'}
+            </Button>
+            <Button
+              onClick={saveCurrentFilters}
+              disabled={!presetName.trim()}
+            >
+              {t('common.save') || 'Save'}
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       <Footer />
       

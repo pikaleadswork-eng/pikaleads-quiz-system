@@ -272,7 +272,17 @@
     "selectLeadsAndStatus": "Выберите лиды и статус",
     "exportSuccess": "Экспортировано {{count}} лидов",
     "managerAssigned": "Менеджер назначен для {{count}} лидов",
-    "statusChanged": "Статус изменен для {{count}} лидов"
+    "statusChanged": "Статус изменен для {{count}} лидов",
+    "loadPreset": "Загрузить пресет...",
+    "saveFilters": "Сохранить фильтры",
+    "savePreset": "Сохранить пресет фильтров",
+    "presetName": "Название пресета",
+    "presetNamePlaceholder": "напр., Высокоценные лиды",
+    "presetNameRequired": "Пожалуйста, введите название пресета",
+    "setAsDefault": "Установить по умолчанию (автоматически применять при загрузке)",
+    "presetSaved": "Пресет сохранен",
+    "presetDeleted": "Пресет удален",
+    "presetLoaded": "Пресет загружен"
   },
   "adminSettings": {
     "title": "Настройки системы",

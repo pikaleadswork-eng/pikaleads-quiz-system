@@ -272,7 +272,17 @@
     "selectLeadsAndStatus": "Виберіть ліди та статус",
     "exportSuccess": "Експортовано {{count}} лідів",
     "managerAssigned": "Менеджера призначено для {{count}} лідів",
-    "statusChanged": "Статус змінено для {{count}} лідів"
+    "statusChanged": "Статус змінено для {{count}} лідів",
+    "loadPreset": "Завантажити пресет...",
+    "saveFilters": "Зберегти фільтри",
+    "savePreset": "Зберегти пресет фільтрів",
+    "presetName": "Назва пресету",
+    "presetNamePlaceholder": "напр., Високоцінні ліди",
+    "presetNameRequired": "Будь ласка, введіть назву пресету",
+    "setAsDefault": "Встановити за замовчуванням (автоматично застосовувати при завантаженні)",
+    "presetSaved": "Пресет збережено",
+    "presetDeleted": "Пресет видалено",
+    "presetLoaded": "Пресет завантажено"
   },
   "adminSettings": {
     "title": "Налаштування системи",

@@ -266,7 +266,17 @@
     "selectLeadsAndStatus": "Please select leads and status",
     "exportSuccess": "Exported {{count}} leads",
     "managerAssigned": "Assigned manager to {{count}} leads",
-    "statusChanged": "Changed status for {{count}} leads"
+    "statusChanged": "Changed status for {{count}} leads",
+    "loadPreset": "Load preset...",
+    "saveFilters": "Save Filters",
+    "savePreset": "Save Filter Preset",
+    "presetName": "Preset Name",
+    "presetNamePlaceholder": "e.g., High-value leads",
+    "presetNameRequired": "Please enter a preset name",
+    "setAsDefault": "Set as default (auto-apply on page load)",
+    "presetSaved": "Preset saved",
+    "presetDeleted": "Preset deleted",
+    "presetLoaded": "Preset loaded"
   },
   "scripts": {
     "title": "Sales Scripts",
