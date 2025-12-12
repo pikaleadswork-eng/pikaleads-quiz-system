@@ -38,6 +38,7 @@ import CRMLayout from "@/components/CRMLayout";
 import { Loader2, MessageSquare, Send, Filter, X } from "lucide-react";
 import { format } from "date-fns";
 import { useAuth } from "@/_core/hooks/useAuth";
+import { useTranslation } from 'react-i18next';
 import { toast } from "sonner";
 
 export default function CRM() {
@@ -46,19 +47,15 @@ export default function CRM() {
     return localStorage.getItem('language') || 'uk';
   });
 
+  const { t } = useTranslation();
+
   useEffect(() => {
     const handleLanguageChange = () => {
       setLanguage(localStorage.getItem('language') || 'uk');
     };
     window.addEventListener('languageChanged', handleLanguageChange);
     return () => window.removeEventListener('languageChanged', handleLanguageChange);
-  }, []);
-
-  const t = (uk: string, ru: string, en: string) => {
-    if (language === 'ru') return ru;
-    if (language === 'en') return en;
-    return uk;
-  };
+   }, []);
 
   const { user, loading: authLoading } = useAuth();
   const [selectedLead, setSelectedLead] = useState<number | null>(null);
@@ -233,13 +230,13 @@ export default function CRM() {
                 {/* Campaign Filter */}
                 {uniqueCampaigns.length > 0 && (
                   <div>
-                    <label className="text-sm font-medium mb-2 block">{t('Кампанія', 'Кампания', 'Campaign')}</label>
+                    <label className="text-sm font-medium mb-2 block">{t('common.campaign')}</label>
                     <Select value={filterCampaign} onValueChange={setFilterCampaign}>
                       <SelectTrigger>
-                        <SelectValue placeholder={t('Всі кампанії', 'Все кампании', 'All campaigns')} />
+                        <SelectValue placeholder={t('common.all_campaigns')} />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="all">{t('Всі кампанії', 'Все кампании', 'All campaigns')}</SelectItem>
+                        <SelectItem value="all">{t('common.all_campaigns')}</SelectItem>
                         {uniqueCampaigns.map((campaign) => (
                           <SelectItem key={campaign as string} value={campaign as string}>
                             {campaign}
@@ -256,7 +253,7 @@ export default function CRM() {
                     <label className="text-sm font-medium mb-2 block">Ad Group</label>
                     <Select value={filterAdGroup} onValueChange={setFilterAdGroup}>
                       <SelectTrigger>
-                        <SelectValue placeholder="All ad groups" />
+                        <SelectValue placeholder={t("crm.allAdGroups")} />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="all">All ad groups</SelectItem>
@@ -276,7 +273,7 @@ export default function CRM() {
                     <label className="text-sm font-medium mb-2 block">Ad</label>
                     <Select value={filterAd} onValueChange={setFilterAd}>
                       <SelectTrigger>
-                        <SelectValue placeholder="All ads" />
+                        <SelectValue placeholder={t("crm.allAds")} />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="all">All ads</SelectItem>
@@ -293,13 +290,13 @@ export default function CRM() {
                 {/* Placement Filter */}
                 {uniquePlacements.length > 0 && (
                   <div>
-                    <label className="text-sm font-medium mb-2 block">{t('Розміщення', 'Размещение', 'Placement')}</label>
+                    <label className="text-sm font-medium mb-2 block">{t('common.placement')}</label>
                     <Select value={filterPlacement} onValueChange={setFilterPlacement}>
                       <SelectTrigger>
-                        <SelectValue placeholder={t('Всі розміщення', 'Все размещения', 'All placements')} />
+                        <SelectValue placeholder={t('common.all_placements')} />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="all">{t('Всі розміщення', 'Все размещения', 'All placements')}</SelectItem>
+                        <SelectItem value="all">{t('common.all_placements')}</SelectItem>
                         {uniquePlacements.map((placement) => (
                           <SelectItem key={placement as string} value={placement as string}>
                             {placement}
@@ -316,7 +313,7 @@ export default function CRM() {
                     <label className="text-sm font-medium mb-2 block">Keyword</label>
                     <Select value={filterKeyword} onValueChange={setFilterKeyword}>
                       <SelectTrigger>
-                        <SelectValue placeholder="All keywords" />
+                        <SelectValue placeholder={t("crm.allKeywords")} />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="all">All keywords</SelectItem>
@@ -333,13 +330,13 @@ export default function CRM() {
                 {/* Site Filter */}
                 {uniqueSites.length > 0 && (
                   <div>
-                    <label className="text-sm font-medium mb-2 block">{t('Сайт', 'Сайт', 'Site')}</label>
+                    <label className="text-sm font-medium mb-2 block">{t('common.site')}</label>
                     <Select value={filterSite} onValueChange={setFilterSite}>
                       <SelectTrigger>
-                        <SelectValue placeholder={t('Всі сайти', 'Все сайты', 'All sites')} />
+                        <SelectValue placeholder={t('common.all_sites')} />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="all">{t('Всі сайти', 'Все сайты', 'All sites')}</SelectItem>
+                        <SelectItem value="all">{t('common.all_sites')}</SelectItem>
                         {uniqueSites.map((site) => (
                           <SelectItem key={site as string} value={site as string}>
                             {site}
@@ -375,18 +372,18 @@ export default function CRM() {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>{t('ID', 'ID', 'ID')}</TableHead>
-                    <TableHead>{t('Дата', 'Дата', 'Date')}</TableHead>
-                    <TableHead>{t('Джерело', 'Источник', 'Source')}</TableHead>
-                    <TableHead>{t('Квіз', 'Квиз', 'Quiz')}</TableHead>
-                    <TableHead>{t('Ім\'я', 'Имя', 'Name')}</TableHead>
-                    <TableHead>{t('Телефон', 'Телефон', 'Phone')}</TableHead>
-                    <TableHead>{t('UTM Кампанія', 'UTM Кампания', 'UTM Campaign')}</TableHead>
-                    <TableHead>{t('UTM Джерело', 'UTM Источник', 'UTM Source')}</TableHead>
-                    <TableHead>{t('UTM Medium', 'UTM Medium', 'UTM Medium')}</TableHead>
-                    <TableHead>{t('Оцінка', 'Оценка', 'Score')}</TableHead>
-                    <TableHead>{t('Статус', 'Статус', 'Status')}</TableHead>
-                    <TableHead>{t('Дії', 'Действия', 'Actions')}</TableHead>
+                    <TableHead>{t('common.id')}</TableHead>
+                    <TableHead>{t('common.date')}</TableHead>
+                    <TableHead>{t('common.source')}</TableHead>
+                    <TableHead>{t('common.quiz')}</TableHead>
+                    <TableHead>{t('common.name')}</TableHead>
+                    <TableHead>{t('common.phone')}</TableHead>
+                    <TableHead>{t('common.utm_campaign')}</TableHead>
+                    <TableHead>{t('common.utm_source')}</TableHead>
+                    <TableHead>{t('common.utm_medium')}</TableHead>
+                    <TableHead>{t('common.score')}</TableHead>
+                    <TableHead>{t('common.status')}</TableHead>
+                    <TableHead>{t('common.actions')}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -535,7 +532,7 @@ export default function CRM() {
                   <CardContent className="space-y-2">
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <p className="text-sm text-muted-foreground">{t('Квіз', 'Квиз', 'Quiz')}</p>
+                        <p className="text-sm text-muted-foreground">{t('common.quiz')}</p>
                         <p className="font-medium">{selectedLeadData.quizName}</p>
                       </div>
                       <div>
@@ -551,7 +548,7 @@ export default function CRM() {
                         </p>
                       </div>
                       <div>
-                        <p className="text-sm text-muted-foreground">{t('Дата', 'Дата', 'Date')}</p>
+                        <p className="text-sm text-muted-foreground">{t('common.date')}</p>
                         <p className="font-medium">
                           {format(
                             new Date(selectedLeadData.createdAt),
@@ -692,7 +689,7 @@ export default function CRM() {
         <Dialog open={showCreateLeadModal} onOpenChange={setShowCreateLeadModal}>
           <DialogContent className="max-w-2xl">
             <DialogHeader>
-              <DialogTitle>{t('Створити лід вручну', 'Создать лид вручную', 'Create Lead Manually')}</DialogTitle>
+              <DialogTitle>{t('common.create_lead_manually')}</DialogTitle>
               <DialogDescription>
                 Add a new lead to the system manually
               </DialogDescription>
@@ -718,7 +715,7 @@ export default function CRM() {
                   />
                 </div>
                 <div>
-                  <label className="text-sm font-medium">{t('Email', 'Email', 'Email')}</label>
+                  <label className="text-sm font-medium">{t('common.email')}</label>
                   <input
                     type="email"
                     className="w-full px-3 py-2 border rounded-md"
@@ -749,7 +746,7 @@ export default function CRM() {
                       <SelectItem value="Facebook">Facebook</SelectItem>
                       <SelectItem value="Google">Google</SelectItem>
                       <SelectItem value="YouTube">YouTube</SelectItem>
-                      <SelectItem value="Email">{t('Email', 'Email', 'Email')}</SelectItem>
+                      <SelectItem value="Email">{t('common.email')}</SelectItem>
                       <SelectItem value="Cold Lead">Cold Lead</SelectItem>
                       <SelectItem value="Referral">Referral</SelectItem>
                     </SelectContent>
@@ -774,7 +771,7 @@ export default function CRM() {
                   />
                 </div>
                 <div>
-                  <label className="text-sm font-medium">{t('UTM Medium', 'UTM Medium', 'UTM Medium')}</label>
+                  <label className="text-sm font-medium">{t('common.utm_medium')}</label>
                   <input
                     type="text"
                     className="w-full px-3 py-2 border rounded-md"

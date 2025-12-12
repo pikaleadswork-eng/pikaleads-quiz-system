@@ -22,27 +22,10 @@ import { format } from "date-fns";
 import { useAuth } from "@/_core/hooks/useAuth";
 import CRMLayout from "@/components/CRMLayout";
 import { Link } from "wouter";
+import { useTranslation } from 'react-i18next';
 
 export default function SalesStatistics() {
-
-  // Detect language from localStorage
-  const [language, setLanguage] = useState(() => {
-    return localStorage.getItem('language') || 'uk';
-  });
-
-  useEffect(() => {
-    const handleLanguageChange = () => {
-      setLanguage(localStorage.getItem('language') || 'uk');
-    };
-    window.addEventListener('languageChanged', handleLanguageChange);
-    return () => window.removeEventListener('languageChanged', handleLanguageChange);
-  }, []);
-
-  const t = (uk: string, ru: string, en: string) => {
-    if (language === 'ru') return ru;
-    if (language === 'en') return en;
-    return uk;
-  };
+  const { t } = useTranslation();
 
 
   const { user, loading: authLoading } = useAuth();
@@ -189,7 +172,7 @@ export default function SalesStatistics() {
                   <TableRow>
                     <TableHead>Manager</TableHead>
                     <TableHead>Sales Count</TableHead>
-                    <TableHead>Total Revenue</TableHead>
+                    <TableHead>{t("sales.totalRevenue")}</TableHead>
                     <TableHead>Average Sale</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -231,7 +214,7 @@ export default function SalesStatistics() {
                   <TableRow>
                     <TableHead>Service</TableHead>
                     <TableHead>Sales Count</TableHead>
-                    <TableHead>Total Revenue</TableHead>
+                    <TableHead>{t("sales.totalRevenue")}</TableHead>
                     <TableHead>Average Sale</TableHead>
                   </TableRow>
                 </TableHeader>

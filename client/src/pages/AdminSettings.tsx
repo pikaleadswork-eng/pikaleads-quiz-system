@@ -16,27 +16,10 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import CRMLayout from "@/components/CRMLayout";
 import { Link } from "wouter";
 import { toast } from "sonner";
+import { useTranslation } from 'react-i18next';
 
 export default function AdminSettings() {
-
-  // Detect language from localStorage
-  const [language, setLanguage] = useState(() => {
-    return localStorage.getItem('language') || 'uk';
-  });
-
-  useEffect(() => {
-    const handleLanguageChange = () => {
-      setLanguage(localStorage.getItem('language') || 'uk');
-    };
-    window.addEventListener('languageChanged', handleLanguageChange);
-    return () => window.removeEventListener('languageChanged', handleLanguageChange);
-  }, []);
-
-  const t = (uk: string, ru: string, en: string) => {
-    if (language === 'ru') return ru;
-    if (language === 'en') return en;
-    return uk;
-  };
+  const { t } = useTranslation();
 
 
   const { user, loading: authLoading } = useAuth();
@@ -209,10 +192,10 @@ export default function AdminSettings() {
     <CRMLayout>
         <div className="mb-8">
           <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent">
-            {t('Налаштування', 'Настройки', 'Settings')}
+            {t('common.settings')}
           </h1>
           <p className="text-gray-400 mt-2">
-            {t('Керуйте інтеграціями, ролями, статусами та телефонією', 'Управляйте интеграциями, ролями, статусами и телефонией', 'Manage integrations, roles, statuses and telephony')}
+            {t('common.manage_integrations_roles_statuses_and_telephony')}
           </p>
         </div>
 
@@ -225,10 +208,10 @@ export default function AdminSettings() {
                   <svg className="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                   </svg>
-                  {t('Ролі та доступи', 'Роли и доступы', 'Roles & Permissions')}
+                  {t('common.roles__permissions')}
                 </CardTitle>
                 <CardDescription>
-                  {t('Керуйте ролями користувачів та правами доступу до CRM', 'Управляйте ролями пользователей и правами доступа к CRM', 'Manage user roles and CRM access permissions')}
+                  {t('common.manage_user_roles_and_crm_access_permissions')}
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -241,10 +224,10 @@ export default function AdminSettings() {
                   <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
                   </svg>
-                  {t('Статуси лідів', 'Статусы лидов', 'Lead Statuses')}
+                  {t('common.lead_statuses')}
                 </CardTitle>
                 <CardDescription>
-                  {t('Налаштуйте статуси для відстеження етапів роботи з лідами', 'Настройте статусы для отслеживания этапов работы с лидами', 'Configure statuses to track lead workflow stages')}
+                  {t('common.configure_statuses_to_track_lead_workflow_stages')}
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -257,10 +240,10 @@ export default function AdminSettings() {
                   <svg className="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                   </svg>
-                  {t('IP-телефонія', 'IP-телефония', 'IP Telephony')}
+                  {t('common.ip_telephony')}
                 </CardTitle>
                 <CardDescription>
-                  {t('Підключіть Zadarma для дзвінків прямо з CRM', 'Подключите Zadarma для звонков прямо из CRM', 'Connect Zadarma for in-CRM calling')}
+                  {t('common.connect_zadarma_for_in_crm_calling')}
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -269,10 +252,10 @@ export default function AdminSettings() {
 
         <div className="mb-6">
           <h2 className="text-2xl font-bold text-white mb-2">
-            {t('Інтеграції месенджерів', 'Интеграции мессенджеров', 'Messaging Integrations')}
+            {t('common.messaging_integrations')}
           </h2>
           <p className="text-gray-400">
-            {t('Налаштуйте API ключі для інтеграції з Instagram, WhatsApp, Email та Google Calendar', 'Настройте API ключи для интеграции с Instagram, WhatsApp, Email и Google Calendar', 'Configure API credentials for Instagram, WhatsApp, Email and Google Calendar integration')}
+            {t('common.configure_api_credentials_for_instagram_whatsapp_email_and_google_calendar_integration')}
           </p>
         </div>
 

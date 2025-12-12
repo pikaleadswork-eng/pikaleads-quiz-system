@@ -31,27 +31,13 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import CRMLayout from "@/components/CRMLayout";
 import { Link } from "wouter";
 import { toast } from "sonner";
+import { useTranslation } from 'react-i18next';
 
 export default function SalesScripts() {
+  const { t } = useTranslation();
 
-  // Detect language from localStorage
-  const [language, setLanguage] = useState(() => {
-    return localStorage.getItem('language') || 'uk';
-  });
 
-  useEffect(() => {
-    const handleLanguageChange = () => {
-      setLanguage(localStorage.getItem('language') || 'uk');
-    };
-    window.addEventListener('languageChanged', handleLanguageChange);
-    return () => window.removeEventListener('languageChanged', handleLanguageChange);
-  }, []);
 
-  const t = (uk: string, ru: string, en: string) => {
-    if (language === 'ru') return ru;
-    if (language === 'en') return en;
-    return uk;
-  };
 
 
   const { user, loading: authLoading } = useAuth();
@@ -223,7 +209,7 @@ export default function SalesScripts() {
         {/* Category Filter */}
         <Card className="bg-zinc-900 border-zinc-800 mb-6">
           <CardHeader>
-            <CardTitle className="text-sm">Filter by Category</CardTitle>
+            <CardTitle className="text-sm">{t("scripts.filterByCategory")}</CardTitle>
           </CardHeader>
           <CardContent>
             <Select value={selectedCategory} onValueChange={setSelectedCategory}>
@@ -231,7 +217,7 @@ export default function SalesScripts() {
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Categories</SelectItem>
+                <SelectItem value="all">{t("scripts.allCategories")}</SelectItem>
                 <SelectItem value="Cold Call">Cold Call</SelectItem>
                 <SelectItem value="Follow-up">Follow-up</SelectItem>
                 <SelectItem value="Objection Handling">Objection Handling</SelectItem>
@@ -398,7 +384,7 @@ export default function SalesScripts() {
                   {(createMutation.isPending || updateMutation.isPending) && (
                     <Loader2 className="w-4 h-4 mr-2 animate-spin" />
                   )}
-                  {editingScript ? "Update Script" : "Create Script"}
+                  {editingScript ? "Update Script" : t("scripts.createScript")}
                 </Button>
               </div>
             </div>

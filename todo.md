@@ -376,3 +376,66 @@
   - [ ] Custom (date range picker)
 - [ ] Update tRPC procedure to accept filter parameters
 - [ ] Add translations for all filter options (UA/RU/EN)
+
+
+## Phase 38 - FIX LANGUAGE SWITCHING 100% (URGENT)
+
+### Problem
+- Language switcher shows "Українська" but text is mixed (RU/EN/UA)
+- useTranslation() hook NOT added to most components
+- Hardcoded text in CRM, Services, Sales, Scripts, AdminSettings
+
+### CRM Page Translation (PRIORITY 1)
+- [ ] Add useTranslation hook to CRM.tsx
+- [ ] Translate "Leads Management" title
+- [ ] Translate "Manage your leads and communicate with clients" subtitle
+- [ ] Translate "UTM Filters" section
+- [ ] Translate filter labels (Campaign, Ad Group, Ad, Placement, Keyword, Site)
+- [ ] Translate dropdown options (All campaigns, All ad groups, All ads, All keywords, All sites)
+- [ ] Translate "Clear Filters" button
+- [ ] Translate table headers (ID, Date, Source, Quiz, Name, Phone, UTM Campaign, UTM Source, UTM Medium, Score, Status, Actions)
+- [ ] Translate "Create Lead Manually" button
+- [ ] Translate action buttons (View, Edit)
+- [ ] Translate status badges (New)
+
+### Services Page Translation (PRIORITY 2)
+- [ ] Add useTranslation hook to ServicesManagement.tsx
+- [ ] Translate "Services Management" title
+- [ ] Translate "Manage your services and pricing" subtitle
+- [ ] Translate "Main Services" section title
+- [ ] Translate "Additional Services" section title
+- [ ] Translate table headers (Name, Type, Price, Status, Actions)
+- [ ] Translate "Add Service" button
+- [ ] Translate "Add Additional Service" button
+- [ ] Translate dialog titles and form labels
+
+### Sales Page Translation (PRIORITY 2)
+- [ ] Add useTranslation hook to SalesStatistics.tsx
+- [ ] Translate "Sales Statistics" title
+- [ ] Translate metric cards (Total Revenue, Total Sales, Average Deal Size, Conversion Rate)
+- [ ] Translate table headers (Date, Lead Name, Service, Amount, Manager, Status)
+- [ ] Translate status labels
+
+### Scripts Page Translation (PRIORITY 2)
+- [ ] Add useTranslation hook to SalesScripts.tsx
+- [ ] Translate "Sales Scripts" title
+- [ ] Translate "Manage your sales scripts and templates" subtitle
+- [ ] Translate "Filter by Category" label
+- [ ] Translate category options (All Categories, Cold Call, Follow-up, Objection Handling, Closing)
+- [ ] Translate table headers (Title, Category, Last Updated, Actions)
+- [ ] Translate "Create Script" button
+- [ ] Translate dialog form labels
+
+### AdminSettings Translation (PRIORITY 3)
+- [ ] Add useTranslation hook to AdminSettings.tsx
+- [ ] Translate all settings card titles
+- [ ] Translate all settings card descriptions
+- [ ] Translate "Go to" link text
+
+### Testing
+- [ ] Test Ukrainian language on all pages
+- [ ] Test Russian language on all pages
+- [ ] Test English language on all pages
+- [ ] Verify language switcher updates all text immediately
+- [ ] Verify no hardcoded text remains
+

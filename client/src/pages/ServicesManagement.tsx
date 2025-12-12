@@ -32,27 +32,10 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import CRMLayout from "@/components/CRMLayout";
 import { Link } from "wouter";
 import { toast } from "sonner";
+import { useTranslation } from 'react-i18next';
 
 export default function ServicesManagement() {
-
-  // Detect language from localStorage
-  const [language, setLanguage] = useState(() => {
-    return localStorage.getItem('language') || 'uk';
-  });
-
-  useEffect(() => {
-    const handleLanguageChange = () => {
-      setLanguage(localStorage.getItem('language') || 'uk');
-    };
-    window.addEventListener('languageChanged', handleLanguageChange);
-    return () => window.removeEventListener('languageChanged', handleLanguageChange);
-  }, []);
-
-  const t = (uk: string, ru: string, en: string) => {
-    if (language === 'ru') return ru;
-    if (language === 'en') return en;
-    return uk;
-  };
+  const { t } = useTranslation();
 
 
   const { user, loading: authLoading } = useAuth();
