@@ -432,6 +432,153 @@ export const appRouter = router({
         };
       }),
     
+    // Send Analytics Report via Email
+    sendAnalyticsReport: adminProcedure
+      .input(z.object({
+        dateRange: z.enum(["today", "yesterday", "last7Days", "last30Days", "thisMonth", "lastMonth", "custom"]).optional(),
+        startDate: z.string().optional(),
+        endDate: z.string().optional(),
+        quizName: z.string().optional(),
+        source: z.string().optional(),
+        campaign: z.string().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const { notifyOwner } = await import("./_core/notification");
+        const { getAllLeads, getAllSales } = await import("./db");
+        
+        const leads = await getAllLeads();
+        const sales = await getAllSales();
+        
+        // Apply date range filter
+        let filteredLeads = leads;
+        const now = new Date();
+        
+        if (input.dateRange && input.dateRange !== "custom") {
+          const startDate = new Date();
+          
+          switch (input.dateRange) {
+            case "today":
+              startDate.setHours(0, 0, 0, 0);
+              break;
+            case "yesterday":
+              startDate.setDate(startDate.getDate() - 1);
+              startDate.setHours(0, 0, 0, 0);
+              break;
+            case "last7Days":
+              startDate.setDate(startDate.getDate() - 7);
+              break;
+            case "last30Days":
+              startDate.setDate(startDate.getDate() - 30);
+              break;
+            case "thisMonth":
+              startDate.setDate(1);
+              startDate.setHours(0, 0, 0, 0);
+              break;
+            case "lastMonth":
+              startDate.setMonth(startDate.getMonth() - 1);
+              startDate.setDate(1);
+              startDate.setHours(0, 0, 0, 0);
+              break;
+          }
+          
+          filteredLeads = filteredLeads.filter(lead => {
+            const leadDate = new Date(lead.createdAt);
+            return leadDate >= startDate && leadDate <= now;
+          });
+        } else if (input.startDate && input.endDate) {
+          const start = new Date(input.startDate);
+          const end = new Date(input.endDate);
+          filteredLeads = filteredLeads.filter(lead => {
+            const leadDate = new Date(lead.createdAt);
+            return leadDate >= start && leadDate <= end;
+          });
+        }
+        
+        // Apply other filters
+        if (input.quizName) {
+          filteredLeads = filteredLeads.filter(lead => lead.quizName === input.quizName);
+        }
+        if (input.source) {
+          filteredLeads = filteredLeads.filter(lead => lead.source === input.source);
+        }
+        if (input.campaign) {
+          filteredLeads = filteredLeads.filter(lead => lead.utmCampaign === input.campaign);
+        }
+        
+        // Calculate metrics
+        const totalLeads = filteredLeads.length;
+        const totalSpent = filteredLeads.reduce((sum, lead) => sum + (parseFloat(lead.spentAmount?.toString() || "0")), 0);
+        
+        const leadIds = filteredLeads.map(l => l.id);
+        const relevantSales = sales.filter(sale => leadIds.includes(sale.leadId));
+        const totalRevenue = relevantSales.reduce((sum, sale) => sum + parseFloat(sale.totalAmount.toString()), 0);
+        const conversions = relevantSales.length;
+        
+        const romi = totalSpent > 0 ? ((totalRevenue - totalSpent) / totalSpent * 100).toFixed(2) : "0";
+        const roas = totalSpent > 0 ? (totalRevenue / totalSpent).toFixed(2) : "0";
+        const conversionRate = totalLeads > 0 ? ((conversions / totalLeads) * 100).toFixed(2) : "0";
+        const avgTimeOnSite = totalLeads > 0 
+          ? Math.round(filteredLeads.reduce((sum, lead) => sum + (lead.timeOnSite || 0), 0) / totalLeads)
+          : 0;
+        const costPerLead = totalLeads > 0 ? (totalSpent / totalLeads).toFixed(2) : "0";
+        
+        // Format period
+        let periodText = "";
+        if (input.dateRange) {
+          const periodMap: Record<string, string> = {
+            today: "Today",
+            yesterday: "Yesterday",
+            last7Days: "Last 7 Days",
+            last30Days: "Last 30 Days",
+            thisMonth: "This Month",
+            lastMonth: "Last Month",
+          };
+          periodText = periodMap[input.dateRange] || "Custom Period";
+        } else if (input.startDate && input.endDate) {
+          periodText = `${new Date(input.startDate).toLocaleDateString()} - ${new Date(input.endDate).toLocaleDateString()}`;
+        }
+        
+        // Create email content
+        const title = `📊 Analytics Report: ${periodText}`;
+        const content = `
+**PIKALEADS Analytics Report**
+
+**Period:** ${periodText}
+${input.quizName ? `**Quiz:** ${input.quizName}\n` : ""}
+${input.source ? `**Source:** ${input.source}\n` : ""}
+${input.campaign ? `**Campaign:** ${input.campaign}\n` : ""}
+
+---
+
+**📊 Key Metrics:**
+
+• **Total Leads:** ${totalLeads}
+• **Conversion Rate:** ${conversionRate}%
+• **ROMI:** ${romi}%
+• **ROAS:** ${roas}x
+• **Average Time on Site:** ${Math.floor(avgTimeOnSite / 60)}m ${avgTimeOnSite % 60}s
+
+**💰 Financial:**
+
+• **Total Spent:** $${totalSpent.toFixed(2)}
+• **Total Revenue:** $${totalRevenue.toFixed(2)}
+• **Cost Per Lead:** $${costPerLead}
+
+---
+
+👉 View detailed analytics at: [Admin Dashboard](/admin/analytics)
+        `.trim();
+        
+        const success = await notifyOwner({ title, content });
+        
+        return {
+          success,
+          message: success 
+            ? "Analytics report sent successfully" 
+            : "Failed to send report. Please try again.",
+        };
+      }),
+    
     // Assignment Rules
     getAssignmentRules: adminProcedure.query(async () => {
       const { getAllAssignmentRules } = await import("./db");

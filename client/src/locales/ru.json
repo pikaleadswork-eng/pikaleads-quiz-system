@@ -377,6 +377,27 @@
     "leadsByStatus": "Лиды по статусу",
     "leadsBySource": "Лиды по источнику"
   },
+  "performance": {
+    "title": "Производительность менеджеров",
+    "description": "Статистика команды и рейтинг",
+    "exportCSV": "Экспортировать CSV",
+    "topPerformer": "Лучший исполнитель",
+    "teamStats": "Статистика команды",
+    "avgResponseTime": "Среднее время ответа",
+    "avgConversionRate": "Средняя конверсия",
+    "leaderboard": "Рейтинг",
+    "manager": "Менеджер",
+    "totalAssigned": "Назначено",
+    "totalProcessed": "Обработано",
+    "responseTime": "Время ответа (час)",
+    "conversionRate": "Конверсия (%)"
+  },
+  "calendar": {
+    "title": "Календарь и встречи",
+    "description": "Планируйте встречи с лидами и управляйте записями",
+    "scheduleNew": "Запланировать новую встречу",
+    "createMeeting": "Создать встречу с лидом"
+  },
   "analytics": {
     "title": "Аналитика UTM и Конверсий",
     "description": "Детальная аналитика кампаний, конверсий и ROI",
@@ -403,6 +424,11 @@
     "lastUpdate": "Последнее обновление",
     "pause": "Приостановить",
     "resume": "Возобновить",
+    "compareWithPrevious": "Сравнить с предыдущим периодом",
+    "sendReport": "Отправить отчет",
+    "sending": "Отправка...",
+    "reportSent": "Отчет успешно отправлен!",
+    "reportFailed": "Ошибка отправки отчета. Попробуйте еще раз.",
     "summaryCards": {
       "totalLeads": "Всего лидов",
       "conversionRate": "Конверсия",

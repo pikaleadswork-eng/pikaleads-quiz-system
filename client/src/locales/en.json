@@ -332,6 +332,27 @@
     "leadsByStatus": "Leads by Status",
     "leadsBySource": "Leads by Source"
   },
+  "performance": {
+    "title": "Manager Performance",
+    "description": "Team statistics and leaderboard",
+    "exportCSV": "Export CSV",
+    "topPerformer": "Top Performer",
+    "teamStats": "Team Statistics",
+    "avgResponseTime": "Average Response Time",
+    "avgConversionRate": "Average Conversion Rate",
+    "leaderboard": "Leaderboard",
+    "manager": "Manager",
+    "totalAssigned": "Total Assigned",
+    "totalProcessed": "Total Processed",
+    "responseTime": "Response Time (hours)",
+    "conversionRate": "Conversion Rate (%)"
+  },
+  "calendar": {
+    "title": "Calendar & Appointments",
+    "description": "Schedule meetings with leads and manage appointments",
+    "scheduleNew": "Schedule New Appointment",
+    "createMeeting": "Create a meeting with a lead"
+  },
   "analytics": {
     "title": "UTM & Conversion Analytics",
     "description": "Detailed campaign, conversion and ROI analytics",
@@ -358,6 +379,11 @@
     "lastUpdate": "Last Update",
     "pause": "Pause",
     "resume": "Resume",
+    "compareWithPrevious": "Compare with previous period",
+    "sendReport": "Send Report",
+    "sending": "Sending...",
+    "reportSent": "Report sent successfully!",
+    "reportFailed": "Failed to send report. Please try again.",
     "summaryCards": {
       "totalLeads": "Total Leads",
       "conversionRate": "Conversion Rate",

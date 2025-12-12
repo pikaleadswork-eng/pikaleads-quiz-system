@@ -1,5 +1,7 @@
-import { useLocation } from "wouter";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import DashboardLayout from "@/components/DashboardLayout";
+import { useLocation } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -69,21 +71,21 @@ export default function AdminPerformance() {
   const topPerformer = performance?.[0];
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="container mx-auto py-8 px-4">
+    <DashboardLayout>
+      <div className="space-y-8">
         <div className="flex items-center gap-4 mb-8">
           <Button variant="ghost" size="icon" onClick={() => setLocation("/admin")}>
             <ArrowLeft className="w-5 h-5" />
           </Button>
           <div className="flex-1">
-            <h1 className="text-3xl font-bold text-foreground">Manager Performance</h1>
+            <h1 className="text-3xl font-bold text-foreground">{t("performance.title")}</h1>
             <p className="text-muted-foreground mt-1">
-              Team statistics and leaderboard
+              {t("performance.description")}
             </p>
           </div>
           <Button onClick={exportToCSV} disabled={!performance || performance.length === 0}>
             <Download className="w-4 h-4 mr-2" />
-            Export CSV
+            {t("performance.exportCSV")}
           </Button>
         </div>
 
@@ -227,6 +229,6 @@ export default function AdminPerformance() {
           </div>
         )}
       </div>
-    </div>
+    </DashboardLayout>
   );
 }

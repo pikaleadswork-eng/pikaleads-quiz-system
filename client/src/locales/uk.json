@@ -377,6 +377,27 @@
     "leadsByStatus": "Ліди за статусом",
     "leadsBySource": "Ліди за джерелом"
   },
+  "performance": {
+    "title": "Продуктивність менеджерів",
+    "description": "Статистика команди та рейтинг",
+    "exportCSV": "Експортувати CSV",
+    "topPerformer": "Кращий виконавець",
+    "teamStats": "Статистика команди",
+    "avgResponseTime": "Середній час відповіді",
+    "avgConversionRate": "Середня конверсія",
+    "leaderboard": "Рейтинг",
+    "manager": "Менеджер",
+    "totalAssigned": "Призначено",
+    "totalProcessed": "Оброблено",
+    "responseTime": "Час відповіді (год)",
+    "conversionRate": "Конверсія (%)"
+  },
+  "calendar": {
+    "title": "Календар і зустрічі",
+    "description": "Плануйте зустрічі з лідами та керуйте записами",
+    "scheduleNew": "Запланувати нову зустріч",
+    "createMeeting": "Створити зустріч з лідом"
+  },
   "analytics": {
     "title": "Аналітика UTM та Конверсії",
     "description": "Детальна аналітика кампаній, конверсій та ROI",
@@ -403,6 +424,11 @@
     "lastUpdate": "Останнє оновлення",
     "pause": "Призупинити",
     "resume": "Відновити",
+    "compareWithPrevious": "Порівняти з попереднім періодом",
+    "sendReport": "Відправити звіт",
+    "sending": "Відправлення...",
+    "reportSent": "Звіт успішно відправлено!",
+    "reportFailed": "Помилка відправки звіту. Спробуйте ще раз.",
     "summaryCards": {
       "totalLeads": "Всього лідів",
       "conversionRate": "Конверсія",

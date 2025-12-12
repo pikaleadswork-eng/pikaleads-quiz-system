@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import DashboardLayout from "@/components/DashboardLayout";
+import { MetricCard } from "@/components/MetricCard";
 import { trpc } from "@/lib/trpc";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -7,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Filter, Calendar as CalendarIcon, TrendingUp, DollarSign, Users, Clock, RefreshCw, Pause, Play } from "lucide-react";
+import { Filter, Calendar as CalendarIcon, TrendingUp, DollarSign, Users, Clock, RefreshCw, Pause, Play, ArrowUp, ArrowDown, Mail } from "lucide-react";
 import { Bar, Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -49,6 +51,77 @@ export default function AdminAnalytics() {
   const [showFilters, setShowFilters] = useState(false);
   const [lastUpdate, setLastUpdate] = useState<Date>(new Date());
   const [isAutoRefreshPaused, setIsAutoRefreshPaused] = useState(false);
+  const [compareWithPrevious, setCompareWithPrevious] = useState(false);
+  
+  // Send report mutation
+  const sendReportMutation = trpc.admin.sendAnalyticsReport.useMutation({
+    onSuccess: (data) => {
+      if (data.success) {
+        alert(t("analytics.reportSent"));
+      } else {
+        alert(t("analytics.reportFailed"));
+      }
+    },
+    onError: () => {
+      alert(t("analytics.reportFailed"));
+    },
+  });
+  
+  const handleSendReport = () => {
+    sendReportMutation.mutate({
+      dateRange: dateRange,
+      startDate: customStartDate?.toISOString(),
+      endDate: customEndDate?.toISOString(),
+      quizName: selectedQuiz !== "all" ? selectedQuiz : undefined,
+      source: selectedSource !== "all" ? selectedSource : undefined,
+      campaign: selectedCampaign !== "all" ? selectedCampaign : undefined,
+    });
+  };
+
+  // Calculate previous period dates
+  const getPreviousPeriodDates = () => {
+    const now = new Date();
+    let prevStart: Date | undefined;
+    let prevEnd: Date | undefined;
+
+    switch (dateRange) {
+      case "today":
+        prevStart = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
+        prevEnd = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1, 23, 59, 59);
+        break;
+      case "yesterday":
+        prevStart = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 2);
+        prevEnd = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 2, 23, 59, 59);
+        break;
+      case "last7Days":
+        prevStart = new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000);
+        prevEnd = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+        break;
+      case "last30Days":
+        prevStart = new Date(now.getTime() - 60 * 24 * 60 * 60 * 1000);
+        prevEnd = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+        break;
+      case "thisMonth":
+        const lastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+        prevStart = lastMonth;
+        prevEnd = new Date(now.getFullYear(), now.getMonth(), 0, 23, 59, 59);
+        break;
+      case "lastMonth":
+        const twoMonthsAgo = new Date(now.getFullYear(), now.getMonth() - 2, 1);
+        prevStart = twoMonthsAgo;
+        prevEnd = new Date(now.getFullYear(), now.getMonth() - 1, 0, 23, 59, 59);
+        break;
+      case "custom":
+        if (customStartDate && customEndDate) {
+          const duration = customEndDate.getTime() - customStartDate.getTime();
+          prevStart = new Date(customStartDate.getTime() - duration);
+          prevEnd = new Date(customStartDate.getTime() - 1);
+        }
+        break;
+    }
+
+    return { prevStart, prevEnd };
+  };
 
   // Fetch analytics data
   const { data: analyticsData, isLoading, refetch } = trpc.admin.getAnalyticsData.useQuery({
@@ -59,6 +132,28 @@ export default function AdminAnalytics() {
     source: selectedSource !== "all" ? selectedSource : undefined,
     campaign: selectedCampaign !== "all" ? selectedCampaign : undefined,
   });
+
+  // Fetch previous period data for comparison
+  const { prevStart, prevEnd } = getPreviousPeriodDates();
+  const { data: previousData } = trpc.admin.getAnalyticsData.useQuery(
+    {
+      dateRange: "custom",
+      startDate: prevStart?.toISOString(),
+      endDate: prevEnd?.toISOString(),
+      quizName: selectedQuiz !== "all" ? selectedQuiz : undefined,
+      source: selectedSource !== "all" ? selectedSource : undefined,
+      campaign: selectedCampaign !== "all" ? selectedCampaign : undefined,
+    },
+    {
+      enabled: compareWithPrevious && !!prevStart && !!prevEnd,
+    }
+  );
+
+  // Calculate percentage changes
+  const calculateChange = (current: number, previous: number) => {
+    if (previous === 0) return current > 0 ? 100 : 0;
+    return ((current - previous) / previous) * 100;
+  };
 
   // Auto-refresh every 30 seconds
   useEffect(() => {
@@ -175,8 +270,8 @@ export default function AdminAnalytics() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white p-6">
-      <div className="max-w-7xl mx-auto space-y-6">
+    <DashboardLayout>
+      <div className="space-y-6">
         {/* Header */}
         <div className="flex justify-between items-start">
           <div>
@@ -209,6 +304,18 @@ export default function AdminAnalytics() {
                   {t("analytics.pause")}
                 </>
               )}
+            </Button>
+            
+            {/* Send Report Button */}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleSendReport}
+              disabled={sendReportMutation.isPending}
+              className="bg-purple-600 border-purple-500 hover:bg-purple-700"
+            >
+              <Mail className="w-4 h-4 mr-2" />
+              {sendReportMutation.isPending ? t("analytics.sending") : t("analytics.sendReport")}
             </Button>
             
             {/* Filters Button */}
@@ -325,6 +432,23 @@ export default function AdminAnalytics() {
                   </Select>
                 </div>
 
+                {/* Comparison Toggle */}
+                <div className="flex items-center justify-between p-3 bg-zinc-800 rounded-lg">
+                  <label className="text-sm text-zinc-300">{t("analytics.compareWithPrevious")}</label>
+                  <button
+                    onClick={() => setCompareWithPrevious(!compareWithPrevious)}
+                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                      compareWithPrevious ? "bg-purple-600" : "bg-zinc-700"
+                    }`}
+                  >
+                    <span
+                      className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                        compareWithPrevious ? "translate-x-6" : "translate-x-1"
+                      }`}
+                    />
+                  </button>
+                </div>
+
                 <Button onClick={clearFilters} variant="outline" className="w-full bg-zinc-800 border-zinc-700">
                   {t("analytics.clearFilters")}
                 </Button>
@@ -336,6 +460,83 @@ export default function AdminAnalytics() {
 
         {/* Summary Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <MetricCard
+            title={t("analytics.summaryCards.totalLeads")}
+            value={analyticsData?.summary.totalLeads || 0}
+            icon={Users}
+            compareWithPrevious={compareWithPrevious}
+            currentValue={analyticsData?.summary.totalLeads}
+            previousValue={previousData?.summary.totalLeads}
+          />
+
+          <MetricCard
+            title={t("analytics.summaryCards.conversionRate")}
+            value={`${analyticsData?.summary.conversionRate || 0}%`}
+            icon={TrendingUp}
+            compareWithPrevious={compareWithPrevious}
+            currentValue={analyticsData?.summary.conversionRate}
+            previousValue={previousData?.summary.conversionRate}
+          />
+
+          <MetricCard
+            title={t("analytics.summaryCards.romi")}
+            value={`${analyticsData?.summary.romi || 0}%`}
+            icon={DollarSign}
+            compareWithPrevious={compareWithPrevious}
+            currentValue={analyticsData?.summary.romi}
+            previousValue={previousData?.summary.romi}
+          />
+
+          <MetricCard
+            title={t("analytics.summaryCards.roas")}
+            value={`${analyticsData?.summary.roas || 0}x`}
+            icon={DollarSign}
+            compareWithPrevious={compareWithPrevious}
+            currentValue={analyticsData?.summary.roas}
+            previousValue={previousData?.summary.roas}
+            suffix="x"
+          />
+
+          <MetricCard
+            title={t("analytics.summaryCards.avgTimeOnSite")}
+            value={`${Math.floor((analyticsData?.summary.avgTimeOnSite || 0) / 60)}m ${(analyticsData?.summary.avgTimeOnSite || 0) % 60}s`}
+            icon={Clock}
+            compareWithPrevious={compareWithPrevious}
+            currentValue={analyticsData?.summary.avgTimeOnSite}
+            previousValue={previousData?.summary.avgTimeOnSite}
+            suffix="s"
+          />
+
+          <MetricCard
+            title={t("analytics.summaryCards.totalSpent")}
+            value={`$${analyticsData?.summary.totalSpent?.toFixed(2) || 0}`}
+            icon={DollarSign}
+            compareWithPrevious={compareWithPrevious}
+            currentValue={analyticsData?.summary.totalSpent}
+            previousValue={previousData?.summary.totalSpent}
+          />
+
+          <MetricCard
+            title={t("analytics.summaryCards.totalRevenue")}
+            value={`$${analyticsData?.summary.totalRevenue?.toFixed(2) || 0}`}
+            icon={DollarSign}
+            compareWithPrevious={compareWithPrevious}
+            currentValue={analyticsData?.summary.totalRevenue}
+            previousValue={previousData?.summary.totalRevenue}
+          />
+
+          <MetricCard
+            title={t("analytics.summaryCards.costPerLead")}
+            value={`$${analyticsData?.summary.costPerLead || 0}`}
+            icon={DollarSign}
+            compareWithPrevious={compareWithPrevious}
+            currentValue={analyticsData?.summary.costPerLead}
+            previousValue={previousData?.summary.costPerLead}
+          />
+        </div>
+
+        {/* OLD CARDS - TO BE REMOVED */}
+        <div className="hidden">
           <Card className="bg-zinc-900 border-zinc-800">
             <CardHeader className="pb-2">
               <CardTitle className="text-sm font-medium text-zinc-400 flex items-center">
@@ -344,7 +545,32 @@ export default function AdminAnalytics() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-white">{analyticsData?.summary.totalLeads || 0}</div>
+              <div className="flex items-end justify-between">
+                <div className="text-2xl font-bold text-white">{analyticsData?.summary.totalLeads || 0}</div>
+                {compareWithPrevious && previousData && (
+                  <div className="flex items-center gap-1 text-sm">
+                    {(() => {
+                      const change = calculateChange(
+                        analyticsData?.summary.totalLeads || 0,
+                        previousData.summary.totalLeads || 0
+                      );
+                      const isPositive = change >= 0;
+                      return (
+                        <>
+                          {isPositive ? (
+                            <ArrowUp className="w-3 h-3 text-green-500" />
+                          ) : (
+                            <ArrowDown className="w-3 h-3 text-red-500" />
+                          )}
+                          <span className={isPositive ? "text-green-500" : "text-red-500"}>
+                            {Math.abs(change).toFixed(1)}%
+                          </span>
+                        </>
+                      );
+                    })()}
+                  </div>
+                )}
+              </div>
             </CardContent>
           </Card>
 
@@ -591,6 +817,6 @@ export default function AdminAnalytics() {
           </CardContent>
         </Card>
       </div>
-    </div>
+    </DashboardLayout>
   );
 }

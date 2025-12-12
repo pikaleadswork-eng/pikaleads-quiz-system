@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import DashboardLayout from "@/components/DashboardLayout";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
 import { Link } from "wouter";
@@ -82,19 +83,19 @@ export default function AdminCalendar() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
-      <div className="container max-w-7xl">
+    <DashboardLayout>
+      <div className="space-y-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">Calendar & Appointments</h1>
-        <p className="text-muted-foreground">Schedule meetings with leads and manage appointments</p>
+        <h1 className="text-3xl font-bold mb-2">{t("calendar.title")}</h1>
+        <p className="text-muted-foreground">{t("calendar.description")}</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Create Appointment Form */}
         <Card>
           <CardHeader>
-            <CardTitle>Schedule New Appointment</CardTitle>
-            <CardDescription>Create a meeting with a lead</CardDescription>
+            <CardTitle>{t("calendar.scheduleNew")}</CardTitle>
+            <CardDescription>{t("calendar.createMeeting")}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
@@ -257,6 +258,6 @@ export default function AdminCalendar() {
         </CardContent>
       </Card>
       </div>
-    </div>
+    </DashboardLayout>
   );
 }

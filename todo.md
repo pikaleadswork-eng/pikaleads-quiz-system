@@ -815,3 +815,31 @@
 - [x] Preserve filter state during auto-refresh
 - [x] Test auto-refresh works correctly
 - [x] Verify no memory leaks from interval cleanup
+
+
+## Phase 12: Language Switcher + Period Comparison + Email Reports - IN PROGRESS 🚀
+- [x] Wrap AdminAnalytics page with DashboardLayout for language switcher
+- [x] Add "Compare with previous period" toggle to filters
+- [x] Calculate percentage changes for all metrics (vs previous period)
+- [x] Add up/down arrows with green/red colors for metric changes
+- [ ] Add comparison data to charts (previous period as dashed line)
+- [x] Create email report backend procedure (admin.sendAnalyticsReport)
+- [x] Create email template with key metrics
+- [x] Add "Send Report" button to analytics page
+- [x] Add translations for email report feature
+- [ ] Test language switcher works on analytics page
+- [ ] Test period comparison calculations are correct
+- [ ] Test email reports are sent successfully
+
+
+## Phase 13: Fix Admin Pages Layout & Translations - IN PROGRESS 🚀
+- [x] Wrap AdminPerformance with DashboardLayout
+- [x] Add performance page translations to uk.json
+- [x] Add performance page translations to ru.json
+- [x] Add performance page translations to en.json
+- [x] Wrap AdminCalendar with DashboardLayout
+- [x] Add calendar page translations to uk.json
+- [x] Add calendar page translations to ru.json
+- [x] Add calendar page translations to en.json
+- [x] Test all admin pages have language switcher
+- [x] Verify all translations work correctly
