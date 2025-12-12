@@ -276,11 +276,11 @@ export function EditLeadForm({ lead, onClose, onSuccess }: EditLeadFormProps) {
 
           {/* Total Amount */}
           <div className="space-y-2 mb-4">
-            <Label htmlFor="manual-amount">{t('Загальна сума (Ручне введення)', 'Общая сумма (Ручной ввод)', 'Total Amount (Manual Override)')}</Label>
+            <Label htmlFor="manual-amount" className="mb-2 block">{t('Загальна сума (Ручне введення)', 'Общая сумма (Ручной ввод)', 'Total Amount (Manual Override)')}</Label>
             <div className="flex gap-2 items-center">
               <Input className="bg-zinc-800 border-zinc-700" id="manual-amount"
                 type="number"
-                placeholder={t('Залиште порожнім для авто-розрахунку', 'Оставьте пустым для авто-расчета', 'Leave empty for auto-calculation')}
+                placeholder={t('Авто-розрахунок', 'Авто-расчет', 'Auto-calculate')}
                 value={formData.manualAmount || ""}
                 onChange={(e) => setFormData({ ...formData, manualAmount: e.target.value ? parseFloat(e.target.value) : null })}
               />

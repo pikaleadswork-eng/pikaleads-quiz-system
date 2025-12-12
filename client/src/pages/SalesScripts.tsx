@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { RichTextEditor } from "@/components/RichTextEditor";
 import {
   Select,
   SelectContent,
@@ -344,7 +344,7 @@ export default function SalesScripts() {
 
             <div className="space-y-4">
               <div>
-                <Label htmlFor="title">Title *</Label>
+                <Label htmlFor="title" className="mb-2 block">Title *</Label>
                 <Input
                   id="title"
                   value={formData.title}
@@ -354,7 +354,7 @@ export default function SalesScripts() {
               </div>
 
               <div>
-                <Label htmlFor="category">Category *</Label>
+                <Label htmlFor="category" className="mb-2 block">Category *</Label>
                 <Select
                   value={formData.category}
                   onValueChange={(value: any) => setFormData({ ...formData, category: value })}
@@ -372,14 +372,11 @@ export default function SalesScripts() {
               </div>
 
               <div>
-                <Label htmlFor="content">Script Content *</Label>
-                <Textarea
-                  id="content"
-                  value={formData.content}
-                  onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                  placeholder="Enter your sales script here..."
-                  rows={12}
-                  className="font-mono text-sm"
+                <Label htmlFor="content" className="mb-2 block">Script Content *</Label>
+                <RichTextEditor
+                  content={formData.content}
+                  onChange={(content) => setFormData({ ...formData, content })}
+                  placeholder="Enter your sales script here... Use the toolbar to format text, add images, and links."
                 />
               </div>
 

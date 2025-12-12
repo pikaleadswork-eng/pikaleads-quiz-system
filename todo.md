@@ -308,3 +308,30 @@
 - [ ] SalesStatistics - translate chart labels
 - [ ] SalesScripts - translate script fields
 - [ ] AdminCalendar - translate calendar labels
+
+
+## Phase 36 - Fix Dialog Spacing & Rich Text Editor for Scripts
+
+### Dialog Form Spacing Fixes
+- [x] Fix Services "Create New Service" dialog - add proper padding, fix placeholder overlap
+- [x] Fix Services "Create Additional Service" dialog - same spacing issues
+- [x] Fix Scripts "Create New Script" dialog - add proper spacing
+- [x] Fix Leads "Edit Lead" dialog - fix "Запишіть порожньки" text overlap
+- [x] Ensure all Input/Textarea fields have proper label spacing (mb-2)
+- [x] Ensure all placeholder texts are visible and don't overlap with input content
+
+### Rich Text Editor Implementation
+- [x] Install @tiptap/react, @tiptap/starter-kit, @tiptap/extension-image
+- [x] Create RichTextEditor component with toolbar (Bold, Italic, Headings, Lists, Images)
+- [x] Add formatting buttons with icons
+- [x] Add image upload functionality
+- [x] Style editor to match dark theme
+
+### Scripts Page Redesign
+- [x] Replace simple textarea with TipTap rich text editor
+- [ ] Add script templates (Cold Call, Follow-up, Objection Handling) (TODO: future enhancement)
+- [ ] Add tags system for scripts (TODO: future enhancement)
+- [ ] Add script preview mode (TODO: future enhancement)
+- [x] Improve category management (already has 4 categories)
+- [ ] Add search and filter by tags (TODO: future enhancement)
+- [ ] Add script duplication feature (TODO: future enhancement)

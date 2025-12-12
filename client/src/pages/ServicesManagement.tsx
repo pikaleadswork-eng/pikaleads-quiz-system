@@ -466,7 +466,7 @@ export default function ServicesManagement() {
 
             <div className="space-y-4">
               <div>
-                <Label htmlFor="service-name">Service Name *</Label>
+                <Label htmlFor="service-name" className="mb-2 block">Service Name *</Label>
                 <Input
                   id="service-name"
                   value={serviceFormData.name}
@@ -476,7 +476,7 @@ export default function ServicesManagement() {
               </div>
 
               <div>
-                <Label htmlFor="service-type">Service Type *</Label>
+                <Label htmlFor="service-type" className="mb-2 block">Service Type *</Label>
                 <Input
                   id="service-type"
                   value={serviceFormData.type}
@@ -486,7 +486,7 @@ export default function ServicesManagement() {
               </div>
 
               <div>
-                <Label htmlFor="service-price">Price ($) *</Label>
+                <Label htmlFor="service-price" className="mb-2 block">Price ($) *</Label>
                 <Input
                   id="service-price"
                   type="number"
@@ -497,7 +497,7 @@ export default function ServicesManagement() {
               </div>
 
               <div>
-                <Label htmlFor="service-description">Description</Label>
+                <Label htmlFor="service-description" className="mb-2 block">Description</Label>
                 <Textarea
                   id="service-description"
                   value={serviceFormData.description}
@@ -557,7 +557,7 @@ export default function ServicesManagement() {
 
             <div className="space-y-4">
               <div>
-                <Label htmlFor="additional-name">Service Name *</Label>
+                <Label htmlFor="additional-name" className="mb-2 block">Service Name *</Label>
                 <Input
                   id="additional-name"
                   value={additionalFormData.name}
@@ -567,7 +567,7 @@ export default function ServicesManagement() {
               </div>
 
               <div>
-                <Label htmlFor="additional-price">Price ($) *</Label>
+                <Label htmlFor="additional-price" className="mb-2 block">Price ($) *</Label>
                 <Input
                   id="additional-price"
                   type="number"
@@ -578,7 +578,7 @@ export default function ServicesManagement() {
               </div>
 
               <div>
-                <Label htmlFor="additional-description">Description</Label>
+                <Label htmlFor="additional-description" className="mb-2 block">Description</Label>
                 <Textarea
                   id="additional-description"
                   value={additionalFormData.description}
