@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { trpc } from "@/lib/trpc";
+import { useTranslation } from "react-i18next";
 
 export type Language = "uk" | "ru" | "en" | "pl" | "de";
 
@@ -22,6 +23,8 @@ function detectBrowserLanguage(): Language {
 }
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
+  const { i18n } = useTranslation();
+  
   const [language, setLanguageState] = useState<Language>(() => {
     // Check localStorage first
     const saved = localStorage.getItem("pikaleads_language");
@@ -47,7 +50,16 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
     localStorage.setItem("pikaleads_language", lang);
+    // Sync with i18next
+    i18n.changeLanguage(lang);
+    // Dispatch event for other components
+    window.dispatchEvent(new Event('languageChanged'));
   };
+  
+  // Initialize i18next with current language
+  useEffect(() => {
+    i18n.changeLanguage(language);
+  }, []);
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage }}>

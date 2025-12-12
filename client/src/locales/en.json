@@ -231,8 +231,19 @@
     "subtitle": "Manage your leads and communicate with clients",
     "filters": "Filters",
     "clearFilters": "Clear Filters",
+    "clearAll": "Clear All",
     "createLeadManually": "Create Lead Manually",
-    "leadsCount": "{{count}} of {{total}} leads"
+    "leadsCount": "{{count}} of {{total}} leads",
+    "allManagers": "All managers",
+    "allSources": "All sources",
+    "dateRange": "Date Range",
+    "from": "From",
+    "to": "To",
+    "manager": "Manager",
+    "leads": "Leads",
+    "view": "View",
+    "edit": "Edit",
+    "noLeads": "No leads yet"
   },
   "scripts": {
     "title": "Sales Scripts",

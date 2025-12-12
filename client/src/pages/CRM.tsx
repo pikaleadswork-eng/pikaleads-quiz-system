@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import {
@@ -41,7 +41,7 @@ import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { addDays, format as formatDate } from "date-fns";
 import { format } from "date-fns";
 import { useAuth } from "@/_core/hooks/useAuth";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
 export default function CRM() {
@@ -218,10 +218,10 @@ export default function CRM() {
       <div className="mb-8 flex items-center justify-between">
         <div>
           <h1 className="text-4xl font-black text-white mb-2">
-            Leads Management
+            {t("crm.title")}
           </h1>
           <p className="text-gray-400">
-            Manage your leads and communicate with clients
+            {t("crm.subtitle")}
           </p>
         </div>
         
@@ -239,7 +239,7 @@ export default function CRM() {
             <PopoverTrigger asChild>
               <Button variant="outline" className="gap-2">
                 <Filter className="w-4 h-4" />
-                Filters
+                {t('crm.filters')}
                 {activeFiltersCount > 0 && (
                   <Badge variant="default" className="ml-1">{activeFiltersCount}</Badge>
                 )}
@@ -248,7 +248,7 @@ export default function CRM() {
             <PopoverContent className="w-96 bg-zinc-900 border-zinc-800" align="end">
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-semibold text-white">Filters</h3>
+                  <h3 className="font-semibold text-white">{t('crm.filters')}</h3>
                   {activeFiltersCount > 0 && (
                     <Button
                       variant="ghost"
@@ -256,7 +256,7 @@ export default function CRM() {
                       onClick={clearFilters}
                       className="h-8 text-xs"
                     >
-                      Clear All
+                      {t('crm.clearAll')}
                     </Button>
                   )}
                 </div>
@@ -265,14 +265,14 @@ export default function CRM() {
                 <div>
                   <label className="text-sm font-medium mb-2 block flex items-center gap-2">
                     <Users className="w-4 h-4" />
-                    Manager
+                    {t('crm.manager')}
                   </label>
                   <Select value={filterManager} onValueChange={setFilterManager}>
                     <SelectTrigger className="bg-zinc-800">
-                      <SelectValue placeholder="All managers" />
+                      <SelectValue placeholder={t("crm.allManagers")} />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="all">All managers</SelectItem>
+                      <SelectItem value="all">{t('crm.allManagers')}</SelectItem>
                       {managers?.map((manager) => (
                         <SelectItem key={manager.id} value={manager.id.toString()}>
                           {manager.name}
@@ -286,14 +286,14 @@ export default function CRM() {
                 <div>
                   <label className="text-sm font-medium mb-2 block flex items-center gap-2">
                     <Tag className="w-4 h-4" />
-                    Source
+                    {t('common.source')}
                   </label>
                   <Select value={filterSource} onValueChange={setFilterSource}>
                     <SelectTrigger className="bg-zinc-800">
                       <SelectValue placeholder="All sources" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="all">All sources</SelectItem>
+                      <SelectItem value="all">{t('crm.allSources')}</SelectItem>
                       {uniqueSources.map((source) => (
                         <SelectItem key={source as string} value={source as string}>
                           {source}
@@ -307,13 +307,13 @@ export default function CRM() {
                 <div>
                   <label className="text-sm font-medium mb-2 block flex items-center gap-2">
                     <Calendar className="w-4 h-4" />
-                    Date Range
+                    {t('crm.dateRange')}
                   </label>
                   <div className="grid grid-cols-2 gap-2">
                     <Popover>
                       <PopoverTrigger asChild>
                         <Button variant="outline" className="justify-start text-left font-normal bg-zinc-800">
-                          {filterDateFrom ? formatDate(filterDateFrom, "MMM d, yyyy") : "From"}
+                          {filterDateFrom ? formatDate(filterDateFrom, "MMM d, yyyy") : t("crm.from")}
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent className="w-auto p-0 bg-zinc-900 border-zinc-800" align="start">
@@ -328,7 +328,7 @@ export default function CRM() {
                     <Popover>
                       <PopoverTrigger asChild>
                         <Button variant="outline" className="justify-start text-left font-normal bg-zinc-800">
-                          {filterDateTo ? formatDate(filterDateTo, "MMM d, yyyy") : "To"}
+                          {filterDateTo ? formatDate(filterDateTo, "MMM d, yyyy") : t("crm.to")}
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent className="w-auto p-0 bg-zinc-900 border-zinc-800" align="start">
@@ -352,173 +352,19 @@ export default function CRM() {
         </div>
       </div>
 
-        {/* UTM Filters */}
-        {uniqueCampaigns.length > 0 && (
-          <Card className="mb-6">
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle className="flex items-center gap-2">
-                    <Filter className="w-5 h-5" />
-                    UTM Filters
-                  </CardTitle>
-                  <CardDescription>
-                    Filter leads by campaign parameters
-                    {activeFiltersCount > 0 && ` (${activeFiltersCount} active)`}
-                  </CardDescription>
-                </div>
-                {activeFiltersCount > 0 && (
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={clearFilters}
-                    className="gap-2"
-                  >
-                    <X className="w-4 h-4" />
-                    Clear Filters
-                  </Button>
-                )}
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {/* Campaign Filter */}
-                {uniqueCampaigns.length > 0 && (
-                  <div>
-                    <label className="text-sm font-medium mb-2 block">{t('common.campaign')}</label>
-                    <Select value={filterCampaign} onValueChange={setFilterCampaign}>
-                      <SelectTrigger>
-                        <SelectValue placeholder={t('common.all_campaigns')} />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">{t('common.all_campaigns')}</SelectItem>
-                        {uniqueCampaigns.map((campaign) => (
-                          <SelectItem key={campaign as string} value={campaign as string}>
-                            {campaign}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                )}
-
-                {/* Ad Group Filter */}
-                {uniqueAdGroups.length > 0 && (
-                  <div>
-                    <label className="text-sm font-medium mb-2 block">Ad Group</label>
-                    <Select value={filterAdGroup} onValueChange={setFilterAdGroup}>
-                      <SelectTrigger>
-                        <SelectValue placeholder={t("crm.allAdGroups")} />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">All ad groups</SelectItem>
-                        {uniqueAdGroups.map((adGroup) => (
-                          <SelectItem key={adGroup as string} value={adGroup as string}>
-                            {adGroup}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                )}
-
-                {/* Ad Filter */}
-                {uniqueAds.length > 0 && (
-                  <div>
-                    <label className="text-sm font-medium mb-2 block">Ad</label>
-                    <Select value={filterAd} onValueChange={setFilterAd}>
-                      <SelectTrigger>
-                        <SelectValue placeholder={t("crm.allAds")} />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">All ads</SelectItem>
-                        {uniqueAds.map((ad) => (
-                          <SelectItem key={ad as string} value={ad as string}>
-                            {ad}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                )}
-
-                {/* Placement Filter */}
-                {uniquePlacements.length > 0 && (
-                  <div>
-                    <label className="text-sm font-medium mb-2 block">{t('common.placement')}</label>
-                    <Select value={filterPlacement} onValueChange={setFilterPlacement}>
-                      <SelectTrigger>
-                        <SelectValue placeholder={t('common.all_placements')} />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">{t('common.all_placements')}</SelectItem>
-                        {uniquePlacements.map((placement) => (
-                          <SelectItem key={placement as string} value={placement as string}>
-                            {placement}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                )}
-
-                {/* Keyword Filter */}
-                {uniqueKeywords.length > 0 && (
-                  <div>
-                    <label className="text-sm font-medium mb-2 block">Keyword</label>
-                    <Select value={filterKeyword} onValueChange={setFilterKeyword}>
-                      <SelectTrigger>
-                        <SelectValue placeholder={t("crm.allKeywords")} />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">All keywords</SelectItem>
-                        {uniqueKeywords.map((keyword) => (
-                          <SelectItem key={keyword as string} value={keyword as string}>
-                            {keyword}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                )}
-
-                {/* Site Filter */}
-                {uniqueSites.length > 0 && (
-                  <div>
-                    <label className="text-sm font-medium mb-2 block">{t('common.site')}</label>
-                    <Select value={filterSite} onValueChange={setFilterSite}>
-                      <SelectTrigger>
-                        <SelectValue placeholder={t('common.all_sites')} />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">{t('common.all_sites')}</SelectItem>
-                        {uniqueSites.map((site) => (
-                          <SelectItem key={site as string} value={site as string}>
-                            {site}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                )}
-              </div>
-            </CardContent>
-          </Card>
-        )}
-
-        {/* Leads Table */}
+      {/* Leads Table */}
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
               <div>
-                <CardTitle>Leads</CardTitle>
+                <CardTitle>{t('crm.leads')}</CardTitle>
                 <CardDescription>
                   {filteredLeads?.length || 0} of {leads?.length || 0} leads
                   {user.role === "manager" && " (assigned to you)"}
                 </CardDescription>
               </div>
               <Button onClick={() => setShowCreateLeadModal(true)}>
-                Create Lead Manually
+                {t("crm.createLeadManually")}
               </Button>
             </div>
           </CardHeader>
@@ -635,7 +481,7 @@ export default function CRM() {
                               onClick={() => setSelectedLead(lead.id)}
                             >
                               <MessageSquare className="w-4 h-4 mr-2" />
-                              View
+                              {t('crm.view')}
                             </Button>
                             <Button
                               size="sm"
@@ -645,7 +491,7 @@ export default function CRM() {
                                 setShowEditLeadModal(true);
                               }}
                             >
-                              Edit
+                              {t('crm.edit')}
                             </Button>
                           </div>
                         </TableCell>
@@ -657,7 +503,7 @@ export default function CRM() {
                         colSpan={7}
                         className="text-center text-muted-foreground py-8"
                       >
-                        No leads yet
+                        {t('crm.noLeads') || 'No leads yet'}
                       </TableCell>
                     </TableRow>
                   )}
@@ -908,7 +754,7 @@ export default function CRM() {
                   </Select>
                 </div>
                 <div>
-                  <label className="text-sm font-medium">UTM Campaign</label>
+                  <label className="text-sm font-medium">{t("crm.utmCampaign")}</label>
                   <input
                     type="text"
                     className="w-full px-3 py-2 border rounded-md"
@@ -917,7 +763,7 @@ export default function CRM() {
                   />
                 </div>
                 <div>
-                  <label className="text-sm font-medium">UTM Source</label>
+                  <label className="text-sm font-medium">{t("crm.utmSource")}</label>
                   <input
                     type="text"
                     className="w-full px-3 py-2 border rounded-md"

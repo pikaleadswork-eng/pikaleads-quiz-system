@@ -188,7 +188,7 @@ export function SettingsRoles() {
           </DialogHeader>
           <div className="space-y-4">
             <div>
-              <Label className="mb-2"htmlFor="roleName" className="mb-2 block">{t("roles.roleName")}</Label>
+              <Label htmlFor="roleName" className="mb-2 block">{t("roles.roleName")}</Label>
               <Input
                 className="bg-zinc-800 border-zinc-700"
                 id="roleName"
@@ -198,7 +198,7 @@ export function SettingsRoles() {
               />
             </div>
             <div>
-              <Label className="mb-2"htmlFor="roleDescription" className="mb-2 block">Description</Label>
+              <Label htmlFor="roleDescription" className="mb-2 block">Description</Label>
               <Textarea
                 className="bg-zinc-800 border-zinc-700"
                 id="roleDescription"

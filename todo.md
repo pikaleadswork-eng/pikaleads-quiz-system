@@ -609,3 +609,16 @@
 2. Manually add useTranslation() to Settings pages
 3. Debug why CRMLayout t() calls don't work
 4. Merge UTM filters into main filter popover
+
+## Phase 43 Tasks (Dec 12, 2025)
+
+- [ ] Fix duplicate className in SettingsLeadStatuses.tsx (lines 215, 225)
+- [ ] Fix duplicate className in SettingsRoles.tsx (lines 191, 201)
+- [ ] Add useTranslation() to CRM.tsx
+- [ ] Translate CRM sidebar menu items
+- [ ] Translate CRM page headers and subtitles
+- [ ] Translate CRM table headers
+- [ ] Translate CRM buttons (View, Edit, Create Lead Manually)
+- [ ] Merge UTM filters into main Filters popover
+- [ ] Test language switching in browser
+- [ ] Save checkpoint

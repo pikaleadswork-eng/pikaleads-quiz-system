@@ -235,8 +235,19 @@
     "subtitle": "Управляйте своими лидами и общайтесь с клиентами",
     "filters": "Фильтры",
     "clearFilters": "Очистить фильтры",
+    "clearAll": "Очистить все",
     "createLeadManually": "Создать лида вручную",
-    "leadsCount": "{{count}} из {{total}} лидов"
+    "leadsCount": "{{count}} из {{total}} лидов",
+    "allManagers": "Все менеджеры",
+    "allSources": "Все источники",
+    "dateRange": "Диапазон дат",
+    "from": "С",
+    "to": "До",
+    "manager": "Менеджер",
+    "leads": "Лиды",
+    "view": "Просмотр",
+    "edit": "Редактировать",
+    "noLeads": "Пока нет лидов"
   },
   "adminSettings": {
     "title": "Настройки системы",
