@@ -1,0 +1,200 @@
+{
+  "common": {
+    "loading": "Завантаження...",
+    "error": "Помилка",
+    "success": "Успішно",
+    "save": "Зберегти",
+    "cancel": "Скасувати",
+    "delete": "Видалити",
+    "edit": "Редагувати",
+    "add": "Додати",
+    "search": "Пошук",
+    "filter": "Фільтр",
+    "export": "Експорт",
+    "import": "Імпорт",
+    "settings": "Налаштування",
+    "logout": "Вийти",
+    "login": "Увійти",
+    "register": "Зареєструватися",
+    "confirm": "Підтвердити",
+    "close": "Закрити"
+  },
+  "nav": {
+    "dashboard": "Панель керування",
+    "messaging": "Повідомлення",
+    "leads": "Ліди",
+    "services": "Послуги",
+    "sales": "Продажі",
+    "scripts": "Скрипти",
+    "settings": "Налаштування",
+    "emailTelegramWhatsApp": "Email, Telegram, WhatsApp",
+    "manageAllLeads": "Управління всіма лідами",
+    "pricingOfferings": "Ціни та пропозиції",
+    "revenueTransactions": "Дохід та транзакції",
+    "callScriptsLibrary": "Бібліотека скриптів дзвінків",
+    "integrationsAPI": "Інтеграції та API"
+  },
+  "messaging": {
+    "title": "Вхідні повідомлення",
+    "subtitle": "Всі повідомлення з Telegram, WhatsApp, Email та Instagram в одному місці",
+    "allMessages": "Всі повідомлення",
+    "telegram": "Telegram",
+    "whatsapp": "WhatsApp",
+    "email": "Email",
+    "instagram": "Instagram",
+    "searchChats": "Пошук чатів...",
+    "selectChat": "Виберіть чат",
+    "selectChatDescription": "Оберіть розмову зі списку зліва",
+    "typeMessage": "Введіть повідомлення...",
+    "send": "Відправити"
+  },
+  "leadInfo": {
+    "title": "Інформація про ліда",
+    "selectLead": "Виберіть чат, щоб побачити інформацію про ліда",
+    "contactInfo": "Контактна інформація",
+    "name": "Ім'я",
+    "phone": "Телефон",
+    "email": "Email",
+    "telegram": "Telegram",
+    "quiz": "Квіз",
+    "leadScore": "Оцінка ліда",
+    "status": "Статус",
+    "call": "Дзвінок",
+    "scheduleActions": "Планування",
+    "scheduleCall": "Запланувати дзвінок",
+    "scheduleMessage": "Запланувати повідомлення",
+    "scheduleMeeting": "Запланувати зустріч",
+    "notes": "Нотатки",
+    "addNote": "Додати нотатку",
+    "typeNote": "Введіть вашу нотатку...",
+    "activityTimeline": "Історія активності",
+    "noActivity": "Поки що немає активності"
+  },
+  "leadStatus": {
+    "new": "Новий",
+    "contacted": "Зв'язались",
+    "qualified": "Кваліфікований",
+    "won": "Виграно",
+    "lost": "Програно"
+  },
+  "schedule": {
+    "call": {
+      "title": "Запланувати дзвінок",
+      "dateTime": "Дата та час",
+      "duration": "Тривалість (хвилини)",
+      "notes": "Нотатки",
+      "schedule": "Запланувати"
+    },
+    "message": {
+      "title": "Запланувати повідомлення",
+      "channel": "Канал",
+      "message": "Повідомлення",
+      "dateTime": "Дата та час",
+      "schedule": "Запланувати"
+    },
+    "meeting": {
+      "title": "Запланувати зустріч",
+      "platform": "Платформа",
+      "googleMeet": "Google Meet",
+      "zoom": "Zoom",
+      "meetingTitle": "Назва зустрічі",
+      "dateTime": "Дата та час",
+      "create": "Створити зустріч"
+    }
+  },
+  "settings": {
+    "title": "Налаштування",
+    "general": "Загальні",
+    "integrations": "Інтеграції",
+    "roles": "Ролі та доступи",
+    "leadStatuses": "Статуси лідів",
+    "ipTelephony": "IP-телефонія",
+    "guides": "Інструкції"
+  },
+  "roles": {
+    "title": "Ролі та доступи",
+    "description": "Керуйте ролями користувачів та їх правами доступу",
+    "createRole": "Створити роль",
+    "editRole": "Редагувати роль",
+    "roleName": "Назва ролі",
+    "permissions": "Дозволи",
+    "inviteUser": "Запросити користувача",
+    "userEmail": "Email користувача",
+    "selectRole": "Виберіть роль",
+    "sendInvitation": "Відправити запрошення",
+    "admin": "Адміністратор",
+    "manager": "Менеджер",
+    "viewer": "Глядач"
+  },
+  "leadStatuses": {
+    "title": "Статуси лідів",
+    "description": "Налаштуйте статуси для відстеження прогресу лідів",
+    "addStatus": "Додати статус",
+    "editStatus": "Редагувати статус",
+    "statusName": "Назва статусу",
+    "statusColor": "Колір",
+    "isDefault": "За замовчуванням",
+    "order": "Порядок",
+    "deleteConfirm": "Ви впевнені, що хочете видалити цей статус?"
+  },
+  "ipTelephony": {
+    "title": "IP-телефонія",
+    "description": "Налаштуйте Zadarma для дзвінків прямо з CRM",
+    "provider": "Провайдер",
+    "zadarma": "Zadarma",
+    "apiKey": "API ключ",
+    "apiSecret": "API секрет",
+    "sipNumber": "SIP номер",
+    "testConnection": "Перевірити підключення",
+    "connectionSuccess": "Підключення успішне!",
+    "connectionFailed": "Помилка підключення",
+    "accountBalance": "Баланс рахунку",
+    "viewGuide": "Переглянути інструкцію",
+    "howToSetup": "Як налаштувати Zadarma"
+  },
+  "guides": {
+    "zadarma": {
+      "title": "Інструкція з інтеграції Zadarma",
+      "step1": "Крок 1: Реєстрація",
+      "step1Desc": "Зареєструйтеся на zadarma.com та створіть акаунт",
+      "step2": "Крок 2: Отримання API ключів",
+      "step2Desc": "Перейдіть в розділ 'Налаштування' → 'API' та створіть новий ключ",
+      "step3": "Крок 3: Налаштування в CRM",
+      "step3Desc": "Скопіюйте API ключ та секрет в налаштування IP-телефонії",
+      "step4": "Крок 4: Тестування",
+      "step4Desc": "Натисніть 'Перевірити підключення' для перевірки"
+    },
+    "googleMeet": {
+      "title": "Інструкція з інтеграції Google Meet",
+      "step1": "Крок 1: Google Cloud Console",
+      "step1Desc": "Створіть проект в Google Cloud Console",
+      "step2": "Крок 2: Увімкнення API",
+      "step2Desc": "Увімкніть Google Calendar API",
+      "step3": "Крок 3: OAuth 2.0",
+      "step3Desc": "Створіть OAuth 2.0 клієнт ID",
+      "step4": "Крок 4: Налаштування",
+      "step4Desc": "Додайте credentials в налаштування CRM"
+    },
+    "zoom": {
+      "title": "Інструкція з інтеграції Zoom",
+      "step1": "Крок 1: Zoom App Marketplace",
+      "step1Desc": "Перейдіть на marketplace.zoom.us",
+      "step2": "Крок 2: Створення додатку",
+      "step2Desc": "Створіть новий Server-to-Server OAuth додаток",
+      "step3": "Крок 3: Отримання credentials",
+      "step3Desc": "Скопіюйте Account ID, Client ID та Client Secret",
+      "step4": "Крок 4: Налаштування",
+      "step4Desc": "Додайте credentials в налаштування CRM"
+    }
+  },
+  "dashboard": {
+    "title": "Панель керування",
+    "welcome": "Ласкаво просимо",
+    "stats": {
+      "totalLeads": "Всього лідів",
+      "newLeads": "Нових лідів",
+      "activeManagers": "Активних менеджерів",
+      "conversionRate": "Коефіцієнт конверсії"
+    }
+  }
+}

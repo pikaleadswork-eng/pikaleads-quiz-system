@@ -1,0 +1,200 @@
+{
+  "common": {
+    "loading": "Загрузка...",
+    "error": "Ошибка",
+    "success": "Успешно",
+    "save": "Сохранить",
+    "cancel": "Отменить",
+    "delete": "Удалить",
+    "edit": "Редактировать",
+    "add": "Добавить",
+    "search": "Поиск",
+    "filter": "Фильтр",
+    "export": "Экспорт",
+    "import": "Импорт",
+    "settings": "Настройки",
+    "logout": "Выйти",
+    "login": "Войти",
+    "register": "Зарегистрироваться",
+    "confirm": "Подтвердить",
+    "close": "Закрыть"
+  },
+  "nav": {
+    "dashboard": "Панель управления",
+    "messaging": "Сообщения",
+    "leads": "Лиды",
+    "services": "Услуги",
+    "sales": "Продажи",
+    "scripts": "Скрипты",
+    "settings": "Настройки",
+    "emailTelegramWhatsApp": "Email, Telegram, WhatsApp",
+    "manageAllLeads": "Управление всеми лидами",
+    "pricingOfferings": "Цены и предложения",
+    "revenueTransactions": "Доход и транзакции",
+    "callScriptsLibrary": "Библиотека скриптов звонков",
+    "integrationsAPI": "Интеграции и API"
+  },
+  "messaging": {
+    "title": "Входящие сообщения",
+    "subtitle": "Все сообщения из Telegram, WhatsApp, Email и Instagram в одном месте",
+    "allMessages": "Все сообщения",
+    "telegram": "Telegram",
+    "whatsapp": "WhatsApp",
+    "email": "Email",
+    "instagram": "Instagram",
+    "searchChats": "Поиск чатов...",
+    "selectChat": "Выберите чат",
+    "selectChatDescription": "Выберите разговор из списка слева",
+    "typeMessage": "Введите сообщение...",
+    "send": "Отправить"
+  },
+  "leadInfo": {
+    "title": "Информация о лиде",
+    "selectLead": "Выберите чат, чтобы увидеть информацию о лиде",
+    "contactInfo": "Контактная информация",
+    "name": "Имя",
+    "phone": "Телефон",
+    "email": "Email",
+    "telegram": "Telegram",
+    "quiz": "Квиз",
+    "leadScore": "Оценка лида",
+    "status": "Статус",
+    "call": "Звонок",
+    "scheduleActions": "Планирование",
+    "scheduleCall": "Запланировать звонок",
+    "scheduleMessage": "Запланировать сообщение",
+    "scheduleMeeting": "Запланировать встречу",
+    "notes": "Заметки",
+    "addNote": "Добавить заметку",
+    "typeNote": "Введите вашу заметку...",
+    "activityTimeline": "История активности",
+    "noActivity": "Пока нет активности"
+  },
+  "leadStatus": {
+    "new": "Новый",
+    "contacted": "Связались",
+    "qualified": "Квалифицированный",
+    "won": "Выиграно",
+    "lost": "Проиграно"
+  },
+  "schedule": {
+    "call": {
+      "title": "Запланировать звонок",
+      "dateTime": "Дата и время",
+      "duration": "Продолжительность (минуты)",
+      "notes": "Заметки",
+      "schedule": "Запланировать"
+    },
+    "message": {
+      "title": "Запланировать сообщение",
+      "channel": "Канал",
+      "message": "Сообщение",
+      "dateTime": "Дата и время",
+      "schedule": "Запланировать"
+    },
+    "meeting": {
+      "title": "Запланировать встречу",
+      "platform": "Платформа",
+      "googleMeet": "Google Meet",
+      "zoom": "Zoom",
+      "meetingTitle": "Название встречи",
+      "dateTime": "Дата и время",
+      "create": "Создать встречу"
+    }
+  },
+  "settings": {
+    "title": "Настройки",
+    "general": "Общие",
+    "integrations": "Интеграции",
+    "roles": "Роли и доступы",
+    "leadStatuses": "Статусы лидов",
+    "ipTelephony": "IP-телефония",
+    "guides": "Инструкции"
+  },
+  "roles": {
+    "title": "Роли и доступы",
+    "description": "Управляйте ролями пользователей и их правами доступа",
+    "createRole": "Создать роль",
+    "editRole": "Редактировать роль",
+    "roleName": "Название роли",
+    "permissions": "Разрешения",
+    "inviteUser": "Пригласить пользователя",
+    "userEmail": "Email пользователя",
+    "selectRole": "Выберите роль",
+    "sendInvitation": "Отправить приглашение",
+    "admin": "Администратор",
+    "manager": "Менеджер",
+    "viewer": "Наблюдатель"
+  },
+  "leadStatuses": {
+    "title": "Статусы лидов",
+    "description": "Настройте статусы для отслеживания прогресса лидов",
+    "addStatus": "Добавить статус",
+    "editStatus": "Редактировать статус",
+    "statusName": "Название статуса",
+    "statusColor": "Цвет",
+    "isDefault": "По умолчанию",
+    "order": "Порядок",
+    "deleteConfirm": "Вы уверены, что хотите удалить этот статус?"
+  },
+  "ipTelephony": {
+    "title": "IP-телефония",
+    "description": "Настройте Zadarma для звонков прямо из CRM",
+    "provider": "Провайдер",
+    "zadarma": "Zadarma",
+    "apiKey": "API ключ",
+    "apiSecret": "API секрет",
+    "sipNumber": "SIP номер",
+    "testConnection": "Проверить подключение",
+    "connectionSuccess": "Подключение успешно!",
+    "connectionFailed": "Ошибка подключения",
+    "accountBalance": "Баланс счета",
+    "viewGuide": "Посмотреть инструкцию",
+    "howToSetup": "Как настроить Zadarma"
+  },
+  "guides": {
+    "zadarma": {
+      "title": "Инструкция по интеграции Zadarma",
+      "step1": "Шаг 1: Регистрация",
+      "step1Desc": "Зарегистрируйтесь на zadarma.com и создайте аккаунт",
+      "step2": "Шаг 2: Получение API ключей",
+      "step2Desc": "Перейдите в раздел 'Настройки' → 'API' и создайте новый ключ",
+      "step3": "Шаг 3: Настройка в CRM",
+      "step3Desc": "Скопируйте API ключ и секрет в настройки IP-телефонии",
+      "step4": "Шаг 4: Тестирование",
+      "step4Desc": "Нажмите 'Проверить подключение' для проверки"
+    },
+    "googleMeet": {
+      "title": "Инструкция по интеграции Google Meet",
+      "step1": "Шаг 1: Google Cloud Console",
+      "step1Desc": "Создайте проект в Google Cloud Console",
+      "step2": "Шаг 2: Включение API",
+      "step2Desc": "Включите Google Calendar API",
+      "step3": "Шаг 3: OAuth 2.0",
+      "step3Desc": "Создайте OAuth 2.0 клиент ID",
+      "step4": "Шаг 4: Настройка",
+      "step4Desc": "Добавьте credentials в настройки CRM"
+    },
+    "zoom": {
+      "title": "Инструкция по интеграции Zoom",
+      "step1": "Шаг 1: Zoom App Marketplace",
+      "step1Desc": "Перейдите на marketplace.zoom.us",
+      "step2": "Шаг 2: Создание приложения",
+      "step2Desc": "Создайте новое Server-to-Server OAuth приложение",
+      "step3": "Шаг 3: Получение credentials",
+      "step3Desc": "Скопируйте Account ID, Client ID и Client Secret",
+      "step4": "Шаг 4: Настройка",
+      "step4Desc": "Добавьте credentials в настройки CRM"
+    }
+  },
+  "dashboard": {
+    "title": "Панель управления",
+    "welcome": "Добро пожаловать",
+    "stats": {
+      "totalLeads": "Всего лидов",
+      "newLeads": "Новых лидов",
+      "activeManagers": "Активных менеджеров",
+      "conversionRate": "Коэффициент конверсии"
+    }
+  }
+}

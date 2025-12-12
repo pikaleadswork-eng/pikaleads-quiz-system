@@ -208,3 +208,53 @@
 - [ ] Show assigned manager badge (TODO)
 - [x] Add meeting scheduling modal
 - [ ] Add reminder calendar widget (TODO)
+
+
+## Phase 34 - Translations & Settings Enhancements
+
+### i18n System (Ukrainian/Russian/English)
+- [x] Install i18next and react-i18next packages
+- [x] Create translation files structure (locales/ua.json, ru.json, en.json)
+- [ ] Translate all UI text in MessagingInbox (TODO)
+- [ ] Translate all UI text in LeadInfoPanel (TODO)
+- [x] Translate all UI text in Settings pages
+- [ ] Translate all UI text in Dashboard (TODO)
+- [ ] Translate all UI text in Leads page (TODO)
+- [ ] Ensure language switcher works 100% (TODO)
+
+### Settings - Roles & Permissions
+- [x] Create roles table (name, permissions JSON)
+- [x] Create user_invitations table (email, role, token, status)
+- [x] Add Settings → Roles page
+- [x] List all roles (Admin, Manager, Viewer, Custom)
+- [x] Create new role with permission checkboxes
+- [ ] Edit existing roles (TODO)
+- [x] Delete custom roles
+- [x] Invite user with role assignment
+- [ ] Send invitation email with signup link (TODO)
+- [ ] User signup with role assignment (TODO)
+
+### Settings - Lead Status Management
+- [x] Add Settings → Lead Statuses page
+- [x] List all current statuses
+- [x] Add new status (name, color, order)
+- [ ] Edit existing status (TODO)
+- [x] Delete status (with warning if leads exist)
+- [ ] Reorder statuses (drag & drop) (TODO)
+- [x] Set default status for new leads
+
+### Settings - IP Telephony Configuration
+- [x] Add Settings → IP Telephony page
+- [x] Zadarma configuration form (API key, secret, SIP number)
+- [x] Test connection button
+- [ ] Show account balance (TODO)
+- [ ] Call history settings (TODO)
+- [ ] Recording settings (TODO)
+
+### Integration Guides (Multilingual)
+- [x] Create guides/zadarma.md (UA/RU/EN) (embedded in UI)
+- [x] Create guides/google-meet.md (UA/RU/EN) (embedded in translations)
+- [x] Create guides/zoom.md (UA/RU/EN) (embedded in translations)
+- [ ] Add screenshots to guides (TODO)
+- [x] Link guides from Settings pages
+- [x] Add "How to integrate" buttons

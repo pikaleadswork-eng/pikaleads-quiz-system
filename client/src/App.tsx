@@ -31,6 +31,9 @@ import MessagingInbox from "./pages/MessagingInbox";
 import SalesStatistics from "./pages/SalesStatistics";
 import SalesScripts from "./pages/SalesScripts";
 import AdminSettings from "./pages/AdminSettings";
+import { SettingsRoles } from "./pages/SettingsRoles";
+import { SettingsLeadStatuses } from "./pages/SettingsLeadStatuses";
+import { SettingsIPTelephony } from "./pages/SettingsIPTelephony";
 import ServicesManagement from "./pages/ServicesManagement";
 import CRMDashboard from "./pages/CRMDashboard";
 import AdminCalendar from "./pages/AdminCalendar";
@@ -86,6 +89,9 @@ function Router() {
       <Route path={"/admin/scripts"} component={SalesScripts} />
       <Route path={"/admin/services"} component={ServicesManagement} />
       <Route path={"/admin/settings"} component={AdminSettings} />
+      <Route path={"/admin/settings/roles"} component={SettingsRoles} />
+      <Route path={"/admin/settings/lead-statuses"} component={SettingsLeadStatuses} />
+      <Route path={"/admin/settings/ip-telephony"} component={SettingsIPTelephony} />
       <Route path={"/admin/calendar"} component={AdminCalendar} />
       
       {/* CRM & Manager Dashboard */}

@@ -1,0 +1,200 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "search": "Search",
+    "filter": "Filter",
+    "export": "Export",
+    "import": "Import",
+    "settings": "Settings",
+    "logout": "Logout",
+    "login": "Login",
+    "register": "Register",
+    "confirm": "Confirm",
+    "close": "Close"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "messaging": "Messaging",
+    "leads": "Leads",
+    "services": "Services",
+    "sales": "Sales",
+    "scripts": "Scripts",
+    "settings": "Settings",
+    "emailTelegramWhatsApp": "Email, Telegram, WhatsApp",
+    "manageAllLeads": "Manage all leads",
+    "pricingOfferings": "Pricing & offerings",
+    "revenueTransactions": "Revenue & transactions",
+    "callScriptsLibrary": "Call scripts library",
+    "integrationsAPI": "Integrations & API"
+  },
+  "messaging": {
+    "title": "Inbox",
+    "subtitle": "All messages from Telegram, WhatsApp, Email and Instagram in one place",
+    "allMessages": "All Messages",
+    "telegram": "Telegram",
+    "whatsapp": "WhatsApp",
+    "email": "Email",
+    "instagram": "Instagram",
+    "searchChats": "Search chats...",
+    "selectChat": "Select a chat",
+    "selectChatDescription": "Choose a conversation from the list on the left",
+    "typeMessage": "Type a message...",
+    "send": "Send"
+  },
+  "leadInfo": {
+    "title": "Lead Information",
+    "selectLead": "Select a chat to see lead information",
+    "contactInfo": "Contact Information",
+    "name": "Name",
+    "phone": "Phone",
+    "email": "Email",
+    "telegram": "Telegram",
+    "quiz": "Quiz",
+    "leadScore": "Lead Score",
+    "status": "Status",
+    "call": "Call",
+    "scheduleActions": "Schedule",
+    "scheduleCall": "Schedule Call",
+    "scheduleMessage": "Schedule Message",
+    "scheduleMeeting": "Schedule Meeting",
+    "notes": "Notes",
+    "addNote": "Add Note",
+    "typeNote": "Type your note...",
+    "activityTimeline": "Activity Timeline",
+    "noActivity": "No activity yet"
+  },
+  "leadStatus": {
+    "new": "New",
+    "contacted": "Contacted",
+    "qualified": "Qualified",
+    "won": "Won",
+    "lost": "Lost"
+  },
+  "schedule": {
+    "call": {
+      "title": "Schedule Call",
+      "dateTime": "Date & Time",
+      "duration": "Duration (minutes)",
+      "notes": "Notes",
+      "schedule": "Schedule"
+    },
+    "message": {
+      "title": "Schedule Message",
+      "channel": "Channel",
+      "message": "Message",
+      "dateTime": "Date & Time",
+      "schedule": "Schedule"
+    },
+    "meeting": {
+      "title": "Schedule Meeting",
+      "platform": "Platform",
+      "googleMeet": "Google Meet",
+      "zoom": "Zoom",
+      "meetingTitle": "Meeting Title",
+      "dateTime": "Date & Time",
+      "create": "Create Meeting"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "general": "General",
+    "integrations": "Integrations",
+    "roles": "Roles & Permissions",
+    "leadStatuses": "Lead Statuses",
+    "ipTelephony": "IP Telephony",
+    "guides": "Guides"
+  },
+  "roles": {
+    "title": "Roles & Permissions",
+    "description": "Manage user roles and their access permissions",
+    "createRole": "Create Role",
+    "editRole": "Edit Role",
+    "roleName": "Role Name",
+    "permissions": "Permissions",
+    "inviteUser": "Invite User",
+    "userEmail": "User Email",
+    "selectRole": "Select Role",
+    "sendInvitation": "Send Invitation",
+    "admin": "Administrator",
+    "manager": "Manager",
+    "viewer": "Viewer"
+  },
+  "leadStatuses": {
+    "title": "Lead Statuses",
+    "description": "Configure statuses to track lead progress",
+    "addStatus": "Add Status",
+    "editStatus": "Edit Status",
+    "statusName": "Status Name",
+    "statusColor": "Color",
+    "isDefault": "Default",
+    "order": "Order",
+    "deleteConfirm": "Are you sure you want to delete this status?"
+  },
+  "ipTelephony": {
+    "title": "IP Telephony",
+    "description": "Configure Zadarma for calling directly from CRM",
+    "provider": "Provider",
+    "zadarma": "Zadarma",
+    "apiKey": "API Key",
+    "apiSecret": "API Secret",
+    "sipNumber": "SIP Number",
+    "testConnection": "Test Connection",
+    "connectionSuccess": "Connection successful!",
+    "connectionFailed": "Connection failed",
+    "accountBalance": "Account Balance",
+    "viewGuide": "View Guide",
+    "howToSetup": "How to setup Zadarma"
+  },
+  "guides": {
+    "zadarma": {
+      "title": "Zadarma Integration Guide",
+      "step1": "Step 1: Registration",
+      "step1Desc": "Register on zadarma.com and create an account",
+      "step2": "Step 2: Get API Keys",
+      "step2Desc": "Go to 'Settings' → 'API' and create a new key",
+      "step3": "Step 3: Configure in CRM",
+      "step3Desc": "Copy API key and secret to IP telephony settings",
+      "step4": "Step 4: Testing",
+      "step4Desc": "Click 'Test Connection' to verify"
+    },
+    "googleMeet": {
+      "title": "Google Meet Integration Guide",
+      "step1": "Step 1: Google Cloud Console",
+      "step1Desc": "Create a project in Google Cloud Console",
+      "step2": "Step 2: Enable API",
+      "step2Desc": "Enable Google Calendar API",
+      "step3": "Step 3: OAuth 2.0",
+      "step3Desc": "Create OAuth 2.0 client ID",
+      "step4": "Step 4: Configuration",
+      "step4Desc": "Add credentials to CRM settings"
+    },
+    "zoom": {
+      "title": "Zoom Integration Guide",
+      "step1": "Step 1: Zoom App Marketplace",
+      "step1Desc": "Go to marketplace.zoom.us",
+      "step2": "Step 2: Create App",
+      "step2Desc": "Create a new Server-to-Server OAuth app",
+      "step3": "Step 3: Get Credentials",
+      "step3Desc": "Copy Account ID, Client ID and Client Secret",
+      "step4": "Step 4: Configuration",
+      "step4Desc": "Add credentials to CRM settings"
+    }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome",
+    "stats": {
+      "totalLeads": "Total Leads",
+      "newLeads": "New Leads",
+      "activeManagers": "Active Managers",
+      "conversionRate": "Conversion Rate"
+    }
+  }
+}

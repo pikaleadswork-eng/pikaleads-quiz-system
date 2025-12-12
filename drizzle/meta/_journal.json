@@ -134,6 +134,13 @@
       "when": 1765549112798,
       "tag": "0018_friendly_shocker",
       "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "5",
+      "when": 1765549912124,
+      "tag": "0019_wakeful_ogun",
+      "breakpoints": true
     }
   ]
 }

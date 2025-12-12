@@ -11,6 +11,7 @@ import { salesRouter } from "./routers/sales";
 import { salesScriptsRouter } from "./routers/salesScripts";
 import { integrationsRouter } from "./routers/integrations";
 import { conversationsRouter } from "./routers/conversations";
+import { settingsRouter } from "./routers/settings";
 
 const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
   if (ctx.user.role !== "admin") {
@@ -747,6 +748,7 @@ export const appRouter = router({
   salesScripts: salesScriptsRouter,
   integrations: integrationsRouter,
   conversations: conversationsRouter,
+  settings: settingsRouter,
 
   calendar: router({
     getAppointments: protectedProcedure.query(async () => {
