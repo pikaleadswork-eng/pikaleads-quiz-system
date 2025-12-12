@@ -62,69 +62,69 @@ export default function ServicesManagement() {
 
   const createServiceMutation = trpc.services.create.useMutation({
     onSuccess: () => {
-      toast.success("Service created successfully");
+      toast.success(t("services.createSuccess"));
       setIsCreateServiceOpen(false);
       resetServiceForm();
       refetchServices();
     },
     onError: (error: any) => {
-      toast.error(error.message || "Failed to create service");
+      toast.error(error.message || t("services.createError"));
     },
   });
 
   const updateServiceMutation = trpc.services.update.useMutation({
     onSuccess: () => {
-      toast.success("Service updated successfully");
+      toast.success(t("services.updateSuccess"));
       setEditingService(null);
       resetServiceForm();
       refetchServices();
     },
     onError: (error: any) => {
-      toast.error(error.message || "Failed to update service");
+      toast.error(error.message || t("services.updateError"));
     },
   });
 
   const deleteServiceMutation = trpc.services.delete.useMutation({
     onSuccess: () => {
-      toast.success("Service deleted successfully");
+      toast.success(t("services.deleteSuccess"));
       refetchServices();
     },
     onError: (error: any) => {
-      toast.error(error.message || "Failed to delete service");
+      toast.error(error.message || t("services.deleteError"));
     },
   });
 
   const createAdditionalMutation = trpc.services.createAdditional.useMutation({
     onSuccess: () => {
-      toast.success("Additional service created successfully");
+      toast.success(t("services.createSuccess"));
       setIsCreateAdditionalOpen(false);
       resetAdditionalForm();
       refetchAdditional();
     },
     onError: (error: any) => {
-      toast.error(error.message || "Failed to create additional service");
+      toast.error(error.message || t("services.createError"));
     },
   });
 
   const updateAdditionalMutation = trpc.services.updateAdditional.useMutation({
     onSuccess: () => {
-      toast.success("Additional service updated successfully");
+      toast.success(t("services.updateSuccess"));
       setEditingAdditional(null);
       resetAdditionalForm();
       refetchAdditional();
     },
     onError: (error: any) => {
-      toast.error(error.message || "Failed to update additional service");
+      toast.error(error.message || t("services.updateError"));
     },
   });
 
   const deleteAdditionalMutation = trpc.services.deleteAdditional.useMutation({
     onSuccess: () => {
-      toast.success("Additional service deleted successfully");
+      toast.success(t("services.deleteSuccess"));
       refetchAdditional();
     },
     onError: (error: any) => {
-      toast.error(error.message || "Failed to delete additional service");
+      toast.error(error.message || t("services.deleteError"));
     },
   });
 
@@ -147,7 +147,7 @@ export default function ServicesManagement() {
 
   const handleCreateService = () => {
     if (!serviceFormData.name || !serviceFormData.type || serviceFormData.price <= 0) {
-      toast.error("Please fill in all required fields");
+      toast.error(t("services.fillRequired"));
       return;
     }
 
@@ -174,14 +174,14 @@ export default function ServicesManagement() {
   };
 
   const handleDeleteService = (id: number) => {
-    if (confirm("Are you sure you want to delete this service?")) {
+    if (confirm(t("services.deleteConfirm"))) {
       deleteServiceMutation.mutate({ id });
     }
   };
 
   const handleCreateAdditional = () => {
     if (!additionalFormData.name || additionalFormData.price <= 0) {
-      toast.error("Please fill in all required fields");
+      toast.error(t("services.fillRequired"));
       return;
     }
 
@@ -438,7 +438,7 @@ export default function ServicesManagement() {
           <DialogContent>
             <DialogHeader>
               <DialogTitle>
-                {editingService ? "Edit Service" : "Create New Service"}
+                {editingService ? t("services.editService") : t("services.createService")}
               </DialogTitle>
               <DialogDescription>
                 {editingService

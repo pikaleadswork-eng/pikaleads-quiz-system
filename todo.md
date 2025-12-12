@@ -622,3 +622,90 @@
 - [ ] Merge UTM filters into main Filters popover
 - [ ] Test language switching in browser
 - [ ] Save checkpoint
+
+
+## Phase 45: Complete Multilingual Admin Panel + Advanced CRM Features
+
+### Translate Remaining Admin Pages
+- [ ] Translate Services page (add useTranslation integration)
+- [ ] Translate Sales page (add useTranslation integration)
+- [ ] Translate Scripts page (add useTranslation integration)
+- [ ] Translate Messaging page (add useTranslation integration)
+- [ ] Add missing translation keys to uk.json, ru.json, en.json
+
+### Bulk Actions for Leads
+- [ ] Add checkbox column to leads table
+- [ ] Add "Select All" checkbox in table header
+- [ ] Create bulk action toolbar (appears when items selected)
+- [ ] Implement "Assign Manager" bulk operation
+- [ ] Implement "Change Status" bulk operation
+- [ ] Implement "Export Selected" bulk operation (CSV/Excel)
+- [ ] Add translations for bulk actions UI
+
+### Lead Detail Modal
+- [ ] Create LeadDetailModal component
+- [ ] Add conversation history section with all messages
+- [ ] Display all UTM parameters in organized view
+- [ ] Show lead score breakdown with explanation
+- [ ] Add activity timeline (calls, messages, status changes)
+- [ ] Add edit capabilities within modal
+- [ ] Add translations for modal content (UA/RU/EN)
+
+### Filter Presets/Saved Views
+- [ ] Create filter_presets table (userId, name, filters JSON, isDefault)
+- [ ] Add "Save Current Filters" button to CRM page
+- [ ] Create preset management UI (save, rename, delete)
+- [ ] Add preset dropdown for quick access
+- [ ] Implement default presets (High-value leads, This week, New leads)
+- [ ] Add translations for preset UI
+- [ ] Store user-specific presets in database
+
+
+### Phase 45 Progress Update ($(date))
+- [x] Translate Services page (add useTranslation integration) - 37 strings replaced
+- [x] Translate Sales page (add useTranslation integration) - 18 strings replaced
+- [x] Translate Scripts page (add useTranslation integration) - 31 strings replaced
+- [x] Translate Messaging page (add useTranslation integration) - 10 strings replaced
+- [x] Add missing translation keys to uk.json, ru.json, en.json
+
+
+## Phase 2: Bulk Actions - COMPLETED ✅
+- [x] Add selectedLeadIds state and bulk action handlers
+- [x] Add checkbox column to table header (select all)
+- [x] Add checkbox to each table row (individual selection)
+- [x] Create floating bulk actions bar at bottom
+- [x] Implement exportSelectedToCSV function
+- [x] Implement bulkAssignManager function
+- [x] Implement bulkChangeStatus function
+- [x] Add bulk actions translations (uk/ru/en)
+- [x] Test bulk actions in browser - all working!
+
+## Phase 3: Lead Detail Modal - IN PROGRESS 🚧
+- [ ] Create LeadDetailModal component
+- [ ] Add full conversation history section
+- [ ] Add complete UTM parameters display
+- [ ] Add lead score breakdown visualization
+- [ ] Add activity timeline with all interactions
+- [ ] Add translations for modal
+- [ ] Wire modal to "View" button in table
+
+
+## Phase 3: Lead Detail Modal - COMPLETED ✅
+- [x] Create LeadDetailModal component with 4 tabs
+- [x] Add Overview tab with contact info and lead score breakdown
+- [x] Add Conversations tab for message history
+- [x] Add UTM Data tab with all UTM parameters
+- [x] Add Timeline tab with activity chronology
+- [x] Add translations for modal (uk/ru/en)
+- [x] Wire modal to View button in CRM table
+- [x] Test all tabs - working perfectly!
+
+## Phase 4: Filter Presets/Saved Views - IN PROGRESS 🚧
+- [ ] Create FilterPresets component
+- [ ] Add "Save Current Filters" button
+- [ ] Add preset dropdown next to Filters button
+- [ ] Implement save preset functionality
+- [ ] Implement load preset functionality
+- [ ] Implement delete preset functionality
+- [ ] Store presets in database
+- [ ] Add translations for presets

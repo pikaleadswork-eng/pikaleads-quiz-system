@@ -882,6 +882,102 @@ export const appRouter = router({
         return { success: true };
       }),
   }),
+
+  // Filter Presets for CRM
+  filterPresets: router({
+    list: protectedProcedure.query(async ({ ctx }) => {
+      const db = await getDb();
+      const { filterPresets } = await import("../drizzle/schema");
+      const { eq } = await import("drizzle-orm");
+      
+      const presets = await db.select().from(filterPresets).where(eq(filterPresets.userId, ctx.user.id));
+      return presets.map(p => ({
+        ...p,
+        filters: JSON.parse(p.filters),
+      }));
+    }),
+
+    create: protectedProcedure
+      .input(z.object({
+        name: z.string().min(1).max(100),
+        filters: z.object({
+          manager: z.string().optional(),
+          source: z.string().optional(),
+          dateFrom: z.string().optional(),
+          dateTo: z.string().optional(),
+          campaign: z.string().optional(),
+          adGroup: z.string().optional(),
+          ad: z.string().optional(),
+          placement: z.string().optional(),
+          keyword: z.string().optional(),
+          site: z.string().optional(),
+        }),
+        isDefault: z.boolean().optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const db = await getDb();
+        const { filterPresets } = await import("../drizzle/schema");
+        const { eq } = await import("drizzle-orm");
+        
+        // If setting as default, unset other defaults
+        if (input.isDefault) {
+          await db.update(filterPresets)
+            .set({ isDefault: false })
+            .where(eq(filterPresets.userId, ctx.user.id));
+        }
+        
+        const [result] = await db.insert(filterPresets).values({
+          userId: ctx.user.id,
+          name: input.name,
+          filters: JSON.stringify(input.filters),
+          isDefault: input.isDefault || false,
+        });
+        
+        return { success: true, id: result.insertId };
+      }),
+
+    delete: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input, ctx }) => {
+        const db = await getDb();
+        const { filterPresets } = await import("../drizzle/schema");
+        const { eq, and } = await import("drizzle-orm");
+        
+        await db.delete(filterPresets).where(
+          and(
+            eq(filterPresets.id, input.id),
+            eq(filterPresets.userId, ctx.user.id)
+          )
+        );
+        
+        return { success: true };
+      }),
+
+    setDefault: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input, ctx }) => {
+        const db = await getDb();
+        const { filterPresets } = await import("../drizzle/schema");
+        const { eq, and } = await import("drizzle-orm");
+        
+        // Unset all defaults
+        await db.update(filterPresets)
+          .set({ isDefault: false })
+          .where(eq(filterPresets.userId, ctx.user.id));
+        
+        // Set new default
+        await db.update(filterPresets)
+          .set({ isDefault: true })
+          .where(
+            and(
+              eq(filterPresets.id, input.id),
+              eq(filterPresets.userId, ctx.user.id)
+            )
+          );
+        
+        return { success: true };
+      }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;

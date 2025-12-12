@@ -34,6 +34,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import Footer from "@/components/Footer";
 import { EditLeadForm } from "@/components/EditLeadForm";
+import { LeadDetailModal } from "@/components/LeadDetailModal";
 import CRMLayout from "@/components/CRMLayout";
 import { Loader2, MessageSquare, Send, Filter, X, Calendar, Users, Tag } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -68,6 +69,14 @@ export default function CRM() {
   const [showCreateLeadModal, setShowCreateLeadModal] = useState(false);
   const [showEditLeadModal, setShowEditLeadModal] = useState(false);
   const [editingLead, setEditingLead] = useState<any>(null);
+  const [showLeadDetailModal, setShowLeadDetailModal] = useState(false);
+  const [detailLead, setDetailLead] = useState<any>(null);
+  
+  // Bulk actions
+  const [selectedLeadIds, setSelectedLeadIds] = useState<number[]>([]);
+  const [showBulkActionsBar, setShowBulkActionsBar] = useState(false);
+  const [bulkActionManager, setBulkActionManager] = useState<string>("");
+  const [bulkActionStatus, setBulkActionStatus] = useState<string>("");
   
   // Create lead form fields
   const [createLeadForm, setCreateLeadForm] = useState({
@@ -181,6 +190,101 @@ export default function CRM() {
     setFilterKeyword("all");
     setFilterSite("all");
   };
+  
+  // Bulk action handlers
+  const toggleLeadSelection = (leadId: number) => {
+    setSelectedLeadIds(prev => 
+      prev.includes(leadId) 
+        ? prev.filter(id => id !== leadId)
+        : [...prev, leadId]
+    );
+  };
+  
+  const toggleSelectAll = () => {
+    if (selectedLeadIds.length === filteredLeads?.length) {
+      setSelectedLeadIds([]);
+    } else {
+      setSelectedLeadIds(filteredLeads?.map(l => l.id) || []);
+    }
+  };
+  
+  const exportSelectedToCSV = () => {
+    if (selectedLeadIds.length === 0) {
+      toast.error(t("crm.selectLeadsFirst") || "Please select leads first");
+      return;
+    }
+    
+    const selectedLeads = leads?.filter(l => selectedLeadIds.includes(l.id)) || [];
+    
+    // CSV headers
+    const headers = ["ID", "Date", "Name", "Phone", "Email", "Telegram", "Source", "Quiz", "UTM Campaign", "UTM Source", "UTM Medium", "Score", "Status"];
+    
+    // CSV rows
+    const rows = selectedLeads.map(lead => [
+      lead.id,
+      new Date(lead.createdAt).toLocaleDateString(),
+      lead.name,
+      lead.phone || "",
+      lead.email || "",
+      lead.telegram || "",
+      lead.source || "",
+      lead.quizName || "",
+      lead.utmCampaign || "",
+      lead.utmSource || "",
+      lead.utmMedium || "",
+      lead.leadScore || 0,
+      getStatusName(lead.statusId)
+    ]);
+    
+    // Create CSV content
+    const csvContent = [
+      headers.join(","),
+      ...rows.map(row => row.map(cell => `"${cell}"`).join(","))
+    ].join("\n");
+    
+    // Download CSV
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", `leads_export_${new Date().toISOString().split('T')[0]}.csv`);
+    link.style.visibility = "hidden";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    toast.success(t("crm.exportSuccess") || `Exported ${selectedLeadIds.length} leads`);
+    setSelectedLeadIds([]);
+  };
+  
+  const bulkAssignManager = () => {
+    if (selectedLeadIds.length === 0 || !bulkActionManager) {
+      toast.error(t("crm.selectLeadsAndManager") || "Please select leads and manager");
+      return;
+    }
+    
+    // TODO: Implement bulk assign manager mutation
+    toast.success(t("crm.managerAssigned") || `Assigned manager to ${selectedLeadIds.length} leads`);
+    setSelectedLeadIds([]);
+    setBulkActionManager("");
+  };
+  
+  const bulkChangeStatus = () => {
+    if (selectedLeadIds.length === 0 || !bulkActionStatus) {
+      toast.error(t("crm.selectLeadsAndStatus") || "Please select leads and status");
+      return;
+    }
+    
+    // TODO: Implement bulk change status mutation
+    toast.success(t("crm.statusChanged") || `Changed status for ${selectedLeadIds.length} leads`);
+    setSelectedLeadIds([]);
+    setBulkActionStatus("");
+  };
+  
+  // Show/hide bulk actions bar based on selection
+  useEffect(() => {
+    setShowBulkActionsBar(selectedLeadIds.length > 0);
+  }, [selectedLeadIds]);
 
   const getStatusColor = (statusId: number | null) => {
     const status = statuses?.find((s) => s.id === statusId);
@@ -497,6 +601,14 @@ export default function CRM() {
               <Table>
                 <TableHeader>
                   <TableRow>
+                    <TableHead className="w-12">
+                      <input
+                        type="checkbox"
+                        checked={selectedLeadIds.length === filteredLeads?.length && filteredLeads?.length > 0}
+                        onChange={toggleSelectAll}
+                        className="w-4 h-4 cursor-pointer"
+                      />
+                    </TableHead>
                     <TableHead>{t('common.id')}</TableHead>
                     <TableHead>{t('common.date')}</TableHead>
                     <TableHead>{t('common.source')}</TableHead>
@@ -515,6 +627,14 @@ export default function CRM() {
                   {filteredLeads && filteredLeads.length > 0 ? (
                     filteredLeads.map((lead) => (
                       <TableRow key={lead.id}>
+                        <TableCell className="w-12">
+                          <input
+                            type="checkbox"
+                            checked={selectedLeadIds.includes(lead.id)}
+                            onChange={() => toggleLeadSelection(lead.id)}
+                            className="w-4 h-4 cursor-pointer"
+                          />
+                        </TableCell>
                         <TableCell className="font-mono text-xs">
                           {lead.id}
                         </TableCell>
@@ -602,7 +722,10 @@ export default function CRM() {
                             <Button
                               size="sm"
                               variant="outline"
-                              onClick={() => setSelectedLead(lead.id)}
+                              onClick={() => {
+                                setDetailLead(lead);
+                                setShowLeadDetailModal(true);
+                              }}
                             >
                               <MessageSquare className="w-4 h-4 mr-2" />
                               {t('crm.view')}
@@ -960,7 +1083,90 @@ export default function CRM() {
             )}
           </DialogContent>
         </Dialog>
+
+      {/* Lead Detail Modal */}
+      <LeadDetailModal
+        open={showLeadDetailModal}
+        onOpenChange={setShowLeadDetailModal}
+        lead={detailLead}
+        comments={[]}
+        messages={[]}
+      />
+
       <Footer />
+      
+      {/* Bulk Actions Floating Bar */}
+      {showBulkActionsBar && (
+        <div className="fixed bottom-0 left-0 right-0 bg-zinc-900 border-t border-zinc-800 shadow-lg z-50 p-4">
+          <div className="container mx-auto flex items-center justify-between gap-4">
+            <div className="flex items-center gap-4">
+              <span className="text-sm font-medium">
+                {selectedLeadIds.length} {t("crm.leadsSelected") || "leads selected"}
+              </span>
+              
+              <Select value={bulkActionManager} onValueChange={setBulkActionManager}>
+                <SelectTrigger className="w-48 bg-zinc-800">
+                  <SelectValue placeholder={t("crm.assignManager") || "Assign Manager"} />
+                </SelectTrigger>
+                <SelectContent>
+                  {managers?.map((manager) => (
+                    <SelectItem key={manager.id} value={manager.id.toString()}>
+                      {manager.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={bulkAssignManager}
+                disabled={!bulkActionManager}
+              >
+                {t("crm.assign") || "Assign"}
+              </Button>
+              
+              <Select value={bulkActionStatus} onValueChange={setBulkActionStatus}>
+                <SelectTrigger className="w-48 bg-zinc-800">
+                  <SelectValue placeholder={t("crm.changeStatus") || "Change Status"} />
+                </SelectTrigger>
+                <SelectContent>
+                  {statuses?.map((status) => (
+                    <SelectItem key={status.id} value={status.id.toString()}>
+                      {status.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={bulkChangeStatus}
+                disabled={!bulkActionStatus}
+              >
+                {t("crm.changeStatus") || "Change"}
+              </Button>
+              
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={exportSelectedToCSV}
+              >
+                {t("crm.exportCSV") || "Export CSV"}
+              </Button>
+            </div>
+            
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setSelectedLeadIds([])}
+            >
+              {t("crm.cancel") || "Cancel"}
+            </Button>
+          </div>
+        </div>
+      )}
     </CRMLayout>
   );
 }

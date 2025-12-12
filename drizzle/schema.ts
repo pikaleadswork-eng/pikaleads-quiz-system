@@ -545,3 +545,19 @@ export const userInvitations = mysqlTable("userInvitations", {
 
 export type UserInvitation = typeof userInvitations.$inferSelect;
 export type InsertUserInvitation = typeof userInvitations.$inferInsert;
+
+/**
+ * Filter presets for CRM - allows users to save commonly used filter combinations
+ */
+export const filterPresets = mysqlTable("filterPresets", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(), // Owner of the preset
+  name: varchar("name", { length: 100 }).notNull(), // e.g., "High-value leads", "This week's campaigns"
+  filters: text("filters").notNull(), // JSON string of filter values
+  isDefault: boolean("isDefault").default(false).notNull(), // Auto-apply on page load
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type FilterPreset = typeof filterPresets.$inferSelect;
+export type InsertFilterPreset = typeof filterPresets.$inferInsert;

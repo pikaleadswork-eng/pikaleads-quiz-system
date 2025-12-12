@@ -55,35 +55,35 @@ export default function SalesScripts() {
 
   const createMutation = trpc.salesScripts.create.useMutation({
     onSuccess: () => {
-      toast.success("Script created successfully");
+      toast.success(t("scripts.createSuccess"));
       setIsCreateOpen(false);
       resetForm();
       refetch();
     },
     onError: (error: any) => {
-      toast.error(error.message || "Failed to create script");
+      toast.error(error.message || t("scripts.createError"));
     },
   });
 
   const updateMutation = trpc.salesScripts.update.useMutation({
     onSuccess: () => {
-      toast.success("Script updated successfully");
+      toast.success(t("scripts.updateSuccess"));
       setEditingScript(null);
       resetForm();
       refetch();
     },
     onError: (error: any) => {
-      toast.error(error.message || "Failed to update script");
+      toast.error(error.message || t("scripts.updateError"));
     },
   });
 
   const deleteMutation = trpc.salesScripts.delete.useMutation({
     onSuccess: () => {
-      toast.success("Script deleted successfully");
+      toast.success(t("scripts.deleteSuccess"));
       refetch();
     },
     onError: (error: any) => {
-      toast.error(error.message || "Failed to delete script");
+      toast.error(error.message || t("scripts.deleteError"));
     },
   });
 
@@ -97,7 +97,7 @@ export default function SalesScripts() {
 
   const handleCreate = () => {
     if (!formData.title || !formData.content) {
-      toast.error("Please fill in all required fields");
+      toast.error(t("scripts.fillRequired"));
       return;
     }
 
@@ -106,7 +106,7 @@ export default function SalesScripts() {
 
   const handleUpdate = () => {
     if (!editingScript || !formData.title || !formData.content) {
-      toast.error("Please fill in all required fields");
+      toast.error(t("scripts.fillRequired"));
       return;
     }
 
@@ -126,7 +126,7 @@ export default function SalesScripts() {
   };
 
   const handleDelete = (id: number) => {
-    if (confirm("Are you sure you want to delete this script?")) {
+    if (confirm(t("scripts.deleteConfirm"))) {
       deleteMutation.mutate({ id });
     }
   };
@@ -147,10 +147,10 @@ export default function SalesScripts() {
   if (user.role !== "admin") {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
-        <h1 className="text-2xl font-bold mb-4">Access Denied</h1>
-        <p className="text-muted-foreground mb-4">You need admin privileges to access this page.</p>
+        <h1 className="text-2xl font-bold mb-4">{t("scripts.accessDenied")}</h1>
+        <p className="text-muted-foreground mb-4">{t("scripts.needAdminPrivileges")}</p>
         <Link href="/admin">
-          <Button>Return Home</Button>
+          <Button>{t("scripts.returnHome")}</Button>
         </Link>
       </div>
     );
@@ -190,14 +190,14 @@ export default function SalesScripts() {
           <div>
             <Link href="/admin">
               <Button variant="ghost" className="mb-4">
-                ← Back to Admin
+                {t("scripts.backToAdmin")}
               </Button>
             </Link>
             <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
               Sales Scripts
             </h1>
             <p className="text-gray-400 mt-2">
-              Manage your sales scripts and templates
+              {t("scripts.subtitle")}
             </p>
           </div>
           <Button onClick={() => setIsCreateOpen(true)}>
