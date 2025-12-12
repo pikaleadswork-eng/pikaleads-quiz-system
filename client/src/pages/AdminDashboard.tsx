@@ -1,4 +1,4 @@
-import { Link } from "wouter";
+import { useState } from "react";
 import { trpc } from "@/lib/trpc";
 import { 
   Users, 
@@ -9,12 +9,46 @@ import {
   Database,
   MessageSquare,
   Calendar,
-  FileText
+  FileText,
+  Package,
+  ScrollText,
+  Loader2,
+  DollarSign
 } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { useAuth } from "@/_core/hooks/useAuth";
+import { Link } from "wouter";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 export default function AdminDashboard() {
+  const { user, loading: authLoading } = useAuth();
   const { data: stats } = trpc.admin.getDashboardStats.useQuery();
+
+  if (authLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <Loader2 className="w-8 h-8 animate-spin" />
+      </div>
+    );
+  }
+
+  if (!user) {
+    window.location.href = "/login";
+    return null;
+  }
+
+  if (user.role !== "admin") {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen">
+        <h1 className="text-2xl font-bold mb-4">Access Denied</h1>
+        <p className="text-muted-foreground mb-4">You need admin privileges to access this page.</p>
+        <Link href="/">
+          <Button>Return Home</Button>
+        </Link>
+      </div>
+    );
+  }
 
   const adminSections = [
     {
@@ -85,9 +119,33 @@ export default function AdminDashboard() {
       title: "Messaging Center",
       description: "Send messages via Telegram, Instagram, WhatsApp",
       icon: MessageSquare,
-      href: "/admin/messaging",
+      href: "/admin/inbox",
       color: "text-red-500",
       bgColor: "bg-red-500/10"
+    },
+    {
+      title: "Services Management",
+      description: "Manage services, pricing, and additional offerings",
+      icon: Package,
+      href: "/admin/services",
+      color: "text-emerald-500",
+      bgColor: "bg-emerald-500/10"
+    },
+    {
+      title: "Sales Statistics",
+      description: "Track revenue, transactions, and sales performance",
+      icon: DollarSign,
+      href: "/admin/sales",
+      color: "text-amber-500",
+      bgColor: "bg-amber-500/10"
+    },
+    {
+      title: "Sales Scripts",
+      description: "Manage call scripts for sales team",
+      icon: ScrollText,
+      href: "/admin/scripts",
+      color: "text-violet-500",
+      bgColor: "bg-violet-500/10"
     }
   ];
 
@@ -96,10 +154,20 @@ export default function AdminDashboard() {
       <div className="container mx-auto py-8 px-4">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-foreground mb-2">Admin Dashboard</h1>
-          <p className="text-muted-foreground">
-            Centralized control panel for PIKALEADS Lead Engine
-          </p>
+          <div className="flex items-start justify-between mb-4">
+            <div>
+              <h1 className="text-4xl font-bold text-foreground mb-2">Admin Dashboard</h1>
+              <p className="text-muted-foreground">
+                Centralized control panel for PIKALEADS Lead Engine
+              </p>
+            </div>
+            <div className="flex gap-2">
+              <Link href="/">
+                <Button variant="outline">← Home</Button>
+              </Link>
+              <LanguageSwitcher />
+            </div>
+          </div>
         </div>
 
         {/* Quick Stats */}

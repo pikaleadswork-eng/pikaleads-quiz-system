@@ -52,3 +52,29 @@
 - [x] Edit Lead form with service assignment
 - [x] Messaging inbox backend ready
 - [x] Admin Settings for API credentials
+
+
+## Phase 24 - Fix Admin Authentication & Navigation
+
+### Fix AdminDashboard Authentication
+- [x] Replace OAuth with useAuth() hook in AdminDashboard.tsx
+- [x] Add admin role check
+- [x] Redirect to /login if not authenticated
+- [x] Test login flow works
+
+### Restructure Admin Navigation
+- [x] Add "Services" card to AdminDashboard
+- [x] Add "Sales Scripts" card to AdminDashboard
+- [x] Add "Sales Statistics" card to AdminDashboard
+- [x] Update card links to match CRM structure
+- [x] Add language switcher to AdminDashboard
+
+### Remove Duplicates
+- [ ] Remove /crm-dashboard route (keep /admin as main)
+- [ ] Update all links that point to /crm-dashboard
+- [ ] Test all navigation flows
+
+### Final Testing
+- [ ] Test admin login
+- [ ] Test all admin cards navigation
+- [ ] Create checkpoint v23.0
