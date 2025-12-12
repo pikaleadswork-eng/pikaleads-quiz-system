@@ -206,8 +206,18 @@ export type InsertManagerInvitation = typeof managerInvitations.$inferInsert;
 export const assignmentRules = mysqlTable("assignment_rules", {
   id: int("id").autoincrement().primaryKey(),
   name: varchar("name", { length: 255 }).notNull(),
+  
+  // Rule type and conditions
+  type: varchar("type", { length: 50 }).default("manual").notNull(), // "manual", "workload", "source", "campaign"
+  conditions: text("conditions"), // JSON string: {"source": "facebook"}, {"campaign": "summer_sale"}, etc.
+  
+  // Assignment target
+  managerId: int("managerId"), // Specific manager ID (null if using workload balancing)
+  assignmentStrategy: varchar("assignmentStrategy", { length: 50 }).default("specific").notNull(), // "specific" or "balance_workload"
+  
+  // Legacy field for backward compatibility
   quizName: varchar("quizName", { length: 100 }), // null = all quizzes
-  managerId: int("managerId").notNull(), // user id with role=manager
+  
   priority: int("priority").default(0).notNull(), // higher = higher priority
   isActive: int("isActive").default(1).notNull(), // 0 = disabled, 1 = enabled
   createdAt: timestamp("createdAt").defaultNow().notNull(),
@@ -561,3 +571,4 @@ export const filterPresets = mysqlTable("filterPresets", {
 
 export type FilterPreset = typeof filterPresets.$inferSelect;
 export type InsertFilterPreset = typeof filterPresets.$inferInsert;
+

@@ -224,6 +224,7 @@ export const translations: Record<Language, Translations> = {
     googleEcomDesc: "Rozwijaj swój sklep za pomocą Google Ads i Shopping",
     googleProductsDesc: "Sprzedawaj więcej produktów za pomocą Google Ads",
     googleTelegramDesc: "Rozwijaj swój kanał za pomocą Google i YouTube",
+  learnMore: "Dowiedz się więcej →",
   },
   
   de: {
@@ -267,6 +268,7 @@ export const translations: Record<Language, Translations> = {
     googleEcomDesc: "Erweitern Sie Ihren Shop mit Google Ads & Shopping",
     googleProductsDesc: "Verkaufen Sie mehr Produkte mit Google Ads",
     googleTelegramDesc: "Erweitern Sie Ihren Kanal mit Google und YouTube",
+  learnMore: "Mehr erfahren →",
   },
 };
 

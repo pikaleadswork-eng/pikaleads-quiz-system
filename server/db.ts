@@ -481,7 +481,13 @@ export async function autoAssignLead(leadId: number, quizName: string) {
     return null;
   }
   
-  // Assign lead to manager
+  // Only proceed if we have a managerId
+  if (!matchedRule.managerId) {
+    console.warn("[AutoAssign] Matched rule has no managerId:", matchedRule);
+    return null;
+  }
+  
+  // Update lead with assigned manager
   await db.update(leads)
     .set({ assignedTo: matchedRule.managerId })
     .where(eq(leads.id, leadId));
@@ -495,11 +501,13 @@ export async function autoAssignLead(leadId: number, quizName: string) {
   });
   
   // Send notification to assigned manager
-  try {
-    const { notifyManagerAboutLead } = await import("./notifications");
-    await notifyManagerAboutLead(matchedRule.managerId, leadId);
-  } catch (error) {
-    console.warn("[AutoAssign] Failed to notify manager:", error);
+  if (matchedRule.managerId) {
+    try {
+      const { notifyManagerAboutLead } = await import("./notifications");
+      await notifyManagerAboutLead(matchedRule.managerId, leadId);
+    } catch (error) {
+      console.warn("[AutoAssign] Failed to notify manager:", error);
+    }
   }
   
   return matchedRule.managerId;

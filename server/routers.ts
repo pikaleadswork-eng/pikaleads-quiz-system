@@ -982,6 +982,117 @@ export const appRouter = router({
         return { success: true };
       }),
   }),
+
+  // Assignment Rules - automatic lead assignment based on rules
+  assignmentRules: router({
+    list: protectedProcedure
+      .query(async ({ ctx }) => {
+        const db = await getDb();
+        if (!db) throw new Error("Database connection failed");
+        const { assignmentRules, users } = await import("../drizzle/schema");
+        const { eq, desc } = await import("drizzle-orm");
+        
+        // Get all rules (admins see all, managers see only their own)
+        const rules = await db.select({
+          id: assignmentRules.id,
+          name: assignmentRules.name,
+          type: assignmentRules.type,
+          conditions: assignmentRules.conditions,
+          managerId: assignmentRules.managerId,
+          assignmentStrategy: assignmentRules.assignmentStrategy,
+          priority: assignmentRules.priority,
+          isActive: assignmentRules.isActive,
+          createdAt: assignmentRules.createdAt,
+          managerName: users.name,
+        })
+        .from(assignmentRules)
+        .leftJoin(users, eq(assignmentRules.managerId, users.id))
+        .orderBy(desc(assignmentRules.priority));
+        
+        return rules;
+      }),
+
+    create: protectedProcedure
+      .input(z.object({
+        name: z.string().min(1),
+        type: z.enum(["manual", "workload", "source", "campaign"]),
+        conditions: z.string().optional(),
+        managerId: z.number().optional(),
+        assignmentStrategy: z.enum(["specific", "balance_workload"]),
+        priority: z.number().default(0),
+        isActive: z.number().default(1),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const db = await getDb();
+        if (!db) throw new Error("Database connection failed");
+        const { assignmentRules } = await import("../drizzle/schema");
+        
+        const [result] = await db.insert(assignmentRules).values({
+          name: input.name,
+          type: input.type,
+          conditions: input.conditions,
+          managerId: input.managerId,
+          assignmentStrategy: input.assignmentStrategy,
+          priority: input.priority,
+          isActive: input.isActive,
+        });
+        
+        return { id: result.insertId, success: true };
+      }),
+
+    update: protectedProcedure
+      .input(z.object({
+        id: z.number(),
+        name: z.string().min(1).optional(),
+        type: z.enum(["manual", "workload", "source", "campaign"]).optional(),
+        conditions: z.string().optional(),
+        managerId: z.number().optional(),
+        assignmentStrategy: z.enum(["specific", "balance_workload"]).optional(),
+        priority: z.number().optional(),
+        isActive: z.number().optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const db = await getDb();
+        if (!db) throw new Error("Database connection failed");
+        const { assignmentRules } = await import("../drizzle/schema");
+        const { eq } = await import("drizzle-orm");
+        
+        const { id, ...updates } = input;
+        await db.update(assignmentRules)
+          .set(updates)
+          .where(eq(assignmentRules.id, id));
+        
+        return { success: true };
+      }),
+
+    delete: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input, ctx }) => {
+        const db = await getDb();
+        if (!db) throw new Error("Database connection failed");
+        const { assignmentRules } = await import("../drizzle/schema");
+        const { eq } = await import("drizzle-orm");
+        
+        await db.delete(assignmentRules).where(eq(assignmentRules.id, input.id));
+        
+        return { success: true };
+      }),
+
+    toggle: protectedProcedure
+      .input(z.object({ id: z.number(), isActive: z.number() }))
+      .mutation(async ({ input, ctx }) => {
+        const db = await getDb();
+        if (!db) throw new Error("Database connection failed");
+        const { assignmentRules } = await import("../drizzle/schema");
+        const { eq } = await import("drizzle-orm");
+        
+        await db.update(assignmentRules)
+          .set({ isActive: input.isActive })
+          .where(eq(assignmentRules.id, input.id));
+        
+        return { success: true };
+      }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;

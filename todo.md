@@ -738,3 +738,22 @@
 
 ## Bug Fixes - COMPLETED ✅
 - [x] Fix Filters popover scrolling - add max-height and overflow-y-auto
+
+
+## Phase 6: Lead Assignment Automation - IN PROGRESS 🚀
+- [ ] Create assignmentRules table in schema.ts
+- [ ] Add tRPC procedures for assignment rules CRUD
+- [ ] Create Settings → Lead Assignment page
+- [ ] Implement rule types: workload-based, source-based, campaign-based
+- [ ] Add automatic assignment logic when lead is created
+- [ ] Add translations for assignment settings
+- [ ] Test automatic assignment with different rules
+
+## Phase 7: Analytics Dashboard - PENDING ⏳
+- [ ] Create Analytics page with navigation
+- [ ] Add conversion rate charts by source/campaign
+- [ ] Add manager performance metrics
+- [ ] Add revenue trends visualization
+- [ ] Implement date range selector
+- [ ] Add export analytics data functionality
+- [ ] Add translations for analytics page
