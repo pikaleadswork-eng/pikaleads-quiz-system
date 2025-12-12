@@ -27,6 +27,7 @@ import AdminAssignmentRules from "./pages/AdminAssignmentRules";
 import AdminPerformance from "./pages/AdminPerformance";
 import AdminRetargeting from "./pages/AdminRetargeting";
 import AdminMessaging from "./pages/AdminMessaging";
+import AdminCalendar from "./pages/AdminCalendar";
 import ManagerDashboard from "./pages/ManagerDashboard";
 import CRM from "./pages/CRM";
 import Privacy from "./pages/Privacy";
@@ -73,6 +74,7 @@ function Router() {
       <Route path={"/admin/performance"} component={AdminPerformance} />
       <Route path={"/admin/retargeting"} component={AdminRetargeting} />
       <Route path={"/admin/messaging"} component={AdminMessaging} />
+      <Route path={"/admin/calendar"} component={AdminCalendar} />
       
       {/* CRM & Manager Dashboard */}
       <Route path={"/manager"} component={ManagerDashboard} />

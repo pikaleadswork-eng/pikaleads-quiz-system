@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
+import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -9,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Calendar, Clock, User, Link as LinkIcon } from "lucide-react";
 
 export default function AdminCalendar() {
+  const { user, loading } = useAuth();
   const [selectedLead, setSelectedLead] = useState<number | null>(null);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -52,8 +55,33 @@ export default function AdminCalendar() {
     }
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
+        <p className="text-white text-lg">Loading...</p>
+      </div>
+    );
+  }
+
+  if (!user || user.role !== "admin") {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
+        <Card className="bg-slate-800/50 border-slate-700 p-8 max-w-md">
+          <h1 className="text-2xl font-bold text-red-400 mb-4">Access Denied</h1>
+          <p className="text-gray-300 mb-6">
+            You need administrator privileges to access the Calendar.
+          </p>
+          <Link href="/">
+            <Button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700">Return Home</Button>
+          </Link>
+        </Card>
+      </div>
+    );
+  }
+
   return (
-    <div className="container mx-auto py-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
+      <div className="container max-w-7xl">
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-2">Calendar & Appointments</h1>
         <p className="text-muted-foreground">Schedule meetings with leads and manage appointments</p>
@@ -226,6 +254,7 @@ export default function AdminCalendar() {
           </p>
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 }

@@ -3,6 +3,8 @@ import { TRPCError } from "@trpc/server";
 import { router, adminProcedure } from "../_core/trpc";
 import { getAllLeads } from "../db";
 import type { Lead } from "../../drizzle/schema";
+import { sendTelegramMessage } from "../telegramBot";
+import { ENV } from "../_core/env";
 
 /**
  * Messaging Router
@@ -74,23 +76,77 @@ export const messagingRouter = router({
         });
       }
 
-      // Simulate sending messages (replace with actual API calls)
+      // Send messages via selected channel
+      let successCount = 0;
+      let failedCount = 0;
+      const errors: string[] = [];
+
+      switch (channel) {
+        case "telegram":
+          if (!ENV.telegramBotToken) {
+            throw new TRPCError({
+              code: "INTERNAL_SERVER_ERROR",
+              message: "Telegram Bot Token not configured. Please set TELEGRAM_BOT_TOKEN environment variable.",
+            });
+          }
+
+          for (const lead of validRecipients) {
+            if (!lead.telegram) continue;
+
+            const result = await sendTelegramMessage(lead.telegram, message);
+            if (result.success) {
+              successCount++;
+            } else {
+              failedCount++;
+              errors.push(`${lead.name}: ${result.error}`);
+            }
+
+            // Rate limiting: 30 messages per second
+            await new Promise((resolve) => setTimeout(resolve, 50));
+          }
+          break;
+
+        case "instagram":
+          // TODO: Implement Instagram Graph API
+          throw new TRPCError({
+            code: "NOT_IMPLEMENTED",
+            message: "Instagram messaging not yet implemented. Coming soon!",
+          });
+
+        case "whatsapp":
+          // TODO: Implement WhatsApp Business API
+          throw new TRPCError({
+            code: "NOT_IMPLEMENTED",
+            message: "WhatsApp messaging not yet implemented. Coming soon!",
+          });
+
+        case "email":
+          // TODO: Implement Email sending (SMTP or service provider)
+          throw new TRPCError({
+            code: "NOT_IMPLEMENTED",
+            message: "Email messaging not yet implemented. Coming soon!",
+          });
+
+        default:
+          throw new TRPCError({
+            code: "BAD_REQUEST",
+            message: `Unsupported channel: ${channel}`,
+          });
+      }
+
       const results = {
         channel,
         totalRecipients: validRecipients.length,
-        successCount: validRecipients.length,
-        failedCount: 0,
+        successCount,
+        failedCount,
         message: message.substring(0, 50) + "...",
         sentAt: new Date(),
+        errors: errors.length > 0 ? errors : undefined,
       };
 
-      // TODO: Implement actual messaging APIs
-      // - Telegram: Use Telegram Bot API
-      // - Instagram: Use Instagram Graph API
-      // - WhatsApp: Use WhatsApp Business API
-      // - Email: Use SMTP or email service provider
-
-      console.log(`[Messaging] Sent ${channel} message to ${validRecipients.length} recipients`);
+      console.log(
+        `[Messaging] Sent ${channel} message: ${successCount} success, ${failedCount} failed`
+      );
 
       return results;
     }),
