@@ -13,7 +13,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
+import { Loader2, Send, MessageCircle, Mail } from "lucide-react";
 
 interface EditLeadFormProps {
   lead: any;
@@ -30,6 +30,7 @@ export function EditLeadForm({ lead, onClose, onSuccess }: EditLeadFormProps) {
     serviceId: null as number | null,
     additionalServiceIds: [] as number[],
     totalAmount: 0,
+    manualAmount: null as number | null,
     notes: "",
   });
 
@@ -58,6 +59,12 @@ export function EditLeadForm({ lead, onClose, onSuccess }: EditLeadFormProps) {
 
   // Calculate total amount when service or additional services change
   useEffect(() => {
+    // If manual amount is set, use it instead of calculated
+    if (formData.manualAmount !== null && formData.manualAmount > 0) {
+      setFormData((prev) => ({ ...prev, totalAmount: formData.manualAmount || 0 }));
+      return;
+    }
+
     let total = 0;
     
     if (formData.serviceId && services) {
@@ -77,7 +84,7 @@ export function EditLeadForm({ lead, onClose, onSuccess }: EditLeadFormProps) {
     }
     
     setFormData((prev) => ({ ...prev, totalAmount: total }));
-  }, [formData.serviceId, formData.additionalServiceIds, services, additionalServices]);
+  }, [formData.serviceId, formData.additionalServiceIds, formData.manualAmount, services, additionalServices]);
 
   const handleSubmit = () => {
     // Update lead basic info
@@ -124,12 +131,12 @@ export function EditLeadForm({ lead, onClose, onSuccess }: EditLeadFormProps) {
 
   return (
     <div className="space-y-6">
-      {/* Basic Information */}
+      {/* Contact & Messaging */}
       <div>
-        <h3 className="text-lg font-semibold mb-4">Basic Information</h3>
+        <h3 className="text-lg font-semibold mb-4">Контактна інформація</h3>
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <Label htmlFor="name">Name *</Label>
+            <Label htmlFor="name">Ім'я *</Label>
             <Input
               id="name"
               value={formData.name}
@@ -137,7 +144,7 @@ export function EditLeadForm({ lead, onClose, onSuccess }: EditLeadFormProps) {
             />
           </div>
           <div>
-            <Label htmlFor="phone">Phone *</Label>
+            <Label htmlFor="phone">Телефон *</Label>
             <Input
               id="phone"
               value={formData.phone}
@@ -162,20 +169,60 @@ export function EditLeadForm({ lead, onClose, onSuccess }: EditLeadFormProps) {
             />
           </div>
         </div>
+
+        {/* Quick Message Buttons */}
+        <div className="mt-4 flex gap-2">
+          {formData.telegram && (
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              className="flex-1"
+              onClick={() => window.open(`https://t.me/${formData.telegram.replace('@', '')}`, '_blank')}
+            >
+              <Send className="w-4 h-4 mr-2" />
+              Telegram
+            </Button>
+          )}
+          {formData.phone && (
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              className="flex-1"
+              onClick={() => window.open(`https://wa.me/${formData.phone.replace(/[^0-9]/g, '')}`, '_blank')}
+            >
+              <MessageCircle className="w-4 h-4 mr-2" />
+              WhatsApp
+            </Button>
+          )}
+          {formData.email && (
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              className="flex-1"
+              onClick={() => window.open(`mailto:${formData.email}`, '_blank')}
+            >
+              <Mail className="w-4 h-4 mr-2" />
+              Email
+            </Button>
+          )}
+        </div>
       </div>
 
       {/* Service Assignment */}
       <div>
-        <h3 className="text-lg font-semibold mb-4">Service Assignment</h3>
+        <h3 className="text-lg font-semibold mb-4">Призначення послуг</h3>
         <div className="space-y-4">
           <div>
-            <Label htmlFor="service">Main Service</Label>
+            <Label htmlFor="service">Основна послуга</Label>
             <Select
               value={formData.serviceId?.toString() || ""}
               onValueChange={(value) => setFormData({ ...formData, serviceId: parseInt(value) })}
             >
               <SelectTrigger>
-                <SelectValue placeholder="Select a service" />
+                <SelectValue placeholder="Оберіть послугу" />
               </SelectTrigger>
               <SelectContent>
                 {services?.map((service) => (
@@ -190,7 +237,7 @@ export function EditLeadForm({ lead, onClose, onSuccess }: EditLeadFormProps) {
           {/* Additional Services */}
           {additionalServices && additionalServices.length > 0 && (
             <div>
-              <Label>Additional Services</Label>
+              <Label>Додаткові послуги</Label>
               <div className="mt-2 space-y-2 border rounded-md p-4">
                 {additionalServices.map((service) => (
                   <div key={service.id} className="flex items-center space-x-2">
@@ -212,23 +259,48 @@ export function EditLeadForm({ lead, onClose, onSuccess }: EditLeadFormProps) {
           )}
 
           {/* Total Amount */}
-          <div className="bg-muted p-4 rounded-md">
-            <div className="flex justify-between items-center">
-              <span className="text-lg font-semibold">Total Amount:</span>
-              <span className="text-2xl font-bold text-primary">
-                ${formData.totalAmount}
-              </span>
+          <div className="space-y-2">
+            <Label htmlFor="manual-amount">Загальна сума (Ручне введення)</Label>
+            <div className="flex gap-2 items-center">
+              <Input
+                id="manual-amount"
+                type="number"
+                placeholder="Залиште порожнім для авто-розрахунку"
+                value={formData.manualAmount || ""}
+                onChange={(e) => setFormData({ ...formData, manualAmount: e.target.value ? parseFloat(e.target.value) : null })}
+              />
+              {formData.manualAmount !== null && (
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setFormData({ ...formData, manualAmount: null })}
+                >
+                  Reset
+                </Button>
+              )}
+            </div>
+            <div className="bg-muted p-4 rounded-md">
+              <div className="flex justify-between items-center">
+                <span className="text-lg font-semibold">Загальна сума:</span>
+                <span className="text-2xl font-bold text-primary">
+                  ${formData.totalAmount}
+                </span>
+              </div>
+              {formData.manualAmount !== null && (
+                <p className="text-xs text-muted-foreground mt-1">Активне ручне введення</p>
+              )}
             </div>
           </div>
 
           {/* Sale Notes */}
           <div>
-            <Label htmlFor="notes">Sale Notes</Label>
+            <Label htmlFor="notes">Примітки до продажу</Label>
             <Textarea
               id="notes"
               value={formData.notes}
               onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-              placeholder="Add notes about this sale..."
+              placeholder="Додайте примітки про цей продаж..."
               rows={3}
             />
           </div>

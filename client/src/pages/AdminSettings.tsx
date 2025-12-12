@@ -30,8 +30,12 @@ export default function AdminSettings() {
   const [whatsappPhoneNumberId, setWhatsappPhoneNumberId] = useState("");
   const [whatsappAccessToken, setWhatsappAccessToken] = useState("");
 
-  // Email state (SendGrid already configured via env)
-  const [sendgridNote, setSendgridNote] = useState("SENDGRID_API_KEY is configured via environment variables");
+  // Email SMTP state
+  const [smtpHost, setSmtpHost] = useState("");
+  const [smtpPort, setSmtpPort] = useState("587");
+  const [smtpUsername, setSmtpUsername] = useState("");
+  const [smtpPassword, setSmtpPassword] = useState("");
+  const [smtpFromEmail, setSmtpFromEmail] = useState("");
 
   // Google Calendar state
   const [googleClientId, setGoogleClientId] = useState("");
@@ -70,6 +74,16 @@ export default function AdminSettings() {
     },
   });
 
+  const saveSMTPMutation = trpc.integrations.save.useMutation({
+    onSuccess: () => {
+      toast.success("SMTP settings saved successfully!");
+      utils.integrations.getAll.invalidate();
+    },
+    onError: (error: any) => {
+      toast.error(`Failed to save SMTP settings: ${error.message}`);
+    },
+  });
+
   const handleSaveInstagram = () => {
     if (!instagramAppId || !instagramAppSecret || !instagramAccessToken) {
       toast.error("Please fill in all Instagram fields");
@@ -82,6 +96,25 @@ export default function AdminSettings() {
         appId: instagramAppId,
         appSecret: instagramAppSecret,
         accessToken: instagramAccessToken,
+      }),
+      isActive: true,
+    });
+  };
+
+  const handleSaveSMTP = () => {
+    if (!smtpHost || !smtpPort || !smtpUsername || !smtpPassword || !smtpFromEmail) {
+      toast.error("Please fill in all SMTP fields");
+      return;
+    }
+
+    saveSMTPMutation.mutate({
+      provider: "smtp",
+      credentials: JSON.stringify({
+        host: smtpHost,
+        port: parseInt(smtpPort),
+        username: smtpUsername,
+        password: smtpPassword,
+        fromEmail: smtpFromEmail,
       }),
       isActive: true,
     });
@@ -148,6 +181,7 @@ export default function AdminSettings() {
   // Load existing settings
   const instagramSettings = settings?.find((s: any) => s.provider === "instagram");
   const whatsappSettings = settings?.find((s: any) => s.provider === "whatsapp");
+  const smtpSettings = settings?.find((s: any) => s.provider === "smtp");
   const googleCalendarSettings = settings?.find((s: any) => s.provider === "google_calendar");
 
   return (
@@ -340,19 +374,100 @@ export default function AdminSettings() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Mail className="w-5 h-5 text-blue-500" />
-                  Email (SendGrid)
-                  <CheckCircle2 className="w-5 h-5 text-green-500 ml-auto" />
+                  Email (SMTP)
+                  {smtpSettings?.isActive && (
+                    <CheckCircle2 className="w-5 h-5 text-green-500 ml-auto" />
+                  )}
                 </CardTitle>
                 <CardDescription>
-                  Email integration via SendGrid
+                  Configure SMTP server for sending emails
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="bg-zinc-800 p-4 rounded-lg text-sm text-gray-400">
-                  <p className="font-semibold mb-2">✅ Email is already configured</p>
-                  <p>SENDGRID_API_KEY is set via environment variables. No additional configuration needed.</p>
-                  <p className="mt-2">To update SendGrid API key, contact system administrator.</p>
+                <div className="space-y-2">
+                  <Label htmlFor="smtp-host">SMTP Host</Label>
+                  <Input
+                    id="smtp-host"
+                    placeholder="smtp.gmail.com"
+                    value={smtpHost}
+                    onChange={(e) => setSmtpHost(e.target.value)}
+                    className="bg-zinc-800 border-zinc-700"
+                  />
                 </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="smtp-port">SMTP Port</Label>
+                  <Input
+                    id="smtp-port"
+                    placeholder="587"
+                    value={smtpPort}
+                    onChange={(e) => setSmtpPort(e.target.value)}
+                    className="bg-zinc-800 border-zinc-700"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="smtp-username">Username (Email)</Label>
+                  <Input
+                    id="smtp-username"
+                    placeholder="your-email@gmail.com"
+                    value={smtpUsername}
+                    onChange={(e) => setSmtpUsername(e.target.value)}
+                    className="bg-zinc-800 border-zinc-700"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="smtp-password">Password (App Password)</Label>
+                  <Input
+                    id="smtp-password"
+                    type="password"
+                    placeholder="Enter your SMTP password"
+                    value={smtpPassword}
+                    onChange={(e) => setSmtpPassword(e.target.value)}
+                    className="bg-zinc-800 border-zinc-700"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="smtp-from-email">From Email</Label>
+                  <Input
+                    id="smtp-from-email"
+                    placeholder="noreply@yourdomain.com"
+                    value={smtpFromEmail}
+                    onChange={(e) => setSmtpFromEmail(e.target.value)}
+                    className="bg-zinc-800 border-zinc-700"
+                  />
+                </div>
+
+                <div className="bg-zinc-800 p-4 rounded-lg text-sm text-gray-400">
+                  <p className="font-semibold mb-2">Gmail Setup:</p>
+                  <ol className="list-decimal list-inside space-y-1">
+                    <li>Enable 2-Step Verification in Google Account</li>
+                    <li>Go to <a href="https://myaccount.google.com/apppasswords" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">App Passwords</a></li>
+                    <li>Generate new app password for "Mail"</li>
+                    <li>Use generated password in "Password" field above</li>
+                    <li>Host: smtp.gmail.com, Port: 587</li>
+                  </ol>
+                </div>
+
+                <Button
+                  onClick={handleSaveSMTP}
+                  disabled={saveSMTPMutation.isPending}
+                  className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600"
+                >
+                  {saveSMTPMutation.isPending ? (
+                    <>
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      Saving...
+                    </>
+                  ) : (
+                    <>
+                      <Save className="w-4 h-4 mr-2" />
+                      Save SMTP Settings
+                    </>
+                  )}
+                </Button>
               </CardContent>
             </Card>
           </TabsContent>

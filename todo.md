@@ -108,3 +108,32 @@
 - [x] Test all pages load correctly
 - [x] Verify dark theme consistency
 - [ ] Create checkpoint v24.0
+
+
+## Phase 26 - Fix CRM Issues (Email, Edit Lead, Translations)
+
+### Issue 1: Email Configuration
+- [x] Add SMTP configuration form to AdminSettings.tsx
+- [x] Add fields: SMTP Host, Port, Username, Password, From Email
+- [x] Add backend procedure to save SMTP credentials
+- [ ] Test SMTP connection
+
+### Issue 2: Edit Lead Modal Enhancements
+- [x] Add "Send Message" section with Telegram/WhatsApp/Email buttons
+- [x] Add manual amount input field (override calculated price)
+- [x] Add Additional Services multi-select dropdown
+- [x] Update total calculation to include additional services
+- [x] Style buttons with messenger icons
+
+### Issue 3: Ukrainian Translations
+- [x] Translate EditLeadForm fields (Name, Phone, Email, Telegram, etc.)
+- [x] Translate Service Assignment section
+- [x] Translate buttons (Update Lead, Convert to Sale, Cancel)
+- [ ] Translate CRM table headers
+- [ ] Translate Settings page
+
+### Testing
+- [x] Test SMTP form saves correctly
+- [x] Test Edit Lead with all new features
+- [x] Test Ukrainian translations display correctly
+- [ ] Create checkpoint v25.0
