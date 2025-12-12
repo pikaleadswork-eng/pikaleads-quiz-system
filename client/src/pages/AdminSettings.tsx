@@ -209,10 +209,70 @@ export default function AdminSettings() {
     <CRMLayout>
         <div className="mb-8">
           <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent">
-            Integration Settings
+            {t('Налаштування', 'Настройки', 'Settings')}
           </h1>
           <p className="text-gray-400 mt-2">
-            Configure API credentials for messaging and calendar integrations
+            {t('Керуйте інтеграціями, ролями, статусами та телефонією', 'Управляйте интеграциями, ролями, статусами и телефонией', 'Manage integrations, roles, statuses and telephony')}
+          </p>
+        </div>
+
+        {/* Quick Links to Settings Pages */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <Link href="/admin/settings/roles">
+            <Card className="bg-zinc-900 border-zinc-800 hover:border-purple-500 transition-all cursor-pointer">
+              <CardHeader>
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <svg className="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                  </svg>
+                  {t('Ролі та доступи', 'Роли и доступы', 'Roles & Permissions')}
+                </CardTitle>
+                <CardDescription>
+                  {t('Керуйте ролями користувачів та правами доступу до CRM', 'Управляйте ролями пользователей и правами доступа к CRM', 'Manage user roles and CRM access permissions')}
+                </CardDescription>
+              </CardHeader>
+            </Card>
+          </Link>
+
+          <Link href="/admin/settings/lead-statuses">
+            <Card className="bg-zinc-900 border-zinc-800 hover:border-blue-500 transition-all cursor-pointer">
+              <CardHeader>
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                  </svg>
+                  {t('Статуси лідів', 'Статусы лидов', 'Lead Statuses')}
+                </CardTitle>
+                <CardDescription>
+                  {t('Налаштуйте статуси для відстеження етапів роботи з лідами', 'Настройте статусы для отслеживания этапов работы с лидами', 'Configure statuses to track lead workflow stages')}
+                </CardDescription>
+              </CardHeader>
+            </Card>
+          </Link>
+
+          <Link href="/admin/settings/ip-telephony">
+            <Card className="bg-zinc-900 border-zinc-800 hover:border-yellow-500 transition-all cursor-pointer">
+              <CardHeader>
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <svg className="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                  </svg>
+                  {t('IP-телефонія', 'IP-телефония', 'IP Telephony')}
+                </CardTitle>
+                <CardDescription>
+                  {t('Підключіть Zadarma для дзвінків прямо з CRM', 'Подключите Zadarma для звонков прямо из CRM', 'Connect Zadarma for in-CRM calling')}
+                </CardDescription>
+              </CardHeader>
+            </Card>
+          </Link>
+        </div>
+
+        <div className="mb-6">
+          <h2 className="text-2xl font-bold text-white mb-2">
+            {t('Інтеграції месенджерів', 'Интеграции мессенджеров', 'Messaging Integrations')}
+          </h2>
+          <p className="text-gray-400">
+            {t('Налаштуйте API ключі для інтеграції з Instagram, WhatsApp, Email та Google Calendar', 'Настройте API ключи для интеграции с Instagram, WhatsApp, Email и Google Calendar', 'Configure API credentials for Instagram, WhatsApp, Email and Google Calendar integration')}
           </p>
         </div>
 

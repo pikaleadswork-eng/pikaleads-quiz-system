@@ -335,3 +335,44 @@
 - [x] Improve category management (already has 4 categories)
 - [ ] Add search and filter by tags (TODO: future enhancement)
 - [ ] Add script duplication feature (TODO: future enhancement)
+
+
+## Phase 37 - Manager Assignment, Translations & Sales Filters
+
+### AdminSettings - Links to New Settings Pages
+- [x] Add card/link to Settings → Roles & Permissions (UA/RU/EN)
+- [x] Add card/link to Settings → Lead Statuses (UA/RU/EN)
+- [x] Add card/link to Settings → IP Telephony (UA/RU/EN)
+- [x] Add multilingual descriptions for each settings section
+
+### Manager Assignment System
+- [ ] Add manager dropdown in LeadInfoPanel
+- [ ] Add manager dropdown in MessagingInbox chat list
+- [ ] Show current assigned manager with badge
+- [ ] Implement automatic manager assignment on lead creation (round-robin)
+- [ ] Log manager changes to interaction_history table
+- [ ] Add tRPC procedure for changing assigned manager
+- [ ] Update lead assignment when manager is changed
+
+### CRM/Leads Page Translations
+- [ ] Translate table headers (ID, Date, Source, Name, Phone, etc.)
+- [ ] Translate filter labels (UTM Filters, Campaign, Placement, etc.)
+- [ ] Translate status badges (New, Contacted, Qualified, Won, Lost)
+- [ ] Translate "Create Lead Manually" button and form
+- [ ] Translate all form fields in create lead dialog
+- [ ] Add useTranslation hook to CRM.tsx
+
+### Sales Page Filters
+- [ ] Add Source filter dropdown (quiz, manual, import, all)
+- [ ] Add Manager filter dropdown (all managers + "All")
+- [ ] Add Time period filter with options:
+  - [ ] Today
+  - [ ] Yesterday
+  - [ ] 3 days ago
+  - [ ] 7 days ago
+  - [ ] 14 days ago
+  - [ ] 30 days ago
+  - [ ] All time
+  - [ ] Custom (date range picker)
+- [ ] Update tRPC procedure to accept filter parameters
+- [ ] Add translations for all filter options (UA/RU/EN)

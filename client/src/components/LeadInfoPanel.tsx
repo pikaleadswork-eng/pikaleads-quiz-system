@@ -35,6 +35,9 @@ export function LeadInfoPanel({ leadId }: LeadInfoPanelProps) {
   // Fetch statuses
   const { data: statuses } = trpc.crm.getStatuses.useQuery();
   
+  // Fetch managers (all users)
+  const { data: managers } = trpc.auth.getAllUsers.useQuery();
+  
   // Fetch interaction history
   const { data: interactions } = trpc.messaging.getInteractionHistory.useQuery({ leadId });
 
@@ -75,6 +78,16 @@ export function LeadInfoPanel({ leadId }: LeadInfoPanelProps) {
     onSuccess: () => {
       toast.success("Note added");
       setNoteText("");
+      refetch();
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
+  const assignManager = trpc.messaging.assignManagerToLead.useMutation({
+    onSuccess: () => {
+      toast.success(t('leadInfo.managerAssigned'));
       refetch();
     },
     onError: (error) => {
@@ -213,7 +226,7 @@ export function LeadInfoPanel({ leadId }: LeadInfoPanelProps) {
         {/* Status Management */}
         <Card className="bg-zinc-900 border-zinc-800">
           <CardHeader>
-            <CardTitle className="text-white text-sm">Status</CardTitle>
+            <CardTitle className="text-white text-sm">{t('leadInfo.status')}</CardTitle>
           </CardHeader>
           <CardContent>
             <Select
@@ -226,7 +239,7 @@ export function LeadInfoPanel({ leadId }: LeadInfoPanelProps) {
               }}
             >
               <SelectTrigger className="bg-zinc-800 border-zinc-700 text-white">
-                <SelectValue placeholder="Select status" />
+                <SelectValue placeholder={t('leadInfo.selectStatus')} />
               </SelectTrigger>
               <SelectContent className="bg-zinc-900 border-zinc-800">
                 {statuses?.map((status: any) => (
@@ -240,6 +253,42 @@ export function LeadInfoPanel({ leadId }: LeadInfoPanelProps) {
                         className={`w-2 h-2 rounded-full ${getStatusColor(status.name)}`}
                       ></div>
                       {status.name}
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </CardContent>
+        </Card>
+
+        {/* Manager Assignment */}
+        <Card className="bg-zinc-900 border-zinc-800">
+          <CardHeader>
+            <CardTitle className="text-white text-sm">{t('leadInfo.assignedManager')}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Select
+              value={leadInfo.assignedTo?.toString() || ""}
+              onValueChange={(value) => {
+                assignManager.mutate({
+                  leadId,
+                  managerId: parseInt(value),
+                });
+              }}
+            >
+              <SelectTrigger className="bg-zinc-800 border-zinc-700 text-white">
+                <SelectValue placeholder={t('leadInfo.selectManager')} />
+              </SelectTrigger>
+              <SelectContent className="bg-zinc-900 border-zinc-800">
+                {managers?.map((manager: any) => (
+                  <SelectItem
+                    key={manager.id}
+                    value={manager.id.toString()}
+                    className="text-white hover:bg-zinc-800"
+                  >
+                    <div className="flex items-center gap-2">
+                      <User className="w-4 h-4 text-purple-400" />
+                      {manager.name}
                     </div>
                   </SelectItem>
                 ))}

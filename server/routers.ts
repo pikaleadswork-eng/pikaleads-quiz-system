@@ -1,5 +1,6 @@
-import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
+
+const COOKIE_NAME = "manus_session";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { TRPCError } from "@trpc/server";
@@ -12,6 +13,8 @@ import { salesScriptsRouter } from "./routers/salesScripts";
 import { integrationsRouter } from "./routers/integrations";
 import { conversationsRouter } from "./routers/conversations";
 import { settingsRouter } from "./routers/settings";
+import * as schema from "../drizzle/schema";
+import { getDb } from "./db";
 
 const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
   if (ctx.user.role !== "admin") {
@@ -36,6 +39,25 @@ export const appRouter = router({
       const clientIP = getClientIP(ctx.req.headers);
       const language = detectLanguageFromIP(clientIP);
       return { language, ip: clientIP };
+    }),
+    getAllUsers: protectedProcedure.query(async () => {
+      // Get all users for manager assignment
+      const db = await getDb();
+      
+      if (!db) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Database not available",
+        });
+      }
+      
+      const users = await db.select({
+        id: schema.users.id,
+        name: schema.users.name,
+        email: schema.users.email,
+        role: schema.users.role,
+      }).from(schema.users);
+      return users;
     }),
   }),
 

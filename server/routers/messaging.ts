@@ -725,10 +725,50 @@ export const messagingRouter = router({
         });
       }
 
-      await db
+       await db
         .update(conversations)
         .set({ assignedManagerId: input.managerId })
         .where(eq(conversations.id, input.conversationId));
+      return { success: true };
+    }),
+
+  /**
+   * Assign manager to lead
+   */
+  assignManagerToLead: adminProcedure
+    .input(
+      z.object({
+        leadId: z.number(),
+        managerId: z.number(),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      const { leads, interactionHistory } = await import("../../drizzle/schema");
+      const { getDb } = await import("../db");
+      const { eq } = await import("drizzle-orm");
+      const db = await getDb();
+      
+      if (!db) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Database not available",
+        });
+      }
+
+      // Update lead's assigned manager
+      await db
+        .update(leads)
+        .set({ assignedTo: input.managerId })
+        .where(eq(leads.id, input.leadId));
+
+      // Log the change to interaction history
+      await db.insert(interactionHistory).values({
+        leadId: input.leadId,
+        type: "manager_assigned",
+        channel: "system",
+        message: `Manager assigned: ${input.managerId}`,
+        userId: input.managerId,
+      });
 
       return { success: true };
     }),
