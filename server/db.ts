@@ -882,3 +882,61 @@ export async function deleteIntegrationSetting(provider: string) {
     .delete(integrationSettings)
     .where(eq(integrationSettings.provider, provider));
 }
+
+// ==================== Conversations & Inbound Messages ====================
+
+export async function getAllConversations() {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const { conversations, leads } = await import("../drizzle/schema");
+  
+  // Join conversations with leads to get lead info
+  const results = await db
+    .select({
+      id: conversations.id,
+      leadId: conversations.leadId,
+      leadName: leads.name,
+      leadPhone: leads.phone,
+      leadEmail: leads.email,
+      channel: conversations.channel,
+      externalId: conversations.externalId,
+      lastMessageAt: conversations.lastMessageAt,
+      unreadCount: conversations.unreadCount,
+      createdAt: conversations.createdAt,
+    })
+    .from(conversations)
+    .leftJoin(leads, eq(conversations.leadId, leads.id))
+    .orderBy(conversations.lastMessageAt);
+    
+  return results;
+}
+
+export async function getConversationMessages(conversationId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const { inboundMessages } = await import("../drizzle/schema");
+  
+  return db
+    .select()
+    .from(inboundMessages)
+    .where(eq(inboundMessages.conversationId, conversationId))
+    .orderBy(inboundMessages.receivedAt);
+}
+
+export async function markConversationAsRead(conversationId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const { conversations, inboundMessages } = await import("../drizzle/schema");
+  
+  // Mark all messages as read
+  await db
+    .update(inboundMessages)
+    .set({ isRead: true })
+    .where(eq(inboundMessages.conversationId, conversationId));
+    
+  // Reset unread count
+  await db
+    .update(conversations)
+    .set({ unreadCount: 0 })
+    .where(eq(conversations.id, conversationId));
+}

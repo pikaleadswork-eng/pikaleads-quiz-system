@@ -956,3 +956,45 @@
 - [ ] Test push notifications on new lead creation
 - [ ] Create APK/IPA build instructions
 - [ ] Test mobile app on iOS and Android
+
+
+## Phase 22 - WhatsApp/Instagram Webhook Integration
+
+### Database Schema
+- [ ] Add conversations table (id, leadId, channel, externalId, lastMessageAt)
+- [ ] Add inbound_messages table (id, conversationId, senderId, content, timestamp, isRead)
+- [ ] Run db:push to apply schema changes
+
+### WhatsApp Webhook
+- [ ] Create /api/webhooks/whatsapp POST endpoint
+- [ ] Create /api/webhooks/whatsapp GET endpoint (verification)
+- [ ] Implement webhook signature verification
+- [ ] Parse incoming WhatsApp messages
+- [ ] Save messages to database
+- [ ] Link messages to leads by phone number
+- [ ] Create new lead if phone not found
+
+### Instagram Webhook
+- [ ] Create /api/webhooks/instagram POST endpoint
+- [ ] Create /api/webhooks/instagram GET endpoint (verification)
+- [ ] Implement webhook signature verification
+- [ ] Parse incoming Instagram Direct Messages
+- [ ] Save messages to database
+- [ ] Link messages to leads by Instagram username
+- [ ] Create new lead if username not found
+
+### Messaging Inbox Updates
+- [ ] Update MessagingInbox to show conversations
+- [ ] Add conversation threading UI
+- [ ] Display unread message count
+- [ ] Add "Reply" button for each conversation
+- [ ] Create reply modal with message input
+- [ ] Implement send reply functionality
+- [ ] Add real-time updates (polling or websocket)
+
+### Testing
+- [ ] Test WhatsApp webhook with Meta test tool
+- [ ] Test Instagram webhook with Meta test tool
+- [ ] Verify messages appear in inbox
+- [ ] Test reply functionality
+- [ ] Test lead linking by phone/username

@@ -351,3 +351,39 @@ export const integrationSettings = mysqlTable("integration_settings", {
 
 export type IntegrationSetting = typeof integrationSettings.$inferSelect;
 export type InsertIntegrationSetting = typeof integrationSettings.$inferInsert;
+
+/**
+ * Conversations table for tracking messaging threads
+ */
+export const conversations = mysqlTable("conversations", {
+  id: int("id").autoincrement().primaryKey(),
+  leadId: int("leadId").notNull(), // Reference to leads table
+  channel: varchar("channel", { length: 50 }).notNull(), // whatsapp, instagram, telegram
+  externalId: varchar("externalId", { length: 255 }).notNull(), // Phone number, Instagram username, Telegram chat ID
+  lastMessageAt: timestamp("lastMessageAt").defaultNow().notNull(),
+  unreadCount: int("unreadCount").default(0).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Conversation = typeof conversations.$inferSelect;
+export type InsertConversation = typeof conversations.$inferInsert;
+
+/**
+ * Inbound messages table for storing received messages
+ */
+export const inboundMessages = mysqlTable("inbound_messages", {
+  id: int("id").autoincrement().primaryKey(),
+  conversationId: int("conversationId").notNull(), // Reference to conversations table
+  senderId: varchar("senderId", { length: 255 }).notNull(), // External sender ID (phone, username, chat ID)
+  senderName: varchar("senderName", { length: 255 }), // Sender display name
+  content: text("content").notNull(), // Message text
+  messageType: varchar("messageType", { length: 50 }).default("text").notNull(), // text, image, video, audio, file
+  mediaUrl: varchar("mediaUrl", { length: 500 }), // URL to media file if applicable
+  isRead: boolean("isRead").default(false).notNull(),
+  receivedAt: timestamp("receivedAt").defaultNow().notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type InboundMessage = typeof inboundMessages.$inferSelect;
+export type InsertInboundMessage = typeof inboundMessages.$inferInsert;
