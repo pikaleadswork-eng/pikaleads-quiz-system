@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import {
@@ -33,6 +33,27 @@ import { ChatWindow } from "@/components/ChatWindow";
 import { Link } from "wouter";
 
 export default function MessagingInbox() {
+
+  // Detect language from localStorage
+  const [language, setLanguage] = useState(() => {
+    return localStorage.getItem('language') || 'uk';
+  });
+
+  useEffect(() => {
+    const handleLanguageChange = () => {
+      setLanguage(localStorage.getItem('language') || 'uk');
+    };
+    window.addEventListener('languageChanged', handleLanguageChange);
+    return () => window.removeEventListener('languageChanged', handleLanguageChange);
+  }, []);
+
+  const t = (uk: string, ru: string, en: string) => {
+    if (language === 'ru') return ru;
+    if (language === 'en') return en;
+    return uk;
+  };
+
+
   const { user, loading: authLoading } = useAuth();
   const [channelFilter, setChannelFilter] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState("");

@@ -176,3 +176,63 @@
 - [x] Test conversation history loads
 - [x] Test Russian translations display
 - [ ] Create checkpoint v26.0
+
+
+## Phase 28 - Complete Russian Translations for All CRM Pages
+
+### CRM.tsx (Leads Table)
+- [x] Add language detection hook
+- [x] Translate table headers (ID, Date, Source, Quiz, Name, Phone, Email, etc.)
+- [x] Translate filter labels (Campaign, Placement, Site, Status)
+- [x] Translate buttons (Create Lead Manually, Edit, View, Convert to Sale)
+- [x] Translate status badges (New, Contacted, Qualified, etc.)
+
+### MessagingInbox.tsx
+- [x] Add language detection hook
+- [ ] Translate page title and description
+- [ ] Translate channel names (Telegram, WhatsApp, Email, Instagram)
+- [ ] Translate table headers (Date, Channel, Message, Recipients, Status, Sent By, Actions)
+- [ ] Translate filter labels and buttons
+- [ ] Translate "View Chat" button
+
+### ServicesManagement.tsx
+- [x] Add language detection hook
+- [ ] Translate page title and description
+- [ ] Translate section titles (Main Services, Additional Services)
+- [ ] Translate table headers (Service Name, Category, Price, Description, Actions)
+- [ ] Translate buttons (Add Service, Edit, Delete)
+- [ ] Translate form labels
+
+### SalesStatistics.tsx
+- [x] Add language detection hook
+- [ ] Translate page title and description
+- [ ] Translate metric cards (Total Revenue, Total Sales, Average Deal Size, Conversion Rate)
+- [ ] Translate table headers (Date, Lead Name, Service, Amount, Manager, Status)
+- [ ] Translate filter labels
+
+### SalesScripts.tsx
+- [x] Add language detection hook
+- [ ] Translate page title and description
+- [ ] Translate category tabs (Cold Call, Follow-up, Objection Handling, Closing)
+- [ ] Translate table headers (Title, Category, Last Updated, Actions)
+- [ ] Translate buttons (Add Script, Edit, Delete, View)
+
+### AdminSettings.tsx
+- [x] Add language detection hook
+- [ ] Translate page title and tabs
+- [ ] Translate tab labels (Instagram, WhatsApp, Email, Google Calendar)
+- [ ] Translate form labels (API Key, Bot Token, SMTP settings, etc.)
+- [ ] Translate buttons (Save Settings, Test Connection)
+
+### CRMLayout.tsx (Sidebar)
+- [x] Add language detection hook
+- [ ] Translate sidebar menu items (Messaging, Leads, Services, Sales, Scripts, Settings)
+- [ ] Translate user profile section (Logout button)
+- [ ] Translate language switcher label
+
+### Testing
+- [x] Test Ukrainian translations
+- [x] Test Russian translations
+- [x] Test English translations
+- [x] Test language switching on all pages
+- [ ] Create checkpoint v27.0

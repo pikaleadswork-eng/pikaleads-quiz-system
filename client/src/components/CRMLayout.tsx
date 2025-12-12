@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
@@ -15,7 +15,6 @@ import {
   X,
   Loader2
 } from "lucide-react";
-import { useState } from "react";
 import { cn } from "@/lib/utils";
 
 interface CRMLayoutProps {
@@ -23,6 +22,27 @@ interface CRMLayoutProps {
 }
 
 export default function CRMLayout({ children }: CRMLayoutProps) {
+
+  // Detect language from localStorage
+  const [language, setLanguage] = useState(() => {
+    return localStorage.getItem('language') || 'uk';
+  });
+
+  useEffect(() => {
+    const handleLanguageChange = () => {
+      setLanguage(localStorage.getItem('language') || 'uk');
+    };
+    window.addEventListener('languageChanged', handleLanguageChange);
+    return () => window.removeEventListener('languageChanged', handleLanguageChange);
+  }, []);
+
+  const t = (uk: string, ru: string, en: string) => {
+    if (language === 'ru') return ru;
+    if (language === 'en') return en;
+    return uk;
+  };
+
+
   const { user, loading: authLoading } = useAuth();
   const [location] = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(true);
