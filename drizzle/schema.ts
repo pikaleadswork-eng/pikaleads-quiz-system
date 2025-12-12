@@ -1,4 +1,4 @@
-import { boolean, int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { boolean, decimal, int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
 
 /**
  * Core user table backing auth flow.
@@ -51,6 +51,8 @@ export const leads = mysqlTable("leads", {
   statusId: int("statusId").default(1), // link to leadStatuses
   assignedTo: int("assignedTo"), // manager user id
   leadScore: int("leadScore").default(0), // 0-100 quality score
+  spentAmount: decimal("spentAmount", { precision: 10, scale: 2 }).default("0.00"), // Ad spend for this lead
+  timeOnSite: int("timeOnSite").default(0), // Time spent on site in seconds
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 });
 

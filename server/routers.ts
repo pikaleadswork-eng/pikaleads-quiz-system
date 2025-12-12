@@ -236,6 +236,202 @@ export const appRouter = router({
       return await getUTMAnalytics();
     }),
     
+    getAnalyticsData: adminProcedure
+      .input(z.object({
+        dateRange: z.enum(["today", "yesterday", "last7Days", "last30Days", "thisMonth", "lastMonth", "custom"]).optional(),
+        startDate: z.string().optional(),
+        endDate: z.string().optional(),
+        quizName: z.string().optional(),
+        source: z.string().optional(),
+        campaign: z.string().optional(),
+      }))
+      .query(async ({ input }) => {
+        const { getAllLeads, getAllSales } = await import("./db");
+        
+        let leads = await getAllLeads();
+        const sales = await getAllSales();
+        
+        // Apply date range filter
+        if (input.dateRange) {
+          const now = new Date();
+          let startDate: Date | null = null;
+          
+          switch (input.dateRange) {
+            case "today":
+              startDate = new Date(now.setHours(0, 0, 0, 0));
+              break;
+            case "yesterday":
+              startDate = new Date(now.setDate(now.getDate() - 1));
+              startDate.setHours(0, 0, 0, 0);
+              break;
+            case "last7Days":
+              startDate = new Date(now.setDate(now.getDate() - 7));
+              break;
+            case "last30Days":
+              startDate = new Date(now.setDate(now.getDate() - 30));
+              break;
+            case "thisMonth":
+              startDate = new Date(now.getFullYear(), now.getMonth(), 1);
+              break;
+            case "lastMonth":
+              startDate = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+              const endDate = new Date(now.getFullYear(), now.getMonth(), 0);
+              leads = leads.filter(lead => {
+                const leadDate = new Date(lead.createdAt);
+                return leadDate >= startDate! && leadDate <= endDate;
+              });
+              break;
+            case "custom":
+              if (input.startDate && input.endDate) {
+                const customStart = new Date(input.startDate);
+                const customEnd = new Date(input.endDate);
+                leads = leads.filter(lead => {
+                  const leadDate = new Date(lead.createdAt);
+                  return leadDate >= customStart && leadDate <= customEnd;
+                });
+              }
+              break;
+          }
+          
+          if (startDate && input.dateRange !== "lastMonth" && input.dateRange !== "custom") {
+            leads = leads.filter(lead => new Date(lead.createdAt) >= startDate!);
+          }
+        }
+        
+        // Apply other filters
+        if (input.quizName) {
+          leads = leads.filter(lead => lead.quizName === input.quizName);
+        }
+        if (input.source) {
+          leads = leads.filter(lead => lead.source === input.source);
+        }
+        if (input.campaign) {
+          leads = leads.filter(lead => lead.utmCampaign === input.campaign);
+        }
+        
+        // Calculate metrics
+        const totalLeads = leads.length;
+        const totalSpent = leads.reduce((sum, lead) => sum + (parseFloat(lead.spentAmount?.toString() || "0")), 0);
+        
+        // Get sales for these leads
+        const leadIds = leads.map(l => l.id);
+        const relevantSales = sales.filter(sale => leadIds.includes(sale.leadId));
+        const totalRevenue = relevantSales.reduce((sum, sale) => sum + parseFloat(sale.totalAmount.toString()), 0);
+        const conversions = relevantSales.length;
+        
+        // Calculate ROMI (Return on Marketing Investment)
+        // ROMI = (Revenue - Cost) / Cost * 100
+        const romi = totalSpent > 0 ? ((totalRevenue - totalSpent) / totalSpent * 100).toFixed(2) : "0";
+        
+        // Calculate ROAS (Return on Ad Spend)
+        // ROAS = Revenue / Cost
+        const roas = totalSpent > 0 ? (totalRevenue / totalSpent).toFixed(2) : "0";
+        
+        // Conversion rate
+        const conversionRate = totalLeads > 0 ? ((conversions / totalLeads) * 100).toFixed(2) : "0";
+        
+        // Average time on site
+        const avgTimeOnSite = totalLeads > 0 
+          ? Math.round(leads.reduce((sum, lead) => sum + (lead.timeOnSite || 0), 0) / totalLeads)
+          : 0;
+        
+        // Cost per lead
+        const costPerLead = totalLeads > 0 ? (totalSpent / totalLeads).toFixed(2) : "0";
+        
+        // Leads by source
+        const leadsBySource: Record<string, number> = {};
+        leads.forEach(lead => {
+          const source = lead.source || "Unknown";
+          leadsBySource[source] = (leadsBySource[source] || 0) + 1;
+        });
+        
+        // Top campaigns
+        const campaignStats: Record<string, { leads: number; conversions: number; spent: number; revenue: number }> = {};
+        leads.forEach(lead => {
+          const campaign = lead.utmCampaign || "No Campaign";
+          if (!campaignStats[campaign]) {
+            campaignStats[campaign] = { leads: 0, conversions: 0, spent: 0, revenue: 0 };
+          }
+          campaignStats[campaign].leads++;
+          campaignStats[campaign].spent += parseFloat(lead.spentAmount?.toString() || "0");
+          
+          const sale = relevantSales.find(s => s.leadId === lead.id);
+          if (sale) {
+            campaignStats[campaign].conversions++;
+            campaignStats[campaign].revenue += parseFloat(sale.totalAmount.toString());
+          }
+        });
+        
+        const topCampaigns = Object.entries(campaignStats)
+          .map(([campaign, stats]) => ({
+            campaign,
+            ...stats,
+            romi: stats.spent > 0 ? ((stats.revenue - stats.spent) / stats.spent * 100).toFixed(2) : "0",
+            roas: stats.spent > 0 ? (stats.revenue / stats.spent).toFixed(2) : "0",
+          }))
+          .sort((a, b) => b.leads - a.leads)
+          .slice(0, 10);
+        
+        // Top ads
+        const adStats: Record<string, { leads: number; conversions: number }> = {};
+        leads.forEach(lead => {
+          const ad = lead.utmAd || "No Ad";
+          if (!adStats[ad]) {
+            adStats[ad] = { leads: 0, conversions: 0 };
+          }
+          adStats[ad].leads++;
+          
+          const sale = relevantSales.find(s => s.leadId === lead.id);
+          if (sale) adStats[ad].conversions++;
+        });
+        
+        const topAds = Object.entries(adStats)
+          .map(([ad, stats]) => ({
+            ad,
+            ...stats,
+            ctr: stats.leads > 0 ? ((stats.conversions / stats.leads) * 100).toFixed(2) : "0",
+          }))
+          .sort((a, b) => b.leads - a.leads)
+          .slice(0, 10);
+        
+        // Top keywords
+        const keywordStats: Record<string, { leads: number; clicks: number }> = {};
+        leads.forEach(lead => {
+          const keyword = lead.utmKeyword || "No Keyword";
+          if (!keywordStats[keyword]) {
+            keywordStats[keyword] = { leads: 0, clicks: 0 };
+          }
+          keywordStats[keyword].leads++;
+          keywordStats[keyword].clicks++; // Simplified - in real scenario track actual clicks
+        });
+        
+        const topKeywords = Object.entries(keywordStats)
+          .map(([keyword, stats]) => ({
+            keyword,
+            ...stats,
+            impressions: stats.clicks * 10, // Simplified estimation
+          }))
+          .sort((a, b) => b.leads - a.leads)
+          .slice(0, 10);
+        
+        return {
+          summary: {
+            totalLeads,
+            conversionRate,
+            romi,
+            roas,
+            avgTimeOnSite,
+            totalSpent,
+            totalRevenue,
+            costPerLead,
+          },
+          leadsBySource,
+          topCampaigns,
+          topAds,
+          topKeywords,
+        };
+      }),
+    
     // Assignment Rules
     getAssignmentRules: adminProcedure.query(async () => {
       const { getAllAssignmentRules } = await import("./db");

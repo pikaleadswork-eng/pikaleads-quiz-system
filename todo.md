@@ -771,17 +771,31 @@
 - [ ] Test activating/deactivating rule (next)
 - [ ] Test rule with real lead (next)
 
-## Phase 9: Analytics Dashboard - PENDING ⏳
-- [ ] Install Chart.js and react-chartjs-2
-- [ ] Create Analytics page component
-- [ ] Add tRPC procedures for analytics data
-- [ ] Implement conversion rate chart by source
-- [ ] Implement conversion rate chart by campaign
-- [ ] Implement manager performance metrics
-- [ ] Implement revenue trends visualization
-- [ ] Add date range selector
-- [ ] Add translations for analytics page
-- [ ] Add route and navigation for Analytics
+## Phase 9: Comprehensive Analytics Dashboard Rebuild - IN PROGRESS 🚀
+- [x] Install Chart.js and react-chartjs-2
+- [x] Add analytics translations to uk.json (title, filters, metrics, charts)
+- [x] Add analytics translations to ru.json
+- [x] Add analytics translations to en.json
+- [x] Extend leads schema with spent_amount and time_on_site fields
+- [x] Create comprehensive analytics backend (getAnalyticsData with filters)
+- [x] Calculate ROMI (Return on Marketing Investment)
+- [x] Calculate ROAS (Return on Ad Spend)
+- [x] Calculate conversion rates by source/campaign/quiz
+- [x] Calculate average time on site
+- [x] Rebuild AdminAnalytics.tsx with filter panel
+- [x] Add date range filter (today/week/month/custom)
+- [x] Add quiz filter dropdown
+- [x] Add source filter dropdown
+- [x] Add campaign filter dropdown
+- [x] Create Chart.js: Leads by Source (bar chart)
+- [x] Create Chart.js: Conversion Funnel (funnel chart)
+- [x] Create Chart.js: Revenue Trends (line chart)
+- [x] Add detailed table: Top Campaigns (with ROMI/ROAS)
+- [x] Add detailed table: Top Ads (with conversion rate)
+- [x] Add detailed table: Top Keywords (with click-through rate)
+- [x] Add summary cards (Total Leads, Conversion %, ROMI, ROAS, Avg Time)
+- [x] Test all filters work correctly
+- [x] Verify translations in all 3 languages
 
 ## Phase 10: Filter Preset Management - PENDING ⏳
 - [ ] Add delete button to preset dropdown items

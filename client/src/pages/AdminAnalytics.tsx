@@ -1,362 +1,553 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { trpc } from "@/lib/trpc";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Loader2, TrendingUp, Target, Zap, Globe, Key, BarChart3, Download } from "lucide-react";
-import { Link } from "wouter";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Filter, Calendar as CalendarIcon, TrendingUp, DollarSign, Users, Clock } from "lucide-react";
+import { Bar, Line } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  LineElement,
+  PointElement,
+  Title,
+  Tooltip,
+  Legend,
+  ChartOptions,
+} from "chart.js";
+
+// Register Chart.js components
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  LineElement,
+  PointElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
+type DateRange = "today" | "yesterday" | "last7Days" | "last30Days" | "thisMonth" | "lastMonth" | "custom";
 
 export default function AdminAnalytics() {
   const { t } = useTranslation();
-  const { data: analytics, isLoading } = trpc.admin.getUTMAnalytics.useQuery();
+  
+  // Filters state
+  const [dateRange, setDateRange] = useState<DateRange>("last30Days");
+  const [customStartDate, setCustomStartDate] = useState<Date>();
+  const [customEndDate, setCustomEndDate] = useState<Date>();
+  const [selectedQuiz, setSelectedQuiz] = useState<string>("all");
+  const [selectedSource, setSelectedSource] = useState<string>("all");
+  const [selectedCampaign, setSelectedCampaign] = useState<string>("all");
+  const [showFilters, setShowFilters] = useState(false);
 
-  const exportToCSV = () => {
-    if (!analytics) return;
+  // Fetch analytics data
+  const { data: analyticsData, isLoading } = trpc.admin.getAnalyticsData.useQuery({
+    dateRange: dateRange,
+    startDate: customStartDate?.toISOString(),
+    endDate: customEndDate?.toISOString(),
+    quizName: selectedQuiz !== "all" ? selectedQuiz : undefined,
+    source: selectedSource !== "all" ? selectedSource : undefined,
+    campaign: selectedCampaign !== "all" ? selectedCampaign : undefined,
+  });
 
-    const campaigns = analytics.topCampaigns.map(c => [
-      "Campaign",
-      c.name || "N/A",
-      c.count,
-      `${c.conversionRate}%`
-    ]);
+  // Fetch leads for filter options
+  const { data: allLeads } = trpc.admin.getLeads.useQuery();
 
-    const adGroups = analytics.topAdGroups.map(a => [
-      "Ad Group",
-      a.name || "N/A",
-      a.count,
-      `${a.conversionRate}%`
-    ]);
+  // Get unique values for filters
+  const uniqueQuizzes = allLeads ? Array.from(new Set(allLeads.map(l => l.quizName))) : [];
+  const uniqueSources = allLeads ? Array.from(new Set(allLeads.map(l => l.source).filter(Boolean))) : [];
+  const uniqueCampaigns = allLeads ? Array.from(new Set(allLeads.map(l => l.utmCampaign).filter(Boolean))) : [];
 
-    const ads = analytics.topAds.map(a => [
-      "Ad",
-      a.name || "N/A",
-      a.count,
-      `${a.conversionRate}%`
-    ]);
+  const clearFilters = () => {
+    setDateRange("last30Days");
+    setSelectedQuiz("all");
+    setSelectedSource("all");
+    setSelectedCampaign("all");
+    setCustomStartDate(undefined);
+    setCustomEndDate(undefined);
+  };
 
-    const csvContent = [
-      ["Type", "Name", "Leads", "Conversion Rate"],
-      ...campaigns,
-      ...adGroups,
-      ...ads,
-    ]
-      .map(row => row.join(","))
-      .join("\n");
+  // Chart data for Leads by Source
+  const leadsBySourceData = analyticsData?.leadsBySource
+    ? {
+        labels: Object.keys(analyticsData.leadsBySource),
+        datasets: [
+          {
+            label: t("analytics.charts.leadsBySource"),
+            data: Object.values(analyticsData.leadsBySource),
+            backgroundColor: "rgba(139, 92, 246, 0.8)",
+            borderColor: "rgba(139, 92, 246, 1)",
+            borderWidth: 1,
+          },
+        ],
+      }
+    : null;
 
-    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-    const link = document.createElement("a");
-    const url = URL.createObjectURL(blob);
-    
-    link.setAttribute("href", url);
-    link.setAttribute("download", `utm_analytics_${new Date().toISOString().split('T')[0]}.csv`);
-    link.style.visibility = "hidden";
-    
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  const chartOptions: ChartOptions<"bar"> = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: {
+          color: "#a1a1aa",
+        },
+        grid: {
+          color: "rgba(255, 255, 255, 0.1)",
+        },
+      },
+      x: {
+        ticks: {
+          color: "#a1a1aa",
+        },
+        grid: {
+          color: "rgba(255, 255, 255, 0.1)",
+        },
+      },
+    },
+  };
+
+  const lineChartOptions: ChartOptions<"line"> = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: true,
+        labels: {
+          color: "#a1a1aa",
+        },
+      },
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: {
+          color: "#a1a1aa",
+        },
+        grid: {
+          color: "rgba(255, 255, 255, 0.1)",
+        },
+      },
+      x: {
+        ticks: {
+          color: "#a1a1aa",
+        },
+        grid: {
+          color: "rgba(255, 255, 255, 0.1)",
+        },
+      },
+    },
   };
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-purple-500" />
-      </div>
-    );
-  }
-
-  if (!analytics) {
-    return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
-        <p className="text-white">No analytics data available</p>
+      <div className="flex items-center justify-center min-h-screen bg-black">
+        <div className="text-zinc-400">{t("common.loading")}</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-black p-8">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
+    <div className="min-h-screen bg-black text-white p-6">
+      <div className="max-w-7xl mx-auto space-y-6">
+        {/* Header */}
+        <div className="flex justify-between items-start">
           <div>
-            <h1 className="text-4xl font-bold text-white mb-2">
-              📊 UTM Analytics Dashboard
-            </h1>
-            <p className="text-zinc-400">
-              Track campaign performance and optimize your ad spend
-            </p>
+            <h1 className="text-3xl font-bold text-white mb-2">{t("analytics.title")}</h1>
+            <p className="text-zinc-400">{t("analytics.description")}</p>
           </div>
-          <div className="flex gap-2">
-            <Link href="/admin">
-              <Button variant="outline" className="bg-transparent border-zinc-700 text-white hover:bg-zinc-800">
-                ← Back to Admin
+          
+          {/* Filters Button */}
+          <Popover open={showFilters} onOpenChange={setShowFilters}>
+            <PopoverTrigger asChild>
+              <Button variant="outline" className="bg-zinc-800 border-zinc-700">
+                <Filter className="w-4 h-4 mr-2" />
+                {t("analytics.filters")}
               </Button>
-            </Link>
-            <Button
-              onClick={exportToCSV}
-              className="bg-purple-600 hover:bg-purple-700 text-white"
-            >
-              <Download className="w-4 h-4 mr-2" />
-              Export CSV
-            </Button>
-          </div>
+            </PopoverTrigger>
+            <PopoverContent className="w-80 bg-zinc-900 border-zinc-800 p-4">
+              <div className="space-y-4">
+                <div>
+                  <label className="text-sm text-zinc-400 mb-2 block">{t("analytics.dateRange")}</label>
+                  <Select value={dateRange} onValueChange={(value) => setDateRange(value as DateRange)}>
+                    <SelectTrigger className="bg-zinc-800 border-zinc-700">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-zinc-900 border-zinc-800">
+                      <SelectItem value="today">{t("analytics.today")}</SelectItem>
+                      <SelectItem value="yesterday">{t("analytics.yesterday")}</SelectItem>
+                      <SelectItem value="last7Days">{t("analytics.last7Days")}</SelectItem>
+                      <SelectItem value="last30Days">{t("analytics.last30Days")}</SelectItem>
+                      <SelectItem value="thisMonth">{t("analytics.thisMonth")}</SelectItem>
+                      <SelectItem value="lastMonth">{t("analytics.lastMonth")}</SelectItem>
+                      <SelectItem value="custom">{t("analytics.custom")}</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {dateRange === "custom" && (
+                  <div className="space-y-2">
+                    <div>
+                      <label className="text-sm text-zinc-400 mb-2 block">{t("analytics.from")}</label>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button variant="outline" className="w-full bg-zinc-800 border-zinc-700 justify-start">
+                            <CalendarIcon className="w-4 h-4 mr-2" />
+                            {customStartDate ? customStartDate.toLocaleDateString() : t("analytics.from")}
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0 bg-zinc-900 border-zinc-800">
+                          <Calendar
+                            mode="single"
+                            selected={customStartDate}
+                            onSelect={setCustomStartDate}
+                          />
+                        </PopoverContent>
+                      </Popover>
+                    </div>
+                    <div>
+                      <label className="text-sm text-zinc-400 mb-2 block">{t("analytics.to")}</label>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button variant="outline" className="w-full bg-zinc-800 border-zinc-700 justify-start">
+                            <CalendarIcon className="w-4 h-4 mr-2" />
+                            {customEndDate ? customEndDate.toLocaleDateString() : t("analytics.to")}
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0 bg-zinc-900 border-zinc-800">
+                          <Calendar
+                            mode="single"
+                            selected={customEndDate}
+                            onSelect={setCustomEndDate}
+                          />
+                        </PopoverContent>
+                      </Popover>
+                    </div>
+                  </div>
+                )}
+
+                <div>
+                  <label className="text-sm text-zinc-400 mb-2 block">{t("common.quiz")}</label>
+                  <Select value={selectedQuiz} onValueChange={setSelectedQuiz}>
+                    <SelectTrigger className="bg-zinc-800 border-zinc-700">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-zinc-900 border-zinc-800">
+                      <SelectItem value="all">{t("analytics.allQuizzes")}</SelectItem>
+                      {uniqueQuizzes.map((quiz) => (
+                        <SelectItem key={quiz} value={quiz}>{quiz}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <label className="text-sm text-zinc-400 mb-2 block">{t("common.source")}</label>
+                  <Select value={selectedSource} onValueChange={setSelectedSource}>
+                    <SelectTrigger className="bg-zinc-800 border-zinc-700">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-zinc-900 border-zinc-800">
+                      <SelectItem value="all">{t("analytics.allSources")}</SelectItem>
+                      {uniqueSources.map((source) => (
+                        <SelectItem key={source} value={source!}>{source}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <label className="text-sm text-zinc-400 mb-2 block">{t("common.campaign")}</label>
+                  <Select value={selectedCampaign} onValueChange={setSelectedCampaign}>
+                    <SelectTrigger className="bg-zinc-800 border-zinc-700">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-zinc-900 border-zinc-800">
+                      <SelectItem value="all">{t("analytics.allCampaigns")}</SelectItem>
+                      {uniqueCampaigns.map((campaign) => (
+                        <SelectItem key={campaign} value={campaign!}>{campaign}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <Button onClick={clearFilters} variant="outline" className="w-full bg-zinc-800 border-zinc-700">
+                  {t("analytics.clearFilters")}
+                </Button>
+              </div>
+            </PopoverContent>
+          </Popover>
         </div>
 
         {/* Summary Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <Card className="bg-zinc-900 border-zinc-800">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-zinc-400">Total Leads</CardTitle>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-zinc-400 flex items-center">
+                <Users className="w-4 h-4 mr-2" />
+                {t("analytics.summaryCards.totalLeads")}
+              </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-white">{analytics.totalLeads}</div>
+              <div className="text-2xl font-bold text-white">{analyticsData?.summary.totalLeads || 0}</div>
             </CardContent>
           </Card>
 
           <Card className="bg-zinc-900 border-zinc-800">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-zinc-400">Active Campaigns</CardTitle>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-zinc-400 flex items-center">
+                <TrendingUp className="w-4 h-4 mr-2" />
+                {t("analytics.summaryCards.conversionRate")}
+              </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-purple-400">{analytics.topCampaigns.length}</div>
+              <div className="text-2xl font-bold text-white">{analyticsData?.summary.conversionRate || 0}%</div>
             </CardContent>
           </Card>
 
           <Card className="bg-zinc-900 border-zinc-800">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-zinc-400">Ad Groups</CardTitle>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-zinc-400 flex items-center">
+                <DollarSign className="w-4 h-4 mr-2" />
+                {t("analytics.summaryCards.romi")}
+              </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-yellow-400">{analytics.topAdGroups.length}</div>
+              <div className="text-2xl font-bold text-white">{analyticsData?.summary.romi || 0}%</div>
             </CardContent>
           </Card>
 
           <Card className="bg-zinc-900 border-zinc-800">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-zinc-400">Total Ads</CardTitle>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-zinc-400 flex items-center">
+                <DollarSign className="w-4 h-4 mr-2" />
+                {t("analytics.summaryCards.roas")}
+              </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-green-400">{analytics.topAds.length}</div>
+              <div className="text-2xl font-bold text-white">{analyticsData?.summary.roas || 0}x</div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-zinc-900 border-zinc-800">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-zinc-400 flex items-center">
+                <Clock className="w-4 h-4 mr-2" />
+                {t("analytics.summaryCards.avgTimeOnSite")}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-white">{Math.floor((analyticsData?.summary.avgTimeOnSite || 0) / 60)}m {(analyticsData?.summary.avgTimeOnSite || 0) % 60}s</div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-zinc-900 border-zinc-800">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-zinc-400 flex items-center">
+                <DollarSign className="w-4 h-4 mr-2" />
+                {t("analytics.summaryCards.totalSpent")}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-white">${analyticsData?.summary.totalSpent?.toFixed(2) || 0}</div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-zinc-900 border-zinc-800">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-zinc-400 flex items-center">
+                <DollarSign className="w-4 h-4 mr-2" />
+                {t("analytics.summaryCards.totalRevenue")}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-white">${analyticsData?.summary.totalRevenue?.toFixed(2) || 0}</div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-zinc-900 border-zinc-800">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-zinc-400 flex items-center">
+                <DollarSign className="w-4 h-4 mr-2" />
+                {t("analytics.summaryCards.costPerLead")}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-white">${analyticsData?.summary.costPerLead || 0}</div>
             </CardContent>
           </Card>
         </div>
 
-        {/* Top Campaigns */}
-        <Card className="bg-zinc-900 border-zinc-800 mb-6">
-          <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
-              <TrendingUp className="w-5 h-5 text-purple-400" />
-              Top Campaigns
-            </CardTitle>
-            <CardDescription className="text-zinc-400">
-              Best performing campaigns by lead count
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            {analytics.topCampaigns.length === 0 ? (
-              <p className="text-zinc-500 text-center py-8">No campaign data yet</p>
-            ) : (
-              <Table>
-                <TableHeader>
-                  <TableRow className="border-zinc-800 hover:bg-zinc-800/50">
-                    <TableHead className="text-zinc-300">Campaign</TableHead>
-                    <TableHead className="text-zinc-300">Leads</TableHead>
-                    <TableHead className="text-zinc-300">Conversion Rate</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {analytics.topCampaigns.map((campaign, index) => (
-                    <TableRow key={index} className="border-zinc-800 hover:bg-zinc-800/50">
-                      <TableCell className="text-white font-medium">
-                        {campaign.name || <span className="text-zinc-500">N/A</span>}
-                      </TableCell>
-                      <TableCell className="text-white">
-                        <Badge className="bg-purple-600 text-white">{campaign.count}</Badge>
-                      </TableCell>
-                      <TableCell className="text-zinc-400">
-                        {campaign.conversionRate}%
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            )}
-          </CardContent>
-        </Card>
-
-        {/* Top Ad Groups */}
-        <Card className="bg-zinc-900 border-zinc-800 mb-6">
-          <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
-              <Target className="w-5 h-5 text-yellow-400" />
-              Top Ad Groups
-            </CardTitle>
-            <CardDescription className="text-zinc-400">
-              Best performing ad groups by lead count
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            {analytics.topAdGroups.length === 0 ? (
-              <p className="text-zinc-500 text-center py-8">No ad group data yet</p>
-            ) : (
-              <Table>
-                <TableHeader>
-                  <TableRow className="border-zinc-800 hover:bg-zinc-800/50">
-                    <TableHead className="text-zinc-300">Ad Group</TableHead>
-                    <TableHead className="text-zinc-300">Leads</TableHead>
-                    <TableHead className="text-zinc-300">Conversion Rate</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {analytics.topAdGroups.map((adGroup, index) => (
-                    <TableRow key={index} className="border-zinc-800 hover:bg-zinc-800/50">
-                      <TableCell className="text-white font-medium">
-                        {adGroup.name || <span className="text-zinc-500">N/A</span>}
-                      </TableCell>
-                      <TableCell className="text-white">
-                        <Badge className="bg-yellow-600 text-white">{adGroup.count}</Badge>
-                      </TableCell>
-                      <TableCell className="text-zinc-400">
-                        {adGroup.conversionRate}%
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            )}
-          </CardContent>
-        </Card>
-
-        {/* Top Ads */}
-        <Card className="bg-zinc-900 border-zinc-800 mb-6">
-          <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
-              <Zap className="w-5 h-5 text-green-400" />
-              Top Ads
-            </CardTitle>
-            <CardDescription className="text-zinc-400">
-              Best performing ad creatives by lead count
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            {analytics.topAds.length === 0 ? (
-              <p className="text-zinc-500 text-center py-8">No ad data yet</p>
-            ) : (
-              <Table>
-                <TableHeader>
-                  <TableRow className="border-zinc-800 hover:bg-zinc-800/50">
-                    <TableHead className="text-zinc-300">Ad</TableHead>
-                    <TableHead className="text-zinc-300">Leads</TableHead>
-                    <TableHead className="text-zinc-300">Conversion Rate</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {analytics.topAds.map((ad, index) => (
-                    <TableRow key={index} className="border-zinc-800 hover:bg-zinc-800/50">
-                      <TableCell className="text-white font-medium">
-                        {ad.name || <span className="text-zinc-500">N/A</span>}
-                      </TableCell>
-                      <TableCell className="text-white">
-                        <Badge className="bg-green-600 text-white">{ad.count}</Badge>
-                      </TableCell>
-                      <TableCell className="text-zinc-400">
-                        {ad.conversionRate}%
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            )}
-          </CardContent>
-        </Card>
-
-        {/* Additional Metrics Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Top Placements */}
+        {/* Charts */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <Card className="bg-zinc-900 border-zinc-800">
             <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2 text-lg">
-                <Globe className="w-5 h-5 text-blue-400" />
-                Top Placements
-              </CardTitle>
+              <CardTitle className="text-white">{t("analytics.charts.leadsBySource")}</CardTitle>
             </CardHeader>
             <CardContent>
-              {analytics.topPlacements.length === 0 ? (
-                <p className="text-zinc-500 text-sm">No data</p>
-              ) : (
-                <div className="space-y-3">
-                  {analytics.topPlacements.slice(0, 5).map((placement, index) => (
-                    <div key={index} className="flex justify-between items-center">
-                      <span className="text-white text-sm truncate">
-                        {placement.name || "N/A"}
-                      </span>
-                      <Badge className="bg-blue-600 text-white">{placement.count}</Badge>
-                    </div>
-                  ))}
-                </div>
-              )}
+              <div className="h-64">
+                {leadsBySourceData && <Bar data={leadsBySourceData} options={chartOptions} />}
+              </div>
             </CardContent>
           </Card>
 
-          {/* Top Keywords */}
           <Card className="bg-zinc-900 border-zinc-800">
             <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2 text-lg">
-                <Key className="w-5 h-5 text-orange-400" />
-                Top Keywords
-              </CardTitle>
+              <CardTitle className="text-white">{t("analytics.charts.revenueTrends")}</CardTitle>
             </CardHeader>
             <CardContent>
-              {analytics.topKeywords.length === 0 ? (
-                <p className="text-zinc-500 text-sm">No data</p>
-              ) : (
-                <div className="space-y-3">
-                  {analytics.topKeywords.slice(0, 5).map((keyword, index) => (
-                    <div key={index} className="flex justify-between items-center">
-                      <span className="text-white text-sm truncate">
-                        {keyword.name || "N/A"}
-                      </span>
-                      <Badge className="bg-orange-600 text-white">{keyword.count}</Badge>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </CardContent>
-          </Card>
-
-          {/* Top Sites */}
-          <Card className="bg-zinc-900 border-zinc-800">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2 text-lg">
-                <BarChart3 className="w-5 h-5 text-pink-400" />
-                Top Sites
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              {analytics.topSites.length === 0 ? (
-                <p className="text-zinc-500 text-sm">No data</p>
-              ) : (
-                <div className="space-y-3">
-                  {analytics.topSites.slice(0, 5).map((site, index) => (
-                    <div key={index} className="flex justify-between items-center">
-                      <span className="text-white text-sm truncate">
-                        {site.name || "N/A"}
-                      </span>
-                      <Badge className="bg-pink-600 text-white">{site.count}</Badge>
-                    </div>
-                  ))}
-                </div>
-              )}
+              <div className="h-64">
+                {analyticsData?.topCampaigns && (
+                  <Line
+                    data={{
+                      labels: analyticsData.topCampaigns.slice(0, 5).map(c => c.campaign),
+                      datasets: [
+                        {
+                          label: t("analytics.tables.revenue"),
+                          data: analyticsData.topCampaigns.slice(0, 5).map(c => c.revenue),
+                          borderColor: "rgba(255, 211, 61, 1)",
+                          backgroundColor: "rgba(255, 211, 61, 0.2)",
+                          tension: 0.4,
+                        },
+                      ],
+                    }}
+                    options={lineChartOptions}
+                  />
+                )}
+              </div>
             </CardContent>
           </Card>
         </div>
+
+        {/* Top Campaigns Table */}
+        <Card className="bg-zinc-900 border-zinc-800">
+          <CardHeader>
+            <CardTitle className="text-white">{t("analytics.tables.topCampaigns")}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Table>
+              <TableHeader>
+                <TableRow className="border-zinc-800">
+                  <TableHead className="text-zinc-400">{t("analytics.tables.campaign")}</TableHead>
+                  <TableHead className="text-zinc-400">{t("analytics.tables.leads")}</TableHead>
+                  <TableHead className="text-zinc-400">{t("analytics.tables.conversions")}</TableHead>
+                  <TableHead className="text-zinc-400">{t("analytics.tables.spent")}</TableHead>
+                  <TableHead className="text-zinc-400">{t("analytics.tables.revenue")}</TableHead>
+                  <TableHead className="text-zinc-400">{t("analytics.tables.romi")}</TableHead>
+                  <TableHead className="text-zinc-400">{t("analytics.tables.roas")}</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {analyticsData?.topCampaigns.length ? (
+                  analyticsData.topCampaigns.map((campaign, idx) => (
+                    <TableRow key={idx} className="border-zinc-800">
+                      <TableCell className="text-white">{campaign.campaign}</TableCell>
+                      <TableCell className="text-white">{campaign.leads}</TableCell>
+                      <TableCell className="text-white">{campaign.conversions}</TableCell>
+                      <TableCell className="text-white">${campaign.spent.toFixed(2)}</TableCell>
+                      <TableCell className="text-white">${campaign.revenue.toFixed(2)}</TableCell>
+                      <TableCell className="text-white">{campaign.romi}%</TableCell>
+                      <TableCell className="text-white">{campaign.roas}x</TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={7} className="text-center text-zinc-400">
+                      {t("analytics.tables.noData")}
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
+
+        {/* Top Ads Table */}
+        <Card className="bg-zinc-900 border-zinc-800">
+          <CardHeader>
+            <CardTitle className="text-white">{t("analytics.tables.topAds")}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Table>
+              <TableHeader>
+                <TableRow className="border-zinc-800">
+                  <TableHead className="text-zinc-400">{t("analytics.tables.ad")}</TableHead>
+                  <TableHead className="text-zinc-400">{t("analytics.tables.leads")}</TableHead>
+                  <TableHead className="text-zinc-400">{t("analytics.tables.conversions")}</TableHead>
+                  <TableHead className="text-zinc-400">{t("analytics.tables.ctr")}</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {analyticsData?.topAds.length ? (
+                  analyticsData.topAds.map((ad, idx) => (
+                    <TableRow key={idx} className="border-zinc-800">
+                      <TableCell className="text-white">{ad.ad}</TableCell>
+                      <TableCell className="text-white">{ad.leads}</TableCell>
+                      <TableCell className="text-white">{ad.conversions}</TableCell>
+                      <TableCell className="text-white">{ad.ctr}%</TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={4} className="text-center text-zinc-400">
+                      {t("analytics.tables.noData")}
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
+
+        {/* Top Keywords Table */}
+        <Card className="bg-zinc-900 border-zinc-800">
+          <CardHeader>
+            <CardTitle className="text-white">{t("analytics.tables.topKeywords")}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Table>
+              <TableHeader>
+                <TableRow className="border-zinc-800">
+                  <TableHead className="text-zinc-400">{t("analytics.tables.keyword")}</TableHead>
+                  <TableHead className="text-zinc-400">{t("analytics.tables.leads")}</TableHead>
+                  <TableHead className="text-zinc-400">{t("analytics.tables.clicks")}</TableHead>
+                  <TableHead className="text-zinc-400">{t("analytics.tables.impressions")}</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {analyticsData?.topKeywords.length ? (
+                  analyticsData.topKeywords.map((keyword, idx) => (
+                    <TableRow key={idx} className="border-zinc-800">
+                      <TableCell className="text-white">{keyword.keyword}</TableCell>
+                      <TableCell className="text-white">{keyword.leads}</TableCell>
+                      <TableCell className="text-white">{keyword.clicks}</TableCell>
+                      <TableCell className="text-white">{keyword.impressions}</TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={4} className="text-center text-zinc-400">
+                      {t("analytics.tables.noData")}
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
