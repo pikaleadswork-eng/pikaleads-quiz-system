@@ -574,3 +574,41 @@ export const filterPresets = mysqlTable("filterPresets", {
 export type FilterPreset = typeof filterPresets.$inferSelect;
 export type InsertFilterPreset = typeof filterPresets.$inferInsert;
 
+/**
+ * Webhooks table for CRM integrations
+ */
+export const webhooks = mysqlTable("webhooks", {
+  id: int("id").autoincrement().primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(), // e.g., "HubSpot Integration", "Salesforce Sync"
+  type: mysqlEnum("type", ["hubspot", "salesforce", "custom"]).notNull(),
+  url: varchar("url", { length: 500 }).notNull(), // Webhook endpoint URL
+  headers: text("headers"), // JSON string of custom headers
+  events: text("events").notNull(), // JSON array of events to trigger on: ["lead.created", "lead.updated"]
+  isActive: boolean("isActive").default(true).notNull(),
+  apiKey: varchar("apiKey", { length: 500 }), // For HubSpot/Salesforce
+  config: text("config"), // JSON string of additional configuration (e.g., Salesforce instance URL)
+  lastTriggeredAt: timestamp("lastTriggeredAt"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Webhook = typeof webhooks.$inferSelect;
+export type InsertWebhook = typeof webhooks.$inferInsert;
+
+/**
+ * Webhook logs for debugging and monitoring
+ */
+export const webhookLogs = mysqlTable("webhookLogs", {
+  id: int("id").autoincrement().primaryKey(),
+  webhookId: int("webhookId").notNull(),
+  event: varchar("event", { length: 100 }).notNull(), // e.g., "lead.created"
+  payload: text("payload").notNull(), // JSON string of data sent
+  response: text("response"), // Response from webhook endpoint
+  statusCode: int("statusCode"), // HTTP status code
+  success: boolean("success").notNull(),
+  errorMessage: text("errorMessage"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type WebhookLog = typeof webhookLogs.$inferSelect;
+export type InsertWebhookLog = typeof webhookLogs.$inferInsert;

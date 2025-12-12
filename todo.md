@@ -887,8 +887,21 @@
 - [x] Verify translations work correctly
 
 ### Webhook Integrations
-- [ ] Create webhook settings page (/admin/webhooks)
-- [ ] Add webhook configuration form (URL, headers, events)
+- [x] Create webhooks table in database schema
+- [x] Add webhook backend procedures (create, update, delete, test)
+- [x] Create AdminWebhooks page (/admin/webhooks)
+- [x] Add webhook list with status indicators
+- [x] Add webhook configuration form (URL, headers, events)
+- [x] Add HubSpot preset configuration
+- [x] Add Salesforce preset configuration
+- [x] Add custom webhook configuration
+- [x] Add webhook test button
+- [x] Add translations for webhooks page (UK)
+- [ ] Add translations for webhooks page (RU/EN)
+- [ ] Create webhook trigger on new lead creation
+- [ ] Add HubSpot API integration helper
+- [ ] Add Salesforce API integration helper
+- [ ] Add webhook logs viewer
 - [ ] Implement HubSpot webhook integration
 - [ ] Implement Salesforce webhook integration
 - [ ] Add webhook testing functionality
@@ -913,3 +926,30 @@
 - [ ] Create A/B test results dashboard
 - [ ] Add automatic winner selection
 - [ ] Test A/B testing flow end-to-end
+
+
+### Advanced Quiz Editor
+- [ ] Extend quiz schema with new question types (image_choice, slider, rating, file_upload)
+- [ ] Add conditional logic fields to questions (show_if, hide_if)
+- [ ] Add question branching/skip logic
+- [ ] Create image upload for question options
+- [ ] Add slider question type component
+- [ ] Add rating (stars) question type component
+- [ ] Add file upload question type component
+- [ ] Add image choice question type component
+- [ ] Add conditional logic editor UI
+- [ ] Add question branching visual editor
+- [ ] Add translations for new question types (UK/RU/EN)
+- [ ] Test all new question types work correctly
+
+### A/B Testing
+- [ ] Create quiz_variants table in database schema
+- [ ] Add variant tracking fields (impressions, conversions, revenue)
+- [ ] Add backend procedures for variant management
+- [ ] Add automatic traffic splitting logic
+- [ ] Create A/B test creation UI
+- [ ] Add variant performance comparison charts
+- [ ] Add statistical significance calculator
+- [ ] Add winner declaration functionality
+- [ ] Add translations for A/B testing (UK/RU/EN)
+- [ ] Test A/B testing functionality
