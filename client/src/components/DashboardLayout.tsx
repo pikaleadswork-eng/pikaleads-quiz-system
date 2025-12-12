@@ -21,7 +21,8 @@ import {
 } from "@/components/ui/sidebar";
 import { getLoginUrl } from "@/const";
 import { useIsMobile } from "@/hooks/useMobile";
-import { LayoutDashboard, LogOut, PanelLeft, Users } from "lucide-react";
+import { LayoutDashboard, LogOut, PanelLeft, Users, Globe } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { useLocation } from "wouter";
 import { DashboardLayoutSkeleton } from './DashboardLayoutSkeleton';
@@ -42,11 +43,17 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const { i18n } = useTranslation();
   const [sidebarWidth, setSidebarWidth] = useState(() => {
     const saved = localStorage.getItem(SIDEBAR_WIDTH_KEY);
     return saved ? parseInt(saved, 10) : DEFAULT_WIDTH;
   });
   const { loading, user } = useAuth();
+  
+  const changeLanguage = (lng: string) => {
+    i18n.changeLanguage(lng);
+    localStorage.setItem('language', lng);
+  };
 
   useEffect(() => {
     localStorage.setItem(SIDEBAR_WIDTH_KEY, sidebarWidth.toString());
@@ -90,7 +97,10 @@ export default function DashboardLayout({
         } as CSSProperties
       }
     >
-      <DashboardLayoutContent setSidebarWidth={setSidebarWidth}>
+      <DashboardLayoutContent 
+        setSidebarWidth={setSidebarWidth}
+        changeLanguage={changeLanguage}
+      >
         {children}
       </DashboardLayoutContent>
     </SidebarProvider>
@@ -100,12 +110,15 @@ export default function DashboardLayout({
 type DashboardLayoutContentProps = {
   children: React.ReactNode;
   setSidebarWidth: (width: number) => void;
+  changeLanguage: (lng: string) => void;
 };
 
 function DashboardLayoutContent({
   children,
   setSidebarWidth,
+  changeLanguage,
 }: DashboardLayoutContentProps) {
+  const { i18n } = useTranslation();
   const { user, logout } = useAuth();
   const [location, setLocation] = useLocation();
   const { state, toggleSidebar } = useSidebar();
@@ -201,7 +214,35 @@ function DashboardLayoutContent({
             </SidebarMenu>
           </SidebarContent>
 
-          <SidebarFooter className="p-3">
+          <SidebarFooter className="p-3 space-y-2">
+            {/* Language Switcher */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="w-full justify-start gap-2 group-data-[collapsible=icon]:justify-center"
+                >
+                  <Globe className="h-4 w-4" />
+                  <span className="group-data-[collapsible=icon]:hidden">
+                    {i18n.language === 'uk' ? '🇺🇦 Українська' : i18n.language === 'ru' ? '🇷🇺 Русский' : '🇬🇧 English'}
+                  </span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuItem onClick={() => changeLanguage('uk')}>
+                  🇺🇦 Українська
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => changeLanguage('ru')}>
+                  🇷🇺 Русский
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => changeLanguage('en')}>
+                  🇬🇧 English
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            
+            {/* User Profile */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button className="flex items-center gap-3 rounded-lg px-1 py-1 hover:bg-accent/50 transition-colors w-full text-left group-data-[collapsible=icon]:justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-ring">
@@ -255,6 +296,26 @@ function DashboardLayoutContent({
                 </div>
               </div>
             </div>
+            
+            {/* Language Switcher */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="sm" className="h-9 w-9 p-0">
+                  <Globe className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={() => changeLanguage('uk')}>
+                  🇺🇦 Українська
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => changeLanguage('ru')}>
+                  🇷🇺 Русский
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => changeLanguage('en')}>
+                  🇬🇧 English
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         )}
         <main className="flex-1 p-4">{children}</main>

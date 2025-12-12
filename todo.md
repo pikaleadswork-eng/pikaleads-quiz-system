@@ -875,3 +875,41 @@
 - [ ] Implement webhook sending on new lead
 - [ ] Add webhook retry logic
 - [ ] Test webhook integrations
+
+
+## Phase 15: Language Switcher + Webhooks + Advanced Quiz Editor + A/B Testing - IN PROGRESS 🚀
+
+### Language Switcher Fix
+- [x] Add language switcher to DashboardLayout header
+- [x] Add language switcher to sidebar footer for desktop
+- [x] Add language switcher to mobile header
+- [x] Test language switcher on all admin pages
+- [x] Verify translations work correctly
+
+### Webhook Integrations
+- [ ] Create webhook settings page (/admin/webhooks)
+- [ ] Add webhook configuration form (URL, headers, events)
+- [ ] Implement HubSpot webhook integration
+- [ ] Implement Salesforce webhook integration
+- [ ] Add webhook testing functionality
+- [ ] Add webhook logs/history
+- [ ] Test webhook delivery on new lead
+
+### Advanced Quiz Editor
+- [ ] Add image-based choices question type
+- [ ] Add slider question type
+- [ ] Add rating question type
+- [ ] Add file upload question type
+- [ ] Add date/time picker question type
+- [ ] Implement conditional logic (question branching)
+- [ ] Add scoring system for questions
+- [ ] Test new question types in quiz builder
+
+### A/B Testing
+- [ ] Create A/B test configuration UI
+- [ ] Add variant creation functionality
+- [ ] Implement traffic splitting logic
+- [ ] Add conversion tracking per variant
+- [ ] Create A/B test results dashboard
+- [ ] Add automatic winner selection
+- [ ] Test A/B testing flow end-to-end
