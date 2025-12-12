@@ -270,3 +270,41 @@
 - [ ] Test language switching Ukrainian → Russian → English
 - [ ] Verify all text changes when language switches
 - [ ] Create checkpoint v28.0
+
+
+## Phase 30 - Redesign MessagingInbox (Facebook-style)
+
+### Layout Redesign
+- [x] Change from single-column table to 2-column layout
+- [x] Left column (30%): Chat list sidebar
+- [x] Right column (70%): Conversation view panel
+- [x] Remove modal-based chat window
+- [x] Make layout responsive (stack on mobile)
+
+### Left Sidebar - Chat List
+- [x] Show list of all conversations (grouped by contact)
+- [x] Display contact name, last message preview, timestamp
+- [x] Show channel icon (Telegram/WhatsApp/Email badge)
+- [x] Highlight selected chat
+- [x] Add unread message indicator (badge with count)
+- [x] Make list scrollable
+
+### Right Panel - Conversation View
+- [x] Show full conversation when chat is selected
+- [x] Display message bubbles (sent/received)
+- [x] Show timestamps for each message
+- [x] Add message input field at bottom
+- [x] Add "Send" button
+- [x] Auto-scroll to latest message
+
+### Tabs & Filters
+- [x] Add tabs: "All Messages", "Telegram", "WhatsApp", "Email", "Instagram"
+- [ ] Add filter buttons: "Unread", "Assigned to me"
+- [x] Add search bar to filter chats
+- [x] Update chat list when tab/filter changes
+
+### Testing
+- [ ] Test chat selection works
+- [ ] Test message sending updates conversation
+- [ ] Test filters and tabs work correctly
+- [ ] Create checkpoint v29.0

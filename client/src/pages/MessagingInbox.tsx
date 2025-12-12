@@ -1,39 +1,18 @@
 import { useState, useEffect } from "react";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Loader2, MessageSquare, Mail, Send, Filter, MessageCircle } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Loader2, MessageSquare, Mail, Send, Search } from "lucide-react";
 import { format } from "date-fns";
 import { useAuth } from "@/_core/hooks/useAuth";
 import CRMLayout from "@/components/CRMLayout";
-import { ChatWindow } from "@/components/ChatWindow";
 import { Link } from "wouter";
+import { cn } from "@/lib/utils";
 
 export default function MessagingInbox() {
-
   // Detect language from localStorage
   const [language, setLanguage] = useState(() => {
     return localStorage.getItem('language') || 'uk';
@@ -53,17 +32,20 @@ export default function MessagingInbox() {
     return uk;
   };
 
-
   const { user, loading: authLoading } = useAuth();
   const [channelFilter, setChannelFilter] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedChat, setSelectedChat] = useState<{
-    recipientId: string;
-    recipientName: string;
-    channel: "telegram" | "whatsapp" | "email" | "instagram";
-  } | null>(null);
+  const [selectedChatId, setSelectedChatId] = useState<string | null>(null);
+  const [messageInput, setMessageInput] = useState("");
 
   const { data: messages, isLoading } = trpc.messaging.getRecentMessages.useQuery({ limit: 100, channel: "all" });
+  const sendMessageMutation = trpc.messaging.sendMessage.useMutation();
+
+  // Get conversation for selected chat
+  const { data: conversation } = trpc.messaging.getConversation.useQuery(
+    { recipientId: selectedChatId || "", channel: "telegram" },
+    { enabled: !!selectedChatId }
+  );
 
   if (authLoading) {
     return (
@@ -81,248 +63,280 @@ export default function MessagingInbox() {
   if (user.role !== "admin") {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
-        <h1 className="text-2xl font-bold mb-4">Access Denied</h1>
-        <p className="text-muted-foreground mb-4">You need admin privileges to access this page.</p>
+        <h1 className="text-2xl font-bold mb-4">{t('Доступ заборонено', 'Доступ запрещен', 'Access Denied')}</h1>
+        <p className="text-muted-foreground mb-4">{t('Потрібні права адміністратора', 'Требуются права администратора', 'You need admin privileges to access this page.')}</p>
         <Link href="/admin">
-          <Button>Return Home</Button>
+          <Button>{t('Повернутися', 'Вернуться', 'Return Home')}</Button>
         </Link>
       </div>
     );
   }
 
-  // Filter messages
-  const filteredMessages = messages?.filter((msg) => {
-    const matchesChannel = channelFilter === "all" || msg.channel.toLowerCase() === channelFilter.toLowerCase();
-    const matchesSearch = !searchQuery || 
-      msg.message.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      msg.sentBy.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesChannel && matchesSearch;
-  });
+  // Group messages by recipient to create chat list
+  const chatList = messages?.reduce((acc, msg) => {
+    const recipientId = `msg-${msg.id}`;
+    const recipientName = msg.sentBy || t('Невідомий контакт', 'Неизвестный контакт', 'Unknown Contact');
+    const existingChat = acc.find(c => c.recipientId === recipientId);
+    if (existingChat) {
+      if (msg.sentAt > existingChat.lastMessageTime) {
+        existingChat.lastMessage = msg.message;
+        existingChat.lastMessageTime = msg.sentAt;
+      }
+    } else {
+      acc.push({
+        recipientId,
+        recipientName,
+        channel: msg.channel,
+        lastMessage: msg.message,
+        lastMessageTime: msg.sentAt,
+        unreadCount: 0, // TODO: implement unread tracking
+      });
+    }
+    return acc;
+  }, [] as Array<{
+    recipientId: string;
+    recipientName: string;
+    channel: string;
+    lastMessage: string;
+    lastMessageTime: Date;
+    unreadCount: number;
+  }>);
 
-  // Count by channel
-  const channelCounts = {
-    telegram: messages?.filter((m) => m.channel === "telegram").length || 0,
-    whatsapp: messages?.filter((m) => m.channel === "whatsapp").length || 0,
-    email: messages?.filter((m) => m.channel === "email").length || 0,
-    instagram: 0, // Instagram not yet supported
+  // Filter chat list
+  const filteredChats = chatList?.filter(chat => {
+    const matchesChannel = channelFilter === "all" || chat.channel.toLowerCase() === channelFilter.toLowerCase();
+    const matchesSearch = !searchQuery || 
+      chat.recipientName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      chat.lastMessage.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesChannel && matchesSearch;
+  }).sort((a, b) => b.lastMessageTime.getTime() - a.lastMessageTime.getTime());
+
+  // Send message handler
+  const handleSendMessage = async () => {
+    if (!messageInput.trim() || !selectedChatId) return;
+
+    try {
+      await sendMessageMutation.mutateAsync({
+        recipientId: selectedChatId,
+        channel: "telegram",
+        message: messageInput,
+      });
+      setMessageInput("");
+    } catch (error) {
+      console.error("Failed to send message:", error);
+    }
+  };
+
+  // Get channel icon
+  const getChannelIcon = (channel: string) => {
+    switch (channel.toLowerCase()) {
+      case "telegram":
+        return <MessageSquare className="w-4 h-4 text-blue-400" />;
+      case "whatsapp":
+        return <MessageSquare className="w-4 h-4 text-green-400" />;
+      case "email":
+        return <Mail className="w-4 h-4 text-purple-400" />;
+      case "instagram":
+        return <MessageSquare className="w-4 h-4 text-pink-400" />;
+      default:
+        return <MessageSquare className="w-4 h-4" />;
+    }
+  };
+
+  // Get channel badge color
+  const getChannelBadgeColor = (channel: string) => {
+    switch (channel.toLowerCase()) {
+      case "telegram":
+        return "bg-blue-500/20 text-blue-400 border-blue-500/30";
+      case "whatsapp":
+        return "bg-green-500/20 text-green-400 border-green-500/30";
+      case "email":
+        return "bg-purple-500/20 text-purple-400 border-purple-500/30";
+      case "instagram":
+        return "bg-pink-500/20 text-pink-400 border-pink-500/30";
+      default:
+        return "bg-gray-500/20 text-gray-400 border-gray-500/30";
+    }
   };
 
   return (
     <CRMLayout>
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold text-white mb-2">
-          Messaging Inbox
-        </h1>
-        <p className="text-gray-400 mt-2">
-          All messages from Telegram, WhatsApp, Email, and Instagram in one place
-        </p>
-      </div>
-
-        {/* Channel Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-          <Card className="bg-zinc-900 border-zinc-800">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-blue-400 flex items-center gap-2">
-                <MessageSquare className="w-4 h-4" />
-                Telegram
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{channelCounts.telegram}</div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-zinc-900 border-zinc-800">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-green-400 flex items-center gap-2">
-                <MessageSquare className="w-4 h-4" />
-                WhatsApp
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{channelCounts.whatsapp}</div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-zinc-900 border-zinc-800">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-purple-400 flex items-center gap-2">
-                <Mail className="w-4 h-4" />
-                Email
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{channelCounts.email}</div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-zinc-900 border-zinc-800">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-pink-400 flex items-center gap-2">
-                <MessageSquare className="w-4 h-4" />
-                Instagram
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{channelCounts.instagram}</div>
-            </CardContent>
-          </Card>
+      <div className="flex flex-col h-[calc(100vh-120px)]">
+        {/* Header */}
+        <div className="mb-6">
+          <h1 className="text-3xl font-bold text-white mb-2">
+            {t('Вхідні повідомлення', 'Входящие сообщения', 'Messaging Inbox')}
+          </h1>
+          <p className="text-gray-400">
+            {t('Всі повідомлення з Telegram, WhatsApp, Email та Instagram в одному місці', 'Все сообщения из Telegram, WhatsApp, Email и Instagram в одном месте', 'All messages from Telegram, WhatsApp, Email, and Instagram in one place')}
+          </p>
         </div>
 
-        {/* Filters */}
-        <Card className="bg-zinc-900 border-zinc-800 mb-6">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Filter className="w-5 h-5" />
-              Filters
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="text-sm font-medium mb-2 block">{t('Канал', 'Канал', 'Channel')}</label>
-                <Select value={channelFilter} onValueChange={setChannelFilter}>
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">{t('Всі канали', 'Все каналы', 'All Channels')}</SelectItem>
-                    <SelectItem value="telegram">Telegram</SelectItem>
-                    <SelectItem value="whatsapp">WhatsApp</SelectItem>
-                    <SelectItem value="email">Email</SelectItem>
-                    <SelectItem value="instagram">Instagram</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div>
-                <label className="text-sm font-medium mb-2 block">{t('Пошук', 'Поиск', 'Search')}</label>
+        {/* Tabs */}
+        <Tabs value={channelFilter} onValueChange={setChannelFilter} className="mb-4">
+          <TabsList className="bg-zinc-900 border-zinc-800">
+            <TabsTrigger value="all">{t('Всі повідомлення', 'Все сообщения', 'All Messages')}</TabsTrigger>
+            <TabsTrigger value="telegram">Telegram</TabsTrigger>
+            <TabsTrigger value="whatsapp">WhatsApp</TabsTrigger>
+            <TabsTrigger value="email">Email</TabsTrigger>
+            <TabsTrigger value="instagram">Instagram</TabsTrigger>
+          </TabsList>
+        </Tabs>
+
+        {/* 2-Column Layout */}
+        <div className="flex gap-4 flex-1 overflow-hidden">
+          {/* Left Sidebar - Chat List */}
+          <Card className="w-1/3 bg-zinc-900 border-zinc-800 flex flex-col">
+            {/* Search */}
+            <div className="p-4 border-b border-zinc-800">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
                 <Input
-                  placeholder={t('Пошук повідомлень...', 'Поиск сообщений...', 'Search messages...')}
+                  placeholder={t('Пошук чатів...', 'Поиск чатов...', 'Search chats...')}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="bg-zinc-800 border-zinc-700"
+                  className="pl-10 bg-zinc-800 border-zinc-700"
                 />
               </div>
             </div>
-          </CardContent>
-        </Card>
 
-        {/* Messages Table */}
-        <Card className="bg-zinc-900 border-zinc-800">
-          <CardHeader>
-            <CardTitle>{t('Останні повідомлення', 'Последние сообщения', 'Recent Messages')}</CardTitle>
-            <CardDescription>
-              {filteredMessages?.length || 0} messages
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            {isLoading ? (
-              <div className="flex items-center justify-center py-8">
-                <Loader2 className="w-6 h-6 animate-spin" />
-              </div>
-            ) : (
-              <div className="overflow-x-auto">
-                <Table>
-                  <TableHeader>
-                     <TableRow>
-                      <TableHead>{t('Дата', 'Дата', 'Date')}</TableHead>
-                      <TableHead>{t('Канал', 'Канал', 'Channel')}</TableHead>
-                      <TableHead>{t('Повідомлення', 'Сообщение', 'Message')}</TableHead>
-                      <TableHead>{t('Отримувачі', 'Получатели', 'Recipients')}</TableHead>
-                      <TableHead>{t('Статус', 'Статус', 'Status')}</TableHead>
-                      <TableHead>{t('Відправник', 'Отправитель', 'Sent By')}</TableHead>
-                      <TableHead>{t('Дії', 'Действия', 'Actions')}</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {filteredMessages && filteredMessages.length > 0 ? (
-                      filteredMessages.map((msg, idx) => (
-                        <TableRow key={idx}>
-                          <TableCell className="text-xs">
-                            {format(new Date(msg.sentAt), "MMM dd, HH:mm")}
-                          </TableCell>
-                          <TableCell>
-                            <Badge
-                              variant="outline"
-                              className={
-                                msg.channel === "telegram"
-                                  ? "bg-blue-500/10 text-blue-500 border-blue-500/20"
-                                  : msg.channel === "whatsapp"
-                                  ? "bg-green-500/10 text-green-500 border-green-500/20"
-                                  : msg.channel === "email"
-                                  ? "bg-purple-500/10 text-purple-500 border-purple-500/20"
-                                  : "bg-pink-500/10 text-pink-500 border-pink-500/20"
-                              }
-                            >
-                              {msg.channel}
-                            </Badge>
-                          </TableCell>
-                          <TableCell className="max-w-md truncate">
-                            {msg.message}
-                          </TableCell>
-                          <TableCell>
-                            <span className="text-sm">
-                              {msg.recipientCount} recipients
-                            </span>
-                          </TableCell>
-                          <TableCell>
-                            <div className="flex flex-col gap-1">
-                              <span className="text-sm text-green-500">
-                                {msg.successCount} sent
-                              </span>
-                              {msg.failedCount > 0 && (
-                                <span className="text-sm text-red-500">
-                                  {msg.failedCount} failed
-                                </span>
-                              )}
-                            </div>
-                          </TableCell>
-                          <TableCell className="text-xs text-gray-400">
-                            {msg.sentBy}
-                          </TableCell>
-                          <TableCell>
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              onClick={() => setSelectedChat({
-                                recipientId: `msg_${msg.id}`,
-                                recipientName: `Recipient ${msg.id}`,
-                                channel: msg.channel as "telegram" | "whatsapp" | "email" | "instagram",
-                              })}
-                              className="flex items-center gap-1"
-                            >
-                              <MessageCircle className="w-3 h-3" />
-                              View Chat
-                            </Button>
-                          </TableCell>
-                        </TableRow>
-                      ))
-                    ) : (
-                       <TableRow>
-                        <TableCell
-                          colSpan={7}
-                          className="text-center text-muted-foreground py-8"
-                        >
-                          No messages found
-                        </TableCell>
-                      </TableRow>
+            {/* Chat List */}
+            <div className="flex-1 overflow-y-auto">
+              {isLoading ? (
+                <div className="flex items-center justify-center h-full">
+                  <Loader2 className="w-6 h-6 animate-spin text-gray-400" />
+                </div>
+              ) : filteredChats && filteredChats.length > 0 ? (
+                filteredChats.map((chat) => (
+                  <div
+                    key={chat.recipientId}
+                    onClick={() => setSelectedChatId(chat.recipientId)}
+                    className={cn(
+                      "p-4 border-b border-zinc-800 cursor-pointer hover:bg-zinc-800/50 transition-colors",
+                      selectedChatId === chat.recipientId && "bg-zinc-800"
                     )}
-                  </TableBody>
-                </Table>
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="flex-shrink-0 mt-1">
+                        {getChannelIcon(chat.channel)}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between mb-1">
+                          <h3 className="font-semibold text-white truncate">{chat.recipientName}</h3>
+                          <span className="text-xs text-gray-400 flex-shrink-0 ml-2">
+                            {format(chat.lastMessageTime, "HH:mm")}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Badge className={cn("text-xs", getChannelBadgeColor(chat.channel))}>
+                            {chat.channel}
+                          </Badge>
+                          {chat.unreadCount > 0 && (
+                            <Badge className="bg-purple-500 text-white text-xs">
+                              {chat.unreadCount}
+                            </Badge>
+                          )}
+                        </div>
+                        <p className="text-sm text-gray-400 truncate mt-1">{chat.lastMessage}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="flex flex-col items-center justify-center h-full text-gray-400">
+                  <MessageSquare className="w-12 h-12 mb-2" />
+                  <p>{t('Немає повідомлень', 'Нет сообщений', 'No messages')}</p>
+                </div>
+              )}
+            </div>
+          </Card>
+
+          {/* Right Panel - Conversation View */}
+          <Card className="flex-1 bg-zinc-900 border-zinc-800 flex flex-col">
+            {selectedChatId ? (
+              <>
+                {/* Conversation Header */}
+                <div className="p-4 border-b border-zinc-800">
+                  <div className="flex items-center gap-3">
+                    {getChannelIcon(filteredChats?.find(c => c.recipientId === selectedChatId)?.channel || "")}
+                    <div>
+                      <h2 className="font-semibold text-white">
+                        {filteredChats?.find(c => c.recipientId === selectedChatId)?.recipientName}
+                      </h2>
+                      <Badge className={cn("text-xs", getChannelBadgeColor(filteredChats?.find(c => c.recipientId === selectedChatId)?.channel || ""))}>
+                        {filteredChats?.find(c => c.recipientId === selectedChatId)?.channel}
+                      </Badge>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Messages */}
+                <div className="flex-1 overflow-y-auto p-4 space-y-4">
+                  {conversation && conversation.length > 0 ? (
+                    conversation.map((msg, idx) => (
+                      <div
+                        key={idx}
+                        className={cn(
+                          "flex",
+                          msg.direction === "sent" ? "justify-end" : "justify-start"
+                        )}
+                      >
+                        <div
+                          className={cn(
+                            "max-w-[70%] rounded-lg p-3",
+                            msg.direction === "sent"
+                              ? "bg-purple-600 text-white"
+                              : "bg-zinc-800 text-white"
+                          )}
+                        >
+                          <p className="text-sm">{msg.content}</p>
+                          <span className="text-xs opacity-70 mt-1 block">
+                            {format(msg.createdAt, "HH:mm")}
+                          </span>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="flex items-center justify-center h-full text-gray-400">
+                      <p>{t('Завантаження повідомлень...', 'Загрузка сообщений...', 'Loading messages...')}</p>
+                    </div>
+                  )}
+                </div>
+
+                {/* Message Input */}
+                <div className="p-4 border-t border-zinc-800">
+                  <div className="flex gap-2">
+                    <Input
+                      placeholder={t('Введіть повідомлення...', 'Введите сообщение...', 'Type a message...')}
+                      value={messageInput}
+                      onChange={(e) => setMessageInput(e.target.value)}
+                      onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                      className="flex-1 bg-zinc-800 border-zinc-700"
+                    />
+                    <Button
+                      onClick={handleSendMessage}
+                      disabled={!messageInput.trim() || sendMessageMutation.isPending}
+                      className="bg-purple-600 hover:bg-purple-700"
+                    >
+                      {sendMessageMutation.isPending ? (
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                      ) : (
+                        <Send className="w-4 h-4" />
+                      )}
+                    </Button>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <div className="flex flex-col items-center justify-center h-full text-gray-400">
+                <MessageSquare className="w-16 h-16 mb-4" />
+                <h3 className="text-lg font-semibold mb-2">{t('Виберіть чат', 'Выберите чат', 'Select a chat')}</h3>
+                <p className="text-sm">{t('Оберіть розмову зі списку зліва', 'Выберите разговор из списка слева', 'Choose a conversation from the list on the left')}</p>
               </div>
             )}
-          </CardContent>
-        </Card>
-
-      {/* Chat Window Modal */}
-      {selectedChat && (
-        <ChatWindow
-          recipientId={selectedChat.recipientId}
-          recipientName={selectedChat.recipientName}
-          channel={selectedChat.channel}
-          onClose={() => setSelectedChat(null)}
-        />
-      )}
+          </Card>
+        </div>
+      </div>
     </CRMLayout>
   );
 }
