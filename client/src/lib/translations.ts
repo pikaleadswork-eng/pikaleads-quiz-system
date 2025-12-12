@@ -47,6 +47,7 @@ export interface Translations {
   googleEcomDesc: string;
   googleProductsDesc: string;
   googleTelegramDesc: string;
+  learnMore: string;
 }
 
 export const translations: Record<Language, Translations> = {
@@ -91,6 +92,7 @@ export const translations: Record<Language, Translations> = {
     googleEcomDesc: "Розвивайте свій магазин за допомогою Google Ads і Shopping",
     googleProductsDesc: "Продавайте більше товарів за допомогою Google Ads",
     googleTelegramDesc: "Розвивайте свій канал за допомогою Google і YouTube",
+  learnMore: "Дізнатись більше →",
   },
   
   ru: {
@@ -134,6 +136,7 @@ export const translations: Record<Language, Translations> = {
     googleEcomDesc: "Развивайте свой магазин с помощью Google Ads и Shopping",
     googleProductsDesc: "Продавайте больше товаров с помощью Google Ads",
     googleTelegramDesc: "Развивайте свой канал с помощью Google и YouTube",
+  learnMore: "Узнать больше →",
   },
   
   en: {
@@ -177,6 +180,7 @@ export const translations: Record<Language, Translations> = {
     googleEcomDesc: "Grow your store with Google Ads & Shopping",
     googleProductsDesc: "Sell more products with Google Ads",
     googleTelegramDesc: "Grow your channel with Google & YouTube",
+  learnMore: "Learn More →",
   },
   
   pl: {

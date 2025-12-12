@@ -583,3 +583,29 @@
   - [x] Add bulk delete functionality
   - [x] Add bulk actions dialog
   - [x] Add translation keys for bulk operations
+
+## Critical Issues (Reported Dec 12)
+- [ ] Language switching NOT working - Ukrainian/Russian/English switcher doesn't change UI text
+- [ ] Input field spacing issues in ALL admin sections - labels overlap with input fields
+- [ ] Input field visibility issues in ALL admin sections - black background fields blend with black page background
+- [ ] CRM filters redesign - merge UTM filters into main filter popover instead of separate section
+
+## Testing Results (Dec 12, 2025)
+
+### ✅ Fixed Issues:
+- [x] Input fields spacing - all labels have mb-2
+- [x] Input fields backgrounds - all inputs have bg-zinc-800 and visible borders
+- [x] Homepage button translations - "Learn More" translates correctly
+- [x] CRM filters backend - Manager, Source, Date Range connected to trpc.crm.getLeads
+
+### ❌ Remaining Issues:
+- [ ] CRM page translations - sidebar, headers, table, buttons all in English
+- [ ] Settings page translations - all text in English
+- [ ] UTM filters - still separate section, need to merge into main Filters popover
+- [ ] CRMLayout translations not working despite using t() calls
+
+### Next Steps:
+1. Manually add useTranslation() to CRM.tsx
+2. Manually add useTranslation() to Settings pages
+3. Debug why CRMLayout t() calls don't work
+4. Merge UTM filters into main filter popover

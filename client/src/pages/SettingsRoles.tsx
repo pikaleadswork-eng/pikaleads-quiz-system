@@ -188,7 +188,7 @@ export function SettingsRoles() {
           </DialogHeader>
           <div className="space-y-4">
             <div>
-              <Label htmlFor="roleName" className="mb-2 block">{t("roles.roleName")}</Label>
+              <Label className="mb-2"htmlFor="roleName" className="mb-2 block">{t("roles.roleName")}</Label>
               <Input
                 className="bg-zinc-800 border-zinc-700"
                 id="roleName"
@@ -198,7 +198,7 @@ export function SettingsRoles() {
               />
             </div>
             <div>
-              <Label htmlFor="roleDescription" className="mb-2 block">Description</Label>
+              <Label className="mb-2"htmlFor="roleDescription" className="mb-2 block">Description</Label>
               <Textarea
                 className="bg-zinc-800 border-zinc-700"
                 id="roleDescription"
@@ -208,7 +208,7 @@ export function SettingsRoles() {
               />
             </div>
             <div>
-              <Label className="mb-3 block">{t("roles.permissions")}</Label>
+              <Label className="mb-3 block mb-2">{t("roles.permissions")}</Label>
               <div className="space-y-4 border border-zinc-700 rounded-lg p-4 bg-zinc-800/50">
                 {Object.keys(newRole.permissions).map((module) => (
                   <div key={module} className="space-y-2">
@@ -266,7 +266,7 @@ export function SettingsRoles() {
           </DialogHeader>
           <div className="space-y-4">
             <div>
-              <Label htmlFor="userEmail">{t("roles.userEmail")}</Label>
+              <Label className="mb-2"htmlFor="userEmail">{t("roles.userEmail")}</Label>
               <Input
                 id="userEmail"
                 type="email"
@@ -276,7 +276,7 @@ export function SettingsRoles() {
               />
             </div>
             <div>
-              <Label htmlFor="selectRole">{t("roles.selectRole")}</Label>
+              <Label className="mb-2"htmlFor="selectRole">{t("roles.selectRole")}</Label>
               <select
                 id="selectRole"
                 className="w-full rounded-md border border-input bg-background px-3 py-2"

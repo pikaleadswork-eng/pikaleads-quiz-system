@@ -155,7 +155,7 @@ export function SettingsLeadStatuses() {
           </DialogHeader>
           <div className="space-y-4">
             <div>
-              <Label htmlFor="statusName" className="mb-2 block">{t("leadStatuses.statusName")}</Label>
+              <Label className="mb-2"htmlFor="statusName" className="mb-2 block">{t("leadStatuses.statusName")}</Label>
               <Input
                 className="bg-zinc-800 border-zinc-700"
                 id="statusName"
@@ -165,7 +165,7 @@ export function SettingsLeadStatuses() {
               />
             </div>
             <div>
-              <Label htmlFor="statusColor" className="mb-2 block">{t("leadStatuses.statusColor")}</Label>
+              <Label className="mb-2"htmlFor="statusColor" className="mb-2 block">{t("leadStatuses.statusColor")}</Label>
               <div className="flex gap-2">
                 <Input
                   id="statusColor"
@@ -189,7 +189,7 @@ export function SettingsLeadStatuses() {
                 checked={newStatus.isDefault}
                 onChange={(e) => setNewStatus({ ...newStatus, isDefault: e.target.checked })}
               />
-              <Label htmlFor="isDefault">{t("leadStatuses.isDefault")}</Label>
+              <Label className="mb-2"htmlFor="isDefault">{t("leadStatuses.isDefault")}</Label>
             </div>
           </div>
           <DialogFooter>
@@ -212,7 +212,7 @@ export function SettingsLeadStatuses() {
           </DialogHeader>
           <div className="space-y-4">
             <div>
-              <Label htmlFor="editStatusName" className="mb-2 block">{t("leadStatuses.statusName")}</Label>
+              <Label className="mb-2"htmlFor="editStatusName" className="mb-2 block">{t("leadStatuses.statusName")}</Label>
               <Input
                 className="bg-zinc-800 border-zinc-700"
                 id="editStatusName"
@@ -222,7 +222,7 @@ export function SettingsLeadStatuses() {
               />
             </div>
             <div>
-              <Label htmlFor="editStatusColor" className="mb-2 block">{t("leadStatuses.statusColor")}</Label>
+              <Label className="mb-2"htmlFor="editStatusColor" className="mb-2 block">{t("leadStatuses.statusColor")}</Label>
               <div className="flex gap-2">
                 <Input
                   id="editStatusColor"
@@ -246,7 +246,7 @@ export function SettingsLeadStatuses() {
                 checked={editingStatus?.isDefault || false}
                 onChange={(e) => setEditingStatus({ ...editingStatus, isDefault: e.target.checked })}
               />
-              <Label htmlFor="editIsDefault">{t("leadStatuses.isDefault")}</Label>
+              <Label className="mb-2"htmlFor="editIsDefault">{t("leadStatuses.isDefault")}</Label>
             </div>
           </div>
           <DialogFooter>

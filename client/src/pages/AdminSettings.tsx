@@ -296,7 +296,7 @@ export default function AdminSettings() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="instagram-app-id">App ID</Label>
+                  <Label className="mb-2"htmlFor="instagram-app-id">App ID</Label>
                   <Input
                     id="instagram-app-id"
                     placeholder="Enter your Instagram App ID"
@@ -307,7 +307,7 @@ export default function AdminSettings() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="instagram-app-secret">App Secret</Label>
+                  <Label className="mb-2"htmlFor="instagram-app-secret">App Secret</Label>
                   <Input
                     id="instagram-app-secret"
                     type="password"
@@ -319,7 +319,7 @@ export default function AdminSettings() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="instagram-access-token">Access Token (Long-lived)</Label>
+                  <Label className="mb-2"htmlFor="instagram-access-token">Access Token (Long-lived)</Label>
                   <Input
                     id="instagram-access-token"
                     type="password"
@@ -379,7 +379,7 @@ export default function AdminSettings() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="whatsapp-phone-number-id">Phone Number ID</Label>
+                  <Label className="mb-2"htmlFor="whatsapp-phone-number-id">Phone Number ID</Label>
                   <Input
                     id="whatsapp-phone-number-id"
                     placeholder="Enter your WhatsApp Phone Number ID"
@@ -390,7 +390,7 @@ export default function AdminSettings() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="whatsapp-access-token">Access Token</Label>
+                  <Label className="mb-2"htmlFor="whatsapp-access-token">Access Token</Label>
                   <Input
                     id="whatsapp-access-token"
                     type="password"
@@ -449,7 +449,7 @@ export default function AdminSettings() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="smtp-host">SMTP Host</Label>
+                  <Label className="mb-2"htmlFor="smtp-host">SMTP Host</Label>
                   <Input
                     id="smtp-host"
                     placeholder="smtp.gmail.com"
@@ -460,7 +460,7 @@ export default function AdminSettings() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="smtp-port">SMTP Port</Label>
+                  <Label className="mb-2"htmlFor="smtp-port">SMTP Port</Label>
                   <Input
                     id="smtp-port"
                     placeholder="587"
@@ -471,7 +471,7 @@ export default function AdminSettings() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="smtp-username">Username (Email)</Label>
+                  <Label className="mb-2"htmlFor="smtp-username">Username (Email)</Label>
                   <Input
                     id="smtp-username"
                     placeholder="your-email@gmail.com"
@@ -482,7 +482,7 @@ export default function AdminSettings() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="smtp-password">Password (App Password)</Label>
+                  <Label className="mb-2"htmlFor="smtp-password">Password (App Password)</Label>
                   <Input
                     id="smtp-password"
                     type="password"
@@ -494,7 +494,7 @@ export default function AdminSettings() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="smtp-from-email">From Email</Label>
+                  <Label className="mb-2"htmlFor="smtp-from-email">From Email</Label>
                   <Input
                     id="smtp-from-email"
                     placeholder="noreply@yourdomain.com"
@@ -553,7 +553,7 @@ export default function AdminSettings() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="google-client-id">OAuth 2.0 Client ID</Label>
+                  <Label className="mb-2"htmlFor="google-client-id">OAuth 2.0 Client ID</Label>
                   <Input
                     id="google-client-id"
                     placeholder="Enter your Google Client ID"
@@ -564,7 +564,7 @@ export default function AdminSettings() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="google-client-secret">OAuth 2.0 Client Secret</Label>
+                  <Label className="mb-2"htmlFor="google-client-secret">OAuth 2.0 Client Secret</Label>
                   <Input
                     id="google-client-secret"
                     type="password"
@@ -576,7 +576,7 @@ export default function AdminSettings() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="google-redirect-uri">Redirect URI</Label>
+                  <Label className="mb-2"htmlFor="google-redirect-uri">Redirect URI</Label>
                   <Input
                     id="google-redirect-uri"
                     placeholder="https://your-domain.manus.space/api/oauth/google/callback"

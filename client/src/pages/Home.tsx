@@ -113,7 +113,7 @@ export default function Home() {
                     variant="default"
                     className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
                   >
-                    Дізнатись більше →
+                    {t.learnMore}
                   </Button>
                 </div>
               </Link>
@@ -146,7 +146,7 @@ export default function Home() {
                     variant="default"
                     className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
                   >
-                    Дізнатись більше →
+                    {t.learnMore}
                   </Button>
                 </div>
               </Link>
