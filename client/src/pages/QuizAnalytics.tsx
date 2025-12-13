@@ -15,7 +15,7 @@ export default function QuizAnalytics() {
   const params = useParams();
   const quizId = params.id; // Can be slug or numeric ID
 
-  const [timeRange, setTimeRange] = useState<string>("7d");
+  const [timeRange, setTimeRange] = useState<"all" | "24h" | "7d" | "30d" | "90d">("7d");
 
   // Fetch analytics data
   const { data: analyticsData, isLoading } = trpc.analytics.getQuizAnalytics.useQuery(
@@ -81,7 +81,7 @@ export default function QuizAnalytics() {
               {/* Time range selector */}
               <div className="flex items-center gap-2">
                 <Calendar className="h-4 w-4 text-zinc-400" />
-                <Select value={timeRange} onValueChange={setTimeRange}>
+                <Select value={timeRange} onValueChange={(value) => setTimeRange(value as "all" | "24h" | "7d" | "30d" | "90d")}>
                   <SelectTrigger className="w-[180px] bg-zinc-800 border-zinc-700">
                     <SelectValue />
                   </SelectTrigger>

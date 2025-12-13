@@ -1398,3 +1398,15 @@
 - [ ] Add "Create Quiz" button (TODO)
 - [ ] Generate background images for quizzes (TODO)
 - [ ] Add multimedia answer options (TODO)
+
+## Phase 69 - Create Quiz Button, AI Images, Multimedia Answers
+- [ ] Create CreateQuizModal component with name and niche fields
+- [ ] Add "Створити квіз" button to AdminQuizzes header
+- [ ] Connect modal to tRPC createQuiz procedure
+- [ ] Generate AI background images for all 10 existing quizzes
+- [ ] Apply generated images to quiz_design_settings table
+- [ ] Extend questions schema to support imageUrl for each option
+- [ ] Build image upload UI for answer options
+- [ ] Update Quiz component to display image options
+- [ ] Test quiz creation flow end-to-end
+- [ ] Test multimedia answers in live quiz

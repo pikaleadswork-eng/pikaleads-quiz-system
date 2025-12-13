@@ -26,6 +26,7 @@ import ImprovedQuizDesignEditor from "@/components/ImprovedQuizDesignEditor";
 import QuizTemplateLibrary from "@/components/QuizTemplateLibrary";
 import DraggableQuestionEditor from "@/components/DraggableQuestionEditor";
 import QuestionTemplateLibrary from "@/components/QuestionTemplateLibrary";
+import CreateQuizModal from "@/components/CreateQuizModal";
 import type { QuizTemplate } from "../../../shared/quizTemplates";
 
 interface QuizContent {
@@ -43,6 +44,7 @@ export default function AdminQuizzes() {
   const [selectedQuiz, setSelectedQuiz] = useState<string>("meta-furniture");
   const [editedContent, setEditedContent] = useState<QuizContent | null>(null);
   const [previewMode, setPreviewMode] = useState(false);
+  const [createModalOpen, setCreateModalOpen] = useState(false);
   const [quizType, setQuizType] = useState<QuizType>("lead_generation");
   const [quizQuestions, setQuizQuestions] = useState<QuizQuestion[]>([]);
   const [buttonStyle, setButtonStyle] = useState<ButtonStyle>({
@@ -118,6 +120,15 @@ export default function AdminQuizzes() {
             <h1 className="text-xl sm:text-2xl font-bold text-foreground">{t("quizzes.quizManagement")}</h1>
           </div>
           <div className="flex items-center gap-2">
+            <Button
+              variant="default"
+              size="sm"
+              onClick={() => setCreateModalOpen(true)}
+              className="bg-purple-600 hover:bg-purple-700"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+              {i18n.language === "uk" ? "Створити квіз" : "Create Quiz"}
+            </Button>
             <Link href={`/admin/quizzes/${selectedQuiz}/analytics`}>
               <Button variant="outline" size="sm">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
@@ -380,6 +391,15 @@ export default function AdminQuizzes() {
         </div>
         )}
       </div>
+
+      <CreateQuizModal
+        open={createModalOpen}
+        onOpenChange={setCreateModalOpen}
+        onQuizCreated={(quizId) => {
+          console.log("Quiz created with ID:", quizId);
+          // TODO: Refresh quiz list and select new quiz
+        }}
+      />
     </DashboardLayout>
   );
 }

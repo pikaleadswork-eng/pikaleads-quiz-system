@@ -20,6 +20,7 @@ import { analyticsSettingsRouter } from "./routers/analyticsSettings";
 import { quizDesignRouter } from "./routers/quizDesign";
 import { quizTemplatesRouter } from "./routers/quizTemplates";
 import { questionTemplatesRouter } from "./routers/questionTemplates";
+import { quizzesRouter } from "./routers/quizzes";
 // import { abTestingRouter } from "./routers/abTesting"; // Disabled - conflicts with existing AB test implementation
 import * as schema from "../drizzle/schema";
 import { getDb } from "./db";
@@ -1263,6 +1264,7 @@ ${input.campaign ? `**Campaign:** ${input.campaign}\n` : ""}
   conversations: conversationsRouter,
   webhooks: webhooksRouter,
   quizEditor: quizEditorRouter,
+  quizzes: quizzesRouter,
   analytics: analyticsRouter,
   settings: settingsRouter,
   analyticsSettings: analyticsSettingsRouter,
