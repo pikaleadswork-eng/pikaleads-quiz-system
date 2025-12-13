@@ -17,10 +17,14 @@ import { Upload, Image as ImageIcon, Type, Palette, Layout, Loader2, Monitor, Sm
 import { useLanguage } from "@/contexts/LanguageContext";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
+import { BackgroundUploader } from "@/components/BackgroundUploader";
+import { DesignLayoutSelector } from "@/components/DesignLayoutSelector";
 
 interface QuizDesignSettings {
   layoutType: "center" | "split" | "background";
   backgroundImage?: string;
+  backgroundVideo?: string;
+  alignment?: "left" | "center" | "right";
   logoImage?: string;
   primaryColor: string;
   accentColor: string;
@@ -60,6 +64,8 @@ export default function ImprovedQuizDesignEditor({ quizId, initialSettings, onSa
   const [settings, setSettings] = useState<QuizDesignSettings>({
     layoutType: initialSettings?.layoutType || "split",
     backgroundImage: initialSettings?.backgroundImage || "",
+    backgroundVideo: initialSettings?.backgroundVideo || "",
+    alignment: initialSettings?.alignment || "center",
     logoImage: initialSettings?.logoImage || "",
     primaryColor: initialSettings?.primaryColor || "#FACC15",
     accentColor: initialSettings?.accentColor || "#A855F7",
@@ -221,6 +227,13 @@ export default function ImprovedQuizDesignEditor({ quizId, initialSettings, onSa
 
               {/* Layout Tab */}
               <TabsContent value="layout" className="space-y-6 mt-6">
+                <DesignLayoutSelector
+                  layoutType={settings.layoutType}
+                  alignment={settings.alignment || "center"}
+                  onLayoutChange={(layout) => updateSetting("layoutType", layout)}
+                  onAlignmentChange={(alignment) => updateSetting("alignment", alignment)}
+                />
+                {/* Keep existing layout settings below */}
                 <div className="space-y-3">
                   <Label className="text-white">{language === "uk" ? "Тип розміщення" : "Layout Type"}</Label>
                   <Select value={settings.layoutType} onValueChange={(value: any) => updateSetting("layoutType", value)}>
@@ -316,6 +329,15 @@ export default function ImprovedQuizDesignEditor({ quizId, initialSettings, onSa
 
               {/* Images Tab */}
               <TabsContent value="images" className="space-y-6 mt-6">
+                <BackgroundUploader
+                  currentImage={settings.backgroundImage}
+                  currentVideo={settings.backgroundVideo}
+                  onImageUploaded={(url) => updateSetting("backgroundImage", url)}
+                  onVideoUploaded={(url) => updateSetting("backgroundVideo", url)}
+                  onRemoveImage={() => updateSetting("backgroundImage", "")}
+                  onRemoveVideo={() => updateSetting("backgroundVideo", "")}
+                />
+                {/* Keep existing logo upload below */}
                 <div className="space-y-3">
                   <Label className="text-white">{language === "uk" ? "Фонове зображення" : "Background Image"}</Label>
                   <div className="flex gap-2">

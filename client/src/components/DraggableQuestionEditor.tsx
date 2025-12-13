@@ -88,7 +88,7 @@ export default function DraggableQuestionEditor({
       required: true,
     };
     setQuestions([...questions, newQuestion]);
-    setExpandedQuestions(new Set([...expandedQuestions, newQuestion.id]));
+    setExpandedQuestions(new Set([...Array.from(expandedQuestions), newQuestion.id]));
     
     toast.success(
       language === "uk" ? "Питання додано" : "Question added"
@@ -113,7 +113,7 @@ export default function DraggableQuestionEditor({
     ];
     
     setQuestions(newQuestions);
-    setExpandedQuestions(new Set([...expandedQuestions, duplicatedQuestion.id]));
+    setExpandedQuestions(new Set([...Array.from(expandedQuestions), duplicatedQuestion.id]));
     
     toast.success(
       language === "uk" ? "Питання продубльовано" : "Question duplicated"

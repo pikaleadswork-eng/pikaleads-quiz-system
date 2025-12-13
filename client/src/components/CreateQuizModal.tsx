@@ -55,8 +55,9 @@ export default function CreateQuizModal({ open, onOpenChange, onQuizCreated }: C
 
     createQuizMutation.mutate({
       name: quizName,
-      niche,
+      slug: niche.toLowerCase().replace(/\s+/g, '-'),
       description,
+      quizType: "lead_generation",
     });
   };
 

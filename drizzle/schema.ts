@@ -750,6 +750,8 @@ export const quizDesignSettings = mysqlTable("quiz_design_settings", {
   quizId: int("quizId").notNull().unique(),
   layoutType: varchar("layoutType", { length: 20 }).default("split").notNull(), // center, split, background
   backgroundImage: text("backgroundImage"), // S3 URL
+  backgroundVideo: text("backgroundVideo"), // S3 URL for video background
+  alignment: varchar("alignment", { length: 20 }).default("center"), // left, center, right
   logoImage: text("logoImage"), // S3 URL
   primaryColor: varchar("primaryColor", { length: 7 }).default("#FACC15"), // Yellow
   accentColor: varchar("accentColor", { length: 7 }).default("#A855F7"), // Purple

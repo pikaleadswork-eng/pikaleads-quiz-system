@@ -218,6 +218,13 @@
       "when": 1765661117418,
       "tag": "0030_curious_tomas",
       "breakpoints": true
+    },
+    {
+      "idx": 31,
+      "version": "5",
+      "when": 1765662809567,
+      "tag": "0031_fat_swordsman",
+      "breakpoints": true
     }
   ]
 }

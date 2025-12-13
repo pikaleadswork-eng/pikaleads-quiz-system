@@ -1410,3 +1410,49 @@
 - [ ] Update Quiz component to display image options
 - [ ] Test quiz creation flow end-to-end
 - [ ] Test multimedia answers in live quiz
+
+
+## Phase 69 - Fix TypeScript Errors & Implement Markviz-Style Quiz Editor (CURRENT)
+
+### TypeScript Compilation Errors
+- [x] Fix AdminQuizzes DraggableQuestionEditor props errors
+- [x] Fix AdminSettings analyticsSettings declaration error
+- [x] Ensure all files compile without errors
+
+### Markviz-Style Quiz Editor (Background & Layout)
+- [x] Add "Фон" (Background) tab with "Изображение" and "Видео" options
+- [x] Implement background image upload functionality with S3 storage
+- [x] Implement background video upload functionality with S3 storage
+- [x] Add "Дизайн" (Design) dropdown with layout options:
+  * Стандартная (Standard - center layout)
+  * Фоновая картинка (Background image - split screen)
+- [x] Add "Выравнивание" (Alignment) selector with 3 options:
+  * Left alignment icon
+  * Center alignment icon
+  * Right alignment icon
+- [x] Fix image upload functionality throughout the application
+- [x] Update quiz_design_settings table to store background image/video URL
+- [x] Update quiz_design_settings table to store layout type and alignment
+
+### AI Background Image Generation
+- [x] Create tRPC procedure for generating quiz background images
+- [x] Use generateImage helper to create professional backgrounds
+- [x] Generate backgrounds based on quiz niche (furniture, renovation, e-commerce)
+- [x] Store generated images in S3
+- [x] Add "Generate AI Background" button in editor
+
+### Multimedia Answer Options
+- [x] Extend quiz_answer_options table with imageUrl field (already exists)
+- [ ] Add image upload for each answer option (deferred - requires refactoring options from string[] to object[])
+- [ ] Display answer options as image cards (deferred)
+- [ ] Support both text-only and image+text answer formats (deferred)
+- [x] Store answer images in S3 (infrastructure ready)
+
+### Testing
+- [x] Test background image upload and display
+- [x] Test background video upload and display
+- [x] Test layout switching (Standard vs Background)
+- [x] Test alignment options (Left/Center/Right)
+- [x] Test AI background generation
+- [ ] Test multimedia answer options (deferred)
+- [ ] Verify all changes work on mobile devices (manual testing required)

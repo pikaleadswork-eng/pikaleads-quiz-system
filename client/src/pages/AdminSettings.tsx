@@ -51,6 +51,10 @@ export default function AdminSettings() {
   const [metaPixelId, setMetaPixelId] = useState("");
   const [clarityProjectId, setClarityProjectId] = useState("");
 
+  // Query declarations BEFORE useEffect
+  const { data: analyticsSettings, isLoading: analyticsLoading } = trpc.analyticsSettings.getAll.useQuery();
+  const { data: settings, isLoading: settingsLoading } = trpc.integrations.getAll.useQuery();
+
   // Load analytics settings
   useEffect(() => {
     if (analyticsSettings) {
@@ -63,9 +67,6 @@ export default function AdminSettings() {
       if (clarity) setClarityProjectId(clarity.trackingId);
     }
   }, [analyticsSettings]);
-
-  const { data: settings, isLoading: settingsLoading } = trpc.integrations.getAll.useQuery();
-  const { data: analyticsSettings, isLoading: analyticsLoading } = trpc.analyticsSettings.getAll.useQuery();
 
   const saveInstagramMutation = trpc.integrations.save.useMutation({
     onSuccess: () => {

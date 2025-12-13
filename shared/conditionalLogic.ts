@@ -99,7 +99,7 @@ export function evaluateRule(
 export function getNextQuestion(
   currentQuestionId: number,
   answers: Record<number, any>,
-  questions: Array<{ id: number; conditionalLogic?: string }>
+  questions: Array<{ id: number; conditionalLogic?: string | null }>
 ): number | null {
   const currentQuestion = questions.find((q) => q.id === currentQuestionId);
   if (!currentQuestion || !currentQuestion.conditionalLogic) {

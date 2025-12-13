@@ -12,8 +12,8 @@ interface QuizTemplate {
   id: number;
   name: string;
   niche: string;
-  description: string;
-  previewImage: string;
+  description: string | null;
+  previewImage: string | null;
   usageCount: number;
   quizData: string;
   designPreset: string;
@@ -41,7 +41,7 @@ export default function QuizTemplateLibrary({ onSelectTemplate }: QuizTemplateLi
 
   const filteredTemplates = allTemplates?.filter((template) => {
     const matchesSearch = template.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         template.description.toLowerCase().includes(searchQuery.toLowerCase());
+                         (template.description?.toLowerCase().includes(searchQuery.toLowerCase()) || false);
     const matchesNiche = selectedNiche === "all" || template.niche === selectedNiche;
     return matchesSearch && matchesNiche;
   }) || [];
@@ -113,7 +113,7 @@ export default function QuizTemplateLibrary({ onSelectTemplate }: QuizTemplateLi
                 <Card key={template.id} className="overflow-hidden hover:shadow-lg transition-shadow">
                   <div className="aspect-video relative overflow-hidden bg-muted">
                     <img
-                      src={template.previewImage}
+                      src={template.previewImage || "/placeholder-quiz.png"}
                       alt={template.name}
                       className="w-full h-full object-cover"
                     />
