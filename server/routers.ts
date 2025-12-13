@@ -14,6 +14,7 @@ import { integrationsRouter } from "./routers/integrations";
 import { conversationsRouter } from "./routers/conversations";
 import { settingsRouter } from "./routers/settings";
 import { webhooksRouter } from "./routers/webhooks";
+import { quizEditorRouter } from "./routers/quizEditor";
 import * as schema from "../drizzle/schema";
 import { getDb } from "./db";
 
@@ -1190,6 +1191,7 @@ ${input.campaign ? `**Campaign:** ${input.campaign}\n` : ""}
   integrations: integrationsRouter,
   conversations: conversationsRouter,
   webhooks: webhooksRouter,
+  quizEditor: quizEditorRouter,
   settings: settingsRouter,
 
   calendar: router({

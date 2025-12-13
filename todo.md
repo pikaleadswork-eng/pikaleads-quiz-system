@@ -932,7 +932,9 @@
 ### Advanced Quiz Editor
 - [x] Extend quiz schema with new question types (quizzes, quiz_questions, quiz_answer_options)
 - [x] Push database schema changes
-- [ ] Extend quiz schema with new question types (image_choice, slider, rating, file_upload)
+- [x] Create quiz editor backend router (CRUD for quizzes, questions, options)
+- [x] Add quizEditor router to appRouter
+- [ ] Create quiz editor UI page
 - [ ] Add conditional logic fields to questions (show_if, hide_if)
 - [ ] Add question branching/skip logic
 - [ ] Create image upload for question options
