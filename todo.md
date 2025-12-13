@@ -1640,3 +1640,130 @@
 - [x] Test Left/Center/Right alignment options (Buttons present)
 - [x] Verify all changes save to database (Save button + tRPC mutation working)
 - [x] Test real-time preview updates (Works for inline editing)
+
+
+## Phase 76 - COMPLETE Markviz Editor Rebuild (Based on Video Analysis)
+
+### Critical Understanding:
+- Markviz has NO inline editing - it uses a settings panel on the RIGHT side
+- Settings panel opens when clicking "Настройки" button (gear icon)
+- Preview is on the LEFT side (70% width), settings on RIGHT (30% width)
+- Top progress tabs switch between 5 pages: Стартовая | Вопросы | Контакти | Результати | Спасибо
+- Bottom design panel is ALWAYS visible (Фон | Дизайн | Вирівнювання)
+
+### Phase 76.1 - Remove Inline Editing & Create Settings Panel Layout
+- [x] Delete EditableText component (inline editing approach is wrong)
+- [x] Create QuizSettingsPanel component (right side, 30% width)
+- [x] Add "Налаштування" button to toggle settings panel visibility
+- [x] Create 2-column layout: LEFT preview (70%) + RIGHT settings (30%)
+- [x] Settings panel should slide in/out when "Налаштування" click### Phase 76.2 - Settings Panel Form Fields
+- [x] Logo upload button with preview
+- [x] Company name input field
+- [x] Title input field (not inline - regular input)
+- [x] Subtitle textarea (not inline - regular textarea)
+- [x] Button text input field
+- [x] **Bonus section:**
+  * [x] Enable bonus checkbox/toggle
+  * [x] Bonus text input field (shows when enabled)
+- [x] Phone number display (bottom of settings)
+- [x] Company name display (bottom of settings)### Phase 76.3 - Preview Panel (Left Side) Updates
+- [x] Show logo at top left (if uploaded)
+- [x] Show company name at top right
+- [x] Show title (from settings input)
+- [x] Show subtitle (from settings input)
+- [x] Show button with text (from settings input)
+- [x] Show bonus text (if enabled in settings)
+- [x] Show phone number at bottom
+- [x] Show company name at bottom
+- [ ] Show "Создан свой марквиз" link (not needed for MVP)
+- [ ] Show "Дисклеймер" button (bottom left) (not needed for MVP)
+- [x] All changes from settings panel update preview in REAL-TIME
+
+### Phase 76.4 - Top Progress Tabs
+- [x] Add horizontal tab bar at top of editor
+- [x] Create 5 tabs with icons:
+  * [x] Стартовая (Start page) - shows logo, title, subtitle, button
+  * [ ] Вопросы (Questions) - shows question editor (placeholder)
+  * [ ] Контакти (Contacts) - shows contact form editor (placeholder)
+  * [ ] Результати (Results) - shows results page editor (placeholder)
+  * [ ] Спасибо (Thank you) - shows thank you page editor (placeholder)
+- [x] Active tab highlighted in pink
+- [ ] Each tab shows different page content (only Стартовая works now)
+- [ ] Tab state persists in URL or component state
+
+### Phase 76.5 - Questions Editor (Вопросы Tab)
+- [ ] Create QuizQuestionsEditor component
+- [ ] Show "Заголовок страницы" input at top
+- [ ] Show "Как правильно составить вопросы?" help link
+- [ ] Question card list with:
+  * [ ] Question text input: "Заголовок вопроса"
+  * [ ] Answer type selector dropdown with 12+ types:
+    - Варианти відповідей (Text options)
+    - Варианти з картинками (Options with images)
+    - Варианти до картинки (Options to image)
+    - Емоджі (Emoji)
+    - Своє поле для вводу (Custom input)
+    - Випадаючий список (Dropdown)
+    - Дата (Date)
+    - Повзунок (Slider)
+    - Завантаження файлу (File upload)
+    - Сторінка (Page)
+    - Рейтинг (Rating)
+    - Група питань (Question group)
+    - Адреса (Address)
+  * [ ] Answer options editor (depends on answer type)
+  * [ ] Question settings (gear icon)
+  * [ ] Delete question button
+- [ ] "+" button to add new question
+- [ ] "Настроить форму" button at bottom
+- [ ] Drag-and-drop to reorder questions
+
+### Phase 76.6 - Database Schema Updates
+- [ ] Update quiz_design_settings table to include:
+  * [ ] logo_url (text)
+  * [ ] company_name (text)
+  * [ ] phone_number (text)
+  * [ ] bonus_enabled (boolean)
+  * [ ] bonus_text (text)
+  * [ ] disclaimer_text (text)
+- [ ] Create quiz_questions table:
+  * [ ] id (primary key)
+  * [ ] quiz_id (foreign key)
+  * [ ] question_text (text)
+  * [ ] question_type (enum: text_options, image_options, emoji, etc.)
+  * [ ] answer_options (json)
+  * [ ] order_index (integer)
+  * [ ] settings (json)
+  * [ ] created_at, updated_at
+
+### Phase 76.7 - tRPC Procedures
+- [ ] Update quizDesign.save to include new fields (logo, company, phone, bonus)
+- [ ] Create quizQuestions.list procedure
+- [ ] Create quizQuestions.create procedure
+- [ ] Create quizQuestions.update procedure
+- [ ] Create quizQuestions.delete procedure
+- [ ] Create quizQuestions.reorder procedure
+
+### Phase 76.8 - Bottom Design Panel (Keep as-is)
+- [ ] Verify Фон section works (Изображение | Видео)
+- [ ] Verify Дизайн section works (Стандартная | Фоновая картинка)
+- [ ] Verify Вирівнювання section works (Left | Center | Right)
+- [ ] All changes apply to preview in real-time
+
+### Phase 76.9 - Testing
+- [ ] Test settings panel toggle (open/close with Настройки button)
+- [ ] Test all form inputs update preview in real-time
+- [ ] Test logo upload and display
+- [ ] Test bonus section enable/disable
+- [ ] Test tab switching (Стартовая/Вопросы/Контакти/Результати/Спасибо)
+- [ ] Test question creation/editing/deletion
+- [ ] Test question reordering
+- [ ] Test save functionality (all data persists to database)
+- [ ] Test page reload (data loads from database)
+
+### Phase 76.10 - Cleanup
+- [ ] Remove old inline editing code
+- [ ] Remove EditableText component
+- [ ] Update imports in AdminQuizzes
+- [ ] Remove unused components
+- [ ] Test entire flow from AdminQuizzes → QuizDesignPage

@@ -1,210 +1,296 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useParams } from "wouter";
-import { trpc } from "@/lib/trpc";
-import { Loader2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Settings } from "lucide-react";
+import QuizSettingsPanel from "@/components/QuizSettingsPanel";
 import BottomDesignPanel from "@/components/BottomDesignPanel";
-import EditableText from "@/components/EditableText";
 
 export default function QuizDesignPage() {
   const { quizId } = useParams<{ quizId: string }>();
+
+  const [showSettings, setShowSettings] = useState(true);
   const [settings, setSettings] = useState({
+    logoUrl: "",
+    companyName: "PikaLeads",
+    title: "Введіть заголовок сторінки",
+    subtitle: "Додатковий текст-опис",
+    buttonText: "Почати",
+    bonusEnabled: false,
+    bonusText: "",
+    phoneNumber: "+380992377117",
     backgroundImage: "",
     backgroundVideo: "",
     layoutType: "standard" as "standard" | "background",
     alignment: "center" as "left" | "center" | "right",
-    primaryColor: "#8B5CF6",
-    accentColor: "#FFD93D",
+    primaryColor: "#FACC15",
+    accentColor: "#A855F7",
     fontFamily: "Inter",
-    logoUrl: "",
-    companyName: "",
-    title: "Введіть заголовок сторінки",
-    subtitle: "Додатковий текст-опис",
-    buttonText: "Почати",
   });
-
-  // Load existing design settings
-  const { data: designData, isLoading } = trpc.quizDesign.getByQuizId.useQuery(
-    { quizId: parseInt(quizId!) },
-    { enabled: !!quizId }
-  );
-
-  useEffect(() => {
-    if (designData) {
-      setSettings({
-        backgroundImage: designData.backgroundImage || "",
-        backgroundVideo: designData.backgroundVideo || "",
-        layoutType: (designData.layoutType as "standard" | "background") || "standard",
-        alignment: (designData.alignment as "left" | "center" | "right") || "center",
-        primaryColor: designData.primaryColor || "#8B5CF6",
-        accentColor: designData.accentColor || "#FFD93D",
-        fontFamily: designData.fontFamily || "Inter",
-        logoUrl: designData.logoImage || "",
-        companyName: "", // Not in schema
-        title: designData.titleText || "Введіть заголовок сторінки",
-        subtitle: designData.subtitleText || "Додатковий текст-опис",
-        buttonText: designData.buttonText || "Почати",
-      });
-    }
-  }, [designData]);
 
   const handleSettingsChange = (newSettings: Partial<typeof settings>) => {
     setSettings((prev) => ({ ...prev, ...newSettings }));
   };
 
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-zinc-900">
-        <Loader2 className="w-8 h-8 animate-spin text-purple-500" />
-      </div>
-    );
-  }
-
-  // Alignment classes
-  const alignmentClasses = {
-    left: "items-start text-left",
-    center: "items-center text-center",
-    right: "items-end text-right",
-  };
-
-  // Render actual quiz start page
   return (
-    <div className="relative min-h-screen bg-zinc-900 overflow-hidden">
-      {/* Quiz Start Page Preview */}
-      {settings.layoutType === "standard" ? (
-        // Standard layout: centered content with colored background
-        <div
-          className="min-h-screen flex flex-col justify-center px-8"
-          style={{
-            backgroundColor: settings.primaryColor,
-            fontFamily: settings.fontFamily,
-          }}
-        >
-          <div className={`flex flex-col gap-6 max-w-2xl mx-auto w-full ${alignmentClasses[settings.alignment]}`}>
-            {/* Logo */}
-            {settings.logoUrl && (
-              <img
-                src={settings.logoUrl}
-                alt="Logo"
-                className="w-16 h-16 object-contain"
-              />
-            )}
-
-            {/* Company Name */}
-            {settings.companyName && (
-              <p className="text-white/80 text-sm">{settings.companyName}</p>
-            )}
-
-            {/* Title */}
-            <EditableText
-              value={settings.title}
-              onChange={(value) => handleSettingsChange({ title: value })}
-              className="text-4xl md:text-5xl font-bold text-white"
-              placeholder="Клікніть для редагування заголовка"
-            />
-
-            {/* Subtitle */}
-            <EditableText
-              value={settings.subtitle}
-              onChange={(value) => handleSettingsChange({ subtitle: value })}
-              className="text-xl text-white/90"
-              placeholder="Клікніть для редагування підзаголовка"
-              multiline
-            />
-
-            {/* Button */}
-            <div className="inline-block">
-              <EditableText
-                value={settings.buttonText}
-                onChange={(value) => handleSettingsChange({ buttonText: value })}
-                className="px-8 py-4 rounded-full font-semibold text-lg shadow-lg inline-block"
-                style={{
-                  backgroundColor: settings.accentColor,
-                  color: "#000",
-                }}
-                placeholder="Клікніть для редагування кнопки"
-              />
-            </div>
-          </div>
+    <div className="h-screen flex flex-col bg-zinc-900">
+      {/* Top Progress Tabs */}
+      <div className="bg-zinc-800 border-b border-zinc-700 px-6 py-3">
+        <div className="flex items-center gap-4">
+          <button className="px-4 py-2 bg-pink-500 text-white rounded-lg font-medium">
+            Стартова
+          </button>
+          <button className="px-4 py-2 text-zinc-400 hover:text-white font-medium">
+            Питання
+          </button>
+          <button className="px-4 py-2 text-zinc-400 hover:text-white font-medium">
+            Контакти
+          </button>
+          <button className="px-4 py-2 text-zinc-400 hover:text-white font-medium">
+            Результати
+          </button>
+          <button className="px-4 py-2 text-zinc-400 hover:text-white font-medium">
+            Спасибо
+          </button>
         </div>
-      ) : (
-        // Background layout: split screen (content left, image right)
-        <div className="min-h-screen flex flex-col md:flex-row">
-          {/* Left side: Content */}
-          <div
-            className="flex-1 flex flex-col justify-center px-8 md:px-16 bg-white"
-            style={{ fontFamily: settings.fontFamily }}
-          >
-            <div className={`flex flex-col gap-6 max-w-xl ${alignmentClasses[settings.alignment]}`}>
-              {/* Logo */}
-              {settings.logoUrl && (
-                <img
-                  src={settings.logoUrl}
-                  alt="Logo"
-                  className="w-16 h-16 object-contain"
-                />
-              )}
+      </div>
 
-              {/* Company Name */}
-              {settings.companyName && (
-                <p className="text-gray-600 text-sm">{settings.companyName}</p>
-              )}
+      {/* Main Content Area */}
+      <div className="flex-1 flex overflow-hidden">
+        {/* Preview Panel (Left) */}
+        <div
+          className={`${
+            showSettings ? "w-[70%]" : "w-full"
+          } bg-zinc-900 p-8 overflow-y-auto transition-all duration-300`}
+        >
+          {/* Settings Toggle Button */}
+          <div className="flex justify-end mb-4">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setShowSettings(!showSettings)}
+              className="bg-zinc-800 border-zinc-700 text-white hover:bg-zinc-700"
+            >
+              <Settings className="w-4 h-4 mr-2" />
+              Налаштування
+            </Button>
+          </div>
 
-              {/* Title */}
-              <EditableText
-                value={settings.title}
-                onChange={(value) => handleSettingsChange({ title: value })}
-                className="text-4xl md:text-5xl font-bold"
-                style={{ color: settings.primaryColor }}
-                placeholder="Клікніть для редагування заголовка"
-              />
+          {/* Quiz Preview */}
+          <div className="max-w-4xl mx-auto">
+            {settings.layoutType === "standard" ? (
+              // Standard Layout
+              <div
+                className="min-h-[600px] rounded-lg p-12 flex flex-col justify-center"
+                style={{
+                  backgroundColor: settings.primaryColor,
+                  textAlign: settings.alignment,
+                }}
+              >
+                {/* Logo */}
+                {settings.logoUrl && (
+                  <div className="mb-4">
+                    <img
+                      src={settings.logoUrl}
+                      alt="Logo"
+                      className="h-12 object-contain"
+                      style={{
+                        marginLeft:
+                          settings.alignment === "left"
+                            ? "0"
+                            : settings.alignment === "right"
+                            ? "auto"
+                            : "auto",
+                        marginRight:
+                          settings.alignment === "right"
+                            ? "0"
+                            : settings.alignment === "left"
+                            ? "auto"
+                            : "auto",
+                      }}
+                    />
+                  </div>
+                )}
 
-              {/* Subtitle */}
-              <EditableText
-                value={settings.subtitle}
-                onChange={(value) => handleSettingsChange({ subtitle: value })}
-                className="text-xl text-gray-700"
-                placeholder="Клікніть для редагування підзаголовка"
-                multiline
-              />
+                {/* Company Name */}
+                {settings.companyName && (
+                  <p className="text-sm text-zinc-700 mb-8">
+                    {settings.companyName}
+                  </p>
+                )}
 
-              {/* Button */}
-              <div className="inline-block">
-                <EditableText
-                  value={settings.buttonText}
-                  onChange={(value) => handleSettingsChange({ buttonText: value })}
-                  className="px-8 py-4 rounded-full font-semibold text-lg shadow-lg inline-block"
+                {/* Title */}
+                <h1
+                  className="text-4xl font-bold mb-4"
+                  style={{ fontFamily: settings.fontFamily }}
+                >
+                  {settings.title}
+                </h1>
+
+                {/* Subtitle */}
+                <p className="text-lg text-zinc-700 mb-6">{settings.subtitle}</p>
+
+                {/* Bonus */}
+                {settings.bonusEnabled && settings.bonusText && (
+                  <div className="mb-6 p-4 bg-white/20 rounded-lg backdrop-blur-sm">
+                    <p className="text-sm font-medium">{settings.bonusText}</p>
+                  </div>
+                )}
+
+                {/* Button */}
+                <button
+                  className="px-8 py-4 rounded-full font-semibold text-white shadow-lg hover:scale-105 transition-transform"
                   style={{
                     backgroundColor: settings.accentColor,
-                    color: "#000",
+                    marginLeft:
+                      settings.alignment === "left"
+                        ? "0"
+                        : settings.alignment === "right"
+                        ? "auto"
+                        : "auto",
+                    marginRight:
+                      settings.alignment === "right"
+                        ? "0"
+                        : settings.alignment === "left"
+                        ? "auto"
+                        : "auto",
                   }}
-                  placeholder="Клікніть для редагування кнопки"
-                />
-              </div>
-            </div>
-          </div>
+                >
+                  {settings.buttonText}
+                </button>
 
-          {/* Right side: Background Image/Video */}
-          <div className="flex-1 relative overflow-hidden">
-            {settings.backgroundVideo ? (
-              <video
-                src={settings.backgroundVideo}
-                autoPlay
-                loop
-                muted
-                className="absolute inset-0 w-full h-full object-cover"
-              />
-            ) : settings.backgroundImage ? (
-              <img
-                src={settings.backgroundImage}
-                alt="Background"
-                className="absolute inset-0 w-full h-full object-cover"
-              />
+                {/* Footer */}
+                <div className="mt-12 pt-8 border-t border-zinc-700/20">
+                  <p className="text-sm text-zinc-700">{settings.phoneNumber}</p>
+                  <p className="text-xs text-zinc-600 mt-1 uppercase">
+                    {settings.companyName}
+                  </p>
+                </div>
+              </div>
             ) : (
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-600 to-pink-600" />
+              // Background Layout
+              <div
+                className="min-h-[600px] rounded-lg flex"
+                style={{
+                  backgroundImage: settings.backgroundImage
+                    ? `url(${settings.backgroundImage})`
+                    : "none",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }}
+              >
+                {/* Left: Background Image */}
+                <div className="w-1/2 flex items-center justify-center">
+                  {!settings.backgroundImage && (
+                    <div className="text-zinc-400 text-center">
+                      <p>Завантажте фонове зображення</p>
+                    </div>
+                  )}
+                </div>
+
+                {/* Right: Content */}
+                <div
+                  className="w-1/2 bg-white p-12 flex flex-col justify-center"
+                  style={{ textAlign: settings.alignment }}
+                >
+                  {/* Logo */}
+                  {settings.logoUrl && (
+                    <div className="mb-4">
+                      <img
+                        src={settings.logoUrl}
+                        alt="Logo"
+                        className="h-12 object-contain"
+                        style={{
+                          marginLeft:
+                            settings.alignment === "left"
+                              ? "0"
+                              : settings.alignment === "right"
+                              ? "auto"
+                              : "auto",
+                          marginRight:
+                            settings.alignment === "right"
+                              ? "0"
+                              : settings.alignment === "left"
+                              ? "auto"
+                              : "auto",
+                        }}
+                      />
+                    </div>
+                  )}
+
+                  {/* Company Name */}
+                  {settings.companyName && (
+                    <p className="text-sm text-zinc-600 mb-8">
+                      {settings.companyName}
+                    </p>
+                  )}
+
+                  {/* Title */}
+                  <h1
+                    className="text-3xl font-bold mb-4 text-zinc-900"
+                    style={{ fontFamily: settings.fontFamily }}
+                  >
+                    {settings.title}
+                  </h1>
+
+                  {/* Subtitle */}
+                  <p className="text-base text-zinc-600 mb-6">
+                    {settings.subtitle}
+                  </p>
+
+                  {/* Bonus */}
+                  {settings.bonusEnabled && settings.bonusText && (
+                    <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                      <p className="text-sm font-medium text-zinc-900">
+                        {settings.bonusText}
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Button */}
+                  <button
+                    className="px-8 py-4 rounded-full font-semibold text-white shadow-lg hover:scale-105 transition-transform"
+                    style={{
+                      backgroundColor: settings.accentColor,
+                      marginLeft:
+                        settings.alignment === "left"
+                          ? "0"
+                          : settings.alignment === "right"
+                          ? "auto"
+                          : "auto",
+                      marginRight:
+                        settings.alignment === "right"
+                          ? "0"
+                          : settings.alignment === "left"
+                          ? "auto"
+                          : "auto",
+                    }}
+                  >
+                    {settings.buttonText}
+                  </button>
+
+                  {/* Footer */}
+                  <div className="mt-12 pt-8 border-t border-zinc-200">
+                    <p className="text-sm text-zinc-700">
+                      {settings.phoneNumber}
+                    </p>
+                    <p className="text-xs text-zinc-500 mt-1 uppercase">
+                      {settings.companyName}
+                    </p>
+                  </div>
+                </div>
+              </div>
             )}
           </div>
         </div>
-      )}
+
+        {/* Settings Panel (Right) */}
+        <QuizSettingsPanel
+          isOpen={showSettings}
+          onClose={() => setShowSettings(false)}
+          settings={settings}
+          onSettingsChange={handleSettingsChange}
+        />
+      </div>
 
       {/* Bottom Design Panel */}
       <BottomDesignPanel
