@@ -1491,3 +1491,33 @@
 - [x] Add gallery to BackgroundUploader component
 - [x] Allow one-click selection from gallery
 - [x] Test gallery functionality
+
+
+## Phase 71 - Fix Markviz Layout System (CURRENT)
+
+### Layout Type Fixes
+- [x] Change layout types from "center/split/background" to "standard/background"
+- [x] Standard layout: content centered on white/colored background (no split)
+- [x] Background layout: SPLIT screen - content LEFT, background image RIGHT
+- [x] Update DesignLayoutSelector to show correct 2 options
+- [x] Update QuizPreviewPanel to render correct layouts
+
+### Split-Screen Implementation
+- [x] Implement 50/50 split for background layout type
+- [x] Left side: content area with title, subtitle, button
+- [x] Right side: full background image (no overlay)
+- [x] Ensure split works on desktop (mobile should stack vertically)
+
+### Alignment Controls
+- [x] Alignment only affects LEFT content area in split layout
+- [x] Left alignment: content aligned to left edge of left panel
+- [x] Center alignment: content centered in left panel
+- [x] Right alignment: content aligned to right edge of left panel
+- [x] Update QuizPreviewPanel to apply alignment correctly
+
+### Drag-and-Drop for Answer Images
+- [x] Add drag-and-drop zone to AnswerOptionRow
+- [x] Show drop zone visual feedback on dragover
+- [x] Handle file drop and validate image type/size
+- [x] Integrate with existing upload mutation
+- [x] Keep existing button upload as fallback

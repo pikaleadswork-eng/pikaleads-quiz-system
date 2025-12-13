@@ -53,7 +53,7 @@ describe("Quiz Design Router", () => {
       // First save
       await caller.quizDesign.save({
         quizId: 998,
-        layoutType: "center",
+        layoutType: "standard",
         primaryColor: "#FF0000",
         accentColor: "#00FF00",
         fontFamily: "Arial",
@@ -90,7 +90,7 @@ describe("Quiz Design Router", () => {
       // First save settings
       await caller.quizDesign.save({
         quizId: 997,
-        layoutType: "split",
+        layoutType: "standard",
         primaryColor: "#FACC15",
         accentColor: "#A855F7",
         fontFamily: "Inter",
@@ -101,7 +101,7 @@ describe("Quiz Design Router", () => {
       
       expect(result).not.toBeNull();
       expect(result?.quizId).toBe(997);
-      expect(result?.layoutType).toBe("split");
+      expect(result?.layoutType).toBe("standard");
       expect(result?.primaryColor).toBe("#FACC15");
     });
   });

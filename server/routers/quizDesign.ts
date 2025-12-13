@@ -26,7 +26,7 @@ export const quizDesignRouter = router({
   save: protectedProcedure
     .input(z.object({
       quizId: z.number(),
-      layoutType: z.enum(["center", "split", "background"]),
+      layoutType: z.enum(["standard", "background"]),
       backgroundImage: z.string().optional().nullable(),
       backgroundVideo: z.string().optional().nullable(),
       alignment: z.enum(["left", "center", "right"]).optional(),

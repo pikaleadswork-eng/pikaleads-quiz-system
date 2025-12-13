@@ -10,9 +10,9 @@ import {
 import { AlignLeft, AlignCenter, AlignRight, Layout, Image as ImageIcon } from "lucide-react";
 
 interface DesignLayoutSelectorProps {
-  layoutType: "center" | "split" | "background";
+  layoutType: "standard" | "background";
   alignment: "left" | "center" | "right";
-  onLayoutChange: (layout: "center" | "split" | "background") => void;
+  onLayoutChange: (layout: "standard" | "background") => void;
   onAlignmentChange: (alignment: "left" | "center" | "right") => void;
 }
 
@@ -35,7 +35,7 @@ export function DesignLayoutSelector({
         
         <div className="space-y-2">
           <Label className="text-zinc-300">Тип макету</Label>
-          <Select value={layoutType} onValueChange={(value) => onLayoutChange(value as "center" | "split" | "background")}>
+          <Select value={layoutType} onValueChange={(value) => onLayoutChange(value as "standard" | "background")}>
             <SelectTrigger className="bg-zinc-800 border-zinc-700">
               <div className="flex items-center gap-2">
                 {layoutType === "background" ? (
@@ -47,7 +47,7 @@ export function DesignLayoutSelector({
               </div>
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="center">
+              <SelectItem value="standard">
                 <div className="flex items-center gap-2">
                   <Layout className="w-4 h-4" />
                   Стандартна
@@ -62,9 +62,9 @@ export function DesignLayoutSelector({
             </SelectContent>
           </Select>
           <p className="text-xs text-zinc-500">
-            {layoutType === "center" 
-              ? "Контент по центру екрану" 
-              : "Контент на фоні зображення/відео"}
+            {layoutType === "standard" 
+              ? "Контент по центру екрану на білому/кольоровому фоні" 
+              : "Розділений екран: контент ліворуч, фонове зображення праворуч"}
           </p>
         </div>
       </div>

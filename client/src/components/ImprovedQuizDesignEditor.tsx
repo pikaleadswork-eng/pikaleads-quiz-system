@@ -22,7 +22,7 @@ import { DesignLayoutSelector } from "@/components/DesignLayoutSelector";
 import { QuizPreviewPanel } from "@/components/QuizPreviewPanel";
 
 interface QuizDesignSettings {
-  layoutType: "center" | "split" | "background";
+  layoutType: "standard" | "background";
   backgroundImage?: string;
   backgroundVideo?: string;
   alignment?: "left" | "center" | "right";
@@ -63,7 +63,7 @@ export default function ImprovedQuizDesignEditor({ quizId, initialSettings, onSa
   const uploadMutation = trpc.quizDesign.uploadImage.useMutation();
   
   const [settings, setSettings] = useState<QuizDesignSettings>({
-    layoutType: initialSettings?.layoutType || "split",
+    layoutType: initialSettings?.layoutType || "standard",
     backgroundImage: initialSettings?.backgroundImage || "",
     backgroundVideo: initialSettings?.backgroundVideo || "",
     alignment: initialSettings?.alignment || "center",
@@ -208,25 +208,7 @@ export default function ImprovedQuizDesignEditor({ quizId, initialSettings, onSa
                   onAlignmentChange={(alignment) => updateSetting("alignment", alignment)}
                 />
                 {/* Keep existing layout settings below */}
-                <div className="space-y-3">
-                  <Label className="text-white">{language === "uk" ? "Тип розміщення" : "Layout Type"}</Label>
-                  <Select value={settings.layoutType} onValueChange={(value: any) => updateSetting("layoutType", value)}>
-                    <SelectTrigger className="bg-zinc-800 border-zinc-700 text-white">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className="bg-zinc-800 border-zinc-700">
-                      <SelectItem value="center" className="text-white">
-                        {language === "uk" ? "По центру" : "Center"}
-                      </SelectItem>
-                      <SelectItem value="split" className="text-white">
-                        {language === "uk" ? "Стандартна (split)" : "Split Screen"}
-                      </SelectItem>
-                      <SelectItem value="background" className="text-white">
-                        {language === "uk" ? "Фонова картинка" : "Background Image"}
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+
 
                 <div className="space-y-3">
                   <Label className="text-white">{language === "uk" ? "Шрифт" : "Font Family"}</Label>
@@ -538,7 +520,7 @@ export default function ImprovedQuizDesignEditor({ quizId, initialSettings, onSa
               }}
             >
               {/* Preview content based on layout type */}
-              {settings.layoutType === "split" && (
+              {settings.layoutType === "standard" && (
                 <div className="grid md:grid-cols-2 gap-8 min-h-[500px]">
                   {/* Left: Text */}
                   <div className="flex flex-col justify-center space-y-6 p-8 bg-zinc-800 rounded-lg">
@@ -592,7 +574,8 @@ export default function ImprovedQuizDesignEditor({ quizId, initialSettings, onSa
                 </div>
               )}
 
-              {settings.layoutType === "center" && (
+              {/* Removed old center layout - now using standard */}
+              {false && (
                 <div className="text-center space-y-6 p-8 bg-zinc-800 rounded-lg">
                   {settings.logoImage && (
                     <img src={settings.logoImage} alt="Logo" className="h-12 object-contain mx-auto" />

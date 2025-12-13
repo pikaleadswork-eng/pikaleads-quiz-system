@@ -24,6 +24,7 @@ export function AnswerOptionRow({
   language,
 }: AnswerOptionRowProps) {
   const [uploading, setUploading] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
 
   const uploadMutation = trpc.quizDesign.uploadImage.useMutation({
     onSuccess: (data: { url: string }) => {
@@ -37,10 +38,7 @@ export function AnswerOptionRow({
     },
   });
 
-  const handleFileSelect = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
+  const handleFile = async (file: File) => {
     if (!file.type.startsWith("image/")) {
       toast.error(language === "uk" ? "Оберіть файл зображення" : "Please select an image file");
       return;
@@ -57,7 +55,7 @@ export function AnswerOptionRow({
     reader.onload = async () => {
       const base64 = reader.result as string;
       uploadMutation.mutate({
-        quizId: 0, // Not used in this context
+        quizId: 0,
         imageType: "background",
         imageData: base64,
         mimeType: file.type,
@@ -70,8 +68,50 @@ export function AnswerOptionRow({
     reader.readAsDataURL(file);
   };
 
+  const handleFileSelect = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    handleFile(file);
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+  };
+
+  const handleDrop = async (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+
+    const file = e.dataTransfer.files?.[0];
+    if (!file) return;
+    handleFile(file);
+  };
+
   return (
-    <div className="space-y-2">
+    <div 
+      className={`space-y-2 relative ${
+        isDragging ? "ring-2 ring-primary ring-offset-2 rounded-lg" : ""
+      }`}
+      onDragOver={handleDragOver}
+      onDragLeave={handleDragLeave}
+      onDrop={handleDrop}
+    >
+      {isDragging && (
+        <div className="absolute inset-0 bg-primary/10 rounded-lg flex items-center justify-center z-10 pointer-events-none">
+          <p className="text-sm font-medium text-primary">
+            {language === "uk" ? "Відпустіть, щоб завантажити" : "Drop to upload"}
+          </p>
+        </div>
+      )}
       <div className="flex items-center gap-2">
         <span className="flex-shrink-0 w-6 text-sm text-muted-foreground">
           {index + 1}.
