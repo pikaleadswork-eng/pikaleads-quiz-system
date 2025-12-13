@@ -1331,3 +1331,48 @@
 ### Notes
 - A/B testing UI postponed - existing AB test system already in place
 - Automatic performance tracking postponed - existing analytics system handles this
+
+
+## Phase 67 - Drag-and-Drop Question Editor with Templates
+
+### Drag-and-Drop Functionality
+- [ ] Install @dnd-kit/core, @dnd-kit/sortable, @dnd-kit/utilities
+- [ ] Create DraggableQuestionItem component
+- [ ] Implement drag handles with grip icon
+- [ ] Add smooth animations during drag
+- [ ] Update question order in database after drop
+- [ ] Add visual feedback (hover states, drop zones)
+
+### Question Duplication
+- [ ] Add "Duplicate" button to each question card
+- [ ] Implement one-click duplication logic
+- [ ] Copy all question properties (text, options, type, settings)
+- [ ] Insert duplicated question right after original
+- [ ] Show success toast notification
+
+### Question Templates System
+- [ ] Create question_templates table (title, category, questionData JSON, usageCount)
+- [ ] Add tRPC procedures (saveTemplate, getTemplates, deleteTemplate)
+- [ ] Add "Save as Template" button in question editor
+- [ ] Create QuestionTemplateLibrary component
+- [ ] Add category filter (General, Furniture, Renovation, E-commerce, Services)
+- [ ] Add search functionality for templates
+- [ ] Implement "Use Template" button to insert saved question
+- [ ] Track template usage count
+- [ ] Add template preview on hover
+
+### UI/UX Enhancements
+- [ ] Add keyboard shortcuts (Ctrl+D to duplicate, Delete to remove)
+- [ ] Add bulk actions (select multiple questions, delete/duplicate all)
+- [ ] Add question counter (Question 1 of 10)
+- [ ] Add collapse/expand all questions button
+- [ ] Improve mobile responsiveness for drag-and-drop
+
+## Phase 67 - COMPLETED ✅
+- [x] Install dnd-kit for drag-and-drop
+- [x] Create DraggableQuestionEditor component
+- [x] Create SortableQuestionItem component
+- [x] Add question_templates table to database
+- [x] Create questionTemplates tRPC router
+- [x] Create QuestionTemplateLibrary component
+- [x] Integrate into AdminQuizzes

@@ -786,3 +786,22 @@ export type QuizTemplate = typeof quizTemplates.$inferSelect;
 export type InsertQuizTemplate = typeof quizTemplates.$inferInsert;
 
 
+/**
+ * Question Templates table - reusable question templates
+ */
+export const questionTemplates = mysqlTable("question_templates", {
+  id: int("id").autoincrement().primaryKey(),
+  title: varchar("title", { length: 255 }).notNull(),
+  category: varchar("category", { length: 100 }).notNull(), // General, Furniture, Renovation, E-commerce, Services
+  questionText: text("questionText").notNull(),
+  questionType: varchar("questionType", { length: 20 }).default("single").notNull(), // single, multiple, text
+  options: text("options").notNull(), // JSON array of options
+  isRequired: int("isRequired").default(1).notNull(),
+  usageCount: int("usageCount").default(0).notNull(),
+  createdBy: int("createdBy"), // User ID who created the template
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type QuestionTemplate = typeof questionTemplates.$inferSelect;
+export type InsertQuestionTemplate = typeof questionTemplates.$inferInsert;

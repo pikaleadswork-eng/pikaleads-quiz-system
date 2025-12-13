@@ -24,6 +24,8 @@ import { ConfettiEffect } from "@/components/ConfettiEffect";
 import { QuizPreview } from "@/components/QuizPreview";
 import QuizDesignEditor from "@/components/QuizDesignEditor";
 import QuizTemplateLibrary from "@/components/QuizTemplateLibrary";
+import DraggableQuestionEditor from "@/components/DraggableQuestionEditor";
+import QuestionTemplateLibrary from "@/components/QuestionTemplateLibrary";
 import type { QuizTemplate } from "../../../shared/quizTemplates";
 
 interface QuizContent {
@@ -181,6 +183,7 @@ export default function AdminQuizzes() {
                   <TabsTrigger value="library">{i18n.language === "uk" ? "Бібліотека" : "Library"}</TabsTrigger>
                   <TabsTrigger value="landing">{t("quizzes.landingPage")}</TabsTrigger>
                   <TabsTrigger value="questions">{t("quizzes.questions")}</TabsTrigger>
+                  <TabsTrigger value="question-templates">{i18n.language === "uk" ? "Шаблони питань" : "Question Templates"}</TabsTrigger>
                   <TabsTrigger value="buttons">{t("quizzes.buttons")}</TabsTrigger>
                   <TabsTrigger value="ab-test">{t("quizzes.abTesting")}</TabsTrigger>
                 </TabsList>
@@ -305,11 +308,32 @@ export default function AdminQuizzes() {
 
                 {/* Questions Tab */}
                 <TabsContent value="questions" className="space-y-6">
-                  <ImprovedQuizEditor
+                  <DraggableQuestionEditor
                     questions={quizQuestions}
                     onChange={(questions) => {
                       setQuizQuestions(questions);
                       toast.success(t("quizEditor.questionsSaved"));
+                    }}
+                  />
+                </TabsContent>
+
+                {/* Question Templates Tab */}
+                <TabsContent value="question-templates" className="space-y-6">
+                  <QuestionTemplateLibrary
+                    onUseTemplate={(template) => {
+                      const newQuestion: QuizQuestion = {
+                        id: Date.now().toString(),
+                        question: template.questionText,
+                        type: template.questionType,
+                        options: template.options,
+                        required: template.isRequired === 1,
+                      };
+                      setQuizQuestions([...quizQuestions, newQuestion]);
+                      toast.success(
+                        i18n.language === "uk"
+                          ? "Питання додано з шаблону"
+                          : "Question added from template"
+                      );
                     }}
                   />
                 </TabsContent>

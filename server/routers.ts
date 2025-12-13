@@ -19,6 +19,7 @@ import { analyticsRouter } from "./routers/analytics";
 import { analyticsSettingsRouter } from "./routers/analyticsSettings";
 import { quizDesignRouter } from "./routers/quizDesign";
 import { quizTemplatesRouter } from "./routers/quizTemplates";
+import { questionTemplatesRouter } from "./routers/questionTemplates";
 // import { abTestingRouter } from "./routers/abTesting"; // Disabled - conflicts with existing AB test implementation
 import * as schema from "../drizzle/schema";
 import { getDb } from "./db";
@@ -1267,6 +1268,7 @@ ${input.campaign ? `**Campaign:** ${input.campaign}\n` : ""}
   analyticsSettings: analyticsSettingsRouter,
   quizDesign: quizDesignRouter,
   quizTemplates: quizTemplatesRouter,
+  questionTemplates: questionTemplatesRouter,
 
   calendar: router({
     getAppointments: protectedProcedure.query(async () => {
