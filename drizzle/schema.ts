@@ -622,6 +622,14 @@ export const quizzes = mysqlTable("quizzes", {
   name: varchar("name", { length: 255 }).notNull(),
   slug: varchar("slug", { length: 255 }).notNull().unique(), // URL-friendly identifier
   description: text("description"),
+  quizType: mysqlEnum("quizType", [
+    "lead_generation",    // Standard lead gen quiz
+    "ecommerce",          // Product discovery/recommendation
+    "calculator",         // Pricing calculator
+    "test",               // True/False knowledge test
+    "form",               // Simple lead capture form
+    "video_consultant",   // Video-based quiz
+  ]).default("lead_generation").notNull(),
   isActive: boolean("isActive").default(true).notNull(),
   createdBy: int("createdBy").notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),

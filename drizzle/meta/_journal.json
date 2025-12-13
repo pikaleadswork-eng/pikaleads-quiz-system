@@ -176,6 +176,13 @@
       "when": 1765580962152,
       "tag": "0024_wealthy_squirrel_girl",
       "breakpoints": true
+    },
+    {
+      "idx": 25,
+      "version": "5",
+      "when": 1765643940665,
+      "tag": "0025_useful_radioactive_man",
+      "breakpoints": true
     }
   ]
 }

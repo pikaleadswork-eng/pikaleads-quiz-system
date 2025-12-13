@@ -15,6 +15,12 @@ import { quizzes } from "@/lib/quizData";
 import QuizEditor from "@/components/QuizEditor";
 import ABTestManager from "@/components/ABTestManager";
 import { TemplateLibrary } from "@/components/TemplateLibrary";
+import { QuizTypeSelector, type QuizType } from "@/components/QuizTypeSelector";
+import { ImprovedQuizEditor, type QuizQuestion } from "@/components/ImprovedQuizEditor";
+import { ButtonCustomizer, type ButtonStyle } from "@/components/ButtonCustomizer";
+import { QuizProgressBar } from "@/components/QuizProgressBar";
+import { ScoreDisplay } from "@/components/ScoreDisplay";
+import { ConfettiEffect } from "@/components/ConfettiEffect";
 import type { QuizTemplate } from "../../../shared/quizTemplates";
 
 interface QuizContent {
@@ -32,6 +38,14 @@ export default function AdminQuizzes() {
   const [selectedQuiz, setSelectedQuiz] = useState<string>("meta-furniture");
   const [editedContent, setEditedContent] = useState<QuizContent | null>(null);
   const [previewMode, setPreviewMode] = useState(false);
+  const [quizType, setQuizType] = useState<QuizType>("lead_generation");
+  const [quizQuestions, setQuizQuestions] = useState<QuizQuestion[]>([]);
+  const [buttonStyle, setButtonStyle] = useState<ButtonStyle>({
+    text: "Продовжити",
+    color: "#FFD93D",
+    icon: "arrow",
+    animation: "none",
+  });
 
   if (loading) {
     return (
@@ -142,12 +156,25 @@ export default function AdminQuizzes() {
           <div className="lg:col-span-3">
             {editedContent && (
               <Tabs defaultValue="templates" className="space-y-6">
-                <TabsList className="grid w-full grid-cols-4">
+                <TabsList className="grid w-full grid-cols-6">
+                  <TabsTrigger value="type">{t("quizzes.quizType")}</TabsTrigger>
                   <TabsTrigger value="templates">{t("quizzes.templates")}</TabsTrigger>
                   <TabsTrigger value="landing">{t("quizzes.landingPage")}</TabsTrigger>
                   <TabsTrigger value="questions">{t("quizzes.questions")}</TabsTrigger>
+                  <TabsTrigger value="buttons">{t("quizzes.buttons")}</TabsTrigger>
                   <TabsTrigger value="ab-test">{t("quizzes.abTesting")}</TabsTrigger>
                 </TabsList>
+
+                {/* Quiz Type Tab */}
+                <TabsContent value="type" className="space-y-6">
+                  <QuizTypeSelector
+                    selectedType={quizType}
+                    onSelect={(type) => {
+                      setQuizType(type);
+                      toast.success(t("quizzes.quizTypeSelected"));
+                    }}
+                  />
+                </TabsContent>
 
                 {/* Templates Tab */}
                 <TabsContent value="templates" className="space-y-6">
@@ -211,14 +238,44 @@ export default function AdminQuizzes() {
 
                 {/* Questions Tab */}
                 <TabsContent value="questions" className="space-y-6">
-                  <QuizEditor
-                    quizId={selectedQuiz ? parseInt(selectedQuiz) : undefined}
-                    initialQuestions={[]}
-                    onSave={(questions) => {
-                      console.log("Saving questions:", questions);
-                      toast.success(t("quizEditor.saveQuiz"));
+                  <ImprovedQuizEditor
+                    questions={quizQuestions}
+                    onChange={(questions) => {
+                      setQuizQuestions(questions);
+                      toast.success(t("quizEditor.questionsSaved"));
                     }}
                   />
+                </TabsContent>
+
+                {/* Buttons Tab */}
+                <TabsContent value="buttons" className="space-y-6">
+                  <ButtonCustomizer
+                    buttonStyle={buttonStyle}
+                    onChange={(style) => {
+                      setButtonStyle(style);
+                      toast.success(t("quizzes.buttonStyleUpdated"));
+                    }}
+                  />
+                  
+                  {/* Preview section */}
+                  <Card className="p-6">
+                    <h3 className="text-xl font-bold text-foreground mb-4">
+                      {t("quizzes.previewComponents")}
+                    </h3>
+                    <div className="space-y-6">
+                      {/* Progress bar preview */}
+                      <div>
+                        <Label className="mb-2 block">{t("quizzes.progressBar")}</Label>
+                        <QuizProgressBar current={3} total={5} color={buttonStyle.color} />
+                      </div>
+                      
+                      {/* Score display preview */}
+                      <div>
+                        <Label className="mb-2 block">{t("quizzes.scoreDisplay")}</Label>
+                        <ScoreDisplay score={85} maxScore={100} />
+                      </div>
+                    </div>
+                  </Card>
                 </TabsContent>
 
                 {/* A/B Testing Tab */}
