@@ -1548,3 +1548,48 @@
 - [x] Display QR code in quiz editor
 - [x] Add instructions for mobile testing
 - [x] Ensure QR code updates when quiz changes
+
+
+## Phase 73 - Redesign Quiz Editor to Match Markviz (URGENT)
+
+### Problem Analysis
+- ❌ Current implementation has TWO previews (QuizPreviewPanel + main area)
+- ❌ Design controls are in TABS instead of bottom panel
+- ❌ We're editing "settings" instead of showing actual quiz page
+- ❌ Alignment doesn't work because it's applied to wrong elements
+
+### Remove Duplicate Previews
+- [ ] Remove QuizPreviewPanel component completely (deferred)
+- [ ] Remove ImprovedQuizDesignEditor two-column layout (deferred)
+- [x] Create single quiz page view that shows ACTUAL quiz start page
+- [ ] Remove unnecessary preview components (deferred)
+
+### Bottom Control Panel (Like Markviz)
+- [x] Create BottomDesignPanel component (fixed at bottom)
+- [x] Add Фон section with "Изображение" | "Видео" buttons
+- [x] Add Дизайн section with "Стандартная" | "Фоновая картинка" dropdown
+- [x] Add Выравнивание section with 3 icon buttons (left/center/right)
+- [x] Style panel to match Markviz (dark bg, white text, icons)
+
+### Real-time Preview
+- [x] Show actual quiz start page in main area
+- [x] Apply background changes IMMEDIATELY to quiz page
+- [x] Apply design type changes IMMEDIATELY
+- [x] Apply alignment changes IMMEDIATELY
+- [x] Ensure preview matches EXACTLY what user will see
+
+### Fix Alignment
+- [ ] Remove alignment from ImprovedQuizDesignEditor
+- [ ] Apply alignment CSS directly to quiz content container
+- [ ] Test left alignment (content flush left)
+- [ ] Test center alignment (content centered)
+- [ ] Test right alignment (content flush right)
+- [ ] Ensure alignment works in both Standard and Background layouts
+
+### Testing
+- [ ] Test background image upload and display
+- [ ] Test background video upload and display
+- [ ] Test switching between Standard and Background layouts
+- [ ] Test all 3 alignment options
+- [ ] Test on mobile devices
+- [ ] Compare with Markviz to ensure 100% match
