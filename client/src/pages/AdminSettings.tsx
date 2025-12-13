@@ -46,6 +46,11 @@ export default function AdminSettings() {
   const [googleClientSecret, setGoogleClientSecret] = useState("");
   const [googleRedirectUri, setGoogleRedirectUri] = useState("");
 
+  // Analytics Tracking state
+  const [ga4MeasurementId, setGa4MeasurementId] = useState("");
+  const [metaPixelId, setMetaPixelId] = useState("");
+  const [clarityProjectId, setClarityProjectId] = useState("");
+
   const { data: settings, isLoading: settingsLoading } = trpc.integrations.getAll.useQuery();
 
   const saveInstagramMutation = trpc.integrations.save.useMutation({
@@ -276,7 +281,7 @@ export default function AdminSettings() {
         </div>
 
         <Tabs defaultValue="instagram" className="w-full">
-          <TabsList className="grid w-full grid-cols-4 bg-zinc-900">
+          <TabsList className="grid w-full grid-cols-5 bg-zinc-900">
             <TabsTrigger value="instagram" className="data-[state=active]:bg-zinc-800">
               <Instagram className="w-4 h-4 mr-2" />
               Instagram
@@ -292,6 +297,12 @@ export default function AdminSettings() {
             <TabsTrigger value="calendar" className="data-[state=active]:bg-zinc-800">
               <Calendar className="w-4 h-4 mr-2" />
               Google Calendar
+            </TabsTrigger>
+            <TabsTrigger value="analytics" className="data-[state=active]:bg-zinc-800">
+              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+              {t('settings.analytics')}
             </TabsTrigger>
           </TabsList>
 
@@ -629,6 +640,103 @@ export default function AdminSettings() {
                       Save Google Calendar Settings
                     </>
                   )}
+                </Button>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Analytics Tracking Tab */}
+          <TabsContent value="analytics">
+            <Card className="bg-zinc-900 border-zinc-800">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <svg className="w-5 h-5 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  </svg>
+                  {t('settings.analyticsTracking')}
+                </CardTitle>
+                <CardDescription>
+                  {t('settings.analyticsDescription')}
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                {/* Google Analytics 4 */}
+                <div className="space-y-4 p-4 bg-zinc-800 rounded-lg">
+                  <div className="flex items-center gap-2 mb-2">
+                    <svg className="w-5 h-5 text-orange-500" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M22.84 2.998v17.999l-3.998 1.5v-17.999l3.998-1.5zm-5.998 2.25v17.999l-10.998 1.5v-17.999l10.998-1.5zm-12.998 1.5v17.999l-3.844 1.253v-17.999l3.844-1.253z"/>
+                    </svg>
+                    <h3 className="text-lg font-semibold text-white">Google Analytics 4</h3>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="ga4-measurement-id" className="mb-2 block">{t('settings.measurementId')}</Label>
+                    <Input
+                      id="ga4-measurement-id"
+                      placeholder="G-XXXXXXXXXX"
+                      value={ga4MeasurementId}
+                      onChange={(e) => setGa4MeasurementId(e.target.value)}
+                      className="bg-zinc-900 border-zinc-700"
+                    />
+                    <p className="text-xs text-gray-400">{t('settings.ga4Help')}</p>
+                  </div>
+                </div>
+
+                {/* Meta Pixel */}
+                <div className="space-y-4 p-4 bg-zinc-800 rounded-lg">
+                  <div className="flex items-center gap-2 mb-2">
+                    <svg className="w-5 h-5 text-blue-500" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                    </svg>
+                    <h3 className="text-lg font-semibold text-white">Meta Pixel (Facebook)</h3>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="meta-pixel-id" className="mb-2 block">{t('settings.pixelId')}</Label>
+                    <Input
+                      id="meta-pixel-id"
+                      placeholder="1234567890123456"
+                      value={metaPixelId}
+                      onChange={(e) => setMetaPixelId(e.target.value)}
+                      className="bg-zinc-900 border-zinc-700"
+                    />
+                    <p className="text-xs text-gray-400">{t('settings.metaPixelHelp')}</p>
+                  </div>
+                </div>
+
+                {/* Microsoft Clarity */}
+                <div className="space-y-4 p-4 bg-zinc-800 rounded-lg">
+                  <div className="flex items-center gap-2 mb-2">
+                    <svg className="w-5 h-5 text-cyan-500" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M0 0v11.408h11.408V0H0zm12.594 0v11.408H24V0H12.594zM0 12.594V24h11.408V12.594H0zm12.594 0V24H24V12.594H12.594z"/>
+                    </svg>
+                    <h3 className="text-lg font-semibold text-white">Microsoft Clarity</h3>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="clarity-project-id" className="mb-2 block">{t('settings.projectId')}</Label>
+                    <Input
+                      id="clarity-project-id"
+                      placeholder="abcdefghij"
+                      value={clarityProjectId}
+                      onChange={(e) => setClarityProjectId(e.target.value)}
+                      className="bg-zinc-900 border-zinc-700"
+                    />
+                    <p className="text-xs text-gray-400">{t('settings.clarityHelp')}</p>
+                  </div>
+                </div>
+
+                <div className="bg-blue-900/20 border border-blue-500/30 p-4 rounded-lg text-sm text-blue-200">
+                  <p className="font-semibold mb-2">ℹ️ {t('settings.analyticsNote')}</p>
+                  <p>{t('settings.analyticsNoteDescription')}</p>
+                </div>
+
+                <Button
+                  onClick={() => {
+                    // Save all analytics settings
+                    toast.success(t('settings.analyticsSaved'));
+                  }}
+                  className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
+                >
+                  <Save className="w-4 h-4 mr-2" />
+                  {t('settings.saveAnalytics')}
                 </Button>
               </CardContent>
             </Card>

@@ -21,6 +21,7 @@ import { ButtonCustomizer, type ButtonStyle } from "@/components/ButtonCustomize
 import { QuizProgressBar } from "@/components/QuizProgressBar";
 import { ScoreDisplay } from "@/components/ScoreDisplay";
 import { ConfettiEffect } from "@/components/ConfettiEffect";
+import { QuizPreview } from "@/components/QuizPreview";
 import type { QuizTemplate } from "../../../shared/quizTemplates";
 
 interface QuizContent {
@@ -110,13 +111,13 @@ export default function AdminQuizzes() {
                 {t("quizzes.backToAdmin")}
               </Button>
             </Link>
-            <h1 className="text-2xl font-bold text-foreground">Quiz Management</h1>
+            <h1 className="text-xl sm:text-2xl font-bold text-foreground">{t("quizzes.quizManagement")}</h1>
           </div>
           <div className="flex items-center gap-2">
             <Link href={`/admin/quizzes/${selectedQuiz}/analytics`}>
               <Button variant="outline" size="sm">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
-                Аналітика
+                {t("quizzes.analytics")}
               </Button>
             </Link>
             <Button
@@ -135,11 +136,20 @@ export default function AdminQuizzes() {
         </div>
 
         {/* Main Content */}
+        {previewMode ? (
+          <div className="max-w-4xl mx-auto">
+            <QuizPreview
+              questions={quizQuestions}
+              buttonStyle={buttonStyle}
+              onClose={() => setPreviewMode(false)}
+            />
+          </div>
+        ) : (
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Quiz Selector Sidebar */}
           <div className="lg:col-span-1">
             <Card className="p-4">
-              <h3 className="font-semibold text-foreground mb-4">Select Quiz</h3>
+              <h3 className="font-semibold text-foreground mb-4">{t("quizzes.selectQuizTitle")}</h3>
               <div className="space-y-2">
                 {quizzes.map((q) => (
                   <Button
@@ -162,7 +172,7 @@ export default function AdminQuizzes() {
           <div className="lg:col-span-3">
             {editedContent && (
               <Tabs defaultValue="templates" className="space-y-6">
-                <TabsList className="grid w-full grid-cols-6">
+                <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1">
                   <TabsTrigger value="type">{t("quizzes.quizType")}</TabsTrigger>
                   <TabsTrigger value="templates">{t("quizzes.templates")}</TabsTrigger>
                   <TabsTrigger value="landing">{t("quizzes.landingPage")}</TabsTrigger>
@@ -209,7 +219,7 @@ export default function AdminQuizzes() {
                     </h3>
                     <div className="space-y-4">
                       <div>
-                        <Label htmlFor="title">Title</Label>
+                        <Label htmlFor="title" className="mb-2 block">{t("quizzes.title")}</Label>
                         <Input
                           id="title"
                           value={editedContent.title}
@@ -223,7 +233,7 @@ export default function AdminQuizzes() {
                         />
                       </div>
                       <div>
-                        <Label htmlFor="subtitle">Subtitle</Label>
+                        <Label htmlFor="subtitle" className="mb-2 block">{t("quizzes.subtitle")}</Label>
                         <Textarea
                           id="subtitle"
                           value={editedContent.subtitle}
@@ -292,6 +302,7 @@ export default function AdminQuizzes() {
             )}
           </div>
         </div>
+        )}
       </div>
     </DashboardLayout>
   );

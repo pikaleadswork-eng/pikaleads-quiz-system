@@ -24,7 +24,7 @@ interface QuizPreviewProps {
   onClose?: () => void;
 }
 
-export default function QuizPreview({
+export function QuizPreview({
   questions,
   buttonStyle,
   onClose,

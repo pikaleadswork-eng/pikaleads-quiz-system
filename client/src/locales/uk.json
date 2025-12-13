@@ -422,6 +422,21 @@
     "averageResponseTime": "Середній час відповіді",
     "customerSatisfaction": "Задоволеність клієнтів"
   },
+  "settings": {
+    "analytics": "Аналітика",
+    "analyticsTracking": "Відстеження аналітики",
+    "analyticsDescription": "Налаштуйте Google Analytics 4, Meta Pixel та Microsoft Clarity для відстеження конверсій",
+    "measurementId": "Measurement ID",
+    "ga4Help": "Знайдіть в Google Analytics 4 → Admin → Data Streams → Ваш сайт → Measurement ID",
+    "pixelId": "Pixel ID",
+    "metaPixelHelp": "Знайдіть в Meta Events Manager → Data Sources → Ваш піксель → Pixel ID (16 цифр)",
+    "projectId": "Project ID",
+    "clarityHelp": "Знайдіть в Microsoft Clarity → Settings → Project ID (короткий код)",
+    "analyticsNote": "Важливо",
+    "analyticsNoteDescription": "Після збереження коди відстеження будуть автоматично додані на всі сторінки квізів. Дані почнуть надходити в реальному часі.",
+    "analyticsSaved": "Налаштування аналітики збережено!",
+    "saveAnalytics": "Зберегти налаштування аналітики"
+  },
   "quizzes": {
     "title": "Управління квізами",
     "backToAdmin": "Назад до адмінки",
@@ -445,7 +460,12 @@
     "previewComponents": "Попередній перегляд компонентів",
     "progressBar": "Прогрес-бар",
     "scoreDisplay": "Відображення балів",
-    "questionsSaved": "Питання збережено"
+    "questionsSaved": "Питання збережено",
+    "selectQuizTitle": "Оберіть квіз",
+    "quizManagement": "Управління квізами",
+    "analytics": "Аналітика",
+    "title": "Заголовок",
+    "subtitle": "Підзаголовок"
   },
   "quizEditor": {
     "title": "Редактор квізу",

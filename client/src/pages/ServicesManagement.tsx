@@ -449,7 +449,7 @@ export default function ServicesManagement() {
 
             <div className="space-y-4">
               <div>
-                <Label className="mb-2"htmlFor="service-name" className="mb-2 block">Service Name *</Label>
+                <Label htmlFor="service-name" className="mb-2 block">Service Name *</Label>
                 <Input
                   className="bg-zinc-800 border-zinc-700"
                   id="service-name"
@@ -460,7 +460,7 @@ export default function ServicesManagement() {
               </div>
 
               <div>
-                <Label className="mb-2"htmlFor="service-type" className="mb-2 block">Service Type *</Label>
+                <Label htmlFor="service-type" className="mb-2 block">Service Type *</Label>
                 <Input
                   className="bg-zinc-800 border-zinc-700"
                   id="service-type"
@@ -471,7 +471,7 @@ export default function ServicesManagement() {
               </div>
 
               <div>
-                <Label className="mb-2"htmlFor="service-price" className="mb-2 block">Price ($) *</Label>
+                <Label htmlFor="service-price" className="mb-2 block">Price ($) *</Label>
                 <Input
                   className="bg-zinc-800 border-zinc-700"
                   id="service-price"
@@ -483,7 +483,7 @@ export default function ServicesManagement() {
               </div>
 
               <div>
-                <Label className="mb-2"htmlFor="service-description" className="mb-2 block">Description</Label>
+                <Label htmlFor="service-description" className="mb-2 block">Description</Label>
                 <Textarea
                   className="bg-zinc-800 border-zinc-700"
                   id="service-description"
@@ -544,7 +544,7 @@ export default function ServicesManagement() {
 
             <div className="space-y-4">
               <div>
-                <Label className="mb-2"htmlFor="additional-name" className="mb-2 block">Service Name *</Label>
+                <Label htmlFor="additional-name" className="mb-2 block">Service Name *</Label>
                 <Input
                   className="bg-zinc-800 border-zinc-700"
                   id="additional-name"
@@ -555,7 +555,7 @@ export default function ServicesManagement() {
               </div>
 
               <div>
-                <Label className="mb-2"htmlFor="additional-price" className="mb-2 block">Price ($) *</Label>
+                <Label htmlFor="additional-price" className="mb-2 block">Price ($) *</Label>
                 <Input
                   className="bg-zinc-800 border-zinc-700"
                   id="additional-price"
@@ -567,7 +567,7 @@ export default function ServicesManagement() {
               </div>
 
               <div>
-                <Label className="mb-2"htmlFor="additional-description" className="mb-2 block">Description</Label>
+                <Label htmlFor="additional-description" className="mb-2 block">Description</Label>
                 <Textarea
                   className="bg-zinc-800 border-zinc-700"
                   id="additional-description"

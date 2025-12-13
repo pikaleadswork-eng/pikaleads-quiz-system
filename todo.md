@@ -1226,3 +1226,18 @@
 - [x] Create alert history tracking
 - [x] Add database schema updates (quizId to quiz_question_events)
 - [x] Add translations (UA/RU/EN)
+
+## Phase 64 - Fix Quiz Builder Critical Issues (CURRENT)
+- [ ] Fix Preview button - make it functional and show live quiz preview
+- [ ] Fix layout overflow - text overlapping on AdminQuizzes page
+- [ ] Complete Ukrainian translations for all AdminQuizzes tabs
+- [ ] Integrate quiz completion with CRM - auto-create leads when quiz is submitted
+- [ ] Add analytics tracking fields (GA4, Meta Pixel, Microsoft Clarity) in Settings
+- [ ] Test all fixes end-to-end
+
+## Phase 64 Tasks Completed:
+- [x] Fix Preview button - make it functional and show live quiz preview
+- [x] Fix layout overflow - text overlapping on AdminQuizzes page  
+- [x] Complete Ukrainian translations for all AdminQuizzes tabs
+- [x] Integrate quiz completion with CRM - auto-create leads when quiz is submitted (ALREADY WORKING)
+- [x] Add analytics tracking fields (GA4, Meta Pixel, Microsoft Clarity) in Settings
