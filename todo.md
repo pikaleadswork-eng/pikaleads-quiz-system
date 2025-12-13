@@ -1168,3 +1168,61 @@
 - [x] Add tRPC procedures for analytics data
 - [x] Add route in App.tsx
 - [x] Add Analytics button in AdminQuizzes
+
+## Phase 61 - Conditional Logic Builder
+- [ ] Design conditional logic data structure (conditions, operators, targets)
+- [ ] Update database schema with logic rules
+- [ ] Create ConditionalLogicBuilder component with visual editor
+- [ ] Add condition types (equals, not equals, greater than, less than, contains)
+- [ ] Implement drag-and-drop for logic rules
+- [ ] Add logic preview visualization
+- [ ] Add translations (UA/RU/EN)
+- [ ] Integrate with ImprovedQuizEditor
+
+## Phase 62 - Real-time Quiz Preview
+- [ ] Create QuizPreview component with live rendering
+- [ ] Implement side-by-side preview mode
+- [ ] Add support for all 10 question types
+- [ ] Implement conditional logic simulation
+- [ ] Add progress tracking in preview
+- [ ] Add reset/restart preview functionality
+- [ ] Add translations (UA/RU/EN)
+- [ ] Integrate with AdminQuizzes
+
+## Phase 63 - Quiz Performance Alerts
+- [ ] Create performance monitoring service
+- [ ] Add alert thresholds configuration (completion rate, drop-off)
+- [ ] Implement Telegram notification system
+- [ ] Create alert history tracking
+- [ ] Add alert settings UI
+- [ ] Add cron job for periodic checks
+- [ ] Add translations (UA/RU/EN)
+- [ ] Test with real quiz data
+
+## Phase 61 - Conditional Logic Builder (COMPLETED)
+- [x] Design conditional logic data structure (conditions, operators, targets)
+- [x] Update database schema with logic rules
+- [x] Create ConditionalLogicBuilder component with visual editor
+- [x] Add condition types (equals, not equals, greater than, less than, contains)
+- [x] Implement drag-and-drop for logic rules
+- [x] Add logic preview visualization
+- [x] Add translations (UA/RU/EN)
+- [x] Integrate with ImprovedQuizEditor
+
+## Phase 62 - Real-time Quiz Preview (COMPLETED)
+- [x] Create QuizPreview component with live rendering
+- [x] Implement side-by-side preview mode
+- [x] Add support for all 10 question types
+- [x] Implement conditional logic simulation
+- [x] Add progress tracking in preview
+- [x] Add reset/restart preview functionality
+- [x] Add translations (UA/RU/EN)
+- [x] Integrate with AdminQuizzes
+
+## Phase 63 - Quiz Performance Alerts (COMPLETED)
+- [x] Create performance monitoring service
+- [x] Add alert thresholds configuration (completion rate, drop-off)
+- [x] Implement Telegram notification system
+- [x] Create alert history tracking
+- [x] Add database schema updates (quizId to quiz_question_events)
+- [x] Add translations (UA/RU/EN)

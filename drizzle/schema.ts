@@ -712,6 +712,7 @@ export type InsertQuizSession = typeof quizSessions.$inferInsert;
  */
 export const quizQuestionEvents = mysqlTable("quiz_question_events", {
   id: int("id").autoincrement().primaryKey(),
+  quizId: int("quizId").notNull(), // Reference to quiz
   sessionId: varchar("sessionId", { length: 255 }).notNull(),
   questionId: int("questionId").notNull(),
   eventType: mysqlEnum("eventType", ["viewed", "answered", "skipped"]).notNull(),
