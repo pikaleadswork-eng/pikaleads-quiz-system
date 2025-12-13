@@ -98,11 +98,11 @@ export default function AdminPerformance() {
               </div>
               <div className="flex-1">
                 <h3 className="text-lg font-semibold text-foreground">
-                  🏆 Top Performer: {topPerformer.managerName}
+                  🏆 {t("performance.topPerformer")}: {topPerformer.managerName}
                 </h3>
                 <p className="text-sm text-muted-foreground">
-                  {topPerformer.totalProcessed} leads processed •{" "}
-                  {topPerformer.conversionRate}% conversion rate
+                  {topPerformer.totalProcessed} {t("performance.leadsProcessed")} •{" "}
+                  {topPerformer.conversionRate}% {t("performance.conversionRate")}
                 </p>
               </div>
             </div>
@@ -115,28 +115,28 @@ export default function AdminPerformance() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Rank</TableHead>
-                  <TableHead>Manager</TableHead>
-                  <TableHead>Email</TableHead>
+                  <TableHead>{t("performance.rank")}</TableHead>
+                  <TableHead>{t("performance.manager")}</TableHead>
+                  <TableHead>{t("common.email")}</TableHead>
                   <TableHead className="text-right">
                     <div className="flex items-center justify-end gap-2">
                       <TrendingUp className="w-4 h-4" />
-                      Assigned
+                      {t("performance.assigned")}
                     </div>
                   </TableHead>
                   <TableHead className="text-right">
                     <div className="flex items-center justify-end gap-2">
                       <TrendingUp className="w-4 h-4" />
-                      Processed
+                      {t("performance.processed")}
                     </div>
                   </TableHead>
                   <TableHead className="text-right">
                     <div className="flex items-center justify-end gap-2">
                       <Clock className="w-4 h-4" />
-                      Avg Response (hrs)
+                      {t("performance.avgResponse")}
                     </div>
                   </TableHead>
-                  <TableHead className="text-right">Conversion Rate</TableHead>
+                  <TableHead className="text-right">{t("performance.conversionRate")}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -180,7 +180,7 @@ export default function AdminPerformance() {
                 ) : (
                   <TableRow>
                     <TableCell colSpan={7} className="text-center text-muted-foreground py-8">
-                      No performance data yet
+                      {t("performance.noData")}
                     </TableCell>
                   </TableRow>
                 )}
@@ -194,13 +194,13 @@ export default function AdminPerformance() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-8">
             <Card className="p-6">
               <h3 className="text-sm font-medium text-muted-foreground mb-2">
-                Total Managers
+                {t("performance.totalManagers")}
               </h3>
               <p className="text-3xl font-bold text-foreground">{performance.length}</p>
             </Card>
             <Card className="p-6">
               <h3 className="text-sm font-medium text-muted-foreground mb-2">
-                Total Assigned
+                {t("performance.totalAssigned")}
               </h3>
               <p className="text-3xl font-bold text-foreground">
                 {performance.reduce((sum: number, m: any) => sum + m.totalAssigned, 0)}
@@ -208,7 +208,7 @@ export default function AdminPerformance() {
             </Card>
             <Card className="p-6">
               <h3 className="text-sm font-medium text-muted-foreground mb-2">
-                Total Processed
+                {t("performance.totalProcessed")}
               </h3>
               <p className="text-3xl font-bold text-foreground">
                 {performance.reduce((sum: number, m: any) => sum + m.totalProcessed, 0)}
@@ -216,7 +216,7 @@ export default function AdminPerformance() {
             </Card>
             <Card className="p-6">
               <h3 className="text-sm font-medium text-muted-foreground mb-2">
-                Team Avg Conversion
+                {t("performance.teamAvgConversion")}
               </h3>
               <p className="text-3xl font-bold text-foreground">
                 {Math.round(

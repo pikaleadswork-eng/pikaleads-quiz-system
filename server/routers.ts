@@ -1182,6 +1182,71 @@ ${input.campaign ? `**Campaign:** ${input.campaign}\n` : ""}
         
         return stats;
       }),
+    
+    getStats: publicProcedure
+      .input(z.object({ quizId: z.string() }))
+      .query(async ({ input }) => {
+        const { getABTestStats, getActiveVariantsForQuiz } = await import("./db");
+        
+        const assignments = await getABTestStats(input.quizId);
+        const variants = await getActiveVariantsForQuiz(input.quizId);
+        
+        const stats = variants.map(variant => {
+          const variantAssignments = assignments.filter((a: any) => a.variantId === variant.id);
+          const impressions = variantAssignments.length;
+          const conversions = variantAssignments.filter((a: any) => a.converted === 1).length;
+          const conversionRate = impressions > 0 ? (conversions / impressions) * 100 : 0;
+          
+          // Calculate confidence level (simplified)
+          const confidenceLevel = impressions > 100 ? Math.min(95, (impressions / 1000) * 100) : 0;
+          
+          return {
+            variantId: variant.id,
+            variantName: variant.variantName,
+            impressions,
+            conversions,
+            conversionRate,
+            isWinner: false,
+            confidenceLevel,
+          };
+        });
+        
+        return stats;
+      }),
+    
+    toggleVariant: adminProcedure
+      .input(z.object({
+        variantId: z.number(),
+        isActive: z.number(),
+      }))
+      .mutation(async ({ input }) => {
+        const db = await getDb();
+        if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Database not available" });
+        
+        const { abTestVariants } = await import("../drizzle/schema");
+        const { eq } = await import("drizzle-orm");
+        
+        await db.update(abTestVariants)
+          .set({ isActive: input.isActive })
+          .where(eq(abTestVariants.id, input.variantId));
+        
+        return { success: true };
+      }),
+    
+    deleteVariant: adminProcedure
+      .input(z.object({ variantId: z.number() }))
+      .mutation(async ({ input }) => {
+        const db = await getDb();
+        if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Database not available" });
+        
+        const { abTestVariants } = await import("../drizzle/schema");
+        const { eq } = await import("drizzle-orm");
+        
+        await db.delete(abTestVariants)
+          .where(eq(abTestVariants.id, input.variantId));
+        
+        return { success: true };
+      }),
   }),
 
   messaging: messagingRouter,

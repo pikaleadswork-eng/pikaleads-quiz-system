@@ -972,3 +972,87 @@
 - [ ] Fix any untranslated elements found
 - [ ] Fix any alignment/layout issues
 - [ ] Document all fixes made
+
+
+## Phase 50 - Translation Verification (COMPLETED)
+- [x] Fix Performance page translations
+- [x] Fix Calendar page translations  
+- [x] Fix Scripts page translations
+- [x] Fix Quizzes page translations
+- [x] Fix CRM page translations
+- [x] Add 35+ translation keys to uk.json and ru.json
+
+## Phase 51 - Quiz Editor UI with Drag-and-Drop (CURRENT)
+- [ ] Install @dnd-kit/core and @dnd-kit/sortable for drag-and-drop
+- [ ] Create QuizEditor component with drag-and-drop question reordering
+- [ ] Create QuestionForm component with forms for 10 question types:
+  - [ ] Text input
+  - [ ] Number input
+  - [ ] Email input
+  - [ ] Phone input
+  - [ ] Single choice (radio)
+  - [ ] Multiple choice (checkbox)
+  - [ ] Slider/range
+  - [ ] Date picker
+  - [ ] File upload
+  - [ ] Rating (stars)
+- [ ] Add real-time preview panel
+- [ ] Create backend tRPC procedures for quiz CRUD operations
+- [ ] Add database schema for quiz questions
+- [ ] Integrate with AdminQuizzes page
+
+## Phase 52 - A/B Testing System
+- [ ] Create ABTestManager component for variant management
+- [ ] Add UI for creating quiz variants (A/B/C/D)
+- [ ] Create database schema for A/B test variants and statistics
+- [ ] Create backend procedures for:
+  - [ ] Creating/updating variants
+  - [ ] Recording variant impressions
+  - [ ] Recording variant conversions
+  - [ ] Calculating conversion rates
+  - [ ] Determining statistical significance
+- [ ] Create real-time statistics dashboard with:
+  - [ ] Conversion rate for each variant
+  - [ ] Impressions count
+  - [ ] Confidence intervals
+  - [ ] Winner determination
+- [ ] Add variant distribution logic (equal split or weighted)
+- [ ] Create visualization charts for A/B test results
+- [ ] Add automatic winner selection based on statistical significance
+
+## Phase 53 - Testing and Delivery
+- [ ] Test drag-and-drop functionality
+- [ ] Test all 10 question type forms
+- [ ] Test quiz preview
+- [ ] Test A/B test variant creation
+- [ ] Test statistics tracking
+- [ ] Test winner determination
+- [ ] Create checkpoint
+- [ ] Deliver to user
+
+## Phase 50 - Translation Verification (COMPLETED)
+- [x] Verify Analytics page translations
+- [x] Verify Performance page translations (7 keys fixed)
+- [x] Verify Calendar page translations (20+ keys fixed)
+- [x] Verify Scripts page translations (3 keys fixed)
+- [x] Verify Quizzes page translations (4 keys fixed)
+- [x] Verify Webhooks page translations
+- [x] Verify CRM page translations (1 key fixed)
+
+## Phase 51 - Quiz Editor UI with Drag-and-Drop (COMPLETED)
+- [x] Install @dnd-kit packages (@dnd-kit/core, @dnd-kit/sortable, @dnd-kit/utilities)
+- [x] Create QuizEditor component with full functionality
+- [x] Implement drag-and-drop for questions reordering
+- [x] Create forms for 10 question types (text, number, email, phone, single_choice, multiple_choice, slider, date, file, rating)
+- [x] Add real-time preview panel (side-by-side view)
+- [x] Integrate with AdminQuizzes page (Questions tab)
+- [x] Add translations (UA/RU/EN) - 30+ keys
+
+## Phase 52 - A/B Testing System (COMPLETED)
+- [x] Create ABTestManager component with full UI
+- [x] Add variant creation dialog with traffic allocation
+- [x] Implement real-time statistics display (refreshes every 5 seconds)
+- [x] Add automatic winner detection (conversion rate > 5%, confidence > 95%, impressions > 100)
+- [x] Create tRPC procedures (getStats, toggleVariant, deleteVariant)
+- [x] Add translations (UA/RU/EN) - 25+ keys
+- [x] Integrate with AdminQuizzes page (A/B Testing tab)

@@ -360,7 +360,7 @@ export default function CRM() {
 
   const getStatusName = (statusId: number | null) => {
     const status = statuses?.find((s) => s.id === statusId);
-    return status?.name || "Unknown";
+    return status?.name || t("common.unknown");
   };
 
   if (authLoading || leadsLoading) {
@@ -741,7 +741,7 @@ export default function CRM() {
                         </TableCell>
                         <TableCell>
                           <Badge variant="secondary">
-                            {lead.source || "Unknown"}
+                            {lead.source || t("common.unknown")}
                           </Badge>
                         </TableCell>
                         <TableCell className="font-medium">

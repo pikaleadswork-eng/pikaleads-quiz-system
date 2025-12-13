@@ -194,7 +194,7 @@ export default function SalesScripts() {
               </Button>
             </Link>
             <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-              Sales Scripts
+              {t("scripts.title")}
             </h1>
             <p className="text-gray-400 mt-2">
               {t("scripts.subtitle")}
@@ -202,7 +202,7 @@ export default function SalesScripts() {
           </div>
           <Button onClick={() => setIsCreateOpen(true)}>
             <Plus className="w-4 h-4 mr-2" />
-            Create Script
+            {t("scripts.createScript")}
           </Button>
         </div>
 
@@ -295,9 +295,9 @@ export default function SalesScripts() {
               <Card className="bg-zinc-900 border-zinc-800">
                 <CardContent className="py-12 text-center">
                   <FileText className="w-12 h-12 mx-auto mb-4 text-gray-600" />
-                  <p className="text-gray-400">No scripts found</p>
+                  <p className="text-gray-400">{t("scripts.noScripts")}</p>
                   <Button onClick={() => setIsCreateOpen(true)} className="mt-4">
-                    Create your first script
+                    {t("scripts.createFirstScript")}
                   </Button>
                 </CardContent>
               </Card>

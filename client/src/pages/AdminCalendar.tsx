@@ -29,7 +29,7 @@ export default function AdminCalendar() {
 
   const handleCreateAppointment = async () => {
     if (!selectedLead || !title || !scheduledAt) {
-      alert("Please fill in all required fields");
+      alert(t("calendar.fillRequired"));
       return;
     }
 
@@ -51,10 +51,10 @@ export default function AdminCalendar() {
       setDuration("30");
       setMeetingLink("");
 
-      alert("Appointment created successfully!");
+      alert(t("calendar.appointmentCreated"));
     } catch (error) {
       console.error("Failed to create appointment:", error);
-      alert("Failed to create appointment");
+      alert(t("calendar.appointmentFailed"));
     }
   };
 
@@ -99,10 +99,10 @@ export default function AdminCalendar() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <Label htmlFor="lead">Select Lead *</Label>
+              <Label htmlFor="lead">{t("calendar.selectLead")} *</Label>
               <Select value={selectedLead?.toString() || ""} onValueChange={(v) => setSelectedLead(parseInt(v))}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Choose a lead" />
+                  <SelectValue placeholder={t("calendar.chooseLead")} />
                 </SelectTrigger>
                 <SelectContent>
                   {leads.map((lead: any) => (
@@ -115,29 +115,29 @@ export default function AdminCalendar() {
             </div>
 
             <div>
-              <Label htmlFor="title">Meeting Title *</Label>
+              <Label htmlFor="title">{t("calendar.meetingTitle")} *</Label>
               <Input
                 id="title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                placeholder="e.g., Initial Consultation"
+                placeholder={t("calendar.meetingTitlePlaceholder")}
               />
             </div>
 
             <div>
-              <Label htmlFor="description">Description</Label>
+              <Label htmlFor="description">{t("calendar.description")}</Label>
               <Textarea
                 id="description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                placeholder="Meeting agenda or notes"
+                placeholder={t("calendar.descriptionPlaceholder")}
                 rows={3}
               />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="scheduledAt">Date & Time *</Label>
+                <Label htmlFor="scheduledAt">{t("calendar.dateTime")} *</Label>
                 <Input
                   id="scheduledAt"
                   type="datetime-local"
@@ -147,35 +147,35 @@ export default function AdminCalendar() {
               </div>
 
               <div>
-                <Label htmlFor="duration">Duration (minutes)</Label>
+                <Label htmlFor="duration">{t("calendar.duration")}</Label>
                 <Select value={duration} onValueChange={setDuration}>
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="15">15 minutes</SelectItem>
-                    <SelectItem value="30">30 minutes</SelectItem>
-                    <SelectItem value="45">45 minutes</SelectItem>
-                    <SelectItem value="60">1 hour</SelectItem>
-                    <SelectItem value="90">1.5 hours</SelectItem>
-                    <SelectItem value="120">2 hours</SelectItem>
+                    <SelectItem value="15">{t("calendar.15min")}</SelectItem>
+                    <SelectItem value="30">{t("calendar.30min")}</SelectItem>
+                    <SelectItem value="45">{t("calendar.45min")}</SelectItem>
+                    <SelectItem value="60">{t("calendar.1hour")}</SelectItem>
+                    <SelectItem value="90">{t("calendar.1_5hours")}</SelectItem>
+                    <SelectItem value="120">{t("calendar.2hours")}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
             </div>
 
             <div>
-              <Label htmlFor="meetingLink">Meeting Link (optional)</Label>
+              <Label htmlFor="meetingLink">{t("calendar.meetingLink")}</Label>
               <Input
                 id="meetingLink"
                 value={meetingLink}
                 onChange={(e) => setMeetingLink(e.target.value)}
-                placeholder="Zoom, Google Meet, or Calendly link"
+                placeholder={t("calendar.meetingLinkPlaceholder")}
               />
             </div>
 
             <Button onClick={handleCreateAppointment} className="w-full" disabled={createAppointment.isPending}>
-              {createAppointment.isPending ? "Creating..." : "Create Appointment"}
+              {createAppointment.isPending ? t("calendar.creating") : t("calendar.createAppointment")}
             </Button>
           </CardContent>
         </Card>
@@ -183,12 +183,12 @@ export default function AdminCalendar() {
         {/* Upcoming Appointments List */}
         <Card>
           <CardHeader>
-            <CardTitle>Upcoming Appointments</CardTitle>
-            <CardDescription>Scheduled meetings with leads</CardDescription>
+            <CardTitle>{t("calendar.upcomingAppointments")}</CardTitle>
+            <CardDescription>{t("calendar.scheduledMeetings")}</CardDescription>
           </CardHeader>
           <CardContent>
             {!appointments || appointments.length === 0 ? (
-              <p className="text-muted-foreground text-center py-8">No appointments scheduled</p>
+              <p className="text-muted-foreground text-center py-8">{t("calendar.noAppointments")}</p>
             ) : (
               <div className="space-y-4">
                 {appointments.map((apt: any) => (
@@ -225,7 +225,7 @@ export default function AdminCalendar() {
                       <div className="flex items-center gap-1 text-sm">
                         <LinkIcon className="w-4 h-4" />
                         <a href={apt.meetingLink} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
-                          Join Meeting
+                          {t("calendar.joinMeeting")}
                         </a>
                       </div>
                     )}
@@ -240,12 +240,12 @@ export default function AdminCalendar() {
       {/* Calendly Integration Instructions */}
       <Card className="mt-6">
         <CardHeader>
-          <CardTitle>Calendly Integration</CardTitle>
-          <CardDescription>Connect your Calendly account for automatic scheduling</CardDescription>
+          <CardTitle>{t("calendar.calendlyIntegration")}</CardTitle>
+          <CardDescription>{t("calendar.calendlyDescription")}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-sm">
-            To enable Calendly integration, add your Calendly API key to the environment variables:
+            {t("calendar.calendlyInstructions")}
           </p>
           <div className="bg-muted p-4 rounded-lg font-mono text-sm">
             CALENDLY_API_KEY=your_api_key_here
@@ -253,7 +253,7 @@ export default function AdminCalendar() {
             CALENDLY_WEBHOOK_URL=https://yourdomain.com/api/webhooks/calendly
           </div>
           <p className="text-sm text-muted-foreground">
-            Once configured, appointments will automatically sync with your Calendly calendar, and clients will receive booking confirmations.
+            {t("calendar.calendlySync")}
           </p>
         </CardContent>
       </Card>
