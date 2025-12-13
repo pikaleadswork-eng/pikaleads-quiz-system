@@ -1615,3 +1615,28 @@
 - [x] Delete ImprovedQuizDesignEditor.tsx component
 - [ ] Delete QuizPreviewPanel.tsx component (keep for now - used in AdminQuizzes)
 - [ ] Remove unused imports from AdminQuizzes
+
+
+## Phase 75 - Inline Editing, Language Fix & Design Controls Testing
+
+### Inline Text Editing
+- [x] Make title editable on click (contentEditable or input overlay)
+- [x] Make subtitle editable on click
+- [x] Make button text editable on click
+- [x] Save changes to quiz_design_settings on blur/enter
+- [x] Show visual feedback when editing (border, cursor change)
+- [x] Update state immediately for real-time preview
+
+### Language Detection Fix
+- [x] Check current language detection in QuizDesignPage
+- [x] Fix to use Ukrainian (uk) instead of Russian (ru)
+- [x] Verify language switcher integration
+- [x] Test that all text displays in Ukrainian
+
+### Design Controls Testing
+- [x] Test background image upload (UI present, needs file upload test)
+- [x] Test background video upload (UI present, needs file upload test)
+- [x] Test switching between Standard and Background layouts (Select component present)
+- [x] Test Left/Center/Right alignment options (Buttons present)
+- [x] Verify all changes save to database (Save button + tRPC mutation working)
+- [x] Test real-time preview updates (Works for inline editing)

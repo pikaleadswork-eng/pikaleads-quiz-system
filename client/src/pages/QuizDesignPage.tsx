@@ -3,6 +3,7 @@ import { useParams } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { Loader2 } from "lucide-react";
 import BottomDesignPanel from "@/components/BottomDesignPanel";
+import EditableText from "@/components/EditableText";
 
 export default function QuizDesignPage() {
   const { quizId } = useParams<{ quizId: string }>();
@@ -16,9 +17,9 @@ export default function QuizDesignPage() {
     fontFamily: "Inter",
     logoUrl: "",
     companyName: "",
-    title: "Введите заголовок страницы",
-    subtitle: "Дополнительный текст-описание",
-    buttonText: "Начать",
+    title: "Введіть заголовок сторінки",
+    subtitle: "Додатковий текст-опис",
+    buttonText: "Почати",
   });
 
   // Load existing design settings
@@ -39,9 +40,9 @@ export default function QuizDesignPage() {
         fontFamily: designData.fontFamily || "Inter",
         logoUrl: designData.logoImage || "",
         companyName: "", // Not in schema
-        title: designData.titleText || "Введите заголовок страницы",
-        subtitle: designData.subtitleText || "Дополнительный текст-описание",
-        buttonText: designData.buttonText || "Начать",
+        title: designData.titleText || "Введіть заголовок сторінки",
+        subtitle: designData.subtitleText || "Додатковий текст-опис",
+        buttonText: designData.buttonText || "Почати",
       });
     }
   }, [designData]);
@@ -94,25 +95,35 @@ export default function QuizDesignPage() {
             )}
 
             {/* Title */}
-            <h1 className="text-4xl md:text-5xl font-bold text-white">
-              {settings.title}
-            </h1>
+            <EditableText
+              value={settings.title}
+              onChange={(value) => handleSettingsChange({ title: value })}
+              className="text-4xl md:text-5xl font-bold text-white"
+              placeholder="Клікніть для редагування заголовка"
+            />
 
             {/* Subtitle */}
-            {settings.subtitle && (
-              <p className="text-xl text-white/90">{settings.subtitle}</p>
-            )}
+            <EditableText
+              value={settings.subtitle}
+              onChange={(value) => handleSettingsChange({ subtitle: value })}
+              className="text-xl text-white/90"
+              placeholder="Клікніть для редагування підзаголовка"
+              multiline
+            />
 
             {/* Button */}
-            <button
-              className="px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:scale-105 transition-transform"
-              style={{
-                backgroundColor: settings.accentColor,
-                color: "#000",
-              }}
-            >
-              {settings.buttonText}
-            </button>
+            <div className="inline-block">
+              <EditableText
+                value={settings.buttonText}
+                onChange={(value) => handleSettingsChange({ buttonText: value })}
+                className="px-8 py-4 rounded-full font-semibold text-lg shadow-lg inline-block"
+                style={{
+                  backgroundColor: settings.accentColor,
+                  color: "#000",
+                }}
+                placeholder="Клікніть для редагування кнопки"
+              />
+            </div>
           </div>
         </div>
       ) : (
@@ -139,28 +150,36 @@ export default function QuizDesignPage() {
               )}
 
               {/* Title */}
-              <h1
+              <EditableText
+                value={settings.title}
+                onChange={(value) => handleSettingsChange({ title: value })}
                 className="text-4xl md:text-5xl font-bold"
                 style={{ color: settings.primaryColor }}
-              >
-                {settings.title}
-              </h1>
+                placeholder="Клікніть для редагування заголовка"
+              />
 
               {/* Subtitle */}
-              {settings.subtitle && (
-                <p className="text-xl text-gray-700">{settings.subtitle}</p>
-              )}
+              <EditableText
+                value={settings.subtitle}
+                onChange={(value) => handleSettingsChange({ subtitle: value })}
+                className="text-xl text-gray-700"
+                placeholder="Клікніть для редагування підзаголовка"
+                multiline
+              />
 
               {/* Button */}
-              <button
-                className="px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:scale-105 transition-transform"
-                style={{
-                  backgroundColor: settings.accentColor,
-                  color: "#000",
-                }}
-              >
-                {settings.buttonText}
-              </button>
+              <div className="inline-block">
+                <EditableText
+                  value={settings.buttonText}
+                  onChange={(value) => handleSettingsChange({ buttonText: value })}
+                  className="px-8 py-4 rounded-full font-semibold text-lg shadow-lg inline-block"
+                  style={{
+                    backgroundColor: settings.accentColor,
+                    color: "#000",
+                  }}
+                  placeholder="Клікніть для редагування кнопки"
+                />
+              </div>
             </div>
           </div>
 
