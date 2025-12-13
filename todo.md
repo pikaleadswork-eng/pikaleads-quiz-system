@@ -1056,3 +1056,41 @@
 - [x] Create tRPC procedures (getStats, toggleVariant, deleteVariant)
 - [x] Add translations (UA/RU/EN) - 25+ keys
 - [x] Integrate with AdminQuizzes page (A/B Testing tab)
+
+## Phase 53 - Quiz Template Library (IN PROGRESS)
+- [ ] Design template data structure (niche, questions, logic, scoring)
+- [ ] Create 10+ ready-to-use quiz templates:
+  - [ ] Furniture leads (Meta Ads)
+  - [ ] Apartment renovation (Meta Ads)
+  - [ ] E-commerce scaling (Meta Ads)
+  - [ ] Product sales (Meta Ads)
+  - [ ] Telegram growth (Meta Ads)
+  - [ ] Furniture leads (Google Ads)
+  - [ ] Renovation leads (Google Ads)
+  - [ ] E-commerce (Google Ads)
+  - [ ] Product sales (Google Ads)
+  - [ ] Telegram growth (Google Ads)
+- [ ] Create TemplateLibrary component with preview
+- [ ] Add "Use Template" functionality to create quiz from template
+- [ ] Add template categories and filtering
+- [ ] Add translations (UA/RU/EN)
+
+## Phase 54 - CRM Integration (TODO)
+- [ ] Create tRPC procedure for quiz submission with lead creation
+- [ ] Implement automatic manager assignment (round-robin or rules-based)
+- [ ] Map quiz answers to lead fields (name, phone, email, telegram, score)
+- [ ] Store quiz responses in database
+- [ ] Add lead source tracking (quiz_id, quiz_name)
+- [ ] Create interaction history entry for quiz submission
+- [ ] Send Telegram notification to assigned manager
+- [ ] Add translations (UA/RU/EN)
+
+## Phase 55 - Email Automation (TODO)
+- [ ] Create email template system for quiz results
+- [ ] Design personalized email templates by niche
+- [ ] Implement SMTP integration for sending emails
+- [ ] Create tRPC procedure for sending quiz result emails
+- [ ] Add email queue system for reliability
+- [ ] Include quiz score, recommendations, and CTA in emails
+- [ ] Add email tracking (sent, opened, clicked)
+- [ ] Add translations (UA/RU/EN)

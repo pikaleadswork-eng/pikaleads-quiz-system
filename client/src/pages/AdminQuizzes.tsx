@@ -14,6 +14,8 @@ import { Link } from "wouter";
 import { quizzes } from "@/lib/quizData";
 import QuizEditor from "@/components/QuizEditor";
 import ABTestManager from "@/components/ABTestManager";
+import { TemplateLibrary } from "@/components/TemplateLibrary";
+import type { QuizTemplate } from "../../../shared/quizTemplates";
 
 interface QuizContent {
   title: string;
@@ -25,7 +27,7 @@ interface QuizContent {
 }
 
 export default function AdminQuizzes() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { user, loading } = useAuth();
   const [selectedQuiz, setSelectedQuiz] = useState<string>("meta-furniture");
   const [editedContent, setEditedContent] = useState<QuizContent | null>(null);
@@ -139,12 +141,32 @@ export default function AdminQuizzes() {
           {/* Main Content Editor */}
           <div className="lg:col-span-3">
             {editedContent && (
-              <Tabs defaultValue="landing" className="space-y-6">
-                <TabsList className="grid w-full grid-cols-3">
+              <Tabs defaultValue="templates" className="space-y-6">
+                <TabsList className="grid w-full grid-cols-4">
+                  <TabsTrigger value="templates">{t("quizzes.templates")}</TabsTrigger>
                   <TabsTrigger value="landing">{t("quizzes.landingPage")}</TabsTrigger>
                   <TabsTrigger value="questions">{t("quizzes.questions")}</TabsTrigger>
                   <TabsTrigger value="ab-test">{t("quizzes.abTesting")}</TabsTrigger>
                 </TabsList>
+
+                {/* Templates Tab */}
+                <TabsContent value="templates" className="space-y-6">
+                  <TemplateLibrary
+                    onSelectTemplate={(template: QuizTemplate) => {
+                      // Convert template to quiz content
+                      const currentLang = (i18n.language as 'ua' | 'ru' | 'en') || 'ua';
+                      setEditedContent({
+                        title: template.title[currentLang],
+                        subtitle: template.subtitle[currentLang],
+                        questions: template.questions.map((q) => ({
+                          question: q.text[currentLang],
+                          options: q.options?.map(opt => opt[currentLang]) || [],
+                        })),
+                      });
+                      toast.success(t("quizzes.templateApplied"));
+                    }}
+                  />
+                </TabsContent>
 
                 {/* Landing Page Tab */}
                 <TabsContent value="landing" className="space-y-6">
