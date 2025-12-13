@@ -1767,3 +1767,102 @@
 - [ ] Update imports in AdminQuizzes
 - [ ] Remove unused components
 - [ ] Test entire flow from AdminQuizzes → QuizDesignPage
+
+
+## Phase 77 - Complete Questions Editor + Logo Upload + Database
+
+### Phase 77.1 - Database Schema Updates
+- [x] Update quiz_design_settings table to add:
+  * [x] logo_url (logoImage already exists)
+  * [x] company_name (companyName)
+  * [x] phone_number (phoneNumber)
+  * [x] bonus_enabled (bonusEnabled, boolean, default false)
+  * [x] bonus_text (bonusText already exists)
+- [x] Update quiz_questions table (already existed, updated):
+  * [x] id (primary key)
+  * [x] quiz_id (quizId, foreign key to quizzes)
+  * [x] question_text (questionText, text)
+  * [x] question_type (questionType, enum with 12 Markviz types)
+  * [x] answer_options (answerOptions, json) - stores options for each question type
+  * [x] order_index (orderIndex, integer) - for drag-and-drop ordering (renamed from 'order')
+  * [x] settings (settings, json) - additional question settings (renamed from 'config')
+  * [x] created_at, updated_at (timestamps)
+- [x] Run `pnpm db:push` to apply schema changes
+
+### Phase 77.2 - Logo Upload to S3
+- [x] Create file upload handler in QuizSettingsPanel
+- [x] Use storagePut from server/storage.ts
+- [x] Upload logo to S3 with path: `quiz-logos/{timestamp}-{randomSuffix}.{ext}`
+- [x] Update settings state with logo URL
+- [x] Show uploaded logo preview in settings panel
+- [ ] Show uploaded logo on quiz preview (needs QuizDesignPage update)
+
+### Phase 77.3 - Save Functionality for New Fields
+- [ ] Update quizDesign.save tRPC procedure to include:
+  * [ ] logoUrl (logo_url in DB)
+  * [ ] companyName (company_name in DB)
+  * [ ] phoneNumber (phone_number in DB)
+  * [ ] bonusEnabled (bonus_enabled in DB)
+  * [ ] bonusText (bonus_text in DB)
+- [ ] Update BottomDesignPanel to send new fields on save
+- [ ] Test save button saves all new fields to database
+- [ ] Test page reload loads saved data correctly
+
+### Phase 77.4 - Questions Editor UI (Вопросы Tab)
+- [ ] Create QuizQuestionsEditor component
+- [ ] Add tab state management to QuizDesignPage
+- [ ] Show QuizQuestionsEditor when "Питання" tab is active
+- [ ] Add "Заголовок страницы" input at top of questions editor
+- [ ] Add "+ Додати питання" button at bottom
+- [ ] Create QuestionCard component for each question with:
+  * [ ] Question text input
+  * [ ] Question type dropdown (12+ types)
+  * [ ] Answer options editor (changes based on type)
+  * [ ] Settings button (gear icon)
+  * [ ] Delete button
+  * [ ] Drag handle for reordering
+
+### Phase 77.5 - Question Types Implementation
+- [ ] Implement 12+ question types:
+  1. [ ] Варіанти відповідей (Text options) - multiple choice text
+  2. [ ] Варіанти з картинками (Options with images) - image grid selection
+  3. [ ] Варіанти до картинки (Options to image) - text options for one image
+  4. [ ] Емоджі (Emoji) - emoji picker
+  5. [ ] Своє поле для вводу (Custom input) - text input field
+  6. [ ] Випадаючий список (Dropdown) - select dropdown
+  7. [ ] Дата (Date) - date picker
+  8. [ ] Повзунок (Slider) - range slider
+  9. [ ] Завантаження файлу (File upload) - file input
+  10. [ ] Сторінка (Page) - info page (no question)
+  11. [ ] Рейтинг (Rating) - star rating
+  12. [ ] Група питань (Question group) - nested questions
+  13. [ ] Адреса (Address) - address autocomplete
+- [ ] Each type should have appropriate answer options editor
+- [ ] Preview should update based on question type
+
+### Phase 77.6 - Drag-and-Drop Reordering
+- [ ] Install @dnd-kit/core and @dnd-kit/sortable
+- [ ] Wrap question list in SortableContext
+- [ ] Make each QuestionCard draggable with useSortable
+- [ ] Update order_index in database on drop
+- [ ] Show visual feedback during drag (ghost, drop indicator)
+
+### Phase 77.7 - tRPC Procedures for Questions
+- [ ] Create quizQuestions router in server/routers.ts
+- [ ] Implement quizQuestions.list procedure (get all questions for quiz)
+- [ ] Implement quizQuestions.create procedure
+- [ ] Implement quizQuestions.update procedure (text, type, options, settings)
+- [ ] Implement quizQuestions.delete procedure
+- [ ] Implement quizQuestions.reorder procedure (update order_index)
+- [ ] Add database helpers in server/db.ts
+
+### Phase 77.8 - Testing
+- [ ] Test database schema changes applied correctly
+- [ ] Test logo upload and display
+- [ ] Test saving all new fields (logo, company, phone, bonus)
+- [ ] Test creating questions with different types
+- [ ] Test editing question text and options
+- [ ] Test deleting questions
+- [ ] Test drag-and-drop reordering
+- [ ] Test page reload preserves all data
+- [ ] Test switching between tabs (Стартова ↔ Питання)

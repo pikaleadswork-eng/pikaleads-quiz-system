@@ -649,21 +649,23 @@ export const quizQuestions = mysqlTable("quiz_questions", {
   quizId: int("quizId").notNull(), // Reference to quizzes table
   questionText: text("questionText").notNull(),
   questionType: mysqlEnum("questionType", [
-    "single_choice",      // Radio buttons
-    "multiple_choice",    // Checkboxes
-    "image_choice",       // Choice with images
-    "text_input",         // Short text
-    "textarea",           // Long text
-    "slider",             // Range slider
-    "rating",             // Star rating
-    "file_upload",        // File upload
-    "email",              // Email input
-    "phone",              // Phone input
+    "text_options",       // Варіанти відповідей (text multiple choice)
+    "image_options",      // Варіанти з картинками (image grid selection)
+    "emoji",              // Емоджі (emoji picker)
+    "custom_input",       // Своє поле для вводу (text input)
+    "dropdown",           // Випадаючий список (select dropdown)
+    "date",               // Дата (date picker)
+    "slider",             // Повзунок (range slider)
+    "file_upload",        // Завантаження файлу (file upload)
+    "page",               // Сторінка (info page, no question)
+    "rating",             // Рейтинг (star rating)
+    "question_group",     // Група питань (nested questions)
+    "address",            // Адреса (address autocomplete)
   ]).notNull(),
-  order: int("order").notNull(), // Display order
+  answerOptions: text("answerOptions"), // JSON string of answer options
+  orderIndex: int("orderIndex").default(0).notNull(), // Display order (renamed from 'order')
   isRequired: boolean("isRequired").default(true).notNull(),
-  config: text("config"), // JSON for question-specific config (e.g., slider min/max, rating stars count)
-  conditionalLogic: text("conditionalLogic"), // JSON for conditional display rules
+  settings: text("settings"), // JSON for question-specific settings (merged config + conditionalLogic)
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 });
@@ -759,7 +761,10 @@ export const quizDesignSettings = mysqlTable("quiz_design_settings", {
   titleText: text("titleText"),
   subtitleText: text("subtitleText"),
   buttonText: varchar("buttonText", { length: 100 }),
+  bonusEnabled: boolean("bonusEnabled").default(false).notNull(),
   bonusText: text("bonusText"),
+  companyName: varchar("companyName", { length: 255 }),
+  phoneNumber: varchar("phoneNumber", { length: 50 }),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 });

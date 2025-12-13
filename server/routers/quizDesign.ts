@@ -139,6 +139,30 @@ export const quizDesignRouter = router({
       }
     }),
 
+  // Upload logo to S3
+  uploadLogo: protectedProcedure
+    .input(z.object({
+      fileData: z.string(), // Base64 encoded file
+      fileName: z.string(),
+      mimeType: z.string(),
+    }))
+    .mutation(async ({ input }) => {
+      // Extract base64 data
+      const base64Data = input.fileData.split(",")[1] || input.fileData.replace(/^data:\w+\/\w+;base64,/, "");
+      const buffer = Buffer.from(base64Data, "base64");
+
+      // Generate unique file key
+      const timestamp = Date.now();
+      const randomSuffix = Math.random().toString(36).substring(7);
+      const extension = input.fileName.split(".").pop();
+      const fileKey = `quiz-logos/${timestamp}-${randomSuffix}.${extension}`;
+
+      // Upload to S3
+      const { url } = await storagePut(fileKey, buffer, input.mimeType);
+
+      return { url, fileKey };
+    }),
+
   // Upload background image or video to S3
   uploadBackground: protectedProcedure
     .input(z.object({

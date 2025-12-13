@@ -25,7 +25,7 @@ export const quizEditorRouter = router({
         .select()
         .from(quizQuestions)
         .where(eq(quizQuestions.quizId, input.id))
-        .orderBy(quizQuestions.order);
+        .orderBy(quizQuestions.orderIndex);
 
       const questionsWithOptions = await Promise.all(
         questions.map(async (question: any) => {
@@ -106,21 +106,23 @@ export const quizEditorRouter = router({
         quizId: z.number(),
         questionText: z.string().min(1),
         questionType: z.enum([
-          "single_choice",
-          "multiple_choice",
-          "image_choice",
-          "text_input",
-          "textarea",
+          "text_options",
+          "image_options",
+          "emoji",
+          "custom_input",
+          "dropdown",
+          "date",
           "slider",
-          "rating",
           "file_upload",
-          "email",
-          "phone",
+          "page",
+          "rating",
+          "question_group",
+          "address",
         ]),
-        order: z.number(),
+        orderIndex: z.number(),
         isRequired: z.boolean().default(true),
-        config: z.string().optional(), // JSON string
-        conditionalLogic: z.string().optional(), // JSON string
+        answerOptions: z.string().optional(), // JSON string
+        settings: z.string().optional(), // JSON string
       })
     )
     .mutation(async ({ input }) => {
@@ -138,22 +140,24 @@ export const quizEditorRouter = router({
         questionText: z.string().optional(),
         questionType: z
           .enum([
-            "single_choice",
-            "multiple_choice",
-            "image_choice",
-            "text_input",
-            "textarea",
+            "text_options",
+            "image_options",
+            "emoji",
+            "custom_input",
+            "dropdown",
+            "date",
             "slider",
-            "rating",
             "file_upload",
-            "email",
-            "phone",
+            "page",
+            "rating",
+            "question_group",
+            "address",
           ])
           .optional(),
-        order: z.number().optional(),
+        orderIndex: z.number().optional(),
         isRequired: z.boolean().optional(),
-        config: z.string().optional(),
-        conditionalLogic: z.string().optional(),
+        answerOptions: z.string().optional(),
+        settings: z.string().optional(),
       })
     )
     .mutation(async ({ input }) => {

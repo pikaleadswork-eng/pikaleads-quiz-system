@@ -4,6 +4,8 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { Upload, X } from "lucide-react";
+import { trpc } from "@/lib/trpc";
+import { useState } from "react";
 
 interface QuizSettingsPanelProps {
   isOpen: boolean;
@@ -27,6 +29,47 @@ export default function QuizSettingsPanel({
   settings,
   onSettingsChange,
 }: QuizSettingsPanelProps) {
+  const [isUploading, setIsUploading] = useState(false);
+  const uploadLogoMutation = trpc.quizDesign.uploadLogo.useMutation();
+
+  const handleLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Check file size (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      alert("Розмір файлу не повинен перевищувати 5MB");
+      return;
+    }
+
+    // Check file type
+    if (!file.type.startsWith("image/")) {
+      alert("Будь ласка, завантажте зображення");
+      return;
+    }
+
+    setIsUploading(true);
+    try {
+      // Convert file to base64
+      const reader = new FileReader();
+      reader.onloadend = async () => {
+        const base64 = reader.result as string;
+        const result = await uploadLogoMutation.mutateAsync({
+          fileData: base64,
+          fileName: file.name,
+          mimeType: file.type,
+        });
+        onSettingsChange({ logoUrl: result.url });
+      };
+      reader.readAsDataURL(file);
+    } catch (error) {
+      console.error("Logo upload failed:", error);
+      alert("Помилка завантаження логотипу");
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -59,17 +102,26 @@ export default function QuizSettingsPanel({
               <Upload className="w-6 h-6 text-zinc-400" />
             </div>
           )}
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => {
-              // TODO: Implement file upload
-              console.log("Upload logo");
-            }}
-          >
-            <Upload className="w-4 h-4 mr-2" />
-            Завантажити
-          </Button>
+          <label htmlFor="logo-upload">
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={isUploading}
+              asChild
+            >
+              <span className="cursor-pointer">
+                <Upload className="w-4 h-4 mr-2" />
+                {isUploading ? "Завантаження..." : "Завантажити"}
+              </span>
+            </Button>
+          </label>
+          <input
+            id="logo-upload"
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={handleLogoUpload}
+          />
         </div>
       </div>
 

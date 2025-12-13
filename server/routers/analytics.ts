@@ -98,7 +98,7 @@ export const analyticsRouter = router({
         .select()
         .from(schema.quizQuestions)
         .where(eq(schema.quizQuestions.quizId, quiz[0].id))
-        .orderBy(schema.quizQuestions.order);
+        .orderBy(schema.quizQuestions.orderIndex);
 
       // Get all question events for this quiz
       const sessionIds = sessions.map((s) => s.sessionId);

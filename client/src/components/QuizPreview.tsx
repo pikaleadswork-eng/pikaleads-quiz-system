@@ -42,8 +42,9 @@ export function QuizPreview({
   };
 
   const handleNext = () => {
-    // Check if conditional logic exists
-    if (currentQuestion.conditionalLogic) {
+    // Check if conditional logic exists in settings
+    const settings = currentQuestion.settings ? JSON.parse(currentQuestion.settings) : {};
+    if (settings.conditionalLogic) {
       const nextQuestionId = getNextQuestion(
         currentQuestion.id,
         answers,
@@ -79,12 +80,12 @@ export function QuizPreview({
   };
 
   const renderQuestionInput = () => {
-    const config = currentQuestion.config
-      ? JSON.parse(currentQuestion.config)
+    const config = currentQuestion.settings
+      ? JSON.parse(currentQuestion.settings)
       : {};
 
     switch (currentQuestion.questionType) {
-      case "text_input":
+      case "custom_input":
         return (
           <Input
             value={answers[currentQuestion.id] || ""}
@@ -94,7 +95,7 @@ export function QuizPreview({
           />
         );
 
-      case "textarea":
+      case "page":
         return (
           <Textarea
             value={answers[currentQuestion.id] || ""}
@@ -104,7 +105,7 @@ export function QuizPreview({
           />
         );
 
-      case "email":
+      case "custom_input": // email type removed, using custom_input
         return (
           <Input
             type="email"
@@ -115,7 +116,7 @@ export function QuizPreview({
           />
         );
 
-      case "phone":
+      case "custom_input": // phone type removed, using custom_input
         return (
           <Input
             type="tel"
@@ -126,7 +127,7 @@ export function QuizPreview({
           />
         );
 
-      case "single_choice":
+      case "text_options":
         const singleOptions = config.options || [];
         return (
           <RadioGroup
@@ -144,7 +145,7 @@ export function QuizPreview({
           </RadioGroup>
         );
 
-      case "multiple_choice":
+      case "image_options":
         const multiOptions = config.options || [];
         const selectedOptions = answers[currentQuestion.id] || [];
         return (
