@@ -20,6 +20,7 @@ import { toast } from "sonner";
 import { BackgroundUploader } from "@/components/BackgroundUploader";
 import { DesignLayoutSelector } from "@/components/DesignLayoutSelector";
 import { QuizPreviewPanel } from "@/components/QuizPreviewPanel";
+import QRCodePreview from "@/components/QRCodePreview";
 
 interface QuizDesignSettings {
   layoutType: "standard" | "background";
@@ -509,6 +510,13 @@ export default function ImprovedQuizDesignEditor({ quizId, initialSettings, onSa
 
         {/* Right Side - Live Preview */}
         <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="text-lg font-semibold text-white">Live Preview</h3>
+            <QRCodePreview 
+              quizUrl={`${window.location.origin}/quiz/${quizId}`}
+              quizName={`Quiz ${quizId}`}
+            />
+          </div>
           <QuizPreviewPanel settings={settings} />
           <Card className="p-6 bg-zinc-900 border-zinc-800">
             <div 

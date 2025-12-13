@@ -1521,3 +1521,30 @@
 - [x] Handle file drop and validate image type/size
 - [x] Integrate with existing upload mutation
 - [x] Keep existing button upload as fallback
+
+
+## Phase 72 - Fix Sidebar Overlap & Quiz UX (CURRENT)
+
+### Sidebar Layout Fix
+- [x] Fix DashboardLayout sidebar text overlapping main content
+- [x] Ensure proper margin-left on main content area
+- [x] Verify sidebar width is consistent
+- [x] Test on different screen sizes
+
+### Quiz Transitions
+- [x] Add fade/slide transitions between questions
+- [x] Implement smooth animation when moving to next question
+- [x] Add transition when going back to previous question
+- [x] Ensure transitions work on mobile
+
+### Progress Bar
+- [x] Create progress bar component showing current/total questions
+- [x] Display progress bar at top of quiz screen
+- [x] Update progress bar as user answers questions
+- [x] Show percentage completion
+
+### QR Code Preview
+- [x] Generate QR code for quiz preview URL
+- [x] Display QR code in quiz editor
+- [x] Add instructions for mobile testing
+- [x] Ensure QR code updates when quiz changes

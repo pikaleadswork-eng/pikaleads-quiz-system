@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
+import { motion, AnimatePresence } from "framer-motion";
 import QuizLayout from "./QuizLayout";
 import ProgressBar from "./ProgressBar";
 import QuizQuestion from "./QuizQuestion";
@@ -145,19 +146,36 @@ export default function Quiz({ config }: QuizProps) {
 
   return (
     <QuizLayout title={quizData.title} subtitle={quizData.subtitle}>
-      <div className="max-w-5xl mx-auto">
+       <div className="max-w-5xl mx-auto">
         <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
-
-        {!isFormStep ? (
-          <QuizQuestion
-            question={quizData.questions[currentStep - 1]!.question}
-            options={quizData.questions[currentStep - 1]!.options}
-            onSelect={handleAnswerSelect}
-            selectedAnswer={selectedAnswer}
-          />
-        ) : (
-          <LeadForm key={language} onSubmit={handleFormSubmit} isLoading={submitLead.isPending} />
-        )}
+        <AnimatePresence mode="wait">
+          {!isFormStep ? (
+            <motion.div
+              key={currentStep}
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -50 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+            >
+              <QuizQuestion
+                question={quizData.questions[currentStep - 1]!.question}
+                options={quizData.questions[currentStep - 1]!.options}
+                onSelect={handleAnswerSelect}
+                selectedAnswer={selectedAnswer}
+              />
+            </motion.div>
+          ) : (
+            <motion.div
+              key="form"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+            >
+              <LeadForm key={language} onSubmit={handleFormSubmit} isLoading={submitLead.isPending} />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </QuizLayout>
   );
