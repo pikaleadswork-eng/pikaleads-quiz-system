@@ -136,6 +136,12 @@ export default function AdminQuizzes() {
                 {t("quizzes.analytics")}
               </Button>
             </Link>
+            <Link href={`/admin/quizzes/${selectedQuiz}/design`}>
+              <Button variant="outline" size="sm" className="bg-purple-600 hover:bg-purple-700 text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+                {i18n.language === "uk" ? "Редактор дизайну" : "Design Editor"}
+              </Button>
+            </Link>
             <Button
               variant="outline"
               size="sm"
@@ -188,15 +194,14 @@ export default function AdminQuizzes() {
           <div className="lg:col-span-3">
             {editedContent && (
               <Tabs defaultValue="templates" className="space-y-6">
-                <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1">
+                <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-8 gap-1">
                   <TabsTrigger value="type">{t("quizzes.quizType")}</TabsTrigger>
                   <TabsTrigger value="templates">{t("quizzes.templates")}</TabsTrigger>
-                  <TabsTrigger value="design">{i18n.language === "uk" ? "Дизайн" : "Design"}</TabsTrigger>
                   <TabsTrigger value="library">{i18n.language === "uk" ? "Бібліотека" : "Library"}</TabsTrigger>
                   <TabsTrigger value="landing">{t("quizzes.landingPage")}</TabsTrigger>
                   <TabsTrigger value="questions">{t("quizzes.questions")}</TabsTrigger>
                   <TabsTrigger value="question-templates">{i18n.language === "uk" ? "Шаблони питань" : "Question Templates"}</TabsTrigger>
-                  <TabsTrigger value="buttons">{t("quizzes.buttons")}</TabsTrigger>
+                  <TabsTrigger value="buttons">{i18n.language === "uk" ? "Кнопки" : "Buttons"}</TabsTrigger>
                   <TabsTrigger value="ab-test">{t("quizzes.abTesting")}</TabsTrigger>
                 </TabsList>
 
@@ -230,17 +235,7 @@ export default function AdminQuizzes() {
                   />
                 </TabsContent>
 
-                {/* Design Tab */}
-                <TabsContent value="design" className="space-y-6">
-                  <ImprovedQuizDesignEditor
-                    quizId={selectedQuiz}
-                    initialSettings={{}}
-                    onSave={(settings) => {
-                      console.log("Design settings saved:", settings);
-                      toast.success(i18n.language === "uk" ? "Дизайн збережено!" : "Design saved!");
-                    }}
-                  />
-                </TabsContent>
+
 
                 {/* Library Tab */}
                 <TabsContent value="library" className="space-y-6">

@@ -1593,3 +1593,25 @@
 - [ ] Test all 3 alignment options
 - [ ] Test on mobile devices
 - [ ] Compare with Markviz to ensure 100% match
+
+
+## Phase 74 - Remove Old Design Editor
+
+### Remove Old Editor
+- [x] Remove "Дизайн" tab from AdminQuizzes
+- [x] Remove ImprovedQuizDesignEditor import and usage
+- [x] Add "Редактор дизайну" button in quiz list or header
+- [x] Button should navigate to `/admin/quizzes/:id/design`
+- [x] Test navigation to new QuizDesignPage
+
+### Inline Text Editing
+- [ ] Make title editable on click in QuizDesignPage
+- [ ] Make subtitle editable on click in QuizDesignPage
+- [ ] Make button text editable on click in QuizDesignPage
+- [ ] Save changes to database on blur/enter
+- [ ] Show visual feedback when editing
+
+### Cleanup
+- [x] Delete ImprovedQuizDesignEditor.tsx component
+- [ ] Delete QuizPreviewPanel.tsx component (keep for now - used in AdminQuizzes)
+- [ ] Remove unused imports from AdminQuizzes
