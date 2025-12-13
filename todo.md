@@ -1271,3 +1271,63 @@
   * Footer with phone and company name
   * Disclaimer button bottom-right
   * Powered by watermark bottom-left
+
+
+## Phase 66 - Markviz Visual Editor + Templates + A/B Testing
+
+### Visual Quiz Editor (Markviz-style)
+- [ ] Add quiz_design_settings table to database (layout_type, background_image, logo, colors, fonts)
+- [ ] Create QuizDesignEditor component with live preview
+- [ ] Implement 3 layout options:
+  * [ ] "center" - image top, text center below
+  * [ ] "split" - text left, image right (50/50)
+  * [ ] "background" - full-screen background image with text overlay
+- [ ] Add image upload for background/hero images
+- [ ] Add logo upload functionality
+- [ ] Implement inline text editing (title, subtitle, description, button text)
+- [ ] Add color picker for primary/accent colors
+- [ ] Add font selector (Google Fonts integration)
+- [ ] Save design settings to database per quiz
+- [ ] Apply design settings to QuizLanding component dynamically
+
+### Quiz Templates Library
+- [ ] Create quiz_templates table (name, niche, questions, design_preset)
+- [ ] Build 15 pre-built templates:
+  * [ ] Furniture Store Quiz (3 variants)
+  * [ ] Apartment Renovation Quiz (3 variants)
+  * [ ] E-Commerce Product Selector (3 variants)
+  * [ ] Professional Services Quiz (3 variants)
+  * [ ] Real Estate Quiz (3 variants)
+- [ ] Create TemplateLibrary UI component with preview cards
+- [ ] Implement "Use Template" button to clone template to new quiz
+- [ ] Add template preview modal with full quiz flow
+
+### A/B Testing System
+- [ ] Add ab_test_variants table (quiz_id, variant_name, design_settings, is_active)
+- [ ] Add ab_test_stats table (variant_id, views, starts, completions, conversion_rate)
+- [ ] Create ABTestManager component in admin panel
+- [ ] Implement variant creation UI (duplicate quiz with different design)
+- [ ] Add traffic splitting logic (50/50 or custom percentages)
+- [ ] Track variant performance automatically
+- [ ] Build comparison dashboard showing:
+  * [ ] Views per variant
+  * [ ] Start rate per variant
+  * [ ] Completion rate per variant
+  * [ ] Conversion rate comparison
+- [ ] Implement automatic winner detection (statistical significance)
+- [ ] Add "Promote Winner" button to make winning variant primary
+
+## Phase 66 - Markviz Visual Editor & Template Library ✅
+
+### Completed Features
+- [x] Database schema extended with quiz_design_settings and quiz_templates tables
+- [x] Visual quiz editor (QuizDesignEditor) with 3 layout options (center, split, background)
+- [x] Image upload functionality with S3 integration
+- [x] 15 pre-built quiz templates created for 5 niches (furniture, renovation, ecommerce, services, realestate)
+- [x] Template library UI (QuizTemplateLibrary) with search and filtering
+- [x] Integration into AdminQuizzes with Design and Library tabs
+- [x] tRPC procedures for quiz design and templates
+
+### Notes
+- A/B testing UI postponed - existing AB test system already in place
+- Automatic performance tracking postponed - existing analytics system handles this

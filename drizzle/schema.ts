@@ -1,4 +1,4 @@
-import { boolean, decimal, int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { boolean, decimal, int, json, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
 
 /**
  * Core user table backing auth flow.
@@ -132,11 +132,13 @@ export const abTestVariants = mysqlTable("ab_test_variants", {
   isControl: int("isControl").default(0).notNull(), // 0 = variant, 1 = control
   trafficPercentage: int("trafficPercentage").default(50).notNull(),
   isActive: int("isActive").default(1).notNull(),
+  isWinner: int("isWinner").default(0).notNull(), // 0 = no, 1 = yes
   // Variant content (JSON)
   title: text("title"),
   subtitle: text("subtitle"),
   bonus: text("bonus"),
   questions: text("questions"), // JSON string
+  designSettings: text("designSettings"), // JSON string of design configuration
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 });
@@ -738,3 +740,49 @@ export const analyticsSettings = mysqlTable("analytics_settings", {
 
 export type AnalyticsSetting = typeof analyticsSettings.$inferSelect;
 export type InsertAnalyticsSetting = typeof analyticsSettings.$inferInsert;
+
+
+/**
+ * Quiz Design Settings table - store visual design configuration for each quiz
+ */
+export const quizDesignSettings = mysqlTable("quiz_design_settings", {
+  id: int("id").autoincrement().primaryKey(),
+  quizId: int("quizId").notNull().unique(),
+  layoutType: varchar("layoutType", { length: 20 }).default("split").notNull(), // center, split, background
+  backgroundImage: text("backgroundImage"), // S3 URL
+  logoImage: text("logoImage"), // S3 URL
+  primaryColor: varchar("primaryColor", { length: 7 }).default("#FACC15"), // Yellow
+  accentColor: varchar("accentColor", { length: 7 }).default("#A855F7"), // Purple
+  fontFamily: varchar("fontFamily", { length: 100 }).default("Inter"),
+  titleText: text("titleText"),
+  subtitleText: text("subtitleText"),
+  buttonText: varchar("buttonText", { length: 100 }),
+  bonusText: text("bonusText"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type QuizDesignSetting = typeof quizDesignSettings.$inferSelect;
+export type InsertQuizDesignSetting = typeof quizDesignSettings.$inferInsert;
+
+/**
+ * Quiz Templates table - pre-built quiz templates for different niches
+ */
+export const quizTemplates = mysqlTable("quiz_templates", {
+  id: int("id").autoincrement().primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  niche: varchar("niche", { length: 100 }).notNull(), // furniture, renovation, ecommerce, services, realestate
+  description: text("description"),
+  previewImage: text("previewImage"), // S3 URL
+  quizData: text("quizData").notNull(), // JSON string - Full quiz configuration (questions, design, etc.)
+  designPreset: text("designPreset").notNull(), // JSON string - Design settings
+  isActive: int("isActive").default(1).notNull(),
+  usageCount: int("usageCount").default(0).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type QuizTemplate = typeof quizTemplates.$inferSelect;
+export type InsertQuizTemplate = typeof quizTemplates.$inferInsert;
+
+

@@ -17,6 +17,9 @@ import { webhooksRouter } from "./routers/webhooks";
 import { quizEditorRouter } from "./routers/quizEditor";
 import { analyticsRouter } from "./routers/analytics";
 import { analyticsSettingsRouter } from "./routers/analyticsSettings";
+import { quizDesignRouter } from "./routers/quizDesign";
+import { quizTemplatesRouter } from "./routers/quizTemplates";
+// import { abTestingRouter } from "./routers/abTesting"; // Disabled - conflicts with existing AB test implementation
 import * as schema from "../drizzle/schema";
 import { getDb } from "./db";
 
@@ -1262,6 +1265,8 @@ ${input.campaign ? `**Campaign:** ${input.campaign}\n` : ""}
   analytics: analyticsRouter,
   settings: settingsRouter,
   analyticsSettings: analyticsSettingsRouter,
+  quizDesign: quizDesignRouter,
+  quizTemplates: quizTemplatesRouter,
 
   calendar: router({
     getAppointments: protectedProcedure.query(async () => {

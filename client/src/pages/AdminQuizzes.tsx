@@ -22,6 +22,8 @@ import { QuizProgressBar } from "@/components/QuizProgressBar";
 import { ScoreDisplay } from "@/components/ScoreDisplay";
 import { ConfettiEffect } from "@/components/ConfettiEffect";
 import { QuizPreview } from "@/components/QuizPreview";
+import QuizDesignEditor from "@/components/QuizDesignEditor";
+import QuizTemplateLibrary from "@/components/QuizTemplateLibrary";
 import type { QuizTemplate } from "../../../shared/quizTemplates";
 
 interface QuizContent {
@@ -175,6 +177,8 @@ export default function AdminQuizzes() {
                 <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1">
                   <TabsTrigger value="type">{t("quizzes.quizType")}</TabsTrigger>
                   <TabsTrigger value="templates">{t("quizzes.templates")}</TabsTrigger>
+                  <TabsTrigger value="design">{i18n.language === "uk" ? "Дизайн" : "Design"}</TabsTrigger>
+                  <TabsTrigger value="library">{i18n.language === "uk" ? "Бібліотека" : "Library"}</TabsTrigger>
                   <TabsTrigger value="landing">{t("quizzes.landingPage")}</TabsTrigger>
                   <TabsTrigger value="questions">{t("quizzes.questions")}</TabsTrigger>
                   <TabsTrigger value="buttons">{t("quizzes.buttons")}</TabsTrigger>
@@ -207,6 +211,53 @@ export default function AdminQuizzes() {
                         })),
                       });
                       toast.success(t("quizzes.templateApplied"));
+                    }}
+                  />
+                </TabsContent>
+
+                {/* Design Tab */}
+                <TabsContent value="design" className="space-y-6">
+                  <QuizDesignEditor
+                    quizId={selectedQuiz}
+                    initialSettings={{}}
+                    onSave={(settings) => {
+                      console.log("Design settings saved:", settings);
+                      toast.success(i18n.language === "uk" ? "Дизайн збережено!" : "Design saved!");
+                    }}
+                  />
+                </TabsContent>
+
+                {/* Library Tab */}
+                <TabsContent value="library" className="space-y-6">
+                  <QuizTemplateLibrary
+                    onSelectTemplate={(template) => {
+                      // Apply template to current quiz
+                      try {
+                        const quizData = JSON.parse(template.quizData);
+                        const designPreset = JSON.parse(template.designPreset);
+                        
+                        // Update quiz content
+                        setEditedContent({
+                          title: designPreset.titleText || template.name,
+                          subtitle: designPreset.subtitleText || template.description,
+                          questions: quizData.questions.map((q: any) => ({
+                            question: q.text,
+                            options: q.options,
+                          })),
+                        });
+                        
+                        toast.success(
+                          i18n.language === "uk" 
+                            ? `Шаблон "${template.name}" застосовано!` 
+                            : `Template "${template.name}" applied!`
+                        );
+                      } catch (error) {
+                        toast.error(
+                          i18n.language === "uk" 
+                            ? "Помилка застосування шаблону" 
+                            : "Error applying template"
+                        );
+                      }
                     }}
                   />
                 </TabsContent>
