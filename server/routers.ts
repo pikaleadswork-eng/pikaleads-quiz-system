@@ -16,6 +16,7 @@ import { settingsRouter } from "./routers/settings";
 import { webhooksRouter } from "./routers/webhooks";
 import { quizEditorRouter } from "./routers/quizEditor";
 import { analyticsRouter } from "./routers/analytics";
+import { analyticsSettingsRouter } from "./routers/analyticsSettings";
 import * as schema from "../drizzle/schema";
 import { getDb } from "./db";
 
@@ -1260,6 +1261,7 @@ ${input.campaign ? `**Campaign:** ${input.campaign}\n` : ""}
   quizEditor: quizEditorRouter,
   analytics: analyticsRouter,
   settings: settingsRouter,
+  analyticsSettings: analyticsSettingsRouter,
 
   calendar: router({
     getAppointments: protectedProcedure.query(async () => {

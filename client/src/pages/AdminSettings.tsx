@@ -51,7 +51,21 @@ export default function AdminSettings() {
   const [metaPixelId, setMetaPixelId] = useState("");
   const [clarityProjectId, setClarityProjectId] = useState("");
 
+  // Load analytics settings
+  useEffect(() => {
+    if (analyticsSettings) {
+      const ga4 = analyticsSettings.find(s => s.provider === 'ga4');
+      const meta = analyticsSettings.find(s => s.provider === 'meta_pixel');
+      const clarity = analyticsSettings.find(s => s.provider === 'microsoft_clarity');
+      
+      if (ga4) setGa4MeasurementId(ga4.trackingId);
+      if (meta) setMetaPixelId(meta.trackingId);
+      if (clarity) setClarityProjectId(clarity.trackingId);
+    }
+  }, [analyticsSettings]);
+
   const { data: settings, isLoading: settingsLoading } = trpc.integrations.getAll.useQuery();
+  const { data: analyticsSettings, isLoading: analyticsLoading } = trpc.analyticsSettings.getAll.useQuery();
 
   const saveInstagramMutation = trpc.integrations.save.useMutation({
     onSuccess: () => {
@@ -70,6 +84,15 @@ export default function AdminSettings() {
     },
     onError: (error: any) => {
       toast.error(`Failed to save WhatsApp settings: ${error.message}`);
+    },
+  });
+
+  const saveAnalyticsMutation = trpc.analyticsSettings.save.useMutation({
+    onSuccess: () => {
+      utils.analyticsSettings.getAll.invalidate();
+    },
+    onError: (error: any) => {
+      toast.error(`Failed to save analytics settings: ${error.message}`);
     },
   });
 
@@ -729,13 +752,55 @@ export default function AdminSettings() {
                 </div>
 
                 <Button
-                  onClick={() => {
-                    // Save all analytics settings
-                    toast.success(t('settings.analyticsSaved'));
+                  onClick={async () => {
+                    try {
+                      // Save all analytics settings in parallel
+                      const promises = [];
+                      
+                      if (ga4MeasurementId) {
+                        promises.push(
+                          saveAnalyticsMutation.mutateAsync({
+                            provider: 'ga4',
+                            trackingId: ga4MeasurementId,
+                            isActive: true,
+                          })
+                        );
+                      }
+                      
+                      if (metaPixelId) {
+                        promises.push(
+                          saveAnalyticsMutation.mutateAsync({
+                            provider: 'meta_pixel',
+                            trackingId: metaPixelId,
+                            isActive: true,
+                          })
+                        );
+                      }
+                      
+                      if (clarityProjectId) {
+                        promises.push(
+                          saveAnalyticsMutation.mutateAsync({
+                            provider: 'microsoft_clarity',
+                            trackingId: clarityProjectId,
+                            isActive: true,
+                          })
+                        );
+                      }
+                      
+                      await Promise.all(promises);
+                      toast.success(t('settings.analyticsSaved'));
+                    } catch (error) {
+                      // Error already handled by mutation
+                    }
                   }}
+                  disabled={saveAnalyticsMutation.isPending}
                   className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
                 >
-                  <Save className="w-4 h-4 mr-2" />
+                  {saveAnalyticsMutation.isPending ? (
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  ) : (
+                    <Save className="w-4 h-4 mr-2" />
+                  )}
                   {t('settings.saveAnalytics')}
                 </Button>
               </CardContent>

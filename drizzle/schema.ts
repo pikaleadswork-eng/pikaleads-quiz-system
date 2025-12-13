@@ -723,3 +723,18 @@ export const quizQuestionEvents = mysqlTable("quiz_question_events", {
 
 export type QuizQuestionEvent = typeof quizQuestionEvents.$inferSelect;
 export type InsertQuizQuestionEvent = typeof quizQuestionEvents.$inferInsert;
+
+/**
+ * Analytics Settings table - store tracking codes for GA4, Meta Pixel, Microsoft Clarity
+ */
+export const analyticsSettings = mysqlTable("analytics_settings", {
+  id: int("id").autoincrement().primaryKey(),
+  provider: varchar("provider", { length: 50 }).notNull().unique(), // ga4, meta_pixel, microsoft_clarity
+  trackingId: varchar("trackingId", { length: 255 }).notNull(), // Measurement ID, Pixel ID, Project ID
+  isActive: boolean("isActive").default(true).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type AnalyticsSetting = typeof analyticsSettings.$inferSelect;
+export type InsertAnalyticsSetting = typeof analyticsSettings.$inferInsert;

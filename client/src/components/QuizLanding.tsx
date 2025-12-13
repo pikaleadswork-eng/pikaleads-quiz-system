@@ -4,7 +4,7 @@ import QuizLayout from "./QuizLayout";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { getQuizTranslation } from "@/lib/quizTranslations";
 import { translations } from "@/lib/translations";
-import { CheckCircle2, Zap, Target, TrendingUp } from "lucide-react";
+import { Lock } from "lucide-react";
 import { initMetaPixel, trackQuizStart as trackMetaQuizStart } from "@/lib/metaPixel";
 import { initGA4, trackQuizStart as trackGA4QuizStart } from "@/lib/googleAnalytics";
 
@@ -41,117 +41,148 @@ export default function QuizLanding({ quizId, onStartQuiz }: QuizLandingProps) {
     }, 300);
   };
 
-  const benefits = [
-    {
-      icon: <CheckCircle2 className="w-6 h-6" />,
-      text: language === "uk" ? "Персональна стратегія запуску" :
-            language === "ru" ? "Персональная стратегия запуска" :
-            language === "pl" ? "Spersonalizowana strategia uruchomienia" :
-            language === "de" ? "Personalisierte Startstrategie" :
-            "Personalized launch strategy"
-    },
-    {
-      icon: <Zap className="w-6 h-6" />,
-      text: language === "uk" ? "Швидкий старт за 24-48 годин" :
-            language === "ru" ? "Быстрый старт за 24-48 часов" :
-            language === "pl" ? "Szybki start w 24-48 godzin" :
-            language === "de" ? "Schnellstart in 24-48 Stunden" :
-            "Quick start in 24-48 hours"
-    },
-    {
-      icon: <Target className="w-6 h-6" />,
-      text: language === "uk" ? "Точний таргетинг на вашу аудиторію" :
-            language === "ru" ? "Точный таргетинг на вашу аудиторию" :
-            language === "pl" ? "Precyzyjne targetowanie Twojej grupy docelowej" :
-            language === "de" ? "Präzises Targeting Ihrer Zielgruppe" :
-            "Precise targeting of your audience"
-    },
-    {
-      icon: <TrendingUp className="w-6 h-6" />,
-      text: language === "uk" ? "Прогноз результатів та ROI" :
-            language === "ru" ? "Прогноз результатов и ROI" :
-            language === "pl" ? "Prognoza wyników i ROI" :
-            language === "de" ? "Ergebnisprognose und ROI" :
-            "Results forecast and ROI"
-    },
-  ];
-
+  // Markviz-style layout: Split-screen with background image
   return (
-    <QuizLayout>
-      <div className="max-w-5xl mx-auto">
-        {/* Hero Section */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-foreground mb-6 leading-tight">
-            {quizData.title}
-          </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground mb-8">
-            {quizData.subtitle}
-          </p>
-          
-          {/* Bonus Badge */}
-          <div className="inline-block bg-gradient-to-r from-accent/20 to-primary/20 border-2 border-accent rounded-2xl px-8 py-4 mb-8">
-            <p className="text-lg font-bold text-accent mb-2">{t.freeBonus}</p>
-            <p className="text-foreground font-semibold">{quizData.bonus}</p>
-          </div>
+    <div className="min-h-screen w-full relative overflow-hidden bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900">
+      {/* Background Image - Right Side */}
+      <div className="absolute inset-0 lg:left-1/2">
+        <div className="absolute inset-0 bg-gradient-to-r from-zinc-900 via-zinc-900/95 to-transparent lg:from-transparent lg:via-transparent lg:to-transparent z-10" />
+        <img
+          src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80"
+          alt="Background"
+          className="w-full h-full object-cover opacity-30 lg:opacity-100"
+        />
+      </div>
 
-          {/* CTA Button - centered below bonus */}
-          <div className="flex justify-center">
-            <Button
-              onClick={handleStart}
-              disabled={isStarting}
-              size="lg"
-              className="h-20 px-16 text-2xl font-black bg-primary hover:bg-primary/90 text-primary-foreground shadow-2xl hover:shadow-accent/50 transition-all duration-300 hover:scale-105"
-            >
-              {isStarting ? "..." : t.startQuiz + " →"}
-            </Button>
-          </div>
-          
-          <p className="text-sm text-muted-foreground mt-4">
-            {language === "uk" ? "⏱️ Займе лише 2 хвилини" :
-             language === "ru" ? "⏱️ Займёт всего 2 минуты" :
-             language === "pl" ? "⏱️ Zajmie tylko 2 minuty" :
-             language === "de" ? "⏱️ Dauert nur 2 Minuten" :
-             "⏱️ Takes only 2 minutes"}
-          </p>
-        </div>
-
-        {/* Benefits Section */}
-        <div className="bg-card border-2 border-border rounded-2xl p-8 md:p-12 mb-12">
-          <h2 className="text-3xl font-bold text-center mb-8 text-foreground">
-            {t.whyChooseUs}
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {benefits.map((benefit, index) => (
-              <div key={index} className="flex items-start gap-4 p-4 bg-secondary/50 rounded-xl">
-                <div className="text-accent flex-shrink-0 mt-1">
-                  {benefit.icon}
+      {/* Content Container */}
+      <div className="relative z-20 min-h-screen flex items-center">
+        <div className="container mx-auto px-4 py-12">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left Side - Text Content */}
+            <div className="space-y-8">
+              {/* Logo/Brand */}
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
+                  <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
                 </div>
-                <p className="text-lg text-foreground font-medium">{benefit.text}</p>
+                <span className="text-xl font-bold text-white">PIKALEADS</span>
               </div>
-            ))}
-          </div>
-        </div>
 
-        {/* Social Proof */}
-        <div className="text-center">
-          <div className="flex items-center justify-center gap-2 text-muted-foreground mb-4">
-            <div className="flex -space-x-2">
-              {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="w-10 h-10 rounded-full bg-primary/20 border-2 border-background flex items-center justify-center text-xs font-bold">
-                  {String.fromCharCode(64 + i)}
+              {/* Main Heading */}
+              <div>
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4 leading-tight">
+                  {quizData.title}
+                </h1>
+                <p className="text-lg md:text-xl text-gray-300 leading-relaxed">
+                  {quizData.subtitle}
+                </p>
+              </div>
+
+              {/* CTA Button - Markviz Style */}
+              <div>
+                <Button
+                  onClick={handleStart}
+                  disabled={isStarting}
+                  className="h-16 px-12 text-xl font-bold rounded-full bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-zinc-900 shadow-2xl hover:shadow-yellow-500/50 transition-all duration-300 hover:scale-105"
+                >
+                  {isStarting ? "..." : (language === "uk" ? "Почати" : language === "ru" ? "Начать" : "Start")}
+                </Button>
+                <p className="text-sm text-gray-400 mt-3">
+                  {language === "uk" ? "⏱️ Займе лише 2 хвилини" :
+                   language === "ru" ? "⏱️ Займёт всего 2 минуты" :
+                   language === "pl" ? "⏱️ Zajmie tylko 2 minuty" :
+                   language === "de" ? "⏱️ Dauert nur 2 Minuten" :
+                   "⏱️ Takes only 2 minutes"}
+                </p>
+              </div>
+
+              {/* Bonuses Section - Markviz Style */}
+              <div className="space-y-3">
+                <p className="text-sm font-semibold text-gray-400 uppercase tracking-wider">
+                  {language === "uk" ? "Бонуси після проходження тесту" :
+                   language === "ru" ? "Бонусы после прохождения теста" :
+                   "Bonuses after completing the test"}
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {/* Bonus 1 */}
+                  <div className="relative group">
+                    <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-xl blur-xl group-hover:blur-2xl transition-all" />
+                    <div className="relative bg-zinc-800/90 backdrop-blur-sm border border-zinc-700 rounded-xl p-4 hover:border-purple-500/50 transition-all">
+                      <div className="flex items-start gap-3">
+                        <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center flex-shrink-0">
+                          <Lock className="w-5 h-5 text-white" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-semibold text-white mb-1">
+                            {quizData.bonus}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Bonus 2 */}
+                  <div className="relative group">
+                    <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-xl blur-xl group-hover:blur-2xl transition-all" />
+                    <div className="relative bg-zinc-800/90 backdrop-blur-sm border border-zinc-700 rounded-xl p-4 hover:border-blue-500/50 transition-all">
+                      <div className="flex items-start gap-3">
+                        <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center flex-shrink-0">
+                          <Lock className="w-5 h-5 text-white" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-semibold text-white mb-1">
+                            {language === "uk" ? "Персональна консультація" :
+                             language === "ru" ? "Персональная консультация" :
+                             "Personal consultation"}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              ))}
+              </div>
+
+              {/* Footer Info */}
+              <div className="pt-8 border-t border-zinc-700">
+                <p className="text-sm text-gray-400">
+                  +7-911-111-11-11
+                </p>
+                <p className="text-xs text-gray-500 mt-1">
+                  ООО «PIKALEADS»
+                </p>
+              </div>
             </div>
-            <span className="text-sm">
-              {language === "uk" ? "500+ клієнтів вже отримали результати" :
-               language === "ru" ? "500+ клиентов уже получили результаты" :
-               language === "pl" ? "500+ klientów już uzyskało wyniki" :
-               language === "de" ? "500+ Kunden haben bereits Ergebnisse erzielt" :
-               "500+ clients already got results"}
-            </span>
+
+            {/* Right Side - Image (visible only on desktop) */}
+            <div className="hidden lg:block" />
           </div>
         </div>
       </div>
-    </QuizLayout>
+
+      {/* Disclaimer */}
+      <button className="fixed bottom-6 right-6 z-30 flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors">
+        <span>
+          {language === "uk" ? "Дисклеймер" :
+           language === "ru" ? "Дисклеймер" :
+           "Disclaimer"}
+        </span>
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+      </button>
+
+      {/* Powered by Markviz watermark */}
+      <div className="fixed bottom-6 left-6 z-30 flex items-center gap-2 text-xs text-gray-500">
+        <span>
+          {language === "uk" ? "Створи свій" :
+           language === "ru" ? "Создай свой" :
+           "Create your"}
+        </span>
+        <span className="font-bold text-gray-400">PIKALEADS</span>
+      </div>
+    </div>
   );
 }

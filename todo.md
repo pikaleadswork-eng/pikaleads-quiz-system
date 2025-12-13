@@ -1241,3 +1241,33 @@
 - [x] Complete Ukrainian translations for all AdminQuizzes tabs
 - [x] Integrate quiz completion with CRM - auto-create leads when quiz is submitted (ALREADY WORKING)
 - [x] Add analytics tracking fields (GA4, Meta Pixel, Microsoft Clarity) in Settings
+
+### Markviz-Style Quiz Features (from editor screenshots):
+- [ ] Add 3 layout options:
+  * По центру (center) - image top, text center bottom
+  * Стандартная (standard) - text left, image right 50/50 split
+  * Фоновая картинка (background) - fullscreen photo with text overlay
+- [ ] Add background type selector (Image / Video)
+- [ ] Add image upload placeholder with mountain icon
+- [ ] Add inline text editing with pencil icon
+- [ ] Style button with large border-radius (like Markviz pink button)
+- [ ] Add disclaimer section at bottom with settings icon
+- [ ] Add company logo at top
+- [ ] Add phone number and company name at bottom
+- [ ] Make all text editable in admin panel
+
+
+## Phase 65 - COMPLETED ✅
+- [x] Add analytics_settings table to database schema
+- [x] Create tRPC procedures for saving/loading analytics settings (GA4, Meta Pixel, Clarity)
+- [x] Connect AdminSettings Analytics tab to backend
+- [x] Inject tracking codes into quiz pages automatically based on saved settings
+- [x] Redesign QuizLanding component in Markviz style:
+  * Full-screen split-screen layout (text left, image right)
+  * Large bold headlines with gradient accents
+  * Yellow CTA button with large border-radius
+  * Bonus cards at bottom with lock icons
+  * Minimalist design with dark background
+  * Footer with phone and company name
+  * Disclaimer button bottom-right
+  * Powered by watermark bottom-left
