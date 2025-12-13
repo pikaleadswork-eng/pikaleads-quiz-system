@@ -6,6 +6,23 @@ import { eq } from "drizzle-orm";
 import { storagePut } from "../storage";
 
 export const quizDesignRouter = router({
+  // Get quiz ID by slug
+  getQuizIdBySlug: protectedProcedure
+    .input(z.object({
+      slug: z.string(),
+    }))
+    .query(async ({ input }) => {
+      const db = await getDb();
+      if (!db) throw new Error("Database connection failed");
+      const { quizzes } = await import("../../drizzle/schema");
+      const quiz = await db.select()
+        .from(quizzes)
+        .where(eq(quizzes.slug, input.slug))
+        .limit(1);
+      
+      return quiz[0]?.id || null;
+    }),
+
   // Get design settings for a quiz
   getByQuizId: protectedProcedure
     .input(z.object({
@@ -38,6 +55,9 @@ export const quizDesignRouter = router({
       subtitleText: z.string().optional(),
       buttonText: z.string().optional(),
       bonusText: z.string().optional(),
+      bonusEnabled: z.boolean().optional(),
+      companyName: z.string().optional(),
+      phoneNumber: z.string().optional(),
     }))
     .mutation(async ({ input }) => {
       const db = await getDb();
@@ -65,6 +85,9 @@ export const quizDesignRouter = router({
             subtitleText: input.subtitleText,
             buttonText: input.buttonText,
             bonusText: input.bonusText,
+            bonusEnabled: input.bonusEnabled,
+            companyName: input.companyName,
+            phoneNumber: input.phoneNumber,
             updatedAt: new Date(),
           })
           .where(eq(quizDesignSettings.quizId, input.quizId));
@@ -84,6 +107,9 @@ export const quizDesignRouter = router({
           subtitleText: input.subtitleText,
           buttonText: input.buttonText,
           bonusText: input.bonusText,
+          bonusEnabled: input.bonusEnabled || false,
+          companyName: input.companyName,
+          phoneNumber: input.phoneNumber,
         });
       }
 

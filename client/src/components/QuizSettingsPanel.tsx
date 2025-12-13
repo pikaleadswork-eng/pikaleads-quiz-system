@@ -8,8 +8,6 @@ import { trpc } from "@/lib/trpc";
 import { useState } from "react";
 
 interface QuizSettingsPanelProps {
-  isOpen: boolean;
-  onClose: () => void;
   settings: {
     logoUrl: string;
     companyName: string;
@@ -20,14 +18,14 @@ interface QuizSettingsPanelProps {
     bonusText: string;
     phoneNumber: string;
   };
-  onSettingsChange: (newSettings: Partial<QuizSettingsPanelProps["settings"]>) => void;
+  onSettingsChange: (key: string, value: any) => void;
+  quizId: number;
 }
 
 export default function QuizSettingsPanel({
-  isOpen,
-  onClose,
   settings,
   onSettingsChange,
+  quizId,
 }: QuizSettingsPanelProps) {
   const [isUploading, setIsUploading] = useState(false);
   const uploadLogoMutation = trpc.quizDesign.uploadLogo.useMutation();
@@ -59,7 +57,7 @@ export default function QuizSettingsPanel({
           fileName: file.name,
           mimeType: file.type,
         });
-        onSettingsChange({ logoUrl: result.url });
+        onSettingsChange("logoUrl", result.url);
       };
       reader.readAsDataURL(file);
     } catch (error) {
@@ -70,21 +68,11 @@ export default function QuizSettingsPanel({
     }
   };
 
-  if (!isOpen) return null;
-
   return (
-    <div className="w-[30%] bg-white border-l border-zinc-200 p-6 overflow-y-auto">
+    <div className="w-full bg-zinc-800 border-l border-zinc-700 p-6 overflow-y-auto">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-lg font-semibold">Налаштування</h2>
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={onClose}
-          className="h-8 w-8"
-        >
-          <X className="h-4 w-4" />
-        </Button>
+      <div className="mb-6">
+        <h2 className="text-lg font-semibold text-white">Налаштування</h2>
       </div>
 
       {/* Logo Upload */}
@@ -131,7 +119,7 @@ export default function QuizSettingsPanel({
         <Input
           id="companyName"
           value={settings.companyName}
-          onChange={(e) => onSettingsChange({ companyName: e.target.value })}
+          onChange={(e) => onSettingsChange("companyName", e.target.value)}
           placeholder="Введіть назву компанії"
           className="mt-2"
         />
@@ -143,7 +131,7 @@ export default function QuizSettingsPanel({
         <Input
           id="title"
           value={settings.title}
-          onChange={(e) => onSettingsChange({ title: e.target.value })}
+          onChange={(e) => onSettingsChange("title", e.target.value)}
           placeholder="Введіть заголовок сторінки"
           className="mt-2"
         />
@@ -155,7 +143,7 @@ export default function QuizSettingsPanel({
         <Textarea
           id="subtitle"
           value={settings.subtitle}
-          onChange={(e) => onSettingsChange({ subtitle: e.target.value })}
+          onChange={(e) => onSettingsChange("subtitle", e.target.value)}
           placeholder="Додатковий текст-опис"
           className="mt-2"
           rows={3}
@@ -168,7 +156,7 @@ export default function QuizSettingsPanel({
         <Input
           id="buttonText"
           value={settings.buttonText}
-          onChange={(e) => onSettingsChange({ buttonText: e.target.value })}
+          onChange={(e) => onSettingsChange("buttonText", e.target.value)}
           placeholder="Почати"
           className="mt-2"
         />
@@ -184,14 +172,14 @@ export default function QuizSettingsPanel({
             id="bonusEnabled"
             checked={settings.bonusEnabled}
             onCheckedChange={(checked) =>
-              onSettingsChange({ bonusEnabled: checked })
+              onSettingsChange("bonusEnabled", checked)
             }
           />
         </div>
         {settings.bonusEnabled && (
           <Textarea
             value={settings.bonusText}
-            onChange={(e) => onSettingsChange({ bonusText: e.target.value })}
+            onChange={(e) => onSettingsChange("bonusText", e.target.value)}
             placeholder="Введіть текст бонусу"
             className="mt-2"
             rows={2}
@@ -205,7 +193,7 @@ export default function QuizSettingsPanel({
         <Input
           id="phoneNumber"
           value={settings.phoneNumber}
-          onChange={(e) => onSettingsChange({ phoneNumber: e.target.value })}
+          onChange={(e) => onSettingsChange("phoneNumber", e.target.value)}
           placeholder="+380..."
           className="mt-2"
         />

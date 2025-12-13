@@ -1,14 +1,27 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "wouter";
-import { Button } from "@/components/ui/button";
-import { Settings } from "lucide-react";
 import QuizSettingsPanel from "@/components/QuizSettingsPanel";
 import BottomDesignPanel from "@/components/BottomDesignPanel";
+import { trpc } from "@/lib/trpc";
 
 export default function QuizDesignPage() {
-  const { quizId } = useParams<{ quizId: string }>();
+  const { quizId: quizSlug } = useParams<{ quizId: string }>();
 
   const [showSettings, setShowSettings] = useState(true);
+  const [activeTab, setActiveTab] = useState<"start" | "questions" | "contacts" | "results" | "thanks">("start");
+  
+  // Get quiz ID from slug
+  const { data: quizId } = trpc.quizDesign.getQuizIdBySlug.useQuery(
+    { slug: quizSlug || "" },
+    { enabled: !!quizSlug }
+  );
+
+  // Load design settings from database
+  const { data: savedSettings } = trpc.quizDesign.getByQuizId.useQuery(
+    { quizId: quizId || 0 },
+    { enabled: !!quizId }
+  );
+
   const [settings, setSettings] = useState({
     logoUrl: "",
     companyName: "PikaLeads",
@@ -20,283 +33,248 @@ export default function QuizDesignPage() {
     phoneNumber: "+380992377117",
     backgroundImage: "",
     backgroundVideo: "",
-    layoutType: "standard" as "standard" | "background",
+    layoutType: "background" as "background" | "standard",
     alignment: "center" as "left" | "center" | "right",
-    primaryColor: "#FACC15",
+    primaryColor: "#FFD93D",
     accentColor: "#A855F7",
     fontFamily: "Inter",
   });
 
-  const handleSettingsChange = (newSettings: Partial<typeof settings>) => {
-    setSettings((prev) => ({ ...prev, ...newSettings }));
+  // Load saved settings when available
+  useEffect(() => {
+    if (savedSettings) {
+      setSettings(prev => ({
+        ...prev,
+        logoUrl: savedSettings.logoImage || "",
+        companyName: savedSettings.companyName || "PikaLeads",
+        title: savedSettings.titleText || "Введіть заголовок сторінки",
+        subtitle: savedSettings.subtitleText || "Додатковий текст-опис",
+        buttonText: savedSettings.buttonText || "Почати",
+        bonusEnabled: savedSettings.bonusEnabled || false,
+        bonusText: savedSettings.bonusText || "",
+        phoneNumber: savedSettings.phoneNumber || "+380992377117",
+        backgroundImage: savedSettings.backgroundImage || "",
+        backgroundVideo: savedSettings.backgroundVideo || "",
+        layoutType: (savedSettings.layoutType as "background" | "standard") || "background",
+        alignment: (savedSettings.alignment as "left" | "center" | "right") || "center",
+        primaryColor: savedSettings.primaryColor || "#FFD93D",
+        accentColor: savedSettings.accentColor || "#A855F7",
+        fontFamily: savedSettings.fontFamily || "Inter",
+      }));
+    }
+  }, [savedSettings]);
+
+  const handleSettingsChange = (key: string, value: any) => {
+    setSettings(prev => ({ ...prev, [key]: value }));
   };
 
+  const tabs = [
+    { id: "start" as const, label: "Стартова", icon: "🏠" },
+    { id: "questions" as const, label: "Питання", icon: "❓" },
+    { id: "contacts" as const, label: "Контакти", icon: "📞" },
+    { id: "results" as const, label: "Результати", icon: "📊" },
+    { id: "thanks" as const, label: "Спасибо", icon: "🎉" },
+  ];
+
   return (
-    <div className="h-screen flex flex-col bg-zinc-900">
-      {/* Top Progress Tabs */}
-      <div className="bg-zinc-800 border-b border-zinc-700 px-6 py-3">
-        <div className="flex items-center gap-4">
-          <button className="px-4 py-2 bg-pink-500 text-white rounded-lg font-medium">
-            Стартова
+    <div className="min-h-screen bg-zinc-900 flex flex-col">
+      {/* Top Tabs */}
+      <div className="bg-zinc-800 border-b border-zinc-700 px-6 py-3 flex items-center gap-4">
+        {tabs.map(tab => (
+          <button
+            key={tab.id}
+            onClick={() => setActiveTab(tab.id)}
+            className={`px-6 py-2 rounded-lg font-medium transition-colors ${
+              activeTab === tab.id
+                ? "bg-pink-500 text-white"
+                : "bg-zinc-700 text-zinc-300 hover:bg-zinc-600"
+            }`}
+          >
+            <span className="mr-2">{tab.icon}</span>
+            {tab.label}
           </button>
-          <button className="px-4 py-2 text-zinc-400 hover:text-white font-medium">
-            Питання
-          </button>
-          <button className="px-4 py-2 text-zinc-400 hover:text-white font-medium">
-            Контакти
-          </button>
-          <button className="px-4 py-2 text-zinc-400 hover:text-white font-medium">
-            Результати
-          </button>
-          <button className="px-4 py-2 text-zinc-400 hover:text-white font-medium">
-            Спасибо
-          </button>
-        </div>
+        ))}
+        
+        {/* Settings Toggle Button */}
+        <button
+          onClick={() => setShowSettings(!showSettings)}
+          className="ml-auto px-4 py-2 bg-zinc-700 text-white rounded-lg hover:bg-zinc-600 flex items-center gap-2"
+        >
+          <span>⚙️</span>
+          Налаштування
+        </button>
       </div>
 
-      {/* Main Content Area */}
+      {/* Main Content */}
       <div className="flex-1 flex overflow-hidden">
-        {/* Preview Panel (Left) */}
-        <div
-          className={`${
-            showSettings ? "w-[70%]" : "w-full"
-          } bg-zinc-900 p-8 overflow-y-auto transition-all duration-300`}
-        >
-          {/* Settings Toggle Button */}
-          <div className="flex justify-end mb-4">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setShowSettings(!showSettings)}
-              className="bg-zinc-800 border-zinc-700 text-white hover:bg-zinc-700"
-            >
-              <Settings className="w-4 h-4 mr-2" />
-              Налаштування
-            </Button>
-          </div>
-
-          {/* Quiz Preview */}
-          <div className="max-w-4xl mx-auto">
-            {settings.layoutType === "standard" ? (
-              // Standard Layout
-              <div
-                className="min-h-[600px] rounded-lg p-12 flex flex-col justify-center"
-                style={{
-                  backgroundColor: settings.primaryColor,
-                  textAlign: settings.alignment,
-                }}
-              >
-                {/* Logo */}
-                {settings.logoUrl && (
-                  <div className="mb-4">
-                    <img
-                      src={settings.logoUrl}
-                      alt="Logo"
-                      className="h-12 object-contain"
-                      style={{
-                        marginLeft:
-                          settings.alignment === "left"
-                            ? "0"
-                            : settings.alignment === "right"
-                            ? "auto"
-                            : "auto",
-                        marginRight:
-                          settings.alignment === "right"
-                            ? "0"
-                            : settings.alignment === "left"
-                            ? "auto"
-                            : "auto",
-                      }}
-                    />
-                  </div>
-                )}
-
-                {/* Company Name */}
-                {settings.companyName && (
-                  <p className="text-sm text-zinc-700 mb-8">
-                    {settings.companyName}
-                  </p>
-                )}
-
-                {/* Title */}
-                <h1
-                  className="text-4xl font-bold mb-4"
-                  style={{ fontFamily: settings.fontFamily }}
-                >
-                  {settings.title}
-                </h1>
-
-                {/* Subtitle */}
-                <p className="text-lg text-zinc-700 mb-6">{settings.subtitle}</p>
-
-                {/* Bonus */}
-                {settings.bonusEnabled && settings.bonusText && (
-                  <div className="mb-6 p-4 bg-white/20 rounded-lg backdrop-blur-sm">
-                    <p className="text-sm font-medium">{settings.bonusText}</p>
-                  </div>
-                )}
-
-                {/* Button */}
-                <button
-                  className="px-8 py-4 rounded-full font-semibold text-white shadow-lg hover:scale-105 transition-transform"
+        {/* Preview Panel (Left - 70%) */}
+        <div className="flex-1 p-6 overflow-auto">
+          {activeTab === "start" && (
+            <div className="w-full h-full">
+              {/* BACKGROUND LAYOUT - Fullscreen image with text overlay */}
+              {settings.layoutType === "background" && (
+                <div 
+                  className="relative w-full h-full rounded-lg overflow-hidden"
                   style={{
-                    backgroundColor: settings.accentColor,
-                    marginLeft:
-                      settings.alignment === "left"
-                        ? "0"
-                        : settings.alignment === "right"
-                        ? "auto"
-                        : "auto",
-                    marginRight:
-                      settings.alignment === "right"
-                        ? "0"
-                        : settings.alignment === "left"
-                        ? "auto"
-                        : "auto",
+                    backgroundImage: settings.backgroundImage ? `url(${settings.backgroundImage})` : "linear-gradient(135deg, #FFD93D 0%, #FFA500 100%)",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
                   }}
-                >
-                  {settings.buttonText}
-                </button>
-
-                {/* Footer */}
-                <div className="mt-12 pt-8 border-t border-zinc-700/20">
-                  <p className="text-sm text-zinc-700">{settings.phoneNumber}</p>
-                  <p className="text-xs text-zinc-600 mt-1 uppercase">
-                    {settings.companyName}
-                  </p>
-                </div>
-              </div>
-            ) : (
-              // Background Layout
-              <div
-                className="min-h-[600px] rounded-lg flex"
-                style={{
-                  backgroundImage: settings.backgroundImage
-                    ? `url(${settings.backgroundImage})`
-                    : "none",
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }}
-              >
-                {/* Left: Background Image */}
-                <div className="w-1/2 flex items-center justify-center">
-                  {!settings.backgroundImage && (
-                    <div className="text-zinc-400 text-center">
-                      <p>Завантажте фонове зображення</p>
-                    </div>
-                  )}
-                </div>
-
-                {/* Right: Content */}
-                <div
-                  className="w-1/2 bg-white p-12 flex flex-col justify-center"
-                  style={{ textAlign: settings.alignment }}
                 >
                   {/* Logo */}
                   {settings.logoUrl && (
-                    <div className="mb-4">
-                      <img
-                        src={settings.logoUrl}
-                        alt="Logo"
-                        className="h-12 object-contain"
-                        style={{
-                          marginLeft:
-                            settings.alignment === "left"
-                              ? "0"
-                              : settings.alignment === "right"
-                              ? "auto"
-                              : "auto",
-                          marginRight:
-                            settings.alignment === "right"
-                              ? "0"
-                              : settings.alignment === "left"
-                              ? "auto"
-                              : "auto",
-                        }}
-                      />
+                    <div className="absolute top-8 left-8">
+                      <img src={settings.logoUrl} alt="Logo" className="h-12 w-auto" />
                     </div>
                   )}
-
+                  
                   {/* Company Name */}
                   {settings.companyName && (
-                    <p className="text-sm text-zinc-600 mb-8">
-                      {settings.companyName}
-                    </p>
-                  )}
-
-                  {/* Title */}
-                  <h1
-                    className="text-3xl font-bold mb-4 text-zinc-900"
-                    style={{ fontFamily: settings.fontFamily }}
-                  >
-                    {settings.title}
-                  </h1>
-
-                  {/* Subtitle */}
-                  <p className="text-base text-zinc-600 mb-6">
-                    {settings.subtitle}
-                  </p>
-
-                  {/* Bonus */}
-                  {settings.bonusEnabled && settings.bonusText && (
-                    <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-                      <p className="text-sm font-medium text-zinc-900">
-                        {settings.bonusText}
-                      </p>
+                    <div className="absolute top-8 right-8">
+                      <p className="text-lg font-semibold text-zinc-800">{settings.companyName}</p>
                     </div>
                   )}
 
-                  {/* Button */}
-                  <button
-                    className="px-8 py-4 rounded-full font-semibold text-white shadow-lg hover:scale-105 transition-transform"
-                    style={{
-                      backgroundColor: settings.accentColor,
-                      marginLeft:
-                        settings.alignment === "left"
-                          ? "0"
-                          : settings.alignment === "right"
-                          ? "auto"
-                          : "auto",
-                      marginRight:
-                        settings.alignment === "right"
-                          ? "0"
-                          : settings.alignment === "left"
-                          ? "auto"
-                          : "auto",
-                    }}
+                  {/* Content Overlay */}
+                  <div 
+                    className={`absolute inset-0 flex flex-col justify-center px-16 ${
+                      settings.alignment === "left" ? "items-start text-left" :
+                      settings.alignment === "right" ? "items-end text-right" :
+                      "items-center text-center"
+                    }`}
                   >
-                    {settings.buttonText}
-                  </button>
+                    <h1 className="text-5xl font-bold text-white mb-4 drop-shadow-lg">
+                      {settings.title}
+                    </h1>
+                    <p className="text-xl text-white/90 mb-6 max-w-2xl drop-shadow-md">
+                      {settings.subtitle}
+                    </p>
+                    
+                    {/* Bonus */}
+                    {settings.bonusEnabled && settings.bonusText && (
+                      <div className="bg-white/20 backdrop-blur-sm px-6 py-3 rounded-lg mb-6">
+                        <p className="text-white font-medium">{settings.bonusText}</p>
+                      </div>
+                    )}
+
+                    {/* Button */}
+                    <button 
+                      className="px-12 py-4 rounded-full font-semibold text-lg shadow-xl transition-transform hover:scale-105"
+                      style={{ backgroundColor: settings.accentColor, color: "white" }}
+                    >
+                      {settings.buttonText}
+                    </button>
+                  </div>
 
                   {/* Footer */}
-                  <div className="mt-12 pt-8 border-t border-zinc-200">
-                    <p className="text-sm text-zinc-700">
-                      {settings.phoneNumber}
-                    </p>
-                    <p className="text-xs text-zinc-500 mt-1 uppercase">
-                      {settings.companyName}
-                    </p>
+                  <div className="absolute bottom-8 left-8 right-8 flex justify-between items-center text-white/80">
+                    <p className="text-sm">{settings.phoneNumber}</p>
+                    <p className="text-sm uppercase font-semibold">{settings.companyName}</p>
                   </div>
                 </div>
-              </div>
-            )}
-          </div>
+              )}
+
+              {/* STANDARD LAYOUT - 50/50 split */}
+              {settings.layoutType === "standard" && (
+                <div className={`flex h-full rounded-lg overflow-hidden ${
+                  settings.alignment === "right" ? "flex-row-reverse" : ""
+                }`}>
+                  {/* Image Side (50%) */}
+                  <div 
+                    className="w-1/2 bg-cover bg-center"
+                    style={{
+                      backgroundImage: settings.backgroundImage 
+                        ? `url(${settings.backgroundImage})` 
+                        : "url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22%3E%3Cpath fill=%22%23a0aec0%22 d=%22M0 0h200v200H0z%22/%3E%3Cpath fill=%22%23cbd5e0%22 d=%22M50 50l50 30 50-30v70l-50 30-50-30z%22/%3E%3C/svg%3E')",
+                    }}
+                  />
+
+                  {/* Text Side (50%) */}
+                  <div className="w-1/2 bg-white flex flex-col justify-center px-12">
+                    {/* Logo */}
+                    {settings.logoUrl && (
+                      <img src={settings.logoUrl} alt="Logo" className="h-10 w-auto mb-6" />
+                    )}
+
+                    <h1 className="text-4xl font-bold text-zinc-800 mb-4">
+                      {settings.title}
+                    </h1>
+                    <p className="text-lg text-zinc-600 mb-6">
+                      {settings.subtitle}
+                    </p>
+
+                    {/* Bonus */}
+                    {settings.bonusEnabled && settings.bonusText && (
+                      <div className="bg-yellow-100 border-l-4 border-yellow-500 px-4 py-3 mb-6">
+                        <p className="text-yellow-800 font-medium">{settings.bonusText}</p>
+                      </div>
+                    )}
+
+                    {/* Button */}
+                    <button 
+                      className="px-10 py-3 rounded-full font-semibold shadow-lg transition-transform hover:scale-105 self-start"
+                      style={{ backgroundColor: settings.accentColor, color: "white" }}
+                    >
+                      {settings.buttonText}
+                    </button>
+
+                    {/* Footer */}
+                    <div className="mt-8 pt-6 border-t border-zinc-200">
+                      <p className="text-sm text-zinc-500">{settings.phoneNumber}</p>
+                      <p className="text-sm text-zinc-400 uppercase font-semibold">{settings.companyName}</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {activeTab === "questions" && (
+            <div className="bg-zinc-800 rounded-lg p-8 text-center">
+              <h2 className="text-2xl font-bold text-white mb-4">Редактор питань</h2>
+              <p className="text-zinc-400">Тут буде конструктор питань з 12 типами</p>
+            </div>
+          )}
+
+          {activeTab === "contacts" && (
+            <div className="bg-zinc-800 rounded-lg p-8 text-center">
+              <h2 className="text-2xl font-bold text-white mb-4">Форма контактів</h2>
+              <p className="text-zinc-400">Тут буде редактор форми збору контактів</p>
+            </div>
+          )}
+
+          {activeTab === "results" && (
+            <div className="bg-zinc-800 rounded-lg p-8 text-center">
+              <h2 className="text-2xl font-bold text-white mb-4">Сторінка результатів</h2>
+              <p className="text-zinc-400">Тут буде редактор сторінки з результатами</p>
+            </div>
+          )}
+
+          {activeTab === "thanks" && (
+            <div className="bg-zinc-800 rounded-lg p-8 text-center">
+              <h2 className="text-2xl font-bold text-white mb-4">Подяка</h2>
+              <p className="text-zinc-400">Тут буде редактор сторінки подяки</p>
+            </div>
+          )}
         </div>
 
-        {/* Settings Panel (Right) */}
-        <QuizSettingsPanel
-          isOpen={showSettings}
-          onClose={() => setShowSettings(false)}
-          settings={settings}
-          onSettingsChange={handleSettingsChange}
-        />
+        {/* Settings Panel (Right - 30%) */}
+        {showSettings && (
+          <div className="w-[30%] border-l border-zinc-700">
+            <QuizSettingsPanel
+              settings={settings}
+              onSettingsChange={handleSettingsChange}
+              quizId={quizId || 0}
+            />
+          </div>
+        )}
       </div>
 
       {/* Bottom Design Panel */}
       <BottomDesignPanel
         settings={settings}
         onSettingsChange={handleSettingsChange}
-        quizId={parseInt(quizId!)}
+        quizId={quizId || 0}
       />
     </div>
   );

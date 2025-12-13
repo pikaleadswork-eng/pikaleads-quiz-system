@@ -26,8 +26,11 @@ interface BottomDesignPanelProps {
     title: string;
     subtitle: string;
     buttonText: string;
+    bonusEnabled: boolean;
+    bonusText: string;
+    phoneNumber: string;
   };
-  onSettingsChange: (newSettings: Partial<BottomDesignPanelProps["settings"]>) => void;
+  onSettingsChange: (key: string, value: any) => void;
   quizId: number;
 }
 
@@ -62,14 +65,17 @@ export default function BottomDesignPanel({
       titleText: settings.title,
       subtitleText: settings.subtitle,
       buttonText: settings.buttonText,
-      bonusText: undefined,
+      bonusText: settings.bonusText || undefined,
+      bonusEnabled: settings.bonusEnabled,
+      companyName: settings.companyName || undefined,
+      phoneNumber: settings.phoneNumber || undefined,
     });
   };
 
   return (
     <>
       {/* Bottom Fixed Panel */}
-      <div className="fixed bottom-0 left-0 right-0 bg-zinc-800 border-t border-zinc-700 px-6 py-4 z-50">
+      <div className="fixed bottom-0 left-0 right-0 bg-zinc-800 border-t border-zinc-700 px-6 py-4 z-[9999]">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-8">
           {/* Фон Section */}
           <div className="flex flex-col gap-2">
@@ -108,7 +114,7 @@ export default function BottomDesignPanel({
             <Select
               value={settings.layoutType}
               onValueChange={(value) =>
-                onSettingsChange({ layoutType: value as "standard" | "background" })
+                onSettingsChange("layoutType", value as "standard" | "background")
               }
             >
               <SelectTrigger className="w-[200px] bg-zinc-700 border-zinc-600 text-white">
@@ -128,21 +134,21 @@ export default function BottomDesignPanel({
               <Button
                 variant={settings.alignment === "left" ? "default" : "outline"}
                 size="icon"
-                onClick={() => onSettingsChange({ alignment: "left" })}
+                onClick={() => onSettingsChange("alignment", "left")}
               >
                 <AlignLeft className="w-4 h-4" />
               </Button>
               <Button
                 variant={settings.alignment === "center" ? "default" : "outline"}
                 size="icon"
-                onClick={() => onSettingsChange({ alignment: "center" })}
+                onClick={() => onSettingsChange("alignment", "center")}
               >
                 <AlignCenter className="w-4 h-4" />
               </Button>
               <Button
                 variant={settings.alignment === "right" ? "default" : "outline"}
                 size="icon"
-                onClick={() => onSettingsChange({ alignment: "right" })}
+                onClick={() => onSettingsChange("alignment", "right")}
               >
                 <AlignRight className="w-4 h-4" />
               </Button>
@@ -181,15 +187,17 @@ export default function BottomDesignPanel({
               currentVideo={uploadType === "video" ? settings.backgroundVideo : null}
               quizNiche="furniture"
               onImageUploaded={(url: string) => {
-                onSettingsChange({ backgroundImage: url, backgroundVideo: "" });
+                onSettingsChange("backgroundImage", url);
+                onSettingsChange("backgroundVideo", "");
                 setShowBackgroundUploader(false);
               }}
               onVideoUploaded={(url: string) => {
-                onSettingsChange({ backgroundVideo: url, backgroundImage: "" });
+                onSettingsChange("backgroundVideo", url);
+                onSettingsChange("backgroundImage", "");
                 setShowBackgroundUploader(false);
               }}
-              onRemoveImage={() => onSettingsChange({ backgroundImage: "" })}
-              onRemoveVideo={() => onSettingsChange({ backgroundVideo: "" })}
+              onRemoveImage={() => onSettingsChange("backgroundImage", "")}
+              onRemoveVideo={() => onSettingsChange("backgroundVideo", "")}
             />
           </div>
         </div>

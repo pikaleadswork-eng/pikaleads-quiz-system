@@ -1799,12 +1799,13 @@
 
 ### Phase 77.3 - Save Functionality for New Fields
 - [ ] Update quizDesign.save tRPC procedure to include:
-  * [ ] logoUrl (logo_url in DB)
-  * [ ] companyName (company_name in DB)
-  * [ ] phoneNumber (phone_number in DB)
-  * [ ] bonusEnabled (bonus_enabled in DB)
-  * [ ] bonusText (bonus_text in DB)
+  * [ ] logoUrl (logoImage in DB - already exists)
+  * [ ] companyName (companyName in DB)
+  * [ ] phoneNumber (phoneNumber in DB)
+  * [ ] bonusEnabled (bonusEnabled in DB)
+  * [ ] bonusText (bonusText in DB - already exists)
 - [ ] Update BottomDesignPanel to send new fields on save
+- [ ] Update QuizDesignPage to load new fields from database
 - [ ] Test save button saves all new fields to database
 - [ ] Test page reload loads saved data correctly
 
@@ -1866,3 +1867,37 @@
 - [ ] Test drag-and-drop reordering
 - [ ] Test page reload preserves all data
 - [ ] Test switching between tabs (Стартова ↔ Питання)
+
+
+## Phase 78 - CRITICAL FIXES for Quiz Editor
+
+### Layout Types (WRONG NOW!)
+- [ ] **Background layout** = FULLSCREEN background image with text OVERLAY on top (like screenshot 1)
+  * [ ] Image covers 100% of screen
+  * [ ] Text (title/subtitle/button) positioned on top of image
+  * [ ] Alignment: left/center/right determines text position
+- [ ] **Standard layout** = 50/50 split: image on one side, text on other (like screenshot 2)
+  * [ ] Image takes 50% width (square or rectangle)
+  * [ ] Text takes 50% width (white/gray/black background)
+  * [ ] Alignment: left (image right) or right (image left) ONLY
+  * [ ] NO center alignment for standard layout
+
+### Functional Tabs
+- [ ] Make top tabs clickable and switch between pages
+- [ ] Стартова tab - start page editor
+- [ ] Питання tab - questions editor
+- [ ] Контакти tab - contact form editor
+- [ ] Результати tab - results page editor
+- [ ] Спасибо tab - thank you page editor
+
+### Image Upload
+- [ ] Fix background image upload (Изображение button)
+- [ ] Fix background video upload (Видео button)
+- [ ] Images should upload to S3 and display immediately
+- [ ] Show upload progress/loading state
+
+### Bottom Panel Design
+- [ ] Dark background (like Markviz)
+- [ ] Better contrast for text/buttons
+- [ ] Proper spacing and layout
+- [ ] Match Markviz visual style
