@@ -22,7 +22,7 @@ import { QuizProgressBar } from "@/components/QuizProgressBar";
 import { ScoreDisplay } from "@/components/ScoreDisplay";
 import { ConfettiEffect } from "@/components/ConfettiEffect";
 import { QuizPreview } from "@/components/QuizPreview";
-import QuizDesignEditor from "@/components/QuizDesignEditor";
+import ImprovedQuizDesignEditor from "@/components/ImprovedQuizDesignEditor";
 import QuizTemplateLibrary from "@/components/QuizTemplateLibrary";
 import DraggableQuestionEditor from "@/components/DraggableQuestionEditor";
 import QuestionTemplateLibrary from "@/components/QuestionTemplateLibrary";
@@ -220,7 +220,7 @@ export default function AdminQuizzes() {
 
                 {/* Design Tab */}
                 <TabsContent value="design" className="space-y-6">
-                  <QuizDesignEditor
+                  <ImprovedQuizDesignEditor
                     quizId={selectedQuiz}
                     initialSettings={{}}
                     onSave={(settings) => {
@@ -272,10 +272,11 @@ export default function AdminQuizzes() {
                       {t("quizzes.landingPageContent")}
                     </h3>
                     <div className="space-y-4">
-                      <div>
-                        <Label htmlFor="title" className="mb-2 block">{t("quizzes.title")}</Label>
+                      <div className="space-y-2">
+                        <Label htmlFor="title">{t("quizzes.title")}</Label>
                         <Input
                           id="title"
+                          className="bg-zinc-800 border-zinc-700"
                           value={editedContent.title}
                           onChange={(e) =>
                             setEditedContent({
@@ -286,10 +287,11 @@ export default function AdminQuizzes() {
                           className="mt-2"
                         />
                       </div>
-                      <div>
-                        <Label htmlFor="subtitle" className="mb-2 block">{t("quizzes.subtitle")}</Label>
+                      <div className="space-y-2">
+                        <Label htmlFor="subtitle">{t("quizzes.subtitle")}</Label>
                         <Textarea
                           id="subtitle"
+                          className="bg-zinc-800 border-zinc-700"
                           value={editedContent.subtitle}
                           onChange={(e) =>
                             setEditedContent({
@@ -298,7 +300,6 @@ export default function AdminQuizzes() {
                             })
                           }
                           rows={3}
-                          className="mt-2"
                         />
                       </div>
 
