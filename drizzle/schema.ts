@@ -684,3 +684,41 @@ export const quizAnswerOptions = mysqlTable("quiz_answer_options", {
 
 export type QuizAnswerOption = typeof quizAnswerOptions.$inferSelect;
 export type InsertQuizAnswerOption = typeof quizAnswerOptions.$inferInsert;
+
+/**
+ * Quiz Sessions table - track each quiz attempt
+ */
+export const quizSessions = mysqlTable("quiz_sessions", {
+  id: int("id").autoincrement().primaryKey(),
+  quizId: int("quizId").notNull(),
+  sessionId: varchar("sessionId", { length: 255 }).notNull().unique(), // UUID for tracking
+  leadId: int("leadId"), // Linked after submission
+  startedAt: timestamp("startedAt").defaultNow().notNull(),
+  completedAt: timestamp("completedAt"),
+  status: mysqlEnum("status", ["in_progress", "completed", "abandoned"]).default("in_progress").notNull(),
+  totalQuestions: int("totalQuestions").notNull(),
+  answeredQuestions: int("answeredQuestions").default(0).notNull(),
+  timeSpent: int("timeSpent").default(0), // Total time in seconds
+  userAgent: text("userAgent"),
+  ipAddress: varchar("ipAddress", { length: 45 }),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type QuizSession = typeof quizSessions.$inferSelect;
+export type InsertQuizSession = typeof quizSessions.$inferInsert;
+
+/**
+ * Quiz Question Events table - track question-level interactions
+ */
+export const quizQuestionEvents = mysqlTable("quiz_question_events", {
+  id: int("id").autoincrement().primaryKey(),
+  sessionId: varchar("sessionId", { length: 255 }).notNull(),
+  questionId: int("questionId").notNull(),
+  eventType: mysqlEnum("eventType", ["viewed", "answered", "skipped"]).notNull(),
+  answer: text("answer"), // JSON string of answer(s)
+  timeSpent: int("timeSpent").default(0), // Time on this question in seconds
+  timestamp: timestamp("timestamp").defaultNow().notNull(),
+});
+
+export type QuizQuestionEvent = typeof quizQuestionEvents.$inferSelect;
+export type InsertQuizQuestionEvent = typeof quizQuestionEvents.$inferInsert;

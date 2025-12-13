@@ -1143,3 +1143,28 @@
 - [x] Add translations (UA/RU/EN)
 - [x] Test all features
 
+
+## Phase 60 - Quiz Analytics Page
+- [ ] Design analytics data structure
+- [ ] Update database schema with analytics tracking
+- [ ] Create OverviewCards component (completion rate, avg time, total responses, conversion)
+- [ ] Create CompletionFunnel component (drop-off visualization)
+- [ ] Create TimeAnalysis component (time per question chart)
+- [ ] Create QuestionPerformance component (metrics table)
+- [ ] Create ConversionTracking component (conversion graph)
+- [ ] Build QuizAnalytics page
+- [ ] Add tRPC procedures for analytics data
+- [ ] Add translations (UA/RU/EN)
+- [ ] Test all analytics features
+
+## Phase 60 - Quiz Analytics Page (COMPLETED)
+- [x] Design analytics data structure
+- [x] Update database schema with analytics tracking (quiz_sessions, quiz_question_events)
+- [x] Create AnalyticsOverviewCards component (completion rate, avg time, total responses, conversion)
+- [x] Create CompletionFunnel component (drop-off visualization)
+- [x] Create TimeAnalysis component (time per question chart)
+- [x] Create QuestionPerformanceTable component (metrics table)
+- [x] Build QuizAnalytics page
+- [x] Add tRPC procedures for analytics data
+- [x] Add route in App.tsx
+- [x] Add Analytics button in AdminQuizzes

@@ -20,6 +20,7 @@ import GoogleProducts from "./pages/GoogleProducts";
 import GoogleTelegram from "./pages/GoogleTelegram";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminQuizzes from "./pages/AdminQuizzes";
+import QuizAnalytics from "./pages/QuizAnalytics";
 import AdminABTests from "./pages/AdminABTests";
 import AdminManagers from "./pages/AdminManagers";
 import AdminAnalytics from "./pages/AdminAnalytics";
@@ -78,6 +79,7 @@ function Router() {
       {/* Admin Panel */}
       <Route path={"/admin"} component={AdminDashboard} />
       <Route path={"/admin/quizzes"} component={AdminQuizzes} />
+      <Route path={"/admin/quizzes/:id/analytics"} component={QuizAnalytics} />
       <Route path={"/admin/ab-tests"} component={AdminABTests} />
       <Route path={"/admin/ab-testing"} component={AdminABTests} />
       <Route path={"/admin/managers"} component={AdminManagers} />

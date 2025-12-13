@@ -113,6 +113,12 @@ export default function AdminQuizzes() {
             <h1 className="text-2xl font-bold text-foreground">Quiz Management</h1>
           </div>
           <div className="flex items-center gap-2">
+            <Link href={`/admin/quizzes/${selectedQuiz}/analytics`}>
+              <Button variant="outline" size="sm">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+                Аналітика
+              </Button>
+            </Link>
             <Button
               variant="outline"
               size="sm"
