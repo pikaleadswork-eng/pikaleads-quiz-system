@@ -1,6 +1,5 @@
 import { getSessionCookieOptions } from "./_core/cookies";
-
-const COOKIE_NAME = "manus_session";
+import { COOKIE_NAME } from "../shared/const";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { TRPCError } from "@trpc/server";

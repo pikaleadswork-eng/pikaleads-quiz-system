@@ -19,6 +19,7 @@ import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 import { BackgroundUploader } from "@/components/BackgroundUploader";
 import { DesignLayoutSelector } from "@/components/DesignLayoutSelector";
+import { QuizPreviewPanel } from "@/components/QuizPreviewPanel";
 
 interface QuizDesignSettings {
   layoutType: "center" | "split" | "background";
@@ -159,33 +160,6 @@ export default function ImprovedQuizDesignEditor({ quizId, initialSettings, onSa
 
   return (
     <div className="space-y-6">
-      {/* Preview Device Toggle */}
-      <Card className="p-4 bg-zinc-900 border-zinc-800">
-        <div className="flex items-center justify-between">
-          <h3 className="font-semibold text-white">
-            {language === "uk" ? "Попередній перегляд" : "Preview"}
-          </h3>
-          <div className="flex gap-2">
-            <Button
-              variant={previewDevice === "desktop" ? "default" : "outline"}
-              size="sm"
-              onClick={() => setPreviewDevice("desktop")}
-            >
-              <Monitor className="w-4 h-4 mr-2" />
-              Desktop
-            </Button>
-            <Button
-              variant={previewDevice === "mobile" ? "default" : "outline"}
-              size="sm"
-              onClick={() => setPreviewDevice("mobile")}
-            >
-              <Smartphone className="w-4 h-4 mr-2" />
-              Mobile
-            </Button>
-          </div>
-        </div>
-      </Card>
-
       <div className="grid lg:grid-cols-2 gap-6">
         {/* Left Side - Editor Controls */}
         <div className="space-y-6">
@@ -553,6 +527,7 @@ export default function ImprovedQuizDesignEditor({ quizId, initialSettings, onSa
 
         {/* Right Side - Live Preview */}
         <div className="space-y-4">
+          <QuizPreviewPanel settings={settings} />
           <Card className="p-6 bg-zinc-900 border-zinc-800">
             <div 
               className={`mx-auto transition-all duration-300 ${

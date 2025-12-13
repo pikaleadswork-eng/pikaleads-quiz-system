@@ -13,11 +13,15 @@ import {
   Plus,
   X,
   Save,
+  ImagePlus,
+  Loader2,
 } from "lucide-react";
 import { useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import type { QuizQuestion } from "./DraggableQuestionEditor";
+import type { QuizQuestion, AnswerOption } from "./DraggableQuestionEditor";
 import { toast } from "sonner";
+import { trpc } from "@/lib/trpc";
+import { AnswerOptionRow } from "./AnswerOptionRow";
 
 interface SortableQuestionItemProps {
   question: QuizQuestion;
@@ -68,9 +72,9 @@ export function SortableQuestionItem({
   };
 
   const handleAddOption = () => {
-    const newOptions = [
+    const newOptions: AnswerOption[] = [
       ...localOptions,
-      language === "uk" ? `Варіант ${localOptions.length + 1}` : `Option ${localOptions.length + 1}`,
+      { text: language === "uk" ? `Варіант ${localOptions.length + 1}` : `Option ${localOptions.length + 1}` },
     ];
     setLocalOptions(newOptions);
     onUpdate({ options: newOptions });
@@ -90,9 +94,9 @@ export function SortableQuestionItem({
     onUpdate({ options: newOptions });
   };
 
-  const handleUpdateOption = (optionIndex: number, value: string) => {
+  const handleUpdateOption = (optionIndex: number, value: string, imageUrl?: string) => {
     const newOptions = localOptions.map((opt, i) =>
-      i === optionIndex ? value : opt
+      i === optionIndex ? { text: value, imageUrl: imageUrl || opt.imageUrl } : opt
     );
     setLocalOptions(newOptions);
   };
@@ -200,26 +204,17 @@ export function SortableQuestionItem({
                 {language === "uk" ? "Додати варіант" : "Add Option"}
               </Button>
             </div>
-            <div className="space-y-2">
+            <div className="space-y-3">
               {localOptions.map((option, optionIndex) => (
-                <div key={optionIndex} className="flex items-center gap-2">
-                  <span className="flex-shrink-0 w-6 text-sm text-muted-foreground">
-                    {optionIndex + 1}.
-                  </span>
-                  <Input
-                    value={option}
-                    onChange={(e) => handleUpdateOption(optionIndex, e.target.value)}
-                    placeholder={`${language === "uk" ? "Варіант" : "Option"} ${optionIndex + 1}`}
-                  />
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => handleRemoveOption(optionIndex)}
-                    disabled={localOptions.length <= 2}
-                  >
-                    <X className="w-4 h-4" />
-                  </Button>
-                </div>
+                <AnswerOptionRow
+                  key={optionIndex}
+                  option={option}
+                  index={optionIndex}
+                  onUpdate={(text, imageUrl) => handleUpdateOption(optionIndex, text, imageUrl)}
+                  onRemove={() => handleRemoveOption(optionIndex)}
+                  canRemove={localOptions.length > 2}
+                  language={language}
+                />
               ))}
             </div>
           </div>

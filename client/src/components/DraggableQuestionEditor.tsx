@@ -21,10 +21,15 @@ import { Plus, Save, Library } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { toast } from "sonner";
 
+export interface AnswerOption {
+  text: string;
+  imageUrl?: string;
+}
+
 export interface QuizQuestion {
   id: string;
   question: string;
-  options: string[];
+  options: AnswerOption[];
   type?: "single" | "multiple" | "text";
   required?: boolean;
 }
@@ -81,8 +86,8 @@ export default function DraggableQuestionEditor({
       id: `question-${Date.now()}`,
       question: language === "uk" ? "Нове питання" : "New question",
       options: [
-        language === "uk" ? "Варіант 1" : "Option 1",
-        language === "uk" ? "Варіант 2" : "Option 2",
+        { text: language === "uk" ? "Варіант 1" : "Option 1" },
+        { text: language === "uk" ? "Варіант 2" : "Option 2" },
       ],
       type: "single",
       required: true,

@@ -13,7 +13,7 @@ describe("Telegram Integration", () => {
 
     const message = formatLeadMessage(testData);
 
-    expect(message).toContain("New Lead from PIKALEADS Quiz");
+    expect(message).toContain("Новий Лід з PIKALEADS Quiz");
     expect(message).toContain("meta-furniture");
     expect(message).toContain("John Doe");
     expect(message).toContain("+1234567890");
