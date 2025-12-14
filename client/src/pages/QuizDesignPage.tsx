@@ -2,13 +2,16 @@ import { useState, useEffect } from "react";
 import { useParams } from "wouter";
 import QuizSettingsPanel from "@/components/QuizSettingsPanel";
 import BottomDesignPanel from "@/components/BottomDesignPanel";
+import DraggableQuestionEditor from "@/components/DraggableQuestionEditor";
 import { trpc } from "@/lib/trpc";
+import type { QuizQuestion } from "@/components/DraggableQuestionEditor";
 
 export default function QuizDesignPage() {
   const { quizId: quizSlug } = useParams<{ quizId: string }>();
 
   const [showSettings, setShowSettings] = useState(true);
   const [activeTab, setActiveTab] = useState<"start" | "questions" | "contacts" | "results" | "thanks">("start");
+  const [questions, setQuestions] = useState<QuizQuestion[]>([]);
   
   // Get quiz ID from slug
   const { data: quizId } = trpc.quizDesign.getQuizIdBySlug.useQuery(
@@ -230,9 +233,18 @@ export default function QuizDesignPage() {
           )}
 
           {activeTab === "questions" && (
-            <div className="bg-zinc-800 rounded-lg p-8 text-center">
-              <h2 className="text-2xl font-bold text-white mb-4">Редактор питань</h2>
-              <p className="text-zinc-400">Тут буде конструктор питань з 12 типами</p>
+            <div className="bg-zinc-800 rounded-lg p-6">
+              <DraggableQuestionEditor
+                quizId={quizSlug || ""}
+                initialQuestions={questions}
+                onSave={(updatedQuestions) => {
+                  setQuestions(updatedQuestions);
+                  // TODO: Save to database via tRPC
+                }}
+                onOpenTemplateLibrary={() => {
+                  // TODO: Open template library modal
+                }}
+              />
             </div>
           )}
 
