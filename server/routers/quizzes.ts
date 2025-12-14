@@ -55,6 +55,18 @@ export const quizzesRouter = router({
       return quiz;
     }),
 
+  // Get quiz by slug
+  getBySlug: publicProcedure
+    .input(z.object({ slug: z.string() }))
+    .query(async ({ input }) => {
+      const db = await getDb();
+      if (!db) throw new Error("Database not available");
+
+      const allQuizzes = await db.select().from(quizzes).where(eq(quizzes.slug, input.slug));
+      const quiz = allQuizzes[0];
+      return quiz;
+    }),
+
   // Update quiz
   update: protectedProcedure
     .input(

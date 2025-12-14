@@ -85,15 +85,15 @@ export default function AdminQuizzes() {
 
               {/* Quiz Info */}
               <h3 className="text-lg font-semibold text-foreground mb-2">
-                {quiz.title}
+                {quiz.name}
               </h3>
               <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
-                {quiz.subtitle}
+                {quiz.description || (i18n.language === "uk" ? "Опис квізу" : "Quiz description")}
               </p>
 
               {/* Stats */}
               <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
-                <span>{quiz.questions.length} {i18n.language === "uk" ? "питань" : "questions"}</span>
+                <span>{quiz.platform === "meta_ads" ? "Meta Ads" : "Google Ads"}</span>
                 <span>•</span>
                 <span>{i18n.language === "uk" ? "Активний" : "Active"}</span>
               </div>
@@ -113,7 +113,7 @@ export default function AdminQuizzes() {
                       {i18n.language === "uk" ? "Аналітика" : "Analytics"}
                     </Button>
                   </Link>
-                  <Link href={`/${quiz.id}`} target="_blank">
+                  <Link href={`/quiz/${quiz.slug}`} target="_blank">
                     <Button variant="outline" size="sm" className="w-full">
                       <Eye className="w-4 h-4 mr-2" />
                       {i18n.language === "uk" ? "Переглянути" : "Preview"}

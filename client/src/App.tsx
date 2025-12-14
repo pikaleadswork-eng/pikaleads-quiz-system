@@ -50,6 +50,7 @@ import Contact from "./pages/Contact";
 import FurnitureQuiz from "./pages/FurnitureQuiz";
 import ApartmentRenovationQuiz from "./pages/ApartmentRenovationQuiz";
 import ECommerceQuiz from "./pages/ECommerceQuiz";
+import QuizPage from "./pages/QuizPage";
 import Login from "./pages/Login";
 
 function Router() {
@@ -58,6 +59,9 @@ function Router() {
       <Route path={"/"} component={Home} />
       <Route path={"/login"} component={Login} />
       <Route path={"/thank-you"} component={ThankYou} />
+      
+      {/* Dynamic Quiz Page - must be before static routes */}
+      <Route path={"/quiz/:slug"} component={QuizPage} />
       
       {/* New Quiz Pages with Offers */}
       <Route path={"/quiz/furniture"} component={FurnitureQuiz} />
