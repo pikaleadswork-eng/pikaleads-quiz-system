@@ -28,9 +28,8 @@ import { useLocation } from "wouter";
 import { DashboardLayoutSkeleton } from './DashboardLayoutSkeleton';
 import { Button } from "./ui/button";
 
-const menuItems = [
-  { icon: LayoutDashboard, label: "Page 1", path: "/" },
-  { icon: Users, label: "Page 2", path: "/some-path" },
+const menuItems: Array<{ icon: any; label: string; path: string }> = [
+  // Navigation items can be added here if needed
 ];
 
 const SIDEBAR_WIDTH_KEY = "sidebar-width";

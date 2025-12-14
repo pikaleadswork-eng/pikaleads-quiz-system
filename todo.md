@@ -1998,3 +1998,21 @@
 - [x] Fix dropdown z-index overlap issue
 - [x] Integrate DraggableQuestionEditor into Questions tab
 - [ ] Create seed script to populate quizzes table from quizData.ts
+
+
+## Phase 83 - Fix Quiz Creation & Database Integration
+- [ ] Fix CreateQuizModal to save quiz to database via tRPC mutation
+- [ ] Fix AdminQuizzes to load quizzes from database instead of quizData.ts hardcoded array
+- [ ] Add tRPC procedure to create quiz in database
+- [ ] Add tRPC procedure to list all quizzes from database
+- [ ] Test complete flow: create quiz → see in list → edit → add questions → save → reload page → verify data persists
+
+
+## Phase 84 - Add Platform Field to Quiz Creation
+- [x] Add `platform` enum field to quizzes table schema (google_ads, meta_ads, telegram)
+- [x] Run `pnpm db:push` to apply schema changes
+- [x] Update CreateQuizModal to include platform selection dropdown
+- [x] Update quizzes.create tRPC procedure to accept platform parameter
+- [x] Remove "Page 1" and "Page 2" placeholder navigation from DashboardLayout
+- [x] Update home page to load quizzes from database and filter by platform (Google Ads / Meta Ads sections)
+- [ ] Test creating quiz with platform → verify it appears in correct section on home page

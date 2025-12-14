@@ -1,86 +1,31 @@
-import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import QuizLayout from "@/components/QuizLayout";
 import { Zap, Target } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/lib/translations";
-
-interface QuizCard {
-  title: string;
-  descriptionKey: string;
-  path: string;
-  platform: "meta" | "google";
-}
-
-const quizCardsConfig: QuizCard[] = [
-  {
-    title: "Furniture",
-    descriptionKey: "metaFurnitureDesc",
-    path: "/quiz/furniture",
-    platform: "meta",
-  },
-  {
-    title: "Apartment Renovation",
-    descriptionKey: "metaRepairDesc",
-    path: "/quiz/apartment-renovation",
-    platform: "meta",
-  },
-  {
-    title: "E-Commerce",
-    descriptionKey: "metaEcomDesc",
-    path: "/quiz/e-commerce",
-    platform: "meta",
-  },
-  {
-    title: "Product Sales",
-    descriptionKey: "metaProductsDesc",
-    path: "/meta-products",
-    platform: "meta",
-  },
-  {
-    title: "Telegram B2B",
-    descriptionKey: "metaTelegramDesc",
-    path: "/meta-telegram",
-    platform: "meta",
-  },
-  {
-    title: "Furniture",
-    descriptionKey: "googleFurnitureDesc",
-    path: "/google-furniture",
-    platform: "google",
-  },
-  {
-    title: "Apartment Renovation",
-    descriptionKey: "googleRepairDesc",
-    path: "/google-repair",
-    platform: "google",
-  },
-  {
-    title: "E-Commerce",
-    descriptionKey: "googleEcomDesc",
-    path: "/google-ecom",
-    platform: "google",
-  },
-  {
-    title: "Product Sales",
-    descriptionKey: "googleProductsDesc",
-    path: "/google-products",
-    platform: "google",
-  },
-  {
-    title: "Telegram B2B",
-    descriptionKey: "googleTelegramDesc",
-    path: "/google-telegram",
-    platform: "google",
-  },
-];
+import { trpc } from "@/lib/trpc";
+import { Link } from "wouter";
 
 export default function Home() {
   const { language } = useLanguage();
   const t = translations[language];
 
-  const metaQuizzes = quizCardsConfig.filter((q) => q.platform === "meta");
-  const googleQuizzes = quizCardsConfig.filter((q) => q.platform === "google");
+  // Load quizzes from database
+  const { data: allQuizzes = [], isLoading } = trpc.quizzes.list.useQuery();
+
+  // Filter by platform
+  const metaQuizzes = allQuizzes.filter((q) => q.platform === "meta_ads");
+  const googleQuizzes = allQuizzes.filter((q) => q.platform === "google_ads");
+
+  if (isLoading) {
+    return (
+      <QuizLayout title={t.homeTitle} subtitle={t.homeSubtitle}>
+        <div className="max-w-7xl mx-auto text-center py-12">
+          <p className="text-muted-foreground">Loading quizzes...</p>
+        </div>
+      </QuizLayout>
+    );
+  }
 
   return (
     <QuizLayout
@@ -100,24 +45,30 @@ export default function Home() {
             {t.metaAdsSubtitle}
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {metaQuizzes.map((quiz) => (
-              <Link key={quiz.path} href={quiz.path}>
-                <div className="bg-card border-2 border-border rounded-xl p-6 hover:border-primary transition-all duration-300 hover:shadow-xl hover:scale-105 cursor-pointer h-full">
-                  <h3 className="text-2xl font-bold text-foreground mb-3">
-                    {quiz.title}
-                  </h3>
-                  <p className="text-muted-foreground mb-4">
-                    {t[quiz.descriptionKey as keyof typeof t] as string}
-                  </p>
-                  <Button
-                    variant="default"
-                    className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
-                  >
-                    {t.learnMore}
-                  </Button>
-                </div>
-              </Link>
-            ))}
+            {metaQuizzes.length === 0 ? (
+              <div className="col-span-full text-center py-8">
+                <p className="text-muted-foreground">No Meta Ads quizzes available yet.</p>
+              </div>
+            ) : (
+              metaQuizzes.map((quiz) => (
+                <Link key={quiz.id} href={`/quiz/${quiz.slug}`}>
+                  <div className="bg-card border-2 border-border rounded-xl p-6 hover:border-primary transition-all duration-300 hover:shadow-xl hover:scale-105 cursor-pointer h-full">
+                    <h3 className="text-2xl font-bold text-foreground mb-3">
+                      {quiz.name}
+                    </h3>
+                    <p className="text-muted-foreground mb-4">
+                      {quiz.description || t.learnMore}
+                    </p>
+                    <Button
+                      variant="default"
+                      className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
+                    >
+                      {t.learnMore}
+                    </Button>
+                  </div>
+                </Link>
+              ))
+            )}
           </div>
         </section>
 
@@ -133,24 +84,30 @@ export default function Home() {
             {t.googleAdsSubtitle}
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {googleQuizzes.map((quiz) => (
-              <Link key={quiz.path} href={quiz.path}>
-                <div className="bg-card border-2 border-border rounded-xl p-6 hover:border-primary transition-all duration-300 hover:shadow-xl hover:scale-105 cursor-pointer h-full">
-                  <h3 className="text-2xl font-bold text-foreground mb-3">
-                    {quiz.title}
-                  </h3>
-                  <p className="text-muted-foreground mb-4">
-                    {t[quiz.descriptionKey as keyof typeof t] as string}
-                  </p>
-                  <Button
-                    variant="default"
-                    className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
-                  >
-                    {t.learnMore}
-                  </Button>
-                </div>
-              </Link>
-            ))}
+            {googleQuizzes.length === 0 ? (
+              <div className="col-span-full text-center py-8">
+                <p className="text-muted-foreground">No Google Ads quizzes available yet.</p>
+              </div>
+            ) : (
+              googleQuizzes.map((quiz) => (
+                <Link key={quiz.id} href={`/quiz/${quiz.slug}`}>
+                  <div className="bg-card border-2 border-border rounded-xl p-6 hover:border-primary transition-all duration-300 hover:shadow-xl hover:scale-105 cursor-pointer h-full">
+                    <h3 className="text-2xl font-bold text-foreground mb-3">
+                      {quiz.name}
+                    </h3>
+                    <p className="text-muted-foreground mb-4">
+                      {quiz.description || t.learnMore}
+                    </p>
+                    <Button
+                      variant="default"
+                      className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
+                    >
+                      {t.learnMore}
+                    </Button>
+                  </div>
+                </Link>
+              ))
+            )}
           </div>
         </section>
       </div>

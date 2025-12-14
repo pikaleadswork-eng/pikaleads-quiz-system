@@ -6,13 +6,16 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ArrowLeft, Plus, BarChart3, Pencil, Eye, Trash2 } from "lucide-react";
 import { Link } from "wouter";
-import { quizzes } from "@/lib/quizData";
 import CreateQuizModal from "@/components/CreateQuizModal";
+import { trpc } from "@/lib/trpc";
 
 export default function AdminQuizzes() {
   const { t, i18n } = useTranslation();
   const { user, loading } = useAuth();
   const [createModalOpen, setCreateModalOpen] = useState(false);
+
+  // Load quizzes from database
+  const { data: quizzes = [], isLoading: quizzesLoading, refetch } = trpc.quizzes.list.useQuery();
 
   if (loading) {
     return (
@@ -144,7 +147,7 @@ export default function AdminQuizzes() {
         onOpenChange={setCreateModalOpen}
         onQuizCreated={() => {
           setCreateModalOpen(false);
-          // TODO: Refresh quiz list
+          refetch(); // Refresh quiz list from database
         }}
       />
     </DashboardLayout>

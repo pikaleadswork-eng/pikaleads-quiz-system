@@ -632,6 +632,11 @@ export const quizzes = mysqlTable("quizzes", {
     "form",               // Simple lead capture form
     "video_consultant",   // Video-based quiz
   ]).default("lead_generation").notNull(),
+  platform: mysqlEnum("platform", [
+    "google_ads",         // Google Ads quizzes
+    "meta_ads",           // Meta (Facebook/Instagram) Ads quizzes
+    "telegram",           // Telegram quizzes
+  ]).default("meta_ads").notNull(),
   isActive: boolean("isActive").default(true).notNull(),
   createdBy: int("createdBy").notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),

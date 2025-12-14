@@ -13,6 +13,7 @@ export const quizzesRouter = router({
         slug: z.string().min(1),
         description: z.string().optional(),
         quizType: z.enum(["lead_generation", "ecommerce", "calculator", "test", "form", "video_consultant"]).optional(),
+        platform: z.enum(["google_ads", "meta_ads", "telegram"]).optional(),
       })
     )
     .mutation(async ({ input, ctx }) => {
@@ -24,6 +25,7 @@ export const quizzesRouter = router({
         slug: input.slug,
         description: input.description || "",
         quizType: input.quizType || "lead_generation",
+        platform: input.platform || "meta_ads",
         createdBy: ctx.user.id,
       });
 

@@ -14,6 +14,12 @@ interface CreateQuizModalProps {
   onQuizCreated: (quizId: number) => void;
 }
 
+const PLATFORMS = [
+  { value: "meta_ads", label: { uk: "Meta Ads", ru: "Meta Ads", en: "Meta Ads" } },
+  { value: "google_ads", label: { uk: "Google Ads", ru: "Google Ads", en: "Google Ads" } },
+  { value: "telegram", label: { uk: "Telegram", ru: "Telegram", en: "Telegram" } },
+];
+
 const NICHES = [
   { value: "furniture", label: { uk: "Меблі", ru: "Мебель", en: "Furniture" } },
   { value: "renovation", label: { uk: "Ремонт", ru: "Ремонт", en: "Renovation" } },
@@ -26,6 +32,7 @@ const NICHES = [
 export default function CreateQuizModal({ open, onOpenChange, onQuizCreated }: CreateQuizModalProps) {
   const { t, i18n } = useTranslation();
   const [quizName, setQuizName] = useState("");
+  const [platform, setPlatform] = useState("");
   const [niche, setNiche] = useState("");
   const [description, setDescription] = useState("");
 
@@ -35,6 +42,7 @@ export default function CreateQuizModal({ open, onOpenChange, onQuizCreated }: C
       onQuizCreated(data.id);
       onOpenChange(false);
       setQuizName("");
+      setPlatform("");
       setNiche("");
       setDescription("");
     },
@@ -48,6 +56,10 @@ export default function CreateQuizModal({ open, onOpenChange, onQuizCreated }: C
       toast.error(i18n.language === "uk" ? "Введіть назву квізу" : "Enter quiz name");
       return;
     }
+    if (!platform) {
+      toast.error(i18n.language === "uk" ? "Оберіть платформу" : "Select platform");
+      return;
+    }
     if (!niche) {
       toast.error(i18n.language === "uk" ? "Оберіть нішу" : "Select niche");
       return;
@@ -55,9 +67,10 @@ export default function CreateQuizModal({ open, onOpenChange, onQuizCreated }: C
 
     createQuizMutation.mutate({
       name: quizName,
-      slug: niche.toLowerCase().replace(/\s+/g, '-'),
+      slug: `${platform}-${niche}`.toLowerCase().replace(/\s+/g, '-'),
       description,
       quizType: "lead_generation",
+      platform: platform as "google_ads" | "meta_ads" | "telegram",
     });
   };
 
@@ -76,6 +89,24 @@ export default function CreateQuizModal({ open, onOpenChange, onQuizCreated }: C
         </DialogHeader>
 
         <div className="space-y-6 py-4">
+          <div className="space-y-2">
+            <Label htmlFor="platform" className="text-white">
+              {i18n.language === "uk" ? "Платформа" : "Platform"}
+            </Label>
+            <Select value={platform} onValueChange={setPlatform}>
+              <SelectTrigger className="bg-zinc-800 border-zinc-700 text-white">
+                <SelectValue placeholder={i18n.language === "uk" ? "Оберіть платформу" : "Select platform"} />
+              </SelectTrigger>
+              <SelectContent className="bg-zinc-800 border-zinc-700">
+                {PLATFORMS.map((p) => (
+                  <SelectItem key={p.value} value={p.value} className="text-white hover:bg-zinc-700">
+                    {p.label[i18n.language as keyof typeof p.label] || p.label.en}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
           <div className="space-y-2">
             <Label htmlFor="quiz-name" className="text-white">
               {i18n.language === "uk" ? "Назва квізу" : "Quiz Name"}
