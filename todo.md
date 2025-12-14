@@ -2035,7 +2035,3 @@
 - [ ] Update QuizDesignPage to load saved questions from database on mount
 - [ ] Update QuizDesignPage to load saved design settings from quiz_design_settings table
 - [ ] Test: open existing quiz → verify questions/design load → edit → save → reload → verify persistence
-
-
-## Current Tasks
-- [x] Restore Meta ADS and Google ADS quiz separation on home page
