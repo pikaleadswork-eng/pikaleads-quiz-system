@@ -77,29 +77,31 @@ export default function AdminQuizzes() {
         {/* Quiz Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {quizzes.map((quiz) => (
-            <Card key={quiz.id} className="p-6 hover:shadow-lg transition-shadow">
+            <Card key={quiz.id} className="p-6 hover:shadow-lg transition-shadow flex flex-col h-full">
               {/* Quiz Preview */}
-              <div className="aspect-video bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg mb-4 flex items-center justify-center">
+              <div className="aspect-video bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg mb-4 flex items-center justify-center flex-shrink-0">
                 <span className="text-4xl">📊</span>
               </div>
 
-              {/* Quiz Info */}
-              <h3 className="text-lg font-semibold text-foreground mb-2">
-                {quiz.name}
-              </h3>
-              <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
-                {quiz.description || (i18n.language === "uk" ? "Опис квізу" : "Quiz description")}
-              </p>
+              {/* Quiz Info - flex-grow to push actions to bottom */}
+              <div className="flex-grow mb-4">
+                <h3 className="text-lg font-semibold text-foreground mb-2">
+                  {quiz.name}
+                </h3>
+                <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
+                  {quiz.description || (i18n.language === "uk" ? "Опис квізу" : "Quiz description")}
+                </p>
 
-              {/* Stats */}
-              <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
-                <span>{quiz.platform === "meta_ads" ? "Meta Ads" : "Google Ads"}</span>
-                <span>•</span>
-                <span>{i18n.language === "uk" ? "Активний" : "Active"}</span>
+                {/* Stats */}
+                <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                  <span>{quiz.platform === "meta_ads" ? "Meta Ads" : "Google Ads"}</span>
+                  <span>•</span>
+                  <span>{i18n.language === "uk" ? "Активний" : "Active"}</span>
+                </div>
               </div>
 
-              {/* Actions */}
-              <div className="flex flex-col gap-2">
+              {/* Actions - always at bottom */}
+              <div className="flex flex-col gap-2 flex-shrink-0">
                 <Link href={`/admin/quizzes/${quiz.id}/design`}>
                   <Button className="w-full bg-purple-600 hover:bg-purple-700">
                     <Pencil className="w-4 h-4 mr-2" />
