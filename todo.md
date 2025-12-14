@@ -2026,3 +2026,12 @@
 - [x] Update CreateQuizModal to save niche field
 - [x] Update home page to group quizzes by niche within Meta/Google sections
 - [ ] Test: create quiz → add questions → save → reload → verify persistence
+
+
+## Phase 86 - Seed Database & Load Saved Quiz Data
+- [ ] Create seed-quizzes.mjs script to populate database with quizzes from quizData.ts
+- [ ] Map each quiz to correct platform (meta_ads/google_ads) and niche
+- [ ] Run seed script and verify all quizzes appear in database
+- [ ] Update QuizDesignPage to load saved questions from database on mount
+- [ ] Update QuizDesignPage to load saved design settings from quiz_design_settings table
+- [ ] Test: open existing quiz → verify questions/design load → edit → save → reload → verify persistence
