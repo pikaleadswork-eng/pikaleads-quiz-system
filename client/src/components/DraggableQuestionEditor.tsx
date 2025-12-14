@@ -30,8 +30,16 @@ export interface QuizQuestion {
   id: string;
   question: string;
   options: AnswerOption[];
-  type?: "single" | "multiple" | "text";
+  type?: "single" | "multiple" | "text" | "slider" | "rating" | "date" | "file" | "emoji" | "dropdown" | "scale" | "matrix" | "ranking";
   required?: boolean;
+  // Additional fields for specific question types
+  min?: number; // For slider, scale
+  max?: number; // For slider, scale
+  step?: number; // For slider
+  maxFiles?: number; // For file upload
+  allowedFileTypes?: string[]; // For file upload
+  rows?: string[]; // For matrix
+  columns?: string[]; // For matrix
 }
 
 interface DraggableQuestionEditorProps {

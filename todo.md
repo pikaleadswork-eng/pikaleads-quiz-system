@@ -1988,3 +1988,13 @@
 - [ ] Upload test image
 - [ ] Check image displays on preview
 - [ ] Test remove button
+
+
+## Phase 82 - Simplify Quiz Management Flow
+- [x] Remove duplicate editor tabs from AdminQuizzes page
+- [x] Keep only quiz list with "Редагувати" button
+- [x] Ensure QuizDesignPage loads ALL quiz data from database (design settings + questions)
+- [x] Test complete flow: select quiz → edit → modify → save
+- [x] Fix dropdown z-index overlap issue
+- [x] Integrate DraggableQuestionEditor into Questions tab
+- [ ] Create seed script to populate quizzes table from quizData.ts

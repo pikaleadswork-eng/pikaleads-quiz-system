@@ -13,11 +13,34 @@ export default function QuizDesignPage() {
   const [activeTab, setActiveTab] = useState<"start" | "questions" | "contacts" | "results" | "thanks">("start");
   const [questions, setQuestions] = useState<QuizQuestion[]>([]);
   
-  // Get quiz ID from slug
+  // Get quiz ID from slug (MUST be first!)
   const { data: quizId } = trpc.quizDesign.getQuizIdBySlug.useQuery(
     { slug: quizSlug || "" },
     { enabled: !!quizSlug }
   );
+
+  // Load questions from database
+  const { data: loadedQuestions } = trpc.quizDesign.getQuestions.useQuery(
+    { quizId: quizId || 0 },
+    { enabled: !!quizId }
+  );
+
+  // Update local state when questions are loaded
+  useEffect(() => {
+    if (loadedQuestions) {
+      setQuestions(loadedQuestions as QuizQuestion[]);
+    }
+  }, [loadedQuestions]);
+
+  // Save questions mutation
+  const saveQuestionsMutation = trpc.quizDesign.saveQuestions.useMutation({
+    onSuccess: () => {
+      toast.success("Питання збережено!");
+    },
+    onError: (error) => {
+      toast.error(`Помилка: ${error.message}`);
+    },
+  });
 
   // Load design settings from database
   const { data: savedSettings } = trpc.quizDesign.getByQuizId.useQuery(
@@ -239,7 +262,14 @@ export default function QuizDesignPage() {
                 initialQuestions={questions}
                 onSave={(updatedQuestions) => {
                   setQuestions(updatedQuestions);
-                  // TODO: Save to database via tRPC
+                  if (!quizId) {
+                    toast.error("Квіз не знайдено в базі даних. Створіть квіз спочатку.");
+                    return;
+                  }
+                  saveQuestionsMutation.mutate({
+                    quizId,
+                    questions: updatedQuestions,
+                  });
                 }}
                 onOpenTemplateLibrary={() => {
                   // TODO: Open template library modal

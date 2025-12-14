@@ -120,7 +120,7 @@ export default function BottomDesignPanel({
               <SelectTrigger className="w-[200px] bg-zinc-700 border-zinc-600 text-white">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="z-[10000]">
                 <SelectItem value="standard">Стандартная</SelectItem>
                 <SelectItem value="background">Фоновая картинка</SelectItem>
               </SelectContent>

@@ -250,4 +250,112 @@ export const quizDesignRouter = router({
 
       return { success: true };
     }),
+
+  // Save quiz questions
+  saveQuestions: protectedProcedure
+    .input(z.object({
+      quizId: z.number(),
+      questions: z.array(z.object({
+        id: z.string(),
+        question: z.string(),
+        type: z.enum(["single", "multiple", "text", "slider", "rating", "date", "file", "emoji", "dropdown", "scale", "matrix", "ranking"]),
+        options: z.array(z.object({
+          text: z.string(),
+          imageUrl: z.string().optional(),
+        })),
+        required: z.boolean().optional(),
+        min: z.number().optional(),
+        max: z.number().optional(),
+        step: z.number().optional(),
+        maxFiles: z.number().optional(),
+        allowedFileTypes: z.array(z.string()).optional(),
+        rows: z.array(z.string()).optional(),
+        columns: z.array(z.string()).optional(),
+      })),
+    }))
+    .mutation(async ({ input }) => {
+      const db = await getDb();
+      if (!db) throw new Error("Database connection failed");
+      const { quizQuestions } = await import("../../drizzle/schema");
+      
+      // Delete existing questions for this quiz
+      await db.delete(quizQuestions)
+        .where(eq(quizQuestions.quizId, input.quizId));
+      
+      // Insert new questions
+      for (let i = 0; i < input.questions.length; i++) {
+        const q = input.questions[i];
+        
+        // Map frontend type to database enum
+        const typeMapping: Record<string, string> = {
+          single: "text_options",
+          multiple: "text_options",
+          text: "custom_input",
+          slider: "slider",
+          rating: "rating",
+          date: "date",
+          file: "file_upload",
+          emoji: "emoji",
+          dropdown: "dropdown",
+          scale: "slider",
+          matrix: "question_group",
+          ranking: "text_options",
+        };
+        
+        await db.insert(quizQuestions).values({
+          quizId: input.quizId,
+          questionText: q.question,
+          questionType: typeMapping[q.type || "single"] as any,
+          answerOptions: JSON.stringify(q.options),
+          orderIndex: i,
+          isRequired: q.required ?? true,
+          settings: JSON.stringify({
+            type: q.type,
+            min: q.min,
+            max: q.max,
+            step: q.step,
+            maxFiles: q.maxFiles,
+            allowedFileTypes: q.allowedFileTypes,
+            rows: q.rows,
+            columns: q.columns,
+          }),
+        });
+      }
+      
+      return { success: true };
+    }),
+
+  // Load quiz questions
+  getQuestions: protectedProcedure
+    .input(z.object({
+      quizId: z.number(),
+    }))
+    .query(async ({ input }) => {
+      const db = await getDb();
+      if (!db) throw new Error("Database connection failed");
+      const { quizQuestions } = await import("../../drizzle/schema");
+      
+      const questions = await db.select()
+        .from(quizQuestions)
+        .where(eq(quizQuestions.quizId, input.quizId))
+        .orderBy(quizQuestions.orderIndex);
+      
+      return questions.map(q => {
+        const settings = q.settings ? JSON.parse(q.settings) : {};
+        return {
+          id: `question-${q.id}`,
+          question: q.questionText,
+          type: (settings.type || "single") as "single" | "multiple" | "text" | "slider" | "rating" | "date" | "file" | "emoji" | "dropdown" | "scale" | "matrix" | "ranking",
+          options: q.answerOptions ? JSON.parse(q.answerOptions) : [],
+          required: q.isRequired,
+          min: settings.min,
+          max: settings.max,
+          step: settings.step,
+          maxFiles: settings.maxFiles,
+          allowedFileTypes: settings.allowedFileTypes,
+          rows: settings.rows,
+          columns: settings.columns,
+        };
+      });
+    }),
 });
