@@ -58,30 +58,48 @@ export default function Home() {
     </>
   );
 
+  // Separate quizzes by platform
+  const metaQuizzes = allQuizzes.filter(q => q.platform === 'meta_ads');
+  const googleQuizzes = allQuizzes.filter(q => q.platform === 'google_ads');
+
   return (
     <QuizLayout
       title={t.homeTitle}
       subtitle={t.homeSubtitle}
     >
-      <div className="max-w-7xl mx-auto">
-        {/* Single section with all quizzes */}
-        <section>
-          <h2 className="text-3xl md:text-4xl font-black text-foreground text-center mb-8">
-            {language === "uk" ? "Оберіть квіз" : "Choose Quiz"}
-          </h2>
-
-          {allQuizzes.length === 0 ? (
-            <div className="text-center py-8">
-              <p className="text-muted-foreground">
-                {language === "uk" ? "Квізи ще не додані" : "No quizzes available yet"}
-              </p>
-            </div>
-          ) : (
+      <div className="max-w-7xl mx-auto space-y-16">
+        {/* META ADS Quizzes */}
+        {metaQuizzes.length > 0 && (
+          <section>
+            <h2 className="text-3xl md:text-4xl font-black text-foreground text-center mb-8">
+              {language === "uk" ? "META ADS Квізи" : language === "ru" ? "META ADS Квизы" : "META ADS Quizzes"}
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {renderQuizCards(allQuizzes)}
+              {renderQuizCards(metaQuizzes)}
             </div>
-          )}
-        </section>
+          </section>
+        )}
+
+        {/* GOOGLE ADS Quizzes */}
+        {googleQuizzes.length > 0 && (
+          <section>
+            <h2 className="text-3xl md:text-4xl font-black text-foreground text-center mb-8">
+              {language === "uk" ? "GOOGLE ADS Квізи" : language === "ru" ? "GOOGLE ADS Квизы" : "GOOGLE ADS Quizzes"}
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {renderQuizCards(googleQuizzes)}
+            </div>
+          </section>
+        )}
+
+        {/* No quizzes message */}
+        {allQuizzes.length === 0 && (
+          <div className="text-center py-8">
+            <p className="text-muted-foreground">
+              {language === "uk" ? "Квізи ще не додані" : "No quizzes available yet"}
+            </p>
+          </div>
+        )}
       </div>
     </QuizLayout>
   );
