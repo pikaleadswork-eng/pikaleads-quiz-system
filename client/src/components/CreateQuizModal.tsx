@@ -71,6 +71,7 @@ export default function CreateQuizModal({ open, onOpenChange, onQuizCreated }: C
       description,
       quizType: "lead_generation",
       platform: platform as "google_ads" | "meta_ads" | "telegram",
+      niche: niche as "furniture" | "renovation" | "ecommerce" | "services" | "realestate" | "other",
     });
   };
 

@@ -2015,4 +2015,14 @@
 - [x] Update quizzes.create tRPC procedure to accept platform parameter
 - [x] Remove "Page 1" and "Page 2" placeholder navigation from DashboardLayout
 - [x] Update home page to load quizzes from database and filter by platform (Google Ads / Meta Ads sections)
-- [ ] Test creating quiz with platform → verify it appears in correct section on home page
+- [x] Test creating quiz with platform → verify it appears in correct section on home page
+
+
+## Phase 85 - Fix Question Saving & Add Niche Filtering
+- [ ] Create seed script to populate existing quizzes from quizData.ts into database
+- [ ] Run seed script to ensure all quizzes have valid IDs
+- [ ] Fix question saving error by verifying quizId is loaded correctly
+- [x] Add `niche` field to quizzes table (furniture, renovation, ecommerce, services, realestate, other)
+- [x] Update CreateQuizModal to save niche field
+- [x] Update home page to group quizzes by niche within Meta/Google sections
+- [ ] Test: create quiz → add questions → save → reload → verify persistence

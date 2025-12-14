@@ -637,6 +637,14 @@ export const quizzes = mysqlTable("quizzes", {
     "meta_ads",           // Meta (Facebook/Instagram) Ads quizzes
     "telegram",           // Telegram quizzes
   ]).default("meta_ads").notNull(),
+  niche: mysqlEnum("niche", [
+    "furniture",          // Furniture business
+    "renovation",         // Apartment/house renovation
+    "ecommerce",          // E-commerce/online store
+    "services",           // Service business
+    "realestate",         // Real estate
+    "other",              // Other niches
+  ]).default("other").notNull(),
   isActive: boolean("isActive").default(true).notNull(),
   createdBy: int("createdBy").notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),

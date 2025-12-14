@@ -239,6 +239,13 @@
       "when": 1765707107225,
       "tag": "0033_overconfident_skreet",
       "breakpoints": true
+    },
+    {
+      "idx": 34,
+      "version": "5",
+      "when": 1765709404900,
+      "tag": "0034_ambiguous_sugar_man",
+      "breakpoints": true
     }
   ]
 }
