@@ -1,8 +1,7 @@
 import { useRoute } from "wouter";
 import { trpc } from "@/lib/trpc";
-import Quiz from "@/components/Quiz";
-import QuizLanding from "@/components/QuizLanding";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
 
 export default function QuizPage() {
   const [, params] = useRoute("/quiz/:slug");
@@ -32,14 +31,36 @@ export default function QuizPage() {
     );
   }
 
-  // For now, show a simple message - need to integrate with existing Quiz component
+  if (!quizStarted) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="text-center max-w-2xl px-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">{quiz.name}</h1>
+          <p className="text-xl text-gray-300 mb-12">{quiz.description}</p>
+          <Button 
+            onClick={() => setQuizStarted(true)}
+            size="lg"
+            className="bg-purple-600 hover:bg-purple-700 text-white px-12 py-6 text-lg"
+          >
+            Почати квіз →
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  // Quiz questions and lead form - to be implemented
   return (
     <div className="min-h-screen bg-black flex items-center justify-center">
-      <div className="text-center">
+      <div className="text-center max-w-2xl px-4">
         <h1 className="text-3xl font-bold text-white mb-4">{quiz.name}</h1>
         <p className="text-gray-400 mb-8">{quiz.description}</p>
-        <p className="text-yellow-400">Quiz functionality coming soon...</p>
-        <p className="text-sm text-gray-500 mt-4">Quiz ID: {quiz.id} | Slug: {slug}</p>
+        <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-6">
+          <p className="text-yellow-400 text-lg mb-2">🚧 Quiz Questions Coming Soon</p>
+          <p className="text-gray-400 text-sm">
+            The quiz designer is ready in the admin panel. Questions and lead form integration is in development.
+          </p>
+        </div>
       </div>
     </div>
   );

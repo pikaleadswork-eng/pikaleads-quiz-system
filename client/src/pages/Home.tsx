@@ -36,17 +36,19 @@ export default function Home() {
   const renderQuizCards = (quizzes: typeof allQuizzes) => (
     <>
       {quizzes.map((quiz) => (
-        <Link key={quiz.id} href={`/quiz/${quiz.slug}`}>
-          <div className="bg-card border-2 border-border rounded-xl p-6 hover:border-primary transition-all duration-300 hover:shadow-xl hover:scale-105 cursor-pointer h-full">
-            <h3 className="text-2xl font-bold text-foreground mb-3">
-              {quiz.name}
-            </h3>
-            <p className="text-muted-foreground mb-4">
-              {quiz.description || t.learnMore}
-            </p>
+        <Link key={quiz.id} href={`/quiz/${quiz.slug}`} className="h-full">
+          <div className="bg-card border-2 border-border rounded-xl p-6 hover:border-primary transition-all duration-300 hover:shadow-xl hover:scale-105 cursor-pointer h-full flex flex-col">
+            <div className="flex-grow">
+              <h3 className="text-2xl font-bold text-foreground mb-3">
+                {quiz.name}
+              </h3>
+              <p className="text-muted-foreground mb-4">
+                {quiz.description || t.learnMore}
+              </p>
+            </div>
             <Button
               variant="default"
-              className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
+              className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex-shrink-0"
             >
               {t.learnMore}
             </Button>
@@ -64,8 +66,8 @@ export default function Home() {
       <div className="max-w-7xl mx-auto">
         {/* Single section with all quizzes */}
         <section>
-          <h2 className="text-3xl md:text-4xl font-black text-foreground text-center mb-4">
-            {language === "uk" ? "Інше" : "Other"}
+          <h2 className="text-3xl md:text-4xl font-black text-foreground text-center mb-8">
+            {language === "uk" ? "Оберіть квіз" : "Choose Quiz"}
           </h2>
 
           {allQuizzes.length === 0 ? (

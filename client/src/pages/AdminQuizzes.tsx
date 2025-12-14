@@ -25,21 +25,7 @@ export default function AdminQuizzes() {
     );
   }
 
-  if (!user || user.role !== "admin") {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <Card className="p-8 max-w-md">
-          <h1 className="text-2xl font-bold text-destructive mb-4">{t("quizzes.accessDenied")}</h1>
-          <p className="text-muted-foreground mb-6">
-            {t("quizzes.needAdminPrivileges")}
-          </p>
-          <Link href="/">
-            <Button>{t("quizzes.returnHome")}</Button>
-          </Link>
-        </Card>
-      </div>
-    );
-  }
+  // Removed admin check - all authenticated users can access
 
   return (
     <DashboardLayout>
@@ -108,7 +94,7 @@ export default function AdminQuizzes() {
                     {i18n.language === "uk" ? "Редагувати" : "Edit"}
                   </Button>
                 </Link>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-3 gap-2">
                   <Link href={`/admin/quizzes/${quiz.id}/analytics`} className="w-full">
                     <Button variant="outline" className="w-full h-full">
                       <BarChart3 className="w-4 h-4 mr-2" />
@@ -121,6 +107,18 @@ export default function AdminQuizzes() {
                       {i18n.language === "uk" ? "Переглянути" : "Preview"}
                     </Button>
                   </Link>
+                  <Button 
+                    variant="outline" 
+                    className="w-full h-full text-destructive hover:bg-destructive hover:text-destructive-foreground"
+                    onClick={() => {
+                      if (confirm(i18n.language === "uk" ? `Видалити квіз "${quiz.name}"?` : `Delete quiz "${quiz.name}"?`)) {
+                        // TODO: Implement delete mutation
+                        alert(i18n.language === "uk" ? "Функція видалення ще не реалізована" : "Delete function not implemented yet");
+                      }
+                    }}
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </Button>
                 </div>
               </div>
             </Card>
