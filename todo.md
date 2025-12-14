@@ -1901,3 +1901,90 @@
 - [ ] Better contrast for text/buttons
 - [ ] Proper spacing and layout
 - [ ] Match Markviz visual style
+
+
+## Phase 79 - Background Upload, Layout Switching & Questions Editor
+
+### Phase 79.1 - Test Background Image Upload
+- [ ] Click "Изображение" button in bottom panel
+- [ ] Upload test image file
+- [ ] Verify image uploads to S3
+- [ ] Check preview shows uploaded background
+- [ ] Test "Remove" button clears background
+- [ ] Test video upload via "Видео" button
+
+### Phase 79.2 - Implement Layout Switching
+- [ ] Click layout dropdown ("Фоновая картинка")
+- [ ] Select "Стандартная" option
+- [ ] Verify preview changes to 50/50 layout (image left/right + text)
+- [ ] Test alignment buttons work for standard layout (image left vs right)
+- [ ] Switch back to background layout
+- [ ] Test alignment buttons work for background layout (left/center/right text)
+- [ ] Save settings and reload page to verify persistence
+
+### Phase 79.3 - Questions Editor UI
+- [ ] Click "Питання" tab
+- [ ] Create QuestionsEditor component
+- [ ] Show list of existing questions
+- [ ] Add "Додати питання" button
+- [ ] Add question type selector (12 types)
+- [ ] Add delete question button for each question
+- [ ] Show question preview on right side
+
+### Phase 79.4 - Implement 12 Question Types
+- [ ] text_options - Multiple choice with text options
+- [ ] image_options - Multiple choice with image options
+- [ ] emoji - Emoji picker question
+- [ ] custom_input - Free text input
+- [ ] dropdown - Dropdown selector
+- [ ] date - Date picker
+- [ ] slider - Range slider
+- [ ] file_upload - File upload field
+- [ ] page - Information page (no question)
+- [ ] rating - Star rating
+- [ ] question_group - Group of related questions
+- [ ] address - Address autocomplete
+
+### Phase 79.5 - Drag-and-Drop Reordering
+- [ ] Install @dnd-kit/core and @dnd-kit/sortable
+- [ ] Wrap questions list with DndContext
+- [ ] Add drag handle icon to each question
+- [ ] Implement onDragEnd handler
+- [ ] Update orderIndex in database when reordered
+- [ ] Show visual feedback during drag (shadow, opacity)
+
+### Phase 79.6 - Testing & Checkpoint
+- [ ] Test all 12 question types
+- [ ] Test drag-and-drop reordering
+- [ ] Test save/load questions from database
+- [ ] Test questions preview in quiz
+- [ ] Save checkpoint
+
+
+## Phase 80 - URGENT: Fix Bonus Display & Input Readability
+
+### Phase 80.1 - Fix Bonus Display on Standard Layout
+- [x] Check QuizDesignPage standard layout rendering
+- [x] Add bonus text display between subtitle and button (like background layout)
+- [x] Ensure bonus only shows when bonusEnabled is true
+- [x] Test bonus toggle on/off
+
+### Phase 80.2 - Fix Input Field Readability (Dark Theme)
+- [x] Change all Input fields in QuizSettingsPanel to bg-zinc-800
+- [x] Change all Textarea fields to bg-zinc-800
+- [x] Ensure text color is white/light gray for visibility
+- [x] Test all input fields are readable
+
+### Phase 80.3 - Test All Controls
+- [x] Test layout dropdown switching (background ↔ standard)
+- [ ] Test alignment buttons (left/center/right)
+- [ ] Test save button
+- [x] Test bonus toggle
+- [x] Test all input fields update preview in real-time
+
+### Phase 80.4 - Test Background Upload
+- [ ] Click "Изображение" button
+- [ ] Verify upload dialog appears
+- [ ] Upload test image
+- [ ] Check image displays on preview
+- [ ] Test remove button

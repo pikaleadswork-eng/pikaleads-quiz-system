@@ -121,7 +121,7 @@ export default function QuizSettingsPanel({
           value={settings.companyName}
           onChange={(e) => onSettingsChange("companyName", e.target.value)}
           placeholder="Введіть назву компанії"
-          className="mt-2"
+          className="mt-2 bg-zinc-800 border-zinc-700 text-white"
         />
       </div>
 
@@ -133,7 +133,7 @@ export default function QuizSettingsPanel({
           value={settings.title}
           onChange={(e) => onSettingsChange("title", e.target.value)}
           placeholder="Введіть заголовок сторінки"
-          className="mt-2"
+          className="mt-2 bg-zinc-800 border-zinc-700 text-white"
         />
       </div>
 
@@ -145,7 +145,7 @@ export default function QuizSettingsPanel({
           value={settings.subtitle}
           onChange={(e) => onSettingsChange("subtitle", e.target.value)}
           placeholder="Додатковий текст-опис"
-          className="mt-2"
+          className="mt-2 bg-zinc-800 border-zinc-700 text-white"
           rows={3}
         />
       </div>
@@ -158,12 +158,12 @@ export default function QuizSettingsPanel({
           value={settings.buttonText}
           onChange={(e) => onSettingsChange("buttonText", e.target.value)}
           placeholder="Почати"
-          className="mt-2"
+          className="mt-2 bg-zinc-800 border-zinc-700 text-white"
         />
       </div>
 
       {/* Bonus Section */}
-      <div className="mb-6 p-4 bg-zinc-50 rounded-lg">
+      <div className="mb-6 p-4 bg-zinc-800 rounded-lg border border-zinc-700">
         <div className="flex items-center justify-between mb-3">
           <Label htmlFor="bonusEnabled" className="font-semibold">
             Бонус
@@ -181,7 +181,7 @@ export default function QuizSettingsPanel({
             value={settings.bonusText}
             onChange={(e) => onSettingsChange("bonusText", e.target.value)}
             placeholder="Введіть текст бонусу"
-            className="mt-2"
+            className="mt-2 bg-zinc-700 border-zinc-600 text-white"
             rows={2}
           />
         )}
@@ -195,7 +195,7 @@ export default function QuizSettingsPanel({
           value={settings.phoneNumber}
           onChange={(e) => onSettingsChange("phoneNumber", e.target.value)}
           placeholder="+380..."
-          className="mt-2"
+          className="mt-2 bg-zinc-800 border-zinc-700 text-white"
         />
       </div>
 
