@@ -15,7 +15,12 @@ export default function AdminQuizzes() {
   const [createModalOpen, setCreateModalOpen] = useState(false);
 
   // Load quizzes from database
-  const { data: quizzes = [], isLoading: quizzesLoading, refetch } = trpc.quizzes.list.useQuery();
+  const { data: quizzes = [], refetch } = trpc.quizzes.list.useQuery();
+  const deleteQuizMutation = trpc.quizzes.delete.useMutation({
+    onSuccess: () => {
+      refetch();
+    },
+  });
 
   if (loading) {
     return (
@@ -112,10 +117,10 @@ export default function AdminQuizzes() {
                     className="w-full h-full text-destructive hover:bg-destructive hover:text-destructive-foreground"
                     onClick={() => {
                       if (confirm(i18n.language === "uk" ? `Видалити квіз "${quiz.name}"?` : `Delete quiz "${quiz.name}"?`)) {
-                        // TODO: Implement delete mutation
-                        alert(i18n.language === "uk" ? "Функція видалення ще не реалізована" : "Delete function not implemented yet");
+                        deleteQuizMutation.mutate({ id: quiz.id });
                       }
                     }}
+                    disabled={deleteQuizMutation.isPending}
                   >
                     <Trash2 className="w-4 h-4" />
                   </Button>
