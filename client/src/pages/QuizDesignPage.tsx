@@ -7,17 +7,12 @@ import { trpc } from "@/lib/trpc";
 import type { QuizQuestion } from "@/components/DraggableQuestionEditor";
 
 export default function QuizDesignPage() {
-  const { quizId: quizSlug } = useParams<{ quizId: string }>();
+  const { quizId: quizIdParam } = useParams<{ quizId: string }>();
+  const quizId = quizIdParam ? parseInt(quizIdParam, 10) : 0;
 
   const [showSettings, setShowSettings] = useState(true);
   const [activeTab, setActiveTab] = useState<"start" | "questions" | "contacts" | "results" | "thanks">("start");
   const [questions, setQuestions] = useState<QuizQuestion[]>([]);
-  
-  // Get quiz ID from slug (MUST be first!)
-  const { data: quizId } = trpc.quizDesign.getQuizIdBySlug.useQuery(
-    { slug: quizSlug || "" },
-    { enabled: !!quizSlug }
-  );
 
   // Load questions from database
   const { data: loadedQuestions } = trpc.quizDesign.getQuestions.useQuery(
@@ -258,7 +253,7 @@ export default function QuizDesignPage() {
           {activeTab === "questions" && (
             <div className="bg-zinc-800 rounded-lg p-6">
               <DraggableQuestionEditor
-                quizId={quizSlug || ""}
+                quizId={String(quizId)}
                 initialQuestions={questions}
                 onSave={(updatedQuestions) => {
                   setQuestions(updatedQuestions);

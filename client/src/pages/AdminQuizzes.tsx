@@ -107,14 +107,14 @@ export default function AdminQuizzes() {
                   </Button>
                 </Link>
                 <div className="grid grid-cols-2 gap-2">
-                  <Link href={`/admin/quizzes/${quiz.id}/analytics`}>
-                    <Button variant="outline" size="sm" className="w-full">
+                  <Link href={`/admin/quizzes/${quiz.id}/analytics`} className="w-full">
+                    <Button variant="outline" className="w-full h-full">
                       <BarChart3 className="w-4 h-4 mr-2" />
                       {i18n.language === "uk" ? "Аналітика" : "Analytics"}
                     </Button>
                   </Link>
-                  <Link href={`/quiz/${quiz.slug}`} target="_blank">
-                    <Button variant="outline" size="sm" className="w-full">
+                  <Link href={`/quiz/${quiz.slug}`} target="_blank" className="w-full">
+                    <Button variant="outline" className="w-full h-full">
                       <Eye className="w-4 h-4 mr-2" />
                       {i18n.language === "uk" ? "Переглянути" : "Preview"}
                     </Button>
