@@ -23,24 +23,6 @@ export default function Home() {
   // Load quizzes from database
   const { data: allQuizzes = [], isLoading } = trpc.quizzes.list.useQuery();
 
-  // Filter by platform
-  const metaQuizzes = allQuizzes.filter((q) => q.platform === "meta_ads");
-  const googleQuizzes = allQuizzes.filter((q) => q.platform === "google_ads");
-
-  // Group by niche
-  const groupByNiche = (quizzes: typeof allQuizzes) => {
-    const grouped: Record<string, typeof allQuizzes> = {};
-    quizzes.forEach((quiz) => {
-      const niche = quiz.niche || "other";
-      if (!grouped[niche]) grouped[niche] = [];
-      grouped[niche].push(quiz);
-    });
-    return grouped;
-  };
-
-  const metaByNiche = groupByNiche(metaQuizzes);
-  const googleByNiche = groupByNiche(googleQuizzes);
-
   if (isLoading) {
     return (
       <QuizLayout title={t.homeTitle} subtitle={t.homeSubtitle}>
@@ -79,67 +61,22 @@ export default function Home() {
       title={t.homeTitle}
       subtitle={t.homeSubtitle}
     >
-      <div className="max-w-7xl mx-auto space-y-16">
-        {/* META ADS Section */}
+      <div className="max-w-7xl mx-auto">
+        {/* Single section with all quizzes */}
         <section>
-          <div className="flex items-center justify-center gap-3 mb-8">
-            <Zap className="w-8 h-8 text-accent" />
-            <h2 className="text-3xl md:text-4xl font-black text-foreground">
-              {t.metaAdsTitle}
-            </h2>
-          </div>
-          <p className="text-center text-muted-foreground mb-8 text-lg">
-            {t.metaAdsSubtitle}
-          </p>
+          <h2 className="text-3xl md:text-4xl font-black text-foreground text-center mb-4">
+            {language === "uk" ? "Інше" : "Other"}
+          </h2>
 
-          {Object.keys(metaByNiche).length === 0 ? (
+          {allQuizzes.length === 0 ? (
             <div className="text-center py-8">
-              <p className="text-muted-foreground">No Meta Ads quizzes available yet.</p>
+              <p className="text-muted-foreground">
+                {language === "uk" ? "Квізи ще не додані" : "No quizzes available yet"}
+              </p>
             </div>
           ) : (
-            <div className="space-y-12">
-              {Object.entries(metaByNiche).map(([niche, quizzes]) => (
-                <div key={niche}>
-                  <h3 className="text-2xl font-bold text-foreground mb-6 text-center">
-                    {NICHE_LABELS[niche]?.[language as keyof typeof NICHE_LABELS[typeof niche]] || NICHE_LABELS[niche]?.en || niche}
-                  </h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {renderQuizCards(quizzes)}
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </section>
-
-        {/* GOOGLE ADS Section */}
-        <section>
-          <div className="flex items-center justify-center gap-3 mb-8">
-            <Target className="w-8 h-8 text-accent" />
-            <h2 className="text-3xl md:text-4xl font-black text-foreground">
-              {t.googleAdsTitle}
-            </h2>
-          </div>
-          <p className="text-center text-muted-foreground mb-8 text-lg">
-            {t.googleAdsSubtitle}
-          </p>
-
-          {Object.keys(googleByNiche).length === 0 ? (
-            <div className="text-center py-8">
-              <p className="text-muted-foreground">No Google Ads quizzes available yet.</p>
-            </div>
-          ) : (
-            <div className="space-y-12">
-              {Object.entries(googleByNiche).map(([niche, quizzes]) => (
-                <div key={niche}>
-                  <h3 className="text-2xl font-bold text-foreground mb-6 text-center">
-                    {NICHE_LABELS[niche]?.[language as keyof typeof NICHE_LABELS[typeof niche]] || NICHE_LABELS[niche]?.en || niche}
-                  </h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {renderQuizCards(quizzes)}
-                  </div>
-                </div>
-              ))}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {renderQuizCards(allQuizzes)}
             </div>
           )}
         </section>
