@@ -2213,3 +2213,60 @@
 - [x] Animate question card when changing questions (fade + slide effect, 200ms)
 - [x] Add handleBack function with animation
 - [x] Animation direction changes based on navigation (left/right)
+
+
+## Phase 94 - Quiz Editor Fixes & CRM Improvements
+
+### Quiz Editor - Critical Fixes
+- [ ] Fix question text display - show current language text instead of JSON {"uk":"...", "ru":"..."}
+- [ ] Populate answer options with real data from database (not "Option 1, 2, 3")
+- [ ] Add language selector to edit questions in specific language
+- [ ] Add Start Page preview with actual content in editor
+- [ ] Make Contact Form editor functional (not just placeholder)
+- [ ] Remove "Результати" (Results) page tab - not needed
+- [ ] Add Thank You page editor with actual content
+
+### Quiz Management
+- [ ] Add quiz copy/duplicate functionality
+- [ ] Show quiz preview in editor
+
+### CRM Improvements
+- [ ] Add individual lead delete button in table row
+- [ ] Add delete confirmation dialog
+- [ ] Add pagination for leads table (10/25/50 per page)
+
+### Telegram Notifications
+- [ ] Test that only ONE notification is sent per lead
+- [ ] Verify Q&A formatting is correct (not [object Object])
+
+
+## Phase 94 - Quiz Editor Fixes & CRM Improvements (COMPLETED)
+
+### Quiz Editor Fixes
+- [x] Display question text properly (not JSON) - show text for current language
+- [x] Populate answer options with real data (not "Option 1, 2, 3")
+- [x] Add multilingual text helper function (multilingualText.ts)
+- [x] Update SortableQuestionItem to parse multilingual text
+- [x] Update QuizSettingsPanel to handle multilingual title/subtitle
+
+### Start Page Preview
+- [x] Add preview of start page content in editor
+- [x] Show title, subtitle, button text properly
+
+### Remove Unnecessary Tab
+- [x] Remove "Results" tab from quiz editor (not needed)
+
+### Quiz Copy/Duplicate
+- [x] Add duplicate quiz functionality (copy button in AdminQuizzes)
+- [x] Copy quiz with all questions and settings
+
+### CRM Improvements
+- [x] Add individual delete button in table row (red trash icon)
+- [x] Add pagination for large number of leads (25 per page default)
+- [x] Show "Showing X-Y of Z" info with page navigation
+- [x] Leads sorted by date DESC (newest first) - ID 60028 "Тест Телеграм" at top
+
+### Telegram Notification Test
+- [x] Tested lead submission - lead saved to CRM successfully
+- [x] Lead appears at top of CRM list (ID 60028)
+- [x] User should verify Telegram notification format

@@ -3,9 +3,17 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
-import { Upload, X } from "lucide-react";
+import { Upload, X, Globe } from "lucide-react";
 import { trpc } from "@/lib/trpc";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { 
+  getTextForLanguage, 
+  parseMultilingualText, 
+  stringifyMultilingualText,
+  type SupportedLanguage,
+  type MultilingualText 
+} from "@/lib/multilingualText";
 
 interface QuizSettingsPanelProps {
   settings: {
@@ -22,13 +30,45 @@ interface QuizSettingsPanelProps {
   quizId: number;
 }
 
+const LANGUAGES: { code: SupportedLanguage; label: string; flag: string }[] = [
+  { code: "uk", label: "UA", flag: "🇺🇦" },
+  { code: "ru", label: "RU", flag: "🇷🇺" },
+  { code: "en", label: "EN", flag: "🇬🇧" },
+  { code: "pl", label: "PL", flag: "🇵🇱" },
+  { code: "de", label: "DE", flag: "🇩🇪" },
+];
+
 export default function QuizSettingsPanel({
   settings,
   onSettingsChange,
   quizId,
 }: QuizSettingsPanelProps) {
+  const { language } = useLanguage();
   const [isUploading, setIsUploading] = useState(false);
+  const [editingLanguage, setEditingLanguage] = useState<SupportedLanguage>(language as SupportedLanguage || "uk");
   const uploadLogoMutation = trpc.quizDesign.uploadLogo.useMutation();
+
+  // Parse multilingual fields
+  const [titleTexts, setTitleTexts] = useState<MultilingualText>(parseMultilingualText(settings.title));
+  const [subtitleTexts, setSubtitleTexts] = useState<MultilingualText>(parseMultilingualText(settings.subtitle));
+
+  // Update local state when settings change
+  useEffect(() => {
+    setTitleTexts(parseMultilingualText(settings.title));
+    setSubtitleTexts(parseMultilingualText(settings.subtitle));
+  }, [settings.title, settings.subtitle]);
+
+  const handleTitleChange = (lang: SupportedLanguage, value: string) => {
+    const newTitles = { ...titleTexts, [lang]: value };
+    setTitleTexts(newTitles);
+    onSettingsChange("title", stringifyMultilingualText(newTitles));
+  };
+
+  const handleSubtitleChange = (lang: SupportedLanguage, value: string) => {
+    const newSubtitles = { ...subtitleTexts, [lang]: value };
+    setSubtitleTexts(newSubtitles);
+    onSettingsChange("subtitle", stringifyMultilingualText(newSubtitles));
+  };
 
   const handleLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -67,6 +107,10 @@ export default function QuizSettingsPanel({
       setIsUploading(false);
     }
   };
+
+  // Get display text for current editing language
+  const currentTitle = titleTexts[editingLanguage] || "";
+  const currentSubtitle = subtitleTexts[editingLanguage] || "";
 
   return (
     <div className="w-full bg-zinc-800 border-l border-zinc-700 p-6 overflow-y-auto">
@@ -125,13 +169,36 @@ export default function QuizSettingsPanel({
         />
       </div>
 
+      {/* Language Selector for Title/Subtitle */}
+      <div className="mb-4 p-3 bg-zinc-700/50 rounded-lg">
+        <div className="flex items-center gap-2 mb-2">
+          <Globe className="w-4 h-4 text-muted-foreground" />
+          <span className="text-sm text-zinc-400">Мова редагування:</span>
+        </div>
+        <div className="flex gap-1 flex-wrap">
+          {LANGUAGES.map(lang => (
+            <Button
+              key={lang.code}
+              variant={editingLanguage === lang.code ? "default" : "outline"}
+              size="sm"
+              className="h-7 px-2"
+              onClick={() => setEditingLanguage(lang.code)}
+            >
+              {lang.flag} {lang.label}
+            </Button>
+          ))}
+        </div>
+      </div>
+
       {/* Title */}
       <div className="mb-6">
-        <Label htmlFor="title">Заголовок</Label>
+        <Label htmlFor="title">
+          Заголовок ({LANGUAGES.find(l => l.code === editingLanguage)?.flag})
+        </Label>
         <Input
           id="title"
-          value={settings.title}
-          onChange={(e) => onSettingsChange("title", e.target.value)}
+          value={currentTitle}
+          onChange={(e) => handleTitleChange(editingLanguage, e.target.value)}
           placeholder="Введіть заголовок сторінки"
           className="mt-2 bg-zinc-800 border-zinc-700 text-white"
         />
@@ -139,11 +206,13 @@ export default function QuizSettingsPanel({
 
       {/* Subtitle */}
       <div className="mb-6">
-        <Label htmlFor="subtitle">Підзаголовок</Label>
+        <Label htmlFor="subtitle">
+          Підзаголовок ({LANGUAGES.find(l => l.code === editingLanguage)?.flag})
+        </Label>
         <Textarea
           id="subtitle"
-          value={settings.subtitle}
-          onChange={(e) => onSettingsChange("subtitle", e.target.value)}
+          value={currentSubtitle}
+          onChange={(e) => handleSubtitleChange(editingLanguage, e.target.value)}
           placeholder="Додатковий текст-опис"
           className="mt-2 bg-zinc-800 border-zinc-700 text-white"
           rows={3}
@@ -199,15 +268,49 @@ export default function QuizSettingsPanel({
         />
       </div>
 
-      {/* Footer Info */}
-      <div className="pt-4 border-t border-zinc-200 text-sm text-zinc-600">
-        <p className="mb-1">
-          <strong>Телефон:</strong> {settings.phoneNumber || "Не вказано"}
-        </p>
-        <p>
-          <strong>Компанія:</strong> {settings.companyName || "Не вказано"}
-        </p>
-      </div>
+      {/* Save Button */}
+      <SaveSettingsButton quizId={quizId} settings={settings} />
     </div>
+  );
+}
+
+function SaveSettingsButton({ quizId, settings }: { quizId: number; settings: any }) {
+  const saveMutation = trpc.quizDesign.save.useMutation({
+    onSuccess: () => {
+      // Toast is shown by parent
+    },
+  });
+
+  const handleSave = () => {
+    if (!quizId) return;
+    
+    saveMutation.mutate({
+      quizId,
+      layoutType: settings.layoutType || "background",
+      backgroundImage: settings.backgroundImage,
+      backgroundVideo: settings.backgroundVideo,
+      alignment: settings.alignment || "center",
+      logoImage: settings.logoUrl,
+      primaryColor: settings.primaryColor,
+      accentColor: settings.accentColor,
+      fontFamily: settings.fontFamily,
+      titleText: settings.title,
+      subtitleText: settings.subtitle,
+      buttonText: settings.buttonText,
+      bonusEnabled: settings.bonusEnabled,
+      bonusText: settings.bonusText,
+      companyName: settings.companyName,
+      phoneNumber: settings.phoneNumber,
+    });
+  };
+
+  return (
+    <Button
+      onClick={handleSave}
+      disabled={saveMutation.isPending || !quizId}
+      className="w-full bg-pink-500 hover:bg-pink-600"
+    >
+      {saveMutation.isPending ? "Збереження..." : "Зберегти"}
+    </Button>
   );
 }

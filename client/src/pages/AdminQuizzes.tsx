@@ -4,7 +4,8 @@ import { useTranslation } from "react-i18next";
 import DashboardLayout from "@/components/DashboardLayout";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ArrowLeft, Plus, BarChart3, Pencil, Eye, Trash2 } from "lucide-react";
+import { ArrowLeft, Plus, BarChart3, Pencil, Eye, Trash2, Copy } from "lucide-react";
+import { toast } from "sonner";
 import { Link } from "wouter";
 import CreateQuizModal from "@/components/CreateQuizModal";
 import { trpc } from "@/lib/trpc";
@@ -19,6 +20,16 @@ export default function AdminQuizzes() {
   const deleteQuizMutation = trpc.quizzes.delete.useMutation({
     onSuccess: () => {
       refetch();
+    },
+  });
+
+  const duplicateQuizMutation = trpc.quizzes.duplicate.useMutation({
+    onSuccess: (newQuiz) => {
+      toast.success(i18n.language === "uk" ? "Квіз скопійовано!" : "Quiz duplicated!");
+      refetch();
+    },
+    onError: (error) => {
+      toast.error(i18n.language === "uk" ? `Помилка: ${error.message}` : `Error: ${error.message}`);
     },
   });
 
@@ -99,22 +110,32 @@ export default function AdminQuizzes() {
                     {i18n.language === "uk" ? "Редагувати" : "Edit"}
                   </Button>
                 </Link>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-4 gap-2">
                   <Link href={`/admin/quizzes/${quiz.id}/analytics`} className="w-full">
-                    <Button variant="outline" className="w-full h-full">
-                      <BarChart3 className="w-4 h-4 mr-2" />
-                      {i18n.language === "uk" ? "Аналітика" : "Analytics"}
+                    <Button variant="outline" className="w-full h-full" title={i18n.language === "uk" ? "Аналітика" : "Analytics"}>
+                      <BarChart3 className="w-4 h-4" />
                     </Button>
                   </Link>
                   <Link href={`/quiz/${quiz.slug}`} target="_blank" className="w-full">
-                    <Button variant="outline" className="w-full h-full">
-                      <Eye className="w-4 h-4 mr-2" />
-                      {i18n.language === "uk" ? "Переглянути" : "Preview"}
+                    <Button variant="outline" className="w-full h-full" title={i18n.language === "uk" ? "Переглянути" : "Preview"}>
+                      <Eye className="w-4 h-4" />
                     </Button>
                   </Link>
                   <Button 
                     variant="outline" 
+                    className="w-full h-full"
+                    title={i18n.language === "uk" ? "Копіювати" : "Duplicate"}
+                    onClick={() => {
+                      duplicateQuizMutation.mutate({ id: quiz.id });
+                    }}
+                    disabled={duplicateQuizMutation.isPending}
+                  >
+                    <Copy className="w-4 h-4" />
+                  </Button>
+                  <Button 
+                    variant="outline" 
                     className="w-full h-full text-destructive hover:bg-destructive hover:text-destructive-foreground"
+                    title={i18n.language === "uk" ? "Видалити" : "Delete"}
                     onClick={() => {
                       if (confirm(i18n.language === "uk" ? `Видалити квіз "${quiz.name}"?` : `Delete quiz "${quiz.name}"?`)) {
                         deleteQuizMutation.mutate({ id: quiz.id });

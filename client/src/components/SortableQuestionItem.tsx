@@ -4,6 +4,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   GripVertical,
   ChevronDown,
@@ -15,13 +16,22 @@ import {
   Save,
   ImagePlus,
   Loader2,
+  Globe,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import type { QuizQuestion, AnswerOption } from "./DraggableQuestionEditor";
 import { toast } from "sonner";
 import { trpc } from "@/lib/trpc";
 import { AnswerOptionRow } from "./AnswerOptionRow";
+import { 
+  getTextForLanguage, 
+  parseMultilingualText, 
+  updateLanguageText,
+  stringifyMultilingualText,
+  type SupportedLanguage,
+  type MultilingualText 
+} from "@/lib/multilingualText";
 
 interface SortableQuestionItemProps {
   question: QuizQuestion;
@@ -33,6 +43,14 @@ interface SortableQuestionItemProps {
   onUpdate: (updates: Partial<QuizQuestion>) => void;
 }
 
+const LANGUAGES: { code: SupportedLanguage; label: string; flag: string }[] = [
+  { code: "uk", label: "UA", flag: "🇺🇦" },
+  { code: "ru", label: "RU", flag: "🇷🇺" },
+  { code: "en", label: "EN", flag: "🇬🇧" },
+  { code: "pl", label: "PL", flag: "🇵🇱" },
+  { code: "de", label: "DE", flag: "🇩🇪" },
+];
+
 export function SortableQuestionItem({
   question,
   index,
@@ -43,6 +61,8 @@ export function SortableQuestionItem({
   onUpdate,
 }: SortableQuestionItemProps) {
   const { language } = useLanguage();
+  const [editingLanguage, setEditingLanguage] = useState<SupportedLanguage>(language as SupportedLanguage || "uk");
+  
   const {
     attributes,
     listeners,
@@ -52,8 +72,26 @@ export function SortableQuestionItem({
     isDragging,
   } = useSortable({ id: question.id });
 
-  const [localQuestion, setLocalQuestion] = useState(question.question);
-  const [localOptions, setLocalOptions] = useState(question.options);
+  // Parse multilingual question text
+  const questionTextObj = parseMultilingualText(question.question);
+  const [localQuestionTexts, setLocalQuestionTexts] = useState<MultilingualText>(questionTextObj);
+  
+  // Parse multilingual options
+  const [localOptions, setLocalOptions] = useState<Array<{ text: MultilingualText; imageUrl?: string }>>(
+    question.options.map(opt => ({
+      text: parseMultilingualText(opt.text),
+      imageUrl: opt.imageUrl,
+    }))
+  );
+
+  // Update local state when question changes
+  useEffect(() => {
+    setLocalQuestionTexts(parseMultilingualText(question.question));
+    setLocalOptions(question.options.map(opt => ({
+      text: parseMultilingualText(opt.text),
+      imageUrl: opt.imageUrl,
+    })));
+  }, [question.id]);
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -61,10 +99,20 @@ export function SortableQuestionItem({
     opacity: isDragging ? 0.5 : 1,
   };
 
+  // Get display text for current UI language
+  const displayQuestionText = getTextForLanguage(question.question, language as SupportedLanguage || "uk");
+
   const handleSaveQuestion = () => {
+    // Convert back to storage format
+    const questionText = stringifyMultilingualText(localQuestionTexts);
+    const options = localOptions.map(opt => ({
+      text: stringifyMultilingualText(opt.text),
+      imageUrl: opt.imageUrl,
+    }));
+    
     onUpdate({
-      question: localQuestion,
-      options: localOptions,
+      question: questionText,
+      options: options as AnswerOption[],
     });
     toast.success(
       language === "uk" ? "Питання оновлено" : "Question updated"
@@ -72,12 +120,16 @@ export function SortableQuestionItem({
   };
 
   const handleAddOption = () => {
-    const newOptions: AnswerOption[] = [
-      ...localOptions,
-      { text: language === "uk" ? `Варіант ${localOptions.length + 1}` : `Option ${localOptions.length + 1}` },
-    ];
-    setLocalOptions(newOptions);
-    onUpdate({ options: newOptions });
+    const newOption: { text: MultilingualText; imageUrl?: string } = {
+      text: {
+        uk: `Варіант ${localOptions.length + 1}`,
+        ru: `Вариант ${localOptions.length + 1}`,
+        en: `Option ${localOptions.length + 1}`,
+        pl: `Opcja ${localOptions.length + 1}`,
+        de: `Option ${localOptions.length + 1}`,
+      },
+    };
+    setLocalOptions([...localOptions, newOption]);
   };
 
   const handleRemoveOption = (optionIndex: number) => {
@@ -91,18 +143,22 @@ export function SortableQuestionItem({
     }
     const newOptions = localOptions.filter((_, i) => i !== optionIndex);
     setLocalOptions(newOptions);
-    onUpdate({ options: newOptions });
   };
 
-  const handleUpdateOption = (optionIndex: number, value: string, imageUrl?: string) => {
+  const handleUpdateOptionText = (optionIndex: number, lang: SupportedLanguage, value: string) => {
     const newOptions = localOptions.map((opt, i) =>
-      i === optionIndex ? { text: value, imageUrl: imageUrl || opt.imageUrl } : opt
+      i === optionIndex 
+        ? { ...opt, text: { ...opt.text, [lang]: value } }
+        : opt
     );
     setLocalOptions(newOptions);
   };
 
+  const handleUpdateQuestionText = (lang: SupportedLanguage, value: string) => {
+    setLocalQuestionTexts(prev => ({ ...prev, [lang]: value }));
+  };
+
   const handleSaveTemplate = () => {
-    // TODO: Implement save as template functionality
     toast.success(
       language === "uk"
         ? "Питання збережено як шаблон"
@@ -134,9 +190,9 @@ export function SortableQuestionItem({
           {index + 1}
         </div>
 
-        {/* Question Title (Collapsed) */}
+        {/* Question Title (Collapsed) - Show current language text */}
         <div className="flex-1 min-w-0">
-          <p className="font-medium truncate">{question.question}</p>
+          <p className="font-medium truncate">{displayQuestionText || "(Без тексту)"}</p>
           <p className="text-xs text-muted-foreground">
             {question.options.length} {language === "uk" ? "варіантів" : "options"}
           </p>
@@ -177,15 +233,37 @@ export function SortableQuestionItem({
       {/* Question Details (Expanded) */}
       {isExpanded && (
         <div className="p-4 space-y-4 border-t">
+          {/* Language Selector */}
+          <div className="flex items-center gap-2 pb-2 border-b">
+            <Globe className="w-4 h-4 text-muted-foreground" />
+            <span className="text-sm text-muted-foreground">
+              {language === "uk" ? "Мова редагування:" : "Edit language:"}
+            </span>
+            <div className="flex gap-1">
+              {LANGUAGES.map(lang => (
+                <Button
+                  key={lang.code}
+                  variant={editingLanguage === lang.code ? "default" : "outline"}
+                  size="sm"
+                  className="h-7 px-2"
+                  onClick={() => setEditingLanguage(lang.code)}
+                >
+                  {lang.flag} {lang.label}
+                </Button>
+              ))}
+            </div>
+          </div>
+
           {/* Question Text */}
           <div className="space-y-2">
             <Label>
-              {language === "uk" ? "Текст питання" : "Question Text"}
+              {language === "uk" ? "Текст питання" : "Question Text"} ({LANGUAGES.find(l => l.code === editingLanguage)?.flag})
             </Label>
             <Input
-              value={localQuestion}
-              onChange={(e) => setLocalQuestion(e.target.value)}
+              value={localQuestionTexts[editingLanguage] || ""}
+              onChange={(e) => handleUpdateQuestionText(editingLanguage, e.target.value)}
               placeholder={language === "uk" ? "Введіть питання..." : "Enter question..."}
+              className="bg-zinc-800 border-zinc-700"
             />
           </div>
 
@@ -193,7 +271,7 @@ export function SortableQuestionItem({
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <Label>
-                {language === "uk" ? "Варіанти відповідей" : "Answer Options"}
+                {language === "uk" ? "Варіанти відповідей" : "Answer Options"} ({LANGUAGES.find(l => l.code === editingLanguage)?.flag})
               </Label>
               <Button
                 variant="outline"
@@ -206,15 +284,24 @@ export function SortableQuestionItem({
             </div>
             <div className="space-y-3">
               {localOptions.map((option, optionIndex) => (
-                <AnswerOptionRow
-                  key={optionIndex}
-                  option={option}
-                  index={optionIndex}
-                  onUpdate={(text, imageUrl) => handleUpdateOption(optionIndex, text, imageUrl)}
-                  onRemove={() => handleRemoveOption(optionIndex)}
-                  canRemove={localOptions.length > 2}
-                  language={language}
-                />
+                <div key={optionIndex} className="flex items-center gap-2">
+                  <span className="text-sm text-muted-foreground w-6">{optionIndex + 1}.</span>
+                  <Input
+                    value={option.text[editingLanguage] || ""}
+                    onChange={(e) => handleUpdateOptionText(optionIndex, editingLanguage, e.target.value)}
+                    placeholder={`${language === "uk" ? "Варіант" : "Option"} ${optionIndex + 1}`}
+                    className="flex-1 bg-zinc-800 border-zinc-700"
+                  />
+                  {localOptions.length > 2 && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleRemoveOption(optionIndex)}
+                    >
+                      <X className="w-4 h-4 text-destructive" />
+                    </Button>
+                  )}
+                </div>
               ))}
             </div>
           </div>

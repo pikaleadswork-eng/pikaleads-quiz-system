@@ -20,6 +20,7 @@ import { Card } from "@/components/ui/card";
 import { Plus, Save, Library } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { toast } from "sonner";
+import { stringifyMultilingualText } from "@/lib/multilingualText";
 
 export interface AnswerOption {
   text: string;
@@ -90,12 +91,35 @@ export default function DraggableQuestionEditor({
   };
 
   const handleAddQuestion = () => {
+    // Create new question with multilingual format
+    const newQuestionText = stringifyMultilingualText({
+      uk: "Нове питання",
+      ru: "Новый вопрос",
+      en: "New question",
+      pl: "Nowe pytanie",
+      de: "Neue Frage",
+    });
+    const option1Text = stringifyMultilingualText({
+      uk: "Варіант 1",
+      ru: "Вариант 1",
+      en: "Option 1",
+      pl: "Opcja 1",
+      de: "Option 1",
+    });
+    const option2Text = stringifyMultilingualText({
+      uk: "Варіант 2",
+      ru: "Вариант 2",
+      en: "Option 2",
+      pl: "Opcja 2",
+      de: "Option 2",
+    });
+    
     const newQuestion: QuizQuestion = {
       id: `question-${Date.now()}`,
-      question: language === "uk" ? "Нове питання" : "New question",
+      question: newQuestionText,
       options: [
-        { text: language === "uk" ? "Варіант 1" : "Option 1" },
-        { text: language === "uk" ? "Варіант 2" : "Option 2" },
+        { text: option1Text },
+        { text: option2Text },
       ],
       type: "single",
       required: true,

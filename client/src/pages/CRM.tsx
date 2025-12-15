@@ -36,7 +36,7 @@ import Footer from "@/components/Footer";
 import { EditLeadForm } from "@/components/EditLeadForm";
 import { LeadDetailModal } from "@/components/LeadDetailModal";
 import CRMLayout from "@/components/CRMLayout";
-import { Loader2, MessageSquare, Send, Filter, X, Calendar, Users, Tag } from "lucide-react";
+import { Loader2, MessageSquare, Send, Filter, X, Calendar, Users, Tag, Trash2 } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { addDays, format as formatDate } from "date-fns";
@@ -77,6 +77,10 @@ export default function CRM() {
   const [showBulkActionsBar, setShowBulkActionsBar] = useState(false);
   const [bulkActionManager, setBulkActionManager] = useState<string>("");
   const [bulkActionStatus, setBulkActionStatus] = useState<string>("");
+  
+  // Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(25);
   
   // Create lead form fields
   const [createLeadForm, setCreateLeadForm] = useState({
@@ -178,6 +182,18 @@ export default function CRM() {
       return true;
     })
     ; // Already sorted by date DESC from backend (newest first)
+  
+  // Pagination calculations
+  const totalItems = filteredLeads?.length || 0;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedLeads = filteredLeads?.slice(startIndex, endIndex) || [];
+  
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filterManager, filterSource, filterDateFrom, filterDateTo, filterCampaign, filterAdGroup, filterAd, filterPlacement, filterKeyword, filterSite]);
   
   const selectedLeadData = leads?.find((l) => l.id === selectedLead);
   
@@ -745,7 +761,7 @@ export default function CRM() {
                 </TableHeader>
                 <TableBody>
                   {filteredLeads && filteredLeads.length > 0 ? (
-                    filteredLeads.map((lead) => (
+                    paginatedLeads.map((lead) => (
                       <TableRow key={lead.id}>
                         <TableCell className="w-12">
                           <input
@@ -860,6 +876,19 @@ export default function CRM() {
                             >
                               {t('crm.edit')}
                             </Button>
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              className="text-destructive hover:text-destructive hover:bg-destructive/10"
+                              onClick={() => {
+                                if (confirm(language === 'uk' ? `Видалити лід #${lead.id}?` : `Delete lead #${lead.id}?`)) {
+                                  deleteLeadsMutation.mutate({ leadIds: [lead.id] });
+                                }
+                              }}
+                              disabled={deleteLeadsMutation.isPending}
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </Button>
                           </div>
                         </TableCell>
                       </TableRow>
@@ -877,6 +906,81 @@ export default function CRM() {
                 </TableBody>
               </Table>
             </div>
+            
+            {/* Pagination Controls */}
+            {totalPages > 1 && (
+              <div className="flex items-center justify-between px-4 py-4 border-t">
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <span>
+                    {language === 'uk' 
+                      ? `Показано ${startIndex + 1}-${Math.min(endIndex, totalItems)} з ${totalItems}`
+                      : `Showing ${startIndex + 1}-${Math.min(endIndex, totalItems)} of ${totalItems}`
+                    }
+                  </span>
+                  <Select
+                    value={String(itemsPerPage)}
+                    onValueChange={(value) => {
+                      setItemsPerPage(Number(value));
+                      setCurrentPage(1);
+                    }}
+                  >
+                    <SelectTrigger className="w-[80px] h-8">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="10">10</SelectItem>
+                      <SelectItem value="25">25</SelectItem>
+                      <SelectItem value="50">50</SelectItem>
+                      <SelectItem value="100">100</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <span>{language === 'uk' ? 'на сторінку' : 'per page'}</span>
+                </div>
+                
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setCurrentPage(1)}
+                    disabled={currentPage === 1}
+                  >
+                    «
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                    disabled={currentPage === 1}
+                  >
+                    {language === 'uk' ? 'Назад' : 'Prev'}
+                  </Button>
+                  
+                  <span className="px-3 py-1 text-sm">
+                    {language === 'uk' 
+                      ? `Сторінка ${currentPage} з ${totalPages}`
+                      : `Page ${currentPage} of ${totalPages}`
+                    }
+                  </span>
+                  
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                    disabled={currentPage === totalPages}
+                  >
+                    {language === 'uk' ? 'Вперед' : 'Next'}
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setCurrentPage(totalPages)}
+                    disabled={currentPage === totalPages}
+                  >
+                    »
+                  </Button>
+                </div>
+              </div>
+            )}
           </CardContent>
         </Card>
 

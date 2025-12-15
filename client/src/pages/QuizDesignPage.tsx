@@ -6,10 +6,13 @@ import BottomDesignPanel from "@/components/BottomDesignPanel";
 import DraggableQuestionEditor from "@/components/DraggableQuestionEditor";
 import { trpc } from "@/lib/trpc";
 import type { QuizQuestion } from "@/components/DraggableQuestionEditor";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { getTextForLanguage, type SupportedLanguage } from "@/lib/multilingualText";
 
 export default function QuizDesignPage() {
   const { quizId: quizIdParam } = useParams<{ quizId: string }>();
   const quizId = quizIdParam ? parseInt(quizIdParam, 10) : 0;
+  const { language } = useLanguage();
 
   const [showSettings, setShowSettings] = useState(true);
   const [activeTab, setActiveTab] = useState<"start" | "questions" | "contacts" | "results" | "thanks">("start");
@@ -94,7 +97,6 @@ export default function QuizDesignPage() {
     { id: "start" as const, label: "Стартова", icon: "🏠" },
     { id: "questions" as const, label: "Питання", icon: "❓" },
     { id: "contacts" as const, label: "Контакти", icon: "📞" },
-    { id: "results" as const, label: "Результати", icon: "📊" },
     { id: "thanks" as const, label: "Спасибо", icon: "🎉" },
   ];
 
@@ -166,10 +168,10 @@ export default function QuizDesignPage() {
                     }`}
                   >
                     <h1 className="text-5xl font-bold text-white mb-4 drop-shadow-lg">
-                      {settings.title}
+                      {getTextForLanguage(settings.title, language as SupportedLanguage || "uk")}
                     </h1>
                     <p className="text-xl text-white/90 mb-6 max-w-2xl drop-shadow-md">
-                      {settings.subtitle}
+                      {getTextForLanguage(settings.subtitle, language as SupportedLanguage || "uk")}
                     </p>
                     
                     {/* Bonus */}
@@ -219,10 +221,10 @@ export default function QuizDesignPage() {
                     )}
 
                     <h1 className="text-4xl font-bold text-zinc-800 mb-4">
-                      {settings.title}
+                      {getTextForLanguage(settings.title, language as SupportedLanguage || "uk")}
                     </h1>
                     <p className="text-lg text-zinc-600 mb-6">
-                      {settings.subtitle}
+                      {getTextForLanguage(settings.subtitle, language as SupportedLanguage || "uk")}
                     </p>
 
                     {/* Bonus */}
@@ -278,13 +280,6 @@ export default function QuizDesignPage() {
             <div className="bg-zinc-800 rounded-lg p-8 text-center">
               <h2 className="text-2xl font-bold text-white mb-4">Форма контактів</h2>
               <p className="text-zinc-400">Тут буде редактор форми збору контактів</p>
-            </div>
-          )}
-
-          {activeTab === "results" && (
-            <div className="bg-zinc-800 rounded-lg p-8 text-center">
-              <h2 className="text-2xl font-bold text-white mb-4">Сторінка результатів</h2>
-              <p className="text-zinc-400">Тут буде редактор сторінки з результатами</p>
             </div>
           )}
 
