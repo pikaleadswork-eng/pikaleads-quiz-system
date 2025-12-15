@@ -16,6 +16,7 @@ export default function QuizDesignPage() {
 
   const [showSettings, setShowSettings] = useState(true);
   const [activeTab, setActiveTab] = useState<"start" | "questions" | "contacts" | "results" | "thanks">("start");
+  const [isMobilePreview, setIsMobilePreview] = useState(false);
   const [questions, setQuestions] = useState<QuizQuestion[]>([]);
 
   // Load questions from database
@@ -65,6 +66,7 @@ export default function QuizDesignPage() {
     primaryColor: "#FFD93D",
     accentColor: "#A855F7",
     buttonRadius: "full" as "none" | "sm" | "md" | "lg" | "full",
+    buttonRadiusPx: 25,
     bullets: [] as Array<{ id: string; text: string; icon: string }>,
     fontFamily: "Inter",
     titleColor: "#FFFFFF",
@@ -133,7 +135,7 @@ export default function QuizDesignPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-zinc-900 flex flex-col">
+    <div className="h-screen bg-zinc-900 flex flex-col overflow-hidden">
       {/* Top Tabs */}
       <div className="bg-zinc-800 border-b border-zinc-700 px-6 py-3 flex items-center gap-4">
         {tabs.map(tab => (
@@ -151,10 +153,23 @@ export default function QuizDesignPage() {
           </button>
         ))}
         
+        {/* Mobile Preview Toggle */}
+        <button
+          onClick={() => setIsMobilePreview(!isMobilePreview)}
+          className={`ml-auto px-4 py-2 rounded-lg flex items-center gap-2 transition-colors ${
+            isMobilePreview 
+              ? "bg-purple-600 text-white" 
+              : "bg-zinc-700 text-white hover:bg-zinc-600"
+          }`}
+        >
+          <span>📱</span>
+          Мобільний
+        </button>
+        
         {/* Settings Toggle Button */}
         <button
           onClick={() => setShowSettings(!showSettings)}
-          className="ml-auto px-4 py-2 bg-zinc-700 text-white rounded-lg hover:bg-zinc-600 flex items-center gap-2"
+          className="px-4 py-2 bg-zinc-700 text-white rounded-lg hover:bg-zinc-600 flex items-center gap-2"
         >
           <span>⚙️</span>
           Налаштування
@@ -163,8 +178,16 @@ export default function QuizDesignPage() {
 
       {/* Main Content */}
       <div className="flex-1 flex overflow-hidden">
-        {/* Preview Panel (Left - 70%) */}
-        <div className="flex-1 p-6 overflow-auto">
+        {/* Preview Panel (Left - 70%) - Fixed, no scroll */}
+        <div className={`flex-1 p-6 flex items-center justify-center bg-zinc-900/50 ${isMobilePreview ? '' : 'overflow-hidden'}`}>
+          {/* Mobile Preview Wrapper */}
+          <div 
+            className={`transition-all duration-300 ${
+              isMobilePreview 
+                ? "w-[375px] h-[667px] max-h-[667px] rounded-[40px] border-8 border-zinc-700 shadow-2xl overflow-hidden bg-white flex-shrink-0" 
+                : "w-full h-full"
+            }`}
+          >
           {activeTab === "start" && (
             <div className="w-full h-full">
               {/* BACKGROUND LAYOUT - Fullscreen image with text overlay */}
@@ -235,14 +258,12 @@ export default function QuizDesignPage() {
 
                     {/* Button with customizable radius */}
                     <button 
-                      className={`px-12 py-4 font-semibold text-lg shadow-xl transition-transform hover:scale-105 ${
-                        settings.buttonRadius === 'none' ? 'rounded-none' :
-                        settings.buttonRadius === 'sm' ? 'rounded-md' :
-                        settings.buttonRadius === 'md' ? 'rounded-xl' :
-                        settings.buttonRadius === 'lg' ? 'rounded-2xl' :
-                        'rounded-full'
-                      }`}
-                      style={{ backgroundColor: settings.accentColor, color: "white" }}
+                      className="px-12 py-4 font-semibold text-lg shadow-xl transition-transform hover:scale-105"
+                      style={{ 
+                        borderRadius: `${settings.buttonRadiusPx || 25}px`,
+                        backgroundColor: settings.accentColor, 
+                        color: "white" 
+                      }}
                     >
                       {settings.buttonText}
                     </button>
@@ -259,11 +280,13 @@ export default function QuizDesignPage() {
               {/* STANDARD LAYOUT - 50/50 split */}
               {settings.layoutType === "standard" && (
                 <div className={`flex h-full rounded-lg overflow-hidden ${
-                  settings.alignment === "right" ? "flex-row-reverse" : ""
+                  isMobilePreview ? "flex-col" : ""
+                } ${
+                  settings.alignment === "right" && !isMobilePreview ? "flex-row-reverse" : ""
                 }`}>
                   {/* Image Side (50%) */}
                   <div 
-                    className="w-1/2 bg-cover bg-center"
+                    className={`bg-cover bg-center ${isMobilePreview ? "h-1/2 w-full" : "w-1/2"}`}
                     style={{
                       backgroundImage: settings.backgroundImage 
                         ? `url(${settings.backgroundImage})` 
@@ -272,16 +295,42 @@ export default function QuizDesignPage() {
                   />
 
                   {/* Text Side (50%) */}
-                  <div className="w-1/2 bg-white flex flex-col justify-center px-12">
+                  <div 
+                    className={`flex flex-col justify-center ${isMobilePreview ? "h-1/2 w-full px-6 py-4" : "w-1/2 px-12"}`}
+                    style={{ 
+                      backgroundColor: settings.backgroundColor || '#ffffff',
+                      background: settings.backgroundGradient || settings.backgroundColor || '#ffffff'
+                    }}
+                  >
                     {/* Logo */}
                     {settings.logoUrl && (
                       <img src={settings.logoUrl} alt="Logo" className="h-10 w-auto mb-6" />
                     )}
 
-                    <h1 className="text-4xl font-bold text-zinc-800 mb-4">
+                    <h1 
+                      className="text-4xl mb-4"
+                      style={{ 
+                        color: settings.titleColor || '#1f2937',
+                        fontFamily: settings.fontFamily || 'Inter',
+                        fontWeight: settings.titleWeight === 'normal' ? 400 : 
+                                   settings.titleWeight === 'medium' ? 500 :
+                                   settings.titleWeight === 'semibold' ? 600 :
+                                   settings.titleWeight === 'extrabold' ? 800 : 700
+                      }}
+                    >
                       {getTextForLanguage(settings.title, language as SupportedLanguage || "uk")}
                     </h1>
-                    <p className="text-lg text-zinc-600 mb-6">
+                    <p 
+                      className="text-lg mb-6"
+                      style={{ 
+                        color: settings.subtitleColor || '#4b5563',
+                        fontFamily: settings.fontFamily || 'Inter',
+                        fontWeight: settings.subtitleWeight === 'medium' ? 500 :
+                                   settings.subtitleWeight === 'semibold' ? 600 :
+                                   settings.subtitleWeight === 'bold' ? 700 :
+                                   settings.subtitleWeight === 'extrabold' ? 800 : 400
+                      }}
+                    >
                       {getTextForLanguage(settings.subtitle, language as SupportedLanguage || "uk")}
                     </p>
 
@@ -307,14 +356,12 @@ export default function QuizDesignPage() {
 
                     {/* Button with customizable radius */}
                     <button 
-                      className={`px-10 py-3 font-semibold shadow-lg transition-transform hover:scale-105 self-start ${
-                        settings.buttonRadius === 'none' ? 'rounded-none' :
-                        settings.buttonRadius === 'sm' ? 'rounded-md' :
-                        settings.buttonRadius === 'md' ? 'rounded-xl' :
-                        settings.buttonRadius === 'lg' ? 'rounded-2xl' :
-                        'rounded-full'
-                      }`}
-                      style={{ backgroundColor: settings.accentColor, color: "white" }}
+                      className="px-10 py-3 font-semibold shadow-lg transition-transform hover:scale-105 self-start"
+                      style={{ 
+                        borderRadius: `${settings.buttonRadiusPx || 25}px`,
+                        backgroundColor: settings.accentColor, 
+                        color: "white" 
+                      }}
                     >
                       {settings.buttonText}
                     </button>
@@ -677,11 +724,12 @@ export default function QuizDesignPage() {
               </div>
             </div>
           )}
+          </div>{/* End Mobile Preview Wrapper */}
         </div>
 
-        {/* Settings Panel (Right - 30%) */}
+        {/* Settings Panel (Right - 30%) - Scrollable */}
         {showSettings && (
-          <div className="w-[30%] border-l border-zinc-700">
+          <div className="w-[30%] border-l border-zinc-700 overflow-y-auto h-full">
             <QuizSettingsPanel
               settings={settings}
               onSettingsChange={handleSettingsChange}

@@ -2470,3 +2470,85 @@
 - [x] Parse JSON in quiz option display
 - [x] Show text for current quiz language (uk/ru/en/pl/de)
 - [x] Apply fix to all quiz pages (QuizPage, QuizPreview, etc.)
+
+
+## Phase 99 - Editor Enhancements & Translation Fixes
+
+### Background Images Gallery
+- [ ] Create gallery component with preset background images
+- [ ] Add categories (business, nature, abstract, gradients)
+- [ ] Quick selection with hover preview
+- [ ] Integration with QuizSettingsPanel
+
+### Drag-and-Drop Bullets
+- [ ] Add dnd-kit for bullet reordering
+- [ ] Visual feedback during drag
+- [ ] Update order in state on drop
+
+### Mobile Preview
+- [ ] Add mobile/desktop toggle button in editor
+- [ ] Show quiz preview in mobile frame (375px width)
+- [ ] Responsive preview container
+
+### Question Translation Fix
+- [ ] Fix questionText display for multilingual format
+- [ ] Parse JSON in question text like options
+- [ ] Test with all 5 languages
+
+### Translation Validation
+- [ ] Add validation check before quiz publish
+- [ ] Show missing translations warning
+- [ ] Highlight incomplete fields in editor
+
+
+### Layout Fix
+- [ ] Fix preview to be fixed height (not scrollable)
+- [ ] Make sidebar menu scrollable independently
+- [ ] Preview stays in place while scrolling settings
+
+
+### Preview Sync Bug
+- [x] Background color changes not reflecting in preview
+- [x] All editor changes must update preview in real-time
+- [x] Debug and fix the state sync between settings and preview
+
+
+### Button Radius Slider
+- [x] Replace button radius buttons with a slider control
+- [x] Slider should show value in pixels (0-50px)
+
+
+## Phase 99 - Editor Enhancements (COMPLETED)
+
+### Background Gallery
+- [x] Create gallery component with preset images
+- [x] Add gradients and solid colors
+- [x] Integrate with QuizSettingsPanel
+
+### Drag-and-Drop Bullets
+- [x] Add dnd-kit to bullets section
+- [x] Create SortableBulletItem component
+- [x] Enable reordering of bullet items
+
+### Mobile Preview
+- [x] Add mobile preview toggle button
+- [x] Create phone frame wrapper
+- [x] Responsive layout for mobile view
+
+### Translation Validation
+- [x] Check all translations are filled before publishing
+- [x] Show warning if translations are missing
+- [x] Allow save with confirmation
+
+### Layout Fix
+- [x] Fix preview to be fixed height (not scrollable)
+- [x] Make sidebar menu scrollable independently
+- [x] Preview stays in place while scrolling settings
+
+### Button Radius Slider
+- [x] Replace button radius buttons with a slider control
+- [x] Slider shows value in pixels (0-50px)
+
+### Preview Sync
+- [x] Background color changes reflecting in preview
+- [x] All editor changes update preview in real-time

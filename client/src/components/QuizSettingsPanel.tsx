@@ -12,7 +12,24 @@ import {
 } from "@/components/ui/select";
 import { Upload, X, Globe, Plus, Trash2, GripVertical, Circle, Square, RectangleHorizontal, Image, Video, Palette, AlignLeft, AlignCenter, AlignRight, Type, Bold } from "lucide-react";
 import { trpc } from "@/lib/trpc";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  type DragEndEvent,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  useSortable,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { 
   getTextForLanguage, 
@@ -22,7 +39,9 @@ import {
   type MultilingualText 
 } from "@/lib/multilingualText";
 import { BackgroundUploader } from "@/components/BackgroundUploader";
+import BackgroundGalleryDialog from "@/components/BackgroundGallery";
 import { toast } from "sonner";
+import { SortableBulletItem } from "@/components/SortableBulletItem";
 
 interface Bullet {
   id: string;
@@ -42,6 +61,7 @@ interface QuizSettingsPanelProps {
     phoneNumber: string;
     accentColor?: string;
     buttonRadius?: "none" | "sm" | "md" | "lg" | "full";
+    buttonRadiusPx?: number;
     bullets?: Bullet[];
     backgroundImage?: string;
     backgroundVideo?: string;
@@ -228,6 +248,23 @@ export default function QuizSettingsPanel({
     onSettingsChange("bullets", currentBullets.filter(b => b.id !== id));
   };
 
+  // Drag and drop sensors
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
+  );
+
+  const handleDragEnd = useCallback((event: DragEndEvent) => {
+    const { active, over } = event;
+    if (over && active.id !== over.id) {
+      const currentBullets = settings.bullets || [];
+      const oldIndex = currentBullets.findIndex(b => b.id === active.id);
+      const newIndex = currentBullets.findIndex(b => b.id === over.id);
+      const newBullets = arrayMove(currentBullets, oldIndex, newIndex);
+      onSettingsChange("bullets", newBullets);
+    }
+  }, [settings.bullets, onSettingsChange]);
+
   const currentTitle = titleTexts[editingLanguage] || "";
   const currentSubtitle = subtitleTexts[editingLanguage] || "";
 
@@ -315,6 +352,23 @@ export default function QuizSettingsPanel({
               Відео
             </Button>
           </div>
+
+          {/* Background Gallery Button */}
+          <BackgroundGalleryDialog
+            currentBackground={settings.backgroundImage || settings.backgroundGradient}
+            onSelect={(url) => {
+              if (url.startsWith("linear-gradient")) {
+                onSettingsChange("backgroundGradient", url);
+                onSettingsChange("backgroundImage", "");
+                onSettingsChange("backgroundColor", "");
+              } else {
+                onSettingsChange("backgroundImage", url);
+                onSettingsChange("backgroundGradient", "");
+                onSettingsChange("backgroundColor", "");
+              }
+            }}
+            language={editingLanguage}
+          />
 
           {/* Current Background Preview */}
           {settings.backgroundImage && (
@@ -566,52 +620,33 @@ export default function QuizSettingsPanel({
             <p className="text-xs text-zinc-500 text-center py-2">Додайте переваги</p>
           )}
 
-          <div className="space-y-2">
-            {(settings.bullets || []).map((bullet) => (
-              <div key={bullet.id} className="flex items-center gap-2 bg-zinc-800 p-2 rounded">
-                <div className="relative">
-                  <button
-                    type="button"
-                    className="w-8 h-8 flex items-center justify-center bg-zinc-700 rounded text-lg hover:bg-zinc-600"
-                    onClick={() => setShowBulletIcons(showBulletIcons === bullet.id ? null : bullet.id)}
-                  >
-                    {bullet.icon}
-                  </button>
-                  {showBulletIcons === bullet.id && (
-                    <div className="absolute top-full left-0 mt-1 bg-zinc-700 rounded p-2 grid grid-cols-4 gap-1 z-50 shadow-xl">
-                      {BULLET_ICONS.map(({ icon }) => (
-                        <button
-                          key={icon}
-                          type="button"
-                          className="w-7 h-7 flex items-center justify-center hover:bg-zinc-600 rounded"
-                          onClick={() => {
-                            updateBullet(bullet.id, "icon", icon);
-                            setShowBulletIcons(null);
-                          }}
-                        >
-                          {icon}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-                <Input
-                  value={bullet.text}
-                  onChange={(e) => updateBullet(bullet.id, "text", e.target.value)}
-                  placeholder="Текст переваги"
-                  className="flex-1 bg-zinc-700 border-zinc-600 text-white h-8"
-                />
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => removeBullet(bullet.id)}
-                  className="h-8 w-8 text-red-400 hover:text-red-300"
-                >
-                  <Trash2 className="w-4 h-4" />
-                </Button>
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={handleDragEnd}
+          >
+            <SortableContext
+              items={(settings.bullets || []).map(b => b.id)}
+              strategy={verticalListSortingStrategy}
+            >
+              <div className="space-y-2">
+                {(settings.bullets || []).map((bullet) => (
+                  <SortableBulletItem
+                    key={bullet.id}
+                    bullet={bullet}
+                    showIcons={showBulletIcons === bullet.id}
+                    onToggleIcons={() => setShowBulletIcons(showBulletIcons === bullet.id ? null : bullet.id)}
+                    onUpdateBullet={updateBullet}
+                    onRemoveBullet={removeBullet}
+                    onSelectIcon={(icon) => {
+                      updateBullet(bullet.id, "icon", icon);
+                      setShowBulletIcons(null);
+                    }}
+                  />
+                ))}
               </div>
-            ))}
-          </div>
+            </SortableContext>
+          </DndContext>
         </div>
 
         {/* ===== BUTTON SECTION ===== */}
@@ -647,24 +682,24 @@ export default function QuizSettingsPanel({
             </div>
           </div>
 
-          {/* Button Radius */}
+          {/* Button Radius Slider */}
           <div>
-            <Label className="text-zinc-400 text-xs mb-2 block">Заокруглення</Label>
-            <div className="grid grid-cols-5 gap-1">
-              {BUTTON_RADIUS_OPTIONS.map(({ value, label }) => (
-                <button
-                  key={value}
-                  type="button"
-                  className={`py-1.5 px-1 text-xs rounded transition-colors ${
-                    (settings.buttonRadius || "full") === value
-                      ? "bg-purple-600 text-white"
-                      : "bg-zinc-700 text-zinc-300 hover:bg-zinc-600"
-                  }`}
-                  onClick={() => onSettingsChange("buttonRadius", value)}
-                >
-                  {label}
-                </button>
-              ))}
+            <div className="flex items-center justify-between mb-2">
+              <Label className="text-zinc-400 text-xs">Заокруглення</Label>
+              <span className="text-xs text-zinc-500">{settings.buttonRadiusPx || 25}px</span>
+            </div>
+            <input
+              type="range"
+              min="0"
+              max="50"
+              value={settings.buttonRadiusPx || 25}
+              onChange={(e) => onSettingsChange("buttonRadiusPx", parseInt(e.target.value))}
+              className="w-full h-2 bg-zinc-700 rounded-lg appearance-none cursor-pointer accent-purple-500"
+            />
+            <div className="flex justify-between text-xs text-zinc-500 mt-1">
+              <span>0</span>
+              <span>25</span>
+              <span>50</span>
             </div>
           </div>
         </div>
@@ -746,8 +781,55 @@ function SaveSettingsButton({ quizId, settings }: { quizId: number; settings: an
     },
   });
 
+  // Validate translations
+  const validateTranslations = () => {
+    const warnings: string[] = [];
+    const languages = ['uk', 'ru', 'en', 'pl', 'de'];
+    
+    // Check title translations
+    if (settings.title) {
+      try {
+        const parsed = JSON.parse(settings.title);
+        if (typeof parsed === 'object') {
+          const missing = languages.filter(lang => !parsed[lang] || parsed[lang].trim() === '');
+          if (missing.length > 0) {
+            warnings.push(`Заголовок: відсутні переклади для ${missing.join(', ')}`);
+          }
+        }
+      } catch {
+        // Not JSON, single language only
+      }
+    }
+    
+    // Check subtitle translations
+    if (settings.subtitle) {
+      try {
+        const parsed = JSON.parse(settings.subtitle);
+        if (typeof parsed === 'object') {
+          const missing = languages.filter(lang => !parsed[lang] || parsed[lang].trim() === '');
+          if (missing.length > 0) {
+            warnings.push(`Підзаголовок: відсутні переклади для ${missing.join(', ')}`);
+          }
+        }
+      } catch {
+        // Not JSON, single language only
+      }
+    }
+    
+    return warnings;
+  };
+
   const handleSave = () => {
     if (!quizId) return;
+    
+    // Show validation warnings if any
+    const warnings = validateTranslations();
+    if (warnings.length > 0) {
+      const proceed = window.confirm(
+        `⚠️ Попередження про переклади:\n\n${warnings.join('\n')}\n\nПродовжити збереження?`
+      );
+      if (!proceed) return;
+    }
     
     saveMutation.mutate({
       quizId,
