@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "wouter";
 import { toast } from "sonner";
 import QuizSettingsPanel from "@/components/QuizSettingsPanel";
-import BottomDesignPanel from "@/components/BottomDesignPanel";
+// BottomDesignPanel merged into QuizSettingsPanel
 import DraggableQuestionEditor from "@/components/DraggableQuestionEditor";
 import { trpc } from "@/lib/trpc";
 import type { QuizQuestion } from "@/components/DraggableQuestionEditor";
@@ -59,10 +59,18 @@ export default function QuizDesignPage() {
     backgroundImage: "",
     backgroundVideo: "",
     layoutType: "background" as "background" | "standard",
-    alignment: "center" as "left" | "center" | "right",
+    alignment: "left" as "left" | "center" | "right",
+    backgroundColor: "#FFD93D",
+    backgroundGradient: "",
     primaryColor: "#FFD93D",
     accentColor: "#A855F7",
+    buttonRadius: "full" as "none" | "sm" | "md" | "lg" | "full",
+    bullets: [] as Array<{ id: string; text: string; icon: string }>,
     fontFamily: "Inter",
+    titleColor: "#FFFFFF",
+    subtitleColor: "#FFFFFF",
+    titleWeight: "bold" as "normal" | "medium" | "semibold" | "bold" | "extrabold",
+    subtitleWeight: "normal" as "normal" | "medium" | "semibold" | "bold" | "extrabold",
     // Contact form settings
     contactFormTitle: '{"uk":"Залиште свої контакти","ru":"Оставьте свои контакты","en":"Leave your contacts","pl":"Zostaw swoje kontakty","de":"Hinterlassen Sie Ihre Kontakte"}',
     contactFormSubtitle: '{"uk":"Ми зв\'яжемося з вами найближчим часом","ru":"Мы свяжемся с вами в ближайшее время","en":"We will contact you shortly","pl":"Skontaktujemy się z Tobą wkrótce","de":"Wir werden uns in Kürze bei Ihnen melden"}',
@@ -90,10 +98,16 @@ export default function QuizDesignPage() {
         backgroundImage: savedSettings.backgroundImage || "",
         backgroundVideo: savedSettings.backgroundVideo || "",
         layoutType: (savedSettings.layoutType as "background" | "standard") || "background",
-        alignment: (savedSettings.alignment as "left" | "center" | "right") || "center",
+        alignment: (savedSettings.alignment as "left" | "center" | "right") || "left",
+        backgroundColor: savedSettings.primaryColor || "#FFD93D",
+        backgroundGradient: "",
         primaryColor: savedSettings.primaryColor || "#FFD93D",
         accentColor: savedSettings.accentColor || "#A855F7",
         fontFamily: savedSettings.fontFamily || "Inter",
+        titleColor: "#FFFFFF",
+        subtitleColor: "#FFFFFF",
+        titleWeight: "bold" as "normal" | "medium" | "semibold" | "bold" | "extrabold",
+        subtitleWeight: "normal" as "normal" | "medium" | "semibold" | "bold" | "extrabold",
         // Contact form settings
         contactFormTitle: savedSettings.contactFormTitle || settings.contactFormTitle,
         contactFormSubtitle: savedSettings.contactFormSubtitle || settings.contactFormSubtitle,
@@ -158,7 +172,14 @@ export default function QuizDesignPage() {
                 <div 
                   className="relative w-full h-full rounded-lg overflow-hidden"
                   style={{
-                    backgroundImage: settings.backgroundImage ? `url(${settings.backgroundImage})` : "linear-gradient(135deg, #FFD93D 0%, #FFA500 100%)",
+                    backgroundImage: settings.backgroundImage 
+                      ? `url(${settings.backgroundImage})` 
+                      : settings.backgroundGradient 
+                        ? settings.backgroundGradient 
+                        : "none",
+                    backgroundColor: !settings.backgroundImage && !settings.backgroundGradient 
+                      ? (settings.backgroundColor || "#FFD93D") 
+                      : "transparent",
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                   }}
@@ -192,16 +213,35 @@ export default function QuizDesignPage() {
                       {getTextForLanguage(settings.subtitle, language as SupportedLanguage || "uk")}
                     </p>
                     
-                    {/* Bonus */}
+                    {/* Bonus - styled like Marquiz */}
                     {settings.bonusEnabled && settings.bonusText && (
-                      <div className="bg-white/20 backdrop-blur-sm px-6 py-3 rounded-lg mb-6">
-                        <p className="text-white font-medium">{settings.bonusText}</p>
+                      <div className="flex items-center gap-3 bg-gradient-to-r from-yellow-400/90 to-orange-400/90 px-6 py-4 rounded-xl mb-6 shadow-lg">
+                        <span className="text-2xl">🎁</span>
+                        <p className="text-white font-bold text-lg">{settings.bonusText}</p>
                       </div>
                     )}
 
-                    {/* Button */}
+                    {/* Bullets/Features */}
+                    {settings.bullets && settings.bullets.length > 0 && (
+                      <div className="flex flex-col gap-3 mb-6">
+                        {settings.bullets.map((bullet) => (
+                          <div key={bullet.id} className="flex items-center gap-3 bg-white/10 backdrop-blur-sm px-4 py-3 rounded-lg">
+                            <span className="text-xl">{bullet.icon || '✓'}</span>
+                            <span className="text-white font-medium">{bullet.text}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Button with customizable radius */}
                     <button 
-                      className="px-12 py-4 rounded-full font-semibold text-lg shadow-xl transition-transform hover:scale-105"
+                      className={`px-12 py-4 font-semibold text-lg shadow-xl transition-transform hover:scale-105 ${
+                        settings.buttonRadius === 'none' ? 'rounded-none' :
+                        settings.buttonRadius === 'sm' ? 'rounded-md' :
+                        settings.buttonRadius === 'md' ? 'rounded-xl' :
+                        settings.buttonRadius === 'lg' ? 'rounded-2xl' :
+                        'rounded-full'
+                      }`}
                       style={{ backgroundColor: settings.accentColor, color: "white" }}
                     >
                       {settings.buttonText}
@@ -245,16 +285,35 @@ export default function QuizDesignPage() {
                       {getTextForLanguage(settings.subtitle, language as SupportedLanguage || "uk")}
                     </p>
 
-                    {/* Bonus */}
+                    {/* Bonus - styled */}
                     {settings.bonusEnabled && settings.bonusText && (
-                      <div className="bg-yellow-100 border-l-4 border-yellow-500 px-4 py-3 mb-6">
-                        <p className="text-yellow-800 font-medium">{settings.bonusText}</p>
+                      <div className="flex items-center gap-3 bg-gradient-to-r from-yellow-400 to-orange-400 px-5 py-3 rounded-xl mb-6 shadow-md">
+                        <span className="text-xl">🎁</span>
+                        <p className="text-white font-bold">{settings.bonusText}</p>
                       </div>
                     )}
 
-                    {/* Button */}
+                    {/* Bullets/Features */}
+                    {settings.bullets && settings.bullets.length > 0 && (
+                      <div className="flex flex-col gap-2 mb-6">
+                        {settings.bullets.map((bullet) => (
+                          <div key={bullet.id} className="flex items-center gap-3 bg-zinc-100 px-4 py-2 rounded-lg">
+                            <span className="text-lg">{bullet.icon || '✓'}</span>
+                            <span className="text-zinc-700 font-medium">{bullet.text}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Button with customizable radius */}
                     <button 
-                      className="px-10 py-3 rounded-full font-semibold shadow-lg transition-transform hover:scale-105 self-start"
+                      className={`px-10 py-3 font-semibold shadow-lg transition-transform hover:scale-105 self-start ${
+                        settings.buttonRadius === 'none' ? 'rounded-none' :
+                        settings.buttonRadius === 'sm' ? 'rounded-md' :
+                        settings.buttonRadius === 'md' ? 'rounded-xl' :
+                        settings.buttonRadius === 'lg' ? 'rounded-2xl' :
+                        'rounded-full'
+                      }`}
                       style={{ backgroundColor: settings.accentColor, color: "white" }}
                     >
                       {settings.buttonText}
@@ -434,30 +493,108 @@ export default function QuizDesignPage() {
           )}
 
           {activeTab === "thanks" && (
-            <div className="flex gap-8 h-full">
-              {/* Preview (Left) */}
-              <div className="flex-1 bg-zinc-800 rounded-lg p-8 flex flex-col items-center justify-center">
-                <div className="text-center">
-                  <div className="w-24 h-24 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                    </svg>
+            <div className="flex gap-8 h-full min-h-[500px]">
+              {/* Preview (Left) - Marquiz Style */}
+              <div className="flex-1 rounded-lg overflow-hidden relative min-h-[500px]" style={{ background: settings.backgroundGradient || settings.backgroundColor || 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }}>
+                {/* Background Image Overlay */}
+                {settings.backgroundImage && (
+                  <div 
+                    className="absolute inset-0 bg-cover bg-center opacity-30"
+                    style={{ backgroundImage: `url(${settings.backgroundImage})` }}
+                  />
+                )}
+                
+                {/* Content */}
+                <div className="relative z-10 h-full flex flex-col items-center justify-center p-8 text-center">
+                  {/* Animated Confetti Effect */}
+                  <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                    {[...Array(20)].map((_, i) => (
+                      <div
+                        key={i}
+                        className="absolute w-3 h-3 rounded-full animate-pulse"
+                        style={{
+                          left: `${Math.random() * 100}%`,
+                          top: `${Math.random() * 100}%`,
+                          backgroundColor: ['#FFD93D', '#FF6B6B', '#4ECDC4', '#A855F7', '#3B82F6'][i % 5],
+                          opacity: 0.6,
+                          animationDelay: `${i * 0.1}s`,
+                        }}
+                      />
+                    ))}
                   </div>
-                  <h2 className="text-3xl font-bold text-white mb-4">
+                  
+                  {/* Success Icon - Marquiz Style */}
+                  <div className="relative mb-8">
+                    <div className="w-28 h-28 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                      <div className="w-20 h-20 rounded-full bg-gradient-to-br from-green-400 to-emerald-600 flex items-center justify-center shadow-2xl shadow-green-500/30">
+                        <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                    </div>
+                    {/* Glow Effect */}
+                    <div className="absolute inset-0 w-28 h-28 rounded-full bg-green-400/30 blur-xl" />
+                  </div>
+                  
+                  {/* Title */}
+                  <h2 
+                    className="text-4xl font-bold mb-4 drop-shadow-lg"
+                    style={{ 
+                      color: settings.titleColor || '#FFFFFF',
+                      fontFamily: settings.fontFamily || 'Inter',
+                      fontWeight: settings.titleWeight === 'extrabold' ? 800 : settings.titleWeight === 'bold' ? 700 : settings.titleWeight === 'semibold' ? 600 : settings.titleWeight === 'medium' ? 500 : 400
+                    }}
+                  >
                     {getTextForLanguage(settings.thankYouTitle, language as SupportedLanguage || "uk")}
                   </h2>
-                  <p className="text-xl text-zinc-400 mb-8">
+                  
+                  {/* Subtitle */}
+                  <p 
+                    className="text-xl mb-8 max-w-md opacity-90"
+                    style={{ 
+                      color: settings.subtitleColor || '#FFFFFF',
+                      fontFamily: settings.fontFamily || 'Inter'
+                    }}
+                  >
                     {getTextForLanguage(settings.thankYouSubtitle, language as SupportedLanguage || "uk")}
                   </p>
+                  
+                  {/* Bonus Badge */}
+                  {settings.bonusEnabled && settings.bonusText && (
+                    <div className="mb-6 px-6 py-3 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full shadow-lg shadow-orange-500/30">
+                      <span className="text-black font-bold flex items-center gap-2">
+                        <span className="text-xl">🎁</span>
+                        {settings.bonusText}
+                      </span>
+                    </div>
+                  )}
+                  
+                  {/* CTA Button */}
                   {settings.thankYouButtonUrl && (
                     <button 
-                      className="px-8 py-3 rounded-lg font-semibold text-white"
-                      style={{ backgroundColor: settings.accentColor }}
+                      className="px-10 py-4 font-bold text-lg shadow-xl transition-transform hover:scale-105"
+                      style={{ 
+                        backgroundColor: settings.accentColor || '#A855F7',
+                        borderRadius: settings.buttonRadius === 'none' ? '0' : settings.buttonRadius === 'sm' ? '4px' : settings.buttonRadius === 'md' ? '8px' : settings.buttonRadius === 'lg' ? '16px' : '9999px',
+                        color: '#FFFFFF'
+                      }}
                       disabled
                     >
                       {getTextForLanguage(settings.thankYouButtonText, language as SupportedLanguage || "uk")}
                     </button>
                   )}
+                  
+                  {/* Social Proof */}
+                  <div className="mt-8 flex items-center gap-3 text-white/70">
+                    <div className="flex -space-x-2">
+                      {['😊', '🎉', '✨'].map((emoji, i) => (
+                        <div key={i} className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-lg">
+                          {emoji}
+                        </div>
+                      ))}
+                    </div>
+                    <span className="text-sm">Дякуємо за довіру!</span>
+                  </div>
                 </div>
               </div>
               
@@ -554,12 +691,7 @@ export default function QuizDesignPage() {
         )}
       </div>
 
-      {/* Bottom Design Panel */}
-      <BottomDesignPanel
-        settings={settings}
-        onSettingsChange={handleSettingsChange}
-        quizId={quizId || 0}
-      />
+      {/* Bottom panel removed - all controls now in sidebar */}
     </div>
   );
 }

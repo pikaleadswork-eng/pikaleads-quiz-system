@@ -18,6 +18,7 @@ import { SortableQuestionItem } from "./SortableQuestionItem";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Plus, Save, Library } from "lucide-react";
+import { QuestionTypeSelector } from "./QuestionTypeSelector";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { toast } from "sonner";
 import { stringifyMultilingualText } from "@/lib/multilingualText";
@@ -61,6 +62,7 @@ export default function DraggableQuestionEditor({
   const [expandedQuestions, setExpandedQuestions] = useState<Set<string>>(
     new Set(questions.map((q) => q.id))
   );
+  const [showTypeSelector, setShowTypeSelector] = useState(false);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -91,42 +93,12 @@ export default function DraggableQuestionEditor({
   };
 
   const handleAddQuestion = () => {
-    // Create new question with multilingual format
-    const newQuestionText = stringifyMultilingualText({
-      uk: "Нове питання",
-      ru: "Новый вопрос",
-      en: "New question",
-      pl: "Nowe pytanie",
-      de: "Neue Frage",
-    });
-    const option1Text = stringifyMultilingualText({
-      uk: "Варіант 1",
-      ru: "Вариант 1",
-      en: "Option 1",
-      pl: "Opcja 1",
-      de: "Option 1",
-    });
-    const option2Text = stringifyMultilingualText({
-      uk: "Варіант 2",
-      ru: "Вариант 2",
-      en: "Option 2",
-      pl: "Opcja 2",
-      de: "Option 2",
-    });
-    
-    const newQuestion: QuizQuestion = {
-      id: `question-${Date.now()}`,
-      question: newQuestionText,
-      options: [
-        { text: option1Text },
-        { text: option2Text },
-      ],
-      type: "single",
-      required: true,
-    };
+    setShowTypeSelector(true);
+  };
+
+  const handleAddQuestionWithType = (newQuestion: QuizQuestion) => {
     setQuestions([...questions, newQuestion]);
     setExpandedQuestions(new Set([...Array.from(expandedQuestions), newQuestion.id]));
-    
     toast.success(
       language === "uk" ? "Питання додано" : "Question added"
     );
@@ -290,6 +262,13 @@ export default function DraggableQuestionEditor({
           </SortableContext>
         </DndContext>
       )}
+
+      {/* Question Type Selector Dialog */}
+      <QuestionTypeSelector
+        open={showTypeSelector}
+        onClose={() => setShowTypeSelector(false)}
+        onSelect={handleAddQuestionWithType}
+      />
     </div>
   );
 }

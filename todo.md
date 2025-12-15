@@ -2351,3 +2351,110 @@
 - [x] Create migration script to add default thank you page settings
 - [x] Apply settings to all existing quizzes in database
 - [x] Verify all quizzes have complete settings
+
+
+## Phase 97 - Fix Quiz Editor Issues (Alignment, Colors, Bonus, Question Types, Thank You Page)
+
+### Alignment Fix
+- [ ] Fix text alignment - should be on LEFT side by default
+- [ ] Update database alignment from 'center' to 'left' for all quizzes
+- [ ] Ensure preview shows text on left, image on right
+
+### Background Color/Gradient Picker
+- [ ] Add color picker for background color in BottomDesignPanel
+- [ ] Add gradient picker option
+- [ ] Show color/gradient in preview instead of just image
+
+### Bonus Display
+- [ ] Show bonus text in preview when enabled
+- [ ] Add bonus styling (yellow background, icon)
+- [ ] Ensure bonus appears before the button
+
+### Question Types (12 variants)
+- [ ] Add all 12 question types to DraggableQuestionEditor
+- [ ] Types: single, multiple, text, slider, rating, date, file, emoji, dropdown, scale, matrix, ranking
+- [ ] Add type selector when creating new question
+- [ ] Show appropriate UI for each question type
+
+### Thank You Page (Marquiz Style)
+- [ ] Redesign thank you page to match Marquiz layout
+- [ ] Add confetti/celebration animation
+- [ ] Add social sharing buttons
+- [ ] Add download bonus/PDF option
+- [ ] Style with gradient background
+
+
+### Button Customization
+- [ ] Add button color picker (already in bottom panel)
+- [ ] Add button radius control (rounded, pill, square)
+- [ ] Preview button style changes in real-time
+
+### Styled Bullets/Features for Start Page
+- [ ] Add bullets/features editor section
+- [ ] Create styled bullet components (icons, checkmarks, numbers)
+- [ ] Allow adding/removing/reordering bullets
+- [ ] Multiple bullet styles (checkmark, star, arrow, number, custom icon)
+- [ ] Bullets appear between subtitle and button
+
+
+### Text Styling Controls
+- [ ] Add title text color picker
+- [ ] Add subtitle text color picker  
+- [ ] Add font weight selector (normal, medium, semibold, bold)
+- [ ] Add 15-20 Google Fonts selection
+- [ ] Preview text styles in real-time
+
+
+### UI Improvements
+- [ ] Merge bottom panel (Фон, Дизайн, Вирівнювання) into sidebar
+- [ ] Remove BottomDesignPanel component
+- [ ] Single scrollable sidebar with all settings
+
+
+## Phase 97 - Quiz Editor Enhancements (COMPLETED)
+
+### Sidebar Consolidation
+- [x] Merge bottom panel (Фон, Дизайн, Вирівнювання) into sidebar
+- [x] Remove BottomDesignPanel component
+- [x] Single scrollable sidebar with all settings
+
+### Text Styling Controls
+- [x] Add 18 Google Fonts (Inter, Roboto, Montserrat, Playfair Display, etc.)
+- [x] Add font family selector dropdown
+- [x] Add title color picker
+- [x] Add subtitle color picker
+- [x] Add title font weight selector (Normal, Medium, Semibold, Bold, Extrabold)
+- [x] Add subtitle font weight selector
+
+### Button Customization
+- [x] Add button color picker
+- [x] Add button radius selector (Прямі, S, M, L, Pill)
+- [x] Live button preview in sidebar
+
+### Styled Bullets/Features Editor
+- [x] Add "Переваги" section with + button
+- [x] Icon + text format for each bullet
+- [x] Add/remove bullets functionality
+
+### 12 Question Types
+- [x] Create QuestionTypeSelector modal component
+- [x] Single choice (⭕)
+- [x] Multiple choice (☑️)
+- [x] Text answer (📝)
+- [x] Slider (🎚️)
+- [x] Rating (⭐)
+- [x] Date (📅)
+- [x] File upload (📎)
+- [x] Emoji (😊)
+- [x] Dropdown (📋)
+- [x] Scale 1-10 (📊)
+- [x] Matrix (📐)
+- [x] Ranking (🏆)
+
+### Thank You Page Redesign (Marquiz Style)
+- [x] Gradient background with confetti effect
+- [x] Large success icon with glow effect
+- [x] Title and subtitle with custom styling
+- [x] CTA button with customizable radius
+- [x] Social proof section with emojis
+- [x] Bonus badge display
