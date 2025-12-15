@@ -301,6 +301,15 @@ function SaveSettingsButton({ quizId, settings }: { quizId: number; settings: an
       bonusText: settings.bonusText,
       companyName: settings.companyName,
       phoneNumber: settings.phoneNumber,
+      // Contact form settings
+      contactFormTitle: (settings as any).contactFormTitle,
+      contactFormSubtitle: (settings as any).contactFormSubtitle,
+      contactFormFields: (settings as any).contactFormFields,
+      // Thank you page settings
+      thankYouTitle: (settings as any).thankYouTitle,
+      thankYouSubtitle: (settings as any).thankYouSubtitle,
+      thankYouButtonText: (settings as any).thankYouButtonText,
+      thankYouButtonUrl: (settings as any).thankYouButtonUrl,
     });
   };
 

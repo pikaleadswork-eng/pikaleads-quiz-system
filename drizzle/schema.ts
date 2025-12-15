@@ -778,6 +778,15 @@ export const quizDesignSettings = mysqlTable("quiz_design_settings", {
   bonusText: text("bonusText"),
   companyName: varchar("companyName", { length: 255 }),
   phoneNumber: varchar("phoneNumber", { length: 50 }),
+  // Contact form settings
+  contactFormTitle: text("contactFormTitle"), // Multilingual JSON
+  contactFormSubtitle: text("contactFormSubtitle"), // Multilingual JSON
+  contactFormFields: text("contactFormFields"), // JSON array of enabled fields: ["name", "phone", "email", "telegram"]
+  // Thank you page settings
+  thankYouTitle: text("thankYouTitle"), // Multilingual JSON
+  thankYouSubtitle: text("thankYouSubtitle"), // Multilingual JSON
+  thankYouButtonText: text("thankYouButtonText"), // Multilingual JSON
+  thankYouButtonUrl: text("thankYouButtonUrl"),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 });

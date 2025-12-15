@@ -58,6 +58,15 @@ export const quizDesignRouter = router({
       bonusEnabled: z.boolean().optional(),
       companyName: z.string().optional(),
       phoneNumber: z.string().optional(),
+      // Contact form settings
+      contactFormTitle: z.string().optional(),
+      contactFormSubtitle: z.string().optional(),
+      contactFormFields: z.string().optional(),
+      // Thank you page settings
+      thankYouTitle: z.string().optional(),
+      thankYouSubtitle: z.string().optional(),
+      thankYouButtonText: z.string().optional(),
+      thankYouButtonUrl: z.string().optional(),
     }))
     .mutation(async ({ input }) => {
       const db = await getDb();
@@ -88,6 +97,13 @@ export const quizDesignRouter = router({
             bonusEnabled: input.bonusEnabled,
             companyName: input.companyName,
             phoneNumber: input.phoneNumber,
+            contactFormTitle: input.contactFormTitle,
+            contactFormSubtitle: input.contactFormSubtitle,
+            contactFormFields: input.contactFormFields,
+            thankYouTitle: input.thankYouTitle,
+            thankYouSubtitle: input.thankYouSubtitle,
+            thankYouButtonText: input.thankYouButtonText,
+            thankYouButtonUrl: input.thankYouButtonUrl,
             updatedAt: new Date(),
           })
           .where(eq(quizDesignSettings.quizId, input.quizId));
@@ -110,6 +126,13 @@ export const quizDesignRouter = router({
           bonusEnabled: input.bonusEnabled || false,
           companyName: input.companyName,
           phoneNumber: input.phoneNumber,
+          contactFormTitle: input.contactFormTitle,
+          contactFormSubtitle: input.contactFormSubtitle,
+          contactFormFields: input.contactFormFields,
+          thankYouTitle: input.thankYouTitle,
+          thankYouSubtitle: input.thankYouSubtitle,
+          thankYouButtonText: input.thankYouButtonText,
+          thankYouButtonUrl: input.thankYouButtonUrl,
         });
       }
 
@@ -346,7 +369,15 @@ export const quizDesignRouter = router({
           id: `question-${q.id}`,
           question: q.questionText,
           type: (settings.type || "single") as "single" | "multiple" | "text" | "slider" | "rating" | "date" | "file" | "emoji" | "dropdown" | "scale" | "matrix" | "ranking",
-          options: q.answerOptions ? JSON.parse(q.answerOptions) : [],
+          options: q.answerOptions ? JSON.parse(q.answerOptions).map((opt: any) => {
+            // Handle both old format (object with uk/ru/en keys) and new format (object with text property)
+            if (typeof opt === 'object' && !opt.text) {
+              // Old format: {uk: "...", ru: "...", en: "..."}
+              return { text: JSON.stringify(opt), imageUrl: undefined };
+            }
+            // New format: {text: "...", imageUrl: "..."}
+            return opt;
+          }) : [],
           required: q.isRequired,
           min: settings.min,
           max: settings.max,

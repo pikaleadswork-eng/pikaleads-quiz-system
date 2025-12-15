@@ -246,6 +246,13 @@
       "when": 1765709404900,
       "tag": "0034_ambiguous_sugar_man",
       "breakpoints": true
+    },
+    {
+      "idx": 35,
+      "version": "5",
+      "when": 1765832795938,
+      "tag": "0035_plain_fixer",
+      "breakpoints": true
     }
   ]
 }
