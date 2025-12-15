@@ -2330,3 +2330,24 @@
 - [x] Preview shows based on layoutType (background/standard)
 - [x] Shows title, subtitle, button text
 - [x] Shows logo and company name
+
+
+## Phase 96 - Start Page Preview, Design Loading & Mass Quiz Update
+
+### Start Page Preview (Стартова tab)
+- [x] Add visual preview on left side showing title, subtitle, button
+- [x] Show background image/color based on layoutType
+- [x] Display logo and company name
+- [x] Real-time preview updates when editing
+
+### Design Settings Loading
+- [x] Load layoutType from database when opening editor
+- [x] Load alignment settings from database
+- [x] Pre-select correct design option (background/standard)
+- [x] Pre-select correct alignment (left/center/right)
+
+### Mass Quiz Update (16 quizzes)
+- [x] Create migration script to add default contact form settings
+- [x] Create migration script to add default thank you page settings
+- [x] Apply settings to all existing quizzes in database
+- [x] Verify all quizzes have complete settings

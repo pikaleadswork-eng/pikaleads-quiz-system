@@ -763,7 +763,7 @@ export type InsertAnalyticsSetting = typeof analyticsSettings.$inferInsert;
 export const quizDesignSettings = mysqlTable("quiz_design_settings", {
   id: int("id").autoincrement().primaryKey(),
   quizId: int("quizId").notNull().unique(),
-  layoutType: varchar("layoutType", { length: 20 }).default("split").notNull(), // center, split, background
+  layoutType: varchar("layoutType", { length: 20 }).default("standard").notNull(), // standard, background
   backgroundImage: text("backgroundImage"), // S3 URL
   backgroundVideo: text("backgroundVideo"), // S3 URL for video background
   alignment: varchar("alignment", { length: 20 }).default("center"), // left, center, right
