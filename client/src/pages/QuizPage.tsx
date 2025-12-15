@@ -30,7 +30,16 @@ function getTranslatedOptions(options: any[], language: string): string[] {
   return options.map(opt => {
     if (typeof opt === "string") return opt;
     if (typeof opt === "object" && opt !== null) {
-      return opt[language] || opt.uk || opt.en || opt.text || "";
+      // Handle {text: {uk: "...", ru: "..."}, imageUrl: "..."} format
+      if (opt.text && typeof opt.text === "object") {
+        return opt.text[language] || opt.text.uk || opt.text.en || "";
+      }
+      // Handle {text: "string", imageUrl: "..."} format
+      if (opt.text && typeof opt.text === "string") {
+        return opt.text;
+      }
+      // Handle {uk: "...", ru: "...", en: "..."} format directly
+      return opt[language] || opt.uk || opt.en || "";
     }
     return "";
   });

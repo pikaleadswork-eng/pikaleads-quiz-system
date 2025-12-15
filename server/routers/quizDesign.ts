@@ -372,10 +372,10 @@ export const quizDesignRouter = router({
           options: q.answerOptions ? JSON.parse(q.answerOptions).map((opt: any) => {
             // Handle both old format (object with uk/ru/en keys) and new format (object with text property)
             if (typeof opt === 'object' && !opt.text) {
-              // Old format: {uk: "...", ru: "...", en: "..."}
-              return { text: JSON.stringify(opt), imageUrl: undefined };
+              // Old format: {uk: "...", ru: "...", en: "..."} - keep as multilingual object
+              return { text: opt, imageUrl: undefined };
             }
-            // New format: {text: "...", imageUrl: "..."}
+            // New format: {text: "...", imageUrl: "..."} or {text: {uk:..., ru:...}, imageUrl: "..."}
             return opt;
           }) : [],
           required: q.isRequired,

@@ -1,0 +1,60 @@
+{
+  "query": "SELECT id, name, slug FROM quizzes LIMIT 10;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user b5yJbKNBA74GJz4.0729dd994af9 --database EcCrELAaL5JgQGs8z45yv6 --execute SELECT id, name, slug FROM quizzes LIMIT 10;",
+  "rows": [
+    {
+      "id": "11",
+      "name": "Інтернет-магазин без продажів — це зламаний таргет",
+      "slug": "ecommerce-meta"
+    },
+    {
+      "id": "12",
+      "name": "Google Ads для інтернет-магазину — не трафік, а продажі",
+      "slug": "ecommerce-google"
+    },
+    {
+      "id": "13",
+      "name": "Ремонт без заявок — значить реклама налаштована криво",
+      "slug": "renovation-meta"
+    },
+    {
+      "id": "14",
+      "name": "Google Ads для ремонту квартир — заявки з пошуку",
+      "slug": "renovation-google"
+    },
+    {
+      "id": "15",
+      "name": "Меблева реклама без заявок — проблема не в ринку",
+      "slug": "furniture-meta"
+    },
+    {
+      "id": "16",
+      "name": "Google Ads для меблів — клієнти з пошуку",
+      "slug": "furniture-google"
+    },
+    {
+      "id": "17",
+      "name": "Telegram без результату — реклама ллється не туди",
+      "slug": "telegram-meta"
+    },
+    {
+      "id": "18",
+      "name": "Google Ads для Telegram — трафік з наміром",
+      "slug": "telegram-google"
+    },
+    {
+      "id": "19",
+      "name": "Будівництво без заявок — реклама працює на конкурентів",
+      "slug": "construction-meta"
+    },
+    {
+      "id": "20",
+      "name": "Google Ads для будівництва — клієнти з пошуку",
+      "slug": "construction-google"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tname\tslug\n11\tІнтернет-магазин без продажів — це зламаний таргет\tecommerce-meta\n12\tGoogle Ads для інтернет-магазину — не трафік, а продажі\tecommerce-google\n13\tРемонт без заявок — значить реклама налаштована криво\trenovation-meta\n14\tGoogle Ads для ремонту квартир — заявки з пошуку\trenovation-google\n15\tМеблева реклама без заявок — проблема не в ринку\tfurniture-meta\n16\tGoogle Ads для меблів — клієнти з пошуку\tfurniture-google\n17\tTelegram без результату — реклама ллється не туди\ttelegram-meta\n18\tGoogle Ads для Telegram — трафік з наміром\ttelegram-google\n19\tБудівництво без заявок — реклама працює на конкурентів\tconstruction-meta\n20\tGoogle Ads для будівництва — клієнти з пошуку\tconstruction-google\n",
+  "stderr": "",
+  "execution_time_ms": 62
+}
