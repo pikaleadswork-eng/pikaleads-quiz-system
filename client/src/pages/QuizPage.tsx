@@ -46,6 +46,8 @@ export default function QuizPage() {
   const [answers, setAnswers] = useState<Record<string, string[]>>({});
   const [textAnswer, setTextAnswer] = useState("");
   const [showLeadForm, setShowLeadForm] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [animationDirection, setAnimationDirection] = useState<'left' | 'right'>('right');
   const [leadData, setLeadData] = useState({ name: "", email: "", phone: "", telegram: "" });
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -378,17 +380,34 @@ export default function QuizPage() {
     }
     
     if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-      // Fire GA4 event for question progress
-      if (typeof window !== "undefined" && (window as any).gtag) {
-        (window as any).gtag("event", "quiz_progress", {
-          quiz_name: quiz.name,
-          question_number: currentQuestionIndex + 2,
-          total_questions: questions.length,
-        });
-      }
+      // Trigger animation
+      setAnimationDirection('right');
+      setIsAnimating(true);
+      setTimeout(() => {
+        setCurrentQuestionIndex(currentQuestionIndex + 1);
+        setIsAnimating(false);
+        // Fire GA4 event for question progress
+        if (typeof window !== "undefined" && (window as any).gtag) {
+          (window as any).gtag("event", "quiz_progress", {
+            quiz_name: quiz.name,
+            question_number: currentQuestionIndex + 2,
+            total_questions: questions.length,
+          });
+        }
+      }, 200);
     } else {
       setShowLeadForm(true);
+    }
+  };
+  
+  const handleBack = () => {
+    if (currentQuestionIndex > 0) {
+      setAnimationDirection('left');
+      setIsAnimating(true);
+      setTimeout(() => {
+        setCurrentQuestionIndex(currentQuestionIndex - 1);
+        setIsAnimating(false);
+      }, 200);
     }
   };
 
@@ -414,22 +433,27 @@ export default function QuizPage() {
         [currentQuestion.id]: [value],
       });
       
-      // Auto-advance to next question after 400ms
+      // Auto-advance to next question after 400ms with animation
       setTimeout(() => {
         if (currentQuestionIndex < questions.length - 1) {
-          setCurrentQuestionIndex(currentQuestionIndex + 1);
-          // Fire GA4 event for question progress
-          if (typeof window !== "undefined" && (window as any).gtag) {
-            (window as any).gtag("event", "quiz_progress", {
-              quiz_name: quiz.name,
-              question_number: currentQuestionIndex + 2,
-              total_questions: questions.length,
-            });
-          }
+          setAnimationDirection('right');
+          setIsAnimating(true);
+          setTimeout(() => {
+            setCurrentQuestionIndex(currentQuestionIndex + 1);
+            setIsAnimating(false);
+            // Fire GA4 event for question progress
+            if (typeof window !== "undefined" && (window as any).gtag) {
+              (window as any).gtag("event", "quiz_progress", {
+                quiz_name: quiz.name,
+                question_number: currentQuestionIndex + 2,
+                total_questions: questions.length,
+              });
+            }
+          }, 200);
         } else {
           setShowLeadForm(true);
         }
-      }, 400);
+      }, 300);
     }
   };
 
@@ -458,8 +482,14 @@ export default function QuizPage() {
           </div>
         </div>
 
-        {/* Question card */}
-        <Card className="p-8 bg-white/10 backdrop-blur-lg border-white/20 shadow-2xl">
+        {/* Question card with animation */}
+        <Card className={`p-8 bg-white/10 backdrop-blur-lg border-white/20 shadow-2xl transition-all duration-200 ease-out ${
+          isAnimating 
+            ? animationDirection === 'right' 
+              ? 'opacity-0 translate-x-8' 
+              : 'opacity-0 -translate-x-8'
+            : 'opacity-100 translate-x-0'
+        }`}>
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-8">{currentQuestion.question}</h2>
           
           {/* Text input for custom_input type */}
@@ -534,7 +564,7 @@ export default function QuizPage() {
               {currentQuestionIndex > 0 && (
                 <Button 
                   variant="outline"
-                  onClick={() => setCurrentQuestionIndex(currentQuestionIndex - 1)}
+                  onClick={handleBack}
                   className="flex-1 border-white/20 text-white hover:bg-white/10"
                 >
                   <ArrowLeft className="mr-2 h-5 w-5" />

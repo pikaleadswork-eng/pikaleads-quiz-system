@@ -177,7 +177,7 @@ export default function CRM() {
       if (filterSite && filterSite !== "all" && lead.utmSite !== filterSite) return false;
       return true;
     })
-    .sort((a, b) => (b.leadScore || 0) - (a.leadScore || 0)); // Sort by score descending
+    ; // Already sorted by date DESC from backend (newest first)
   
   const selectedLeadData = leads?.find((l) => l.id === selectedLead);
   
@@ -346,6 +346,28 @@ export default function CRM() {
     toast.success(t("crm.statusChanged") || `Changed status for ${selectedLeadIds.length} leads`);
     setSelectedLeadIds([]);
     setBulkActionStatus("");
+  };
+  
+  const deleteLeadsMutation = trpc.admin.deleteLeads.useMutation({
+    onSuccess: (data) => {
+      toast.success(t("crm.leadsDeleted") || `Deleted ${data.deletedCount} leads`);
+      setSelectedLeadIds([]);
+      refetchLeads();
+    },
+    onError: (error) => {
+      toast.error(t("crm.deleteError") || `Error: ${error.message}`);
+    },
+  });
+  
+  const bulkDeleteLeads = () => {
+    if (selectedLeadIds.length === 0) {
+      toast.error(t("crm.selectLeads") || "Please select leads to delete");
+      return;
+    }
+    
+    if (confirm(t("crm.confirmDelete") || `Are you sure you want to delete ${selectedLeadIds.length} leads? This action cannot be undone.`)) {
+      deleteLeadsMutation.mutate({ leadIds: selectedLeadIds });
+    }
   };
   
   // Show/hide bulk actions bar based on selection
@@ -1305,6 +1327,14 @@ export default function CRM() {
                 onClick={exportSelectedToCSV}
               >
                 {t("crm.exportCSV") || "Export CSV"}
+              </Button>
+              
+              <Button
+                variant="destructive"
+                size="sm"
+                onClick={bulkDeleteLeads}
+              >
+                Видалити
               </Button>
             </div>
             

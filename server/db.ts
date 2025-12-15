@@ -104,11 +104,27 @@ export async function getAllLeads() {
   }
 
   try {
-    const result = await db.select().from(leads).orderBy(leads.createdAt);
+    const result = await db.select().from(leads).orderBy(desc(leads.createdAt));
     return result;
   } catch (error) {
     console.error("[Database] Failed to get leads:", error);
     return [];
+  }
+}
+
+// Delete leads function
+export async function deleteLeads(leadIds: number[]) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  try {
+    for (const id of leadIds) {
+      await db.delete(leads).where(eq(leads.id, id));
+    }
+    return { success: true, deletedCount: leadIds.length };
+  } catch (error) {
+    console.error("[Database] Failed to delete leads:", error);
+    throw error;
   }
 }
 

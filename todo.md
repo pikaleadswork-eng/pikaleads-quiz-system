@@ -2182,3 +2182,34 @@
 - [x] Answers stored in proper JSON format with question/answer pairs
 - [x] Lead appears in CRM at /crm page
 
+
+## Phase 93 - CRM Improvements & Quiz Animation (Dec 15, 2025)
+
+### CRM Sorting
+- [ ] Fix leads sorting - newest leads should appear at the top (ORDER BY createdAt DESC)
+
+### CRM Lead Deletion
+- [ ] Add bulk delete button for selected leads
+- [ ] Add delete confirmation dialog
+- [ ] Implement deleteLeads tRPC procedure
+- [ ] Add individual delete button in lead actions
+
+### Quiz Animation
+- [ ] Add smooth transition animation between questions in QuizPage
+
+
+
+## Phase 93 - Critical CRM & Quiz Fixes (COMPLETED)
+
+### CRM Improvements
+- [x] Fix leads sorting - newest leads now appear at the top (sort by createdAt DESC)
+- [x] Add bulk delete functionality for selected leads
+- [x] Add "Видалити" (Delete) button to bulk actions bar
+- [x] deleteLeads tRPC procedure added to admin router
+- [x] deleteLeads function added to db.ts
+
+### Quiz Animation
+- [x] Add smooth transition animation between quiz questions
+- [x] Animate question card when changing questions (fade + slide effect, 200ms)
+- [x] Add handleBack function with animation
+- [x] Animation direction changes based on navigation (left/right)

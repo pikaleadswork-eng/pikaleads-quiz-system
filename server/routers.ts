@@ -217,6 +217,15 @@ export const appRouter = router({
       return await getAllLeads();
     }),
     
+    deleteLeads: adminProcedure
+      .input(z.object({
+        leadIds: z.array(z.number()),
+      }))
+      .mutation(async ({ input }) => {
+        const { deleteLeads } = await import("./db");
+        return await deleteLeads(input.leadIds);
+      }),
+    
     getUTMAnalytics: adminProcedure.query(async () => {
       const { getUTMAnalytics } = await import("./db");
       return await getUTMAnalytics();
