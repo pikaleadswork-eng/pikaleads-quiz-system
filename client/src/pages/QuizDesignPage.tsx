@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "wouter";
+import { toast } from "sonner";
 import QuizSettingsPanel from "@/components/QuizSettingsPanel";
 import BottomDesignPanel from "@/components/BottomDesignPanel";
 import DraggableQuestionEditor from "@/components/DraggableQuestionEditor";

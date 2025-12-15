@@ -30,7 +30,7 @@ export interface QuizQuestion {
   id: string;
   question: string;
   options: AnswerOption[];
-  type?: "single" | "multiple" | "text" | "slider" | "rating" | "date" | "file" | "emoji" | "dropdown" | "scale" | "matrix" | "ranking";
+  type: "single" | "multiple" | "text" | "slider" | "rating" | "date" | "file" | "emoji" | "dropdown" | "scale" | "matrix" | "ranking";
   required?: boolean;
   // Additional fields for specific question types
   min?: number; // For slider, scale

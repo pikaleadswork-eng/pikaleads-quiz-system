@@ -2039,3 +2039,65 @@
 
 ## Current Tasks
 - [x] Restore Meta ADS and Google ADS quiz separation on home page
+
+
+## Phase 90 - Create 16 New Quizzes (Dec 15, 2025)
+
+### Requirements from User:
+- [ ] Delete all old quizzes
+- [ ] Create 16 new quizzes (8 Meta Ads + 8 Google Ads)
+- [ ] Niches: Інтернет-магазини, Ремонт квартир, Меблі, Telegram, Будівництво, Доставка їжі, B2B, Загальний
+- [ ] Pokemon-style background images for each niche
+- [ ] Split-screen layout (text left, image right) or fullscreen background
+- [ ] Lead form at the end
+- [ ] Thank you page
+- [ ] All leads go to CRM
+- [ ] GA4 and Meta Pixel events working
+- [ ] All quizzes editable through quiz editor
+
+### Quiz Content (from TZ):
+1. Інтернет-магазини (Meta + Google)
+2. Ремонт квартир (Meta + Google)
+3. Меблі (Meta + Google)
+4. Telegram (Meta + Google)
+5. Будівництво (Meta + Google)
+6. Доставка їжі (Meta + Google)
+7. B2B (Meta + Google)
+8. Загальний (Meta + Google)
+
+### Tasks:
+- [ ] Delete old quizzes from database
+- [ ] Generate 8 Pokemon-style niche images
+- [ ] Create quiz records in database
+- [ ] Add questions to each quiz
+- [ ] Configure design settings with images
+- [ ] Test GA4/Meta events
+- [ ] Verify CRM integration
+- [ ] Save checkpoint
+
+
+## Phase 90 - Create 16 New Quizzes with Fan-Art Images (COMPLETED)
+
+### Database Cleanup
+- [x] Delete old quizzes from database
+- [x] Delete old quiz questions from database
+
+### Image Generation
+- [x] Generate 8 fan-art style images for each niche (e-commerce, renovation, furniture, telegram, construction, food-delivery, b2b, general)
+- [x] Upload images to S3 storage
+
+### Quiz Creation (16 total)
+- [x] Create 8 META ADS quizzes with Ukrainian content
+- [x] Create 8 GOOGLE ADS quizzes with Ukrainian content
+- [x] Translate all content to RU/EN/PL/DE using DeepL API
+- [x] Add 4 questions to each quiz with translations
+
+### Design Configuration
+- [x] Configure quiz design settings with fan-art images
+- [x] Set up split layout (text left, image right)
+- [x] Configure lead form with discount badge
+
+### Testing
+- [x] Test quiz flow (questions → lead form → thank you page)
+- [x] Verify GA4 and Meta Pixel events work
+- [x] Verify leads save to CRM database
