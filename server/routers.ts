@@ -170,32 +170,10 @@ export const appRouter = router({
           console.warn("[Quiz] Auto-assignment failed:", error);
         }
         
-        // Send new format Telegram notification
-        const { sendLeadNotification } = await import("./_core/telegramNotifications");
-        try {
-          await sendLeadNotification({
-            quizName: input.quizName,
-            firstName: input.name.split(" ")[0] || input.name,
-            lastName: input.name.split(" ").slice(1).join(" ") || undefined,
-            phone: input.phone,
-            telegram: input.telegram,
-            email: input.email,
-            utmSource: input.utmSource,
-            utmMedium: input.utmMedium,
-            utmCampaign: input.utmCampaign,
-            utmContent: input.utmContent,
-            utmTerm: input.utmTerm,
-            assignedManager: assignedManagerName,
-            leadScore,
-          });
-        } catch (error) {
-          console.warn("[Quiz] New Telegram notification failed:", error);
-        }
-        
-        // Keep old format for backward compatibility
+        // Send single Telegram notification with full Q&A details
         const telegramSent = await sendTelegramMessage(message);
         if (!telegramSent) {
-          console.warn("[Quiz] Lead saved but old Telegram notification failed");
+          console.warn("[Quiz] Lead saved but Telegram notification failed");
         }
         
         return { success: true, leadId };

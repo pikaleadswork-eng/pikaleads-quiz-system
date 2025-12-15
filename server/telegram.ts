@@ -33,7 +33,7 @@ export interface LeadData {
 }
 
 export function formatLeadMessage(data: LeadData): string {
-  const answersArray = JSON.parse(data.answers);
+  const answersRaw = JSON.parse(data.answers);
   let questionsArray: string[] = [];
   
   // Parse questions if available
@@ -45,17 +45,30 @@ export function formatLeadMessage(data: LeadData): string {
     }
   }
   
-  // Format Q&A section
+  // Format Q&A section - handle both formats:
+  // 1. New format: [{question: "...", answer: "..."}, ...]
+  // 2. Old format: ["answer1", "answer2", ...]
   let qaText = "";
-  if (questionsArray.length > 0 && questionsArray.length === answersArray.length) {
-    qaText = answersArray.map((answer: string, index: number) => 
-      `<b>Q${index + 1}:</b> ${questionsArray[index]}\n<b>A${index + 1}:</b> ${answer}`
-    ).join("\n\n");
-  } else {
-    // Fallback to just answers
-    qaText = answersArray.map((answer: string, index: number) => 
-      `${index + 1}. ${answer}`
-    ).join("\n");
+  
+  if (Array.isArray(answersRaw) && answersRaw.length > 0) {
+    // Check if it's the new format (array of objects)
+    if (typeof answersRaw[0] === "object" && answersRaw[0] !== null && "question" in answersRaw[0]) {
+      // New format: [{question: "...", answer: "..."}, ...]
+      qaText = answersRaw.map((item: { question: string; answer: string }, index: number) => 
+        `<b>Q${index + 1}:</b> ${item.question}\n<b>A${index + 1}:</b> ${item.answer}`
+      ).join("\n\n");
+    } else if (questionsArray.length > 0 && questionsArray.length === answersRaw.length) {
+      // Old format with separate questions array
+      qaText = answersRaw.map((answer: string, index: number) => 
+        `<b>Q${index + 1}:</b> ${questionsArray[index]}\n<b>A${index + 1}:</b> ${answer}`
+      ).join("\n\n");
+    } else {
+      // Fallback to just answers (convert objects to strings if needed)
+      qaText = answersRaw.map((answer: any, index: number) => {
+        const answerText = typeof answer === "object" ? JSON.stringify(answer) : String(answer);
+        return `${index + 1}. ${answerText}`;
+      }).join("\n");
+    }
   }
 
   // Build contact section

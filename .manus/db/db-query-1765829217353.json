@@ -1,0 +1,90 @@
+{
+  "query": "SELECT q.name, q.slug, qds.backgroundImage FROM quizzes q LEFT JOIN quiz_design_settings qds ON q.id = qds.quizId ORDER BY q.id;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user b5yJbKNBA74GJz4.0729dd994af9 --database EcCrELAaL5JgQGs8z45yv6 --execute SELECT q.name, q.slug, qds.backgroundImage FROM quizzes q LEFT JOIN quiz_design_settings qds ON q.id = qds.quizId ORDER BY q.id;",
+  "rows": [
+    {
+      "name": "Інтернет-магазин без продажів — це зламаний таргет",
+      "slug": "ecommerce-meta",
+      "backgroundImage": "/quiz-images/ecommerce-bg.png"
+    },
+    {
+      "name": "Google Ads для інтернет-магазину — не трафік, а продажі",
+      "slug": "ecommerce-google",
+      "backgroundImage": "/quiz-images/ecommerce-bg.png"
+    },
+    {
+      "name": "Ремонт без заявок — значить реклама налаштована криво",
+      "slug": "renovation-meta",
+      "backgroundImage": "/quiz-images/renovation-bg.png"
+    },
+    {
+      "name": "Google Ads для ремонту квартир — заявки з пошуку",
+      "slug": "renovation-google",
+      "backgroundImage": "/quiz-images/renovation-bg.png"
+    },
+    {
+      "name": "Меблева реклама без заявок — проблема не в ринку",
+      "slug": "furniture-meta",
+      "backgroundImage": "/quiz-images/furniture-bg.png"
+    },
+    {
+      "name": "Google Ads для меблів — клієнти з пошуку",
+      "slug": "furniture-google",
+      "backgroundImage": "/quiz-images/furniture-bg.png"
+    },
+    {
+      "name": "Telegram без результату — реклама ллється не туди",
+      "slug": "telegram-meta",
+      "backgroundImage": "/quiz-images/telegram-bg.png"
+    },
+    {
+      "name": "Google Ads для Telegram — трафік з наміром",
+      "slug": "telegram-google",
+      "backgroundImage": "/quiz-images/telegram-bg.png"
+    },
+    {
+      "name": "Будівництво без заявок — реклама працює на конкурентів",
+      "slug": "construction-meta",
+      "backgroundImage": "/quiz-images/construction-bg.png"
+    },
+    {
+      "name": "Google Ads для будівництва — клієнти з пошуку",
+      "slug": "construction-google",
+      "backgroundImage": "/quiz-images/construction-bg.png"
+    },
+    {
+      "name": "Доставка їжі без замовлень — таргет не працює",
+      "slug": "food-delivery-meta",
+      "backgroundImage": "/quiz-images/food-delivery-bg.png"
+    },
+    {
+      "name": "Google Ads для доставки їжі — замовлення з пошуку",
+      "slug": "food-delivery-google",
+      "backgroundImage": "/quiz-images/food-delivery-bg.png"
+    },
+    {
+      "name": "B2B реклама без якісних заявок — злитий бюджет",
+      "slug": "b2b-meta",
+      "backgroundImage": "/quiz-images/b2b-bg.png"
+    },
+    {
+      "name": "Google Ads для B2B — заявки від бізнесу",
+      "slug": "b2b-google",
+      "backgroundImage": "/quiz-images/b2b-bg.png"
+    },
+    {
+      "name": "Реклама без результату — проблема в налаштуванні",
+      "slug": "general-meta",
+      "backgroundImage": "/quiz-images/general-bg.png"
+    },
+    {
+      "name": "Google Ads без результату — налаштуємо правильно",
+      "slug": "general-google",
+      "backgroundImage": "/quiz-images/general-bg.png"
+    }
+  ],
+  "messages": [],
+  "stdout": "name\tslug\tbackgroundImage\nІнтернет-магазин без продажів — це зламаний таргет\tecommerce-meta\t/quiz-images/ecommerce-bg.png\nGoogle Ads для інтернет-магазину — не трафік, а продажі\tecommerce-google\t/quiz-images/ecommerce-bg.png\nРемонт без заявок — значить реклама налаштована криво\trenovation-meta\t/quiz-images/renovation-bg.png\nGoogle Ads для ремонту квартир — заявки з пошуку\trenovation-google\t/quiz-images/renovation-bg.png\nМеблева реклама без заявок — проблема не в ринку\tfurniture-meta\t/quiz-images/furniture-bg.png\nGoogle Ads для меблів — клієнти з пошуку\tfurniture-google\t/quiz-images/furniture-bg.png\nTelegram без результату — реклама ллється не туди\ttelegram-meta\t/quiz-images/telegram-bg.png\nGoogle Ads для Telegram — трафік з наміром\ttelegram-google\t/quiz-images/telegram-bg.png\nБудівництво без заявок — реклама працює на конкурентів\tconstruction-meta\t/quiz-images/construction-bg.png\nGoogle Ads для будівництва — клієнти з пошуку\tconstruction-google\t/quiz-images/construction-bg.png\nДоставка їжі без замовлень — таргет не працює\tfood-delivery-meta\t/quiz-images/food-delivery-bg.png\nGoogle Ads для доставки їжі — замовлення з пошуку\tfood-delivery-google\t/quiz-images/food-delivery-bg.png\nB2B реклама без якісних заявок — злитий бюджет\tb2b-meta\t/quiz-images/b2b-bg.png\nGoogle Ads для B2B — заявки від бізнесу\tb2b-google\t/quiz-images/b2b-bg.png\nРеклама без результату — проблема в налаштуванні\tgeneral-meta\t/quiz-images/general-bg.png\nGoogle Ads без результату — налаштуємо правильно\tgeneral-google\t/quiz-images/general-bg.png\n",
+  "stderr": "",
+  "execution_time_ms": 54
+}

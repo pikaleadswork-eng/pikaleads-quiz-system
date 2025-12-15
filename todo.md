@@ -2149,3 +2149,36 @@
 - [x] Complete full quiz flow
 - [x] Verify lead appears in CRM database
 - [x] Verify Telegram notification is sent
+
+
+## Phase 94 - Fix Quiz Page Errors
+
+### Blank Screen Issue
+- [ ] Quiz page shows blank/loading screen after clicking quiz
+- [ ] Investigate QuizPage.tsx for loading state issues
+- [ ] Check tRPC queries for errors
+
+### Image Changing Issue
+- [ ] Images change unexpectedly when navigating quiz
+- [ ] Images should remain stable for each quiz
+- [ ] Fix image URL handling in QuizPage
+
+
+## Phase 92 - Critical Quiz Bugs Fix (Dec 15, 2025)
+
+### Bug 1: Auto-advance on Answer Selection
+- [x] Remove "Next" button from quiz questions (for single choice)
+- [x] Auto-advance to next question when user selects an answer (400ms delay)
+- [x] Add smooth transition animation between questions
+
+### Bug 2: Telegram Notification Issues
+- [x] Fix duplicate Telegram messages (only send ONE notification per lead)
+- [x] Fix [object Object] display in answers - show actual answer text
+- [x] Combine all info into single formatted message
+
+### Bug 3: CRM Lead Saving
+- [x] Verified leads ARE saving to database correctly
+- [x] Lead ID 60027 "Тест Автоперехід" saved successfully
+- [x] Answers stored in proper JSON format with question/answer pairs
+- [x] Lead appears in CRM at /crm page
+

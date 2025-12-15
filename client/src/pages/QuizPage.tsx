@@ -394,6 +394,7 @@ export default function QuizPage() {
 
   const handleAnswerChange = (value: string) => {
     if (currentQuestion.type === "multiple") {
+      // Multiple choice - don't auto-advance, user needs to click Next
       const current = answers[currentQuestion.id] || [];
       if (current.includes(value)) {
         setAnswers({
@@ -407,10 +408,28 @@ export default function QuizPage() {
         });
       }
     } else {
+      // Single choice - save answer and auto-advance after short delay
       setAnswers({
         ...answers,
         [currentQuestion.id]: [value],
       });
+      
+      // Auto-advance to next question after 400ms
+      setTimeout(() => {
+        if (currentQuestionIndex < questions.length - 1) {
+          setCurrentQuestionIndex(currentQuestionIndex + 1);
+          // Fire GA4 event for question progress
+          if (typeof window !== "undefined" && (window as any).gtag) {
+            (window as any).gtag("event", "quiz_progress", {
+              quiz_name: quiz.name,
+              question_number: currentQuestionIndex + 2,
+              total_questions: questions.length,
+            });
+          }
+        } else {
+          setShowLeadForm(true);
+        }
+      }, 400);
     }
   };
 
@@ -509,28 +528,34 @@ export default function QuizPage() {
             </div>
           )}
 
-          <div className="flex gap-4 mt-8">
-            {currentQuestionIndex > 0 && (
-              <Button 
-                variant="outline"
-                onClick={() => setCurrentQuestionIndex(currentQuestionIndex - 1)}
-                className="flex-1 border-white/20 text-white hover:bg-white/10"
-              >
-                <ArrowLeft className="mr-2 h-5 w-5" />
-                {language === "uk" ? "Назад" : language === "ru" ? "Назад" : "Back"}
-              </Button>
-            )}
-            <Button 
-              onClick={handleNext}
-              className={`flex-1 bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-black font-bold ${currentQuestionIndex === 0 ? "w-full" : ""}`}
-              disabled={!canProceed}
-            >
-              {currentQuestionIndex < questions.length - 1 
-                ? (language === "uk" ? "Далі" : language === "ru" ? "Далее" : "Next") 
-                : (language === "uk" ? "Завершити" : language === "ru" ? "Завершить" : "Finish")}
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
-          </div>
+          {/* Only show navigation buttons for multiple choice or text input questions */}
+          {(currentQuestion.type === "multiple" || isTextInput || currentQuestionIndex > 0) && (
+            <div className="flex gap-4 mt-8">
+              {currentQuestionIndex > 0 && (
+                <Button 
+                  variant="outline"
+                  onClick={() => setCurrentQuestionIndex(currentQuestionIndex - 1)}
+                  className="flex-1 border-white/20 text-white hover:bg-white/10"
+                >
+                  <ArrowLeft className="mr-2 h-5 w-5" />
+                  {language === "uk" ? "Назад" : language === "ru" ? "Назад" : "Back"}
+                </Button>
+              )}
+              {/* Show Next/Finish button only for multiple choice or text input */}
+              {(currentQuestion.type === "multiple" || isTextInput) && (
+                <Button 
+                  onClick={handleNext}
+                  className={`flex-1 bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-black font-bold ${currentQuestionIndex === 0 ? "w-full" : ""}`}
+                  disabled={!canProceed}
+                >
+                  {currentQuestionIndex < questions.length - 1 
+                    ? (language === "uk" ? "Далі" : language === "ru" ? "Далее" : "Next") 
+                    : (language === "uk" ? "Завершити" : language === "ru" ? "Завершить" : "Finish")}
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              )}
+            </div>
+          )}
         </Card>
       </div>
     </div>
