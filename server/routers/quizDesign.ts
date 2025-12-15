@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { protectedProcedure, router } from "../_core/trpc";
+import { publicProcedure, protectedProcedure, router } from "../_core/trpc";
 import { getDb } from "../db";
 import { quizDesignSettings } from "../../drizzle/schema";
 import { eq } from "drizzle-orm";
@@ -7,7 +7,7 @@ import { storagePut } from "../storage";
 
 export const quizDesignRouter = router({
   // Get quiz ID by slug
-  getQuizIdBySlug: protectedProcedure
+  getQuizIdBySlug: publicProcedure
     .input(z.object({
       slug: z.string(),
     }))
@@ -23,8 +23,8 @@ export const quizDesignRouter = router({
       return quiz[0]?.id || null;
     }),
 
-  // Get design settings for a quiz
-  getByQuizId: protectedProcedure
+  // Get design settings for a quiz (public for quiz display)
+  getByQuizId: publicProcedure
     .input(z.object({
       quizId: z.number(),
     }))
@@ -325,8 +325,8 @@ export const quizDesignRouter = router({
       return { success: true };
     }),
 
-  // Load quiz questions
-  getQuestions: protectedProcedure
+  // Load quiz questions (public for quiz display)
+  getQuestions: publicProcedure
     .input(z.object({
       quizId: z.number(),
     }))
