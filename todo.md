@@ -2118,3 +2118,34 @@
 - [x] Make all quiz-related procedures public
 - [x] Remove any auth checks from QuizPage
 - [x] Test quiz flow without login
+
+
+## Phase 92 - Fix Home Page Manus OAuth Bug (URGENT)
+
+### Bug Report
+- [ ] Home page shows Manus OAuth login screen
+- [ ] Entire public site should be accessible without any login
+- [ ] Only admin panel should require authentication
+
+### Investigation
+- [ ] Check App.tsx for auth guards on home route
+- [ ] Check if there's a global auth wrapper
+- [ ] Check server-side auth middleware
+
+### Fix
+- [ ] Remove auth requirement from public pages
+- [ ] Keep auth only for /admin routes
+- [ ] Test home page and quiz pages without login
+
+
+## Phase 93 - Configure Telegram Bot & Test Quiz Flow
+
+### Telegram Bot Configuration
+- [x] Save Telegram Bot token to integration settings
+- [x] Save Chat ID for notifications
+- [x] Test Telegram notification sending
+
+### Quiz Flow Testing
+- [x] Complete full quiz flow
+- [x] Verify lead appears in CRM database
+- [x] Verify Telegram notification is sent

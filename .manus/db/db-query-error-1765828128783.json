@@ -1,0 +1,8 @@
+{
+  "query": "INSERT INTO integration_settings (provider, api_key, settings, is_active, created_at, updated_at) VALUES ('telegram', '8109110065:AAFMykyIO2DWzkWj_OKP_OYAZlpH6H39enw', '{\"chatId\": \"-1003393497944\"}', 1, NOW(), NOW());",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user b5yJbKNBA74GJz4.0729dd994af9 --database EcCrELAaL5JgQGs8z45yv6 --execute INSERT INTO integration_settings (provider, api_key, settings, is_active, created_at, updated_at) VALUES ('telegram', '8109110065:AAFMykyIO2DWzkWj_OKP_OYAZlpH6H39enw', '{\"chatId\": \"-1003393497944\"}', 1, NOW(), NOW());",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1054 (42S22) at line 1: Unknown column 'api_key' in 'field list'"
+  ]
+}

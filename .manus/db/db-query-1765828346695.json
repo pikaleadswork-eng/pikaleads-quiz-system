@@ -1,0 +1,50 @@
+{
+  "query": "SELECT id, name, phone, email, quizName, createdAt FROM leads ORDER BY id DESC LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user b5yJbKNBA74GJz4.0729dd994af9 --database EcCrELAaL5JgQGs8z45yv6 --execute SELECT id, name, phone, email, quizName, createdAt FROM leads ORDER BY id DESC LIMIT 5;",
+  "rows": [
+    {
+      "id": "60025",
+      "name": "Тест Манус",
+      "phone": "+380991234567",
+      "email": "test@manus.com",
+      "quizName": "Інтернет-магазин без продажів — це зламаний таргет",
+      "createdAt": "2025-12-15 19:52:00"
+    },
+    {
+      "id": "60024",
+      "name": "Test User",
+      "phone": "+1234567890",
+      "email": "NULL",
+      "quizName": "test-quiz",
+      "createdAt": "2025-12-13 22:34:06"
+    },
+    {
+      "id": "60023",
+      "name": "Test User",
+      "phone": "+1234567890",
+      "email": "test@example.com",
+      "quizName": "test-quiz",
+      "createdAt": "2025-12-13 22:34:05"
+    },
+    {
+      "id": "60022",
+      "name": "Test User",
+      "phone": "+1234567890",
+      "email": "NULL",
+      "quizName": "test-quiz",
+      "createdAt": "2025-12-13 22:25:13"
+    },
+    {
+      "id": "60021",
+      "name": "Test User",
+      "phone": "+1234567890",
+      "email": "test@example.com",
+      "quizName": "test-quiz",
+      "createdAt": "2025-12-13 22:25:12"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tname\tphone\temail\tquizName\tcreatedAt\n60025\tТест Манус\t+380991234567\ttest@manus.com\tІнтернет-магазин без продажів — це зламаний таргет\t2025-12-15 19:52:00\n60024\tTest User\t+1234567890\tNULL\ttest-quiz\t2025-12-13 22:34:06\n60023\tTest User\t+1234567890\ttest@example.com\ttest-quiz\t2025-12-13 22:34:05\n60022\tTest User\t+1234567890\tNULL\ttest-quiz\t2025-12-13 22:25:13\n60021\tTest User\t+1234567890\ttest@example.com\ttest-quiz\t2025-12-13 22:25:12\n",
+  "stderr": "",
+  "execution_time_ms": 53
+}
