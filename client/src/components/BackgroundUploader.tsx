@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -38,6 +38,8 @@ export function BackgroundUploader({
   const [generating, setGenerating] = useState(false);
   const [uploadType, setUploadType] = useState<"image" | "video">("image");
   const [aiStyle, setAiStyle] = useState<"modern" | "minimalist" | "professional" | "vibrant">("professional");
+  const [isDragging, setIsDragging] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
 
   const generateMutation = trpc.quizDesign.generateBackground.useMutation({
     onSuccess: (data: { url: string; fileKey: string }) => {
@@ -61,53 +63,101 @@ export function BackgroundUploader({
         toast.success("Відео завантажено");
       }
       setUploading(false);
+      setUploadProgress(0);
     },
     onError: (error: any) => {
       toast.error(`Помилка завантаження: ${error.message}`);
       setUploading(false);
+      setUploadProgress(0);
     },
   });
 
-  const handleFileSelect = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
+  const processFile = useCallback(async (file: File, type: "image" | "video") => {
     // Validate file type
-    if (uploadType === "image" && !file.type.startsWith("image/")) {
-      toast.error("Будь ласка, оберіть файл зображення");
+    if (type === "image" && !file.type.startsWith("image/")) {
+      toast.error("Будь ласка, оберіть файл зображення (JPG, PNG, WebP)");
       return;
     }
 
-    if (uploadType === "video" && !file.type.startsWith("video/")) {
-      toast.error("Будь ласка, оберіть відео файл");
+    if (type === "video" && !file.type.startsWith("video/")) {
+      toast.error("Будь ласка, оберіть відео файл (MP4, WebM)");
       return;
     }
 
     // Validate file size (max 10MB for images, 50MB for videos)
-    const maxSize = uploadType === "image" ? 10 * 1024 * 1024 : 50 * 1024 * 1024;
+    const maxSize = type === "image" ? 10 * 1024 * 1024 : 50 * 1024 * 1024;
     if (file.size > maxSize) {
-      toast.error(`Файл занадто великий. Максимум ${uploadType === "image" ? "10MB" : "50MB"}`);
+      toast.error(`Файл занадто великий. Максимум ${type === "image" ? "10MB" : "50MB"}`);
       return;
     }
 
     setUploading(true);
+    setUploadProgress(10);
 
     // Convert file to base64
     const reader = new FileReader();
+    reader.onprogress = (event) => {
+      if (event.lengthComputable) {
+        const progress = Math.round((event.loaded / event.total) * 50) + 10;
+        setUploadProgress(progress);
+      }
+    };
     reader.onload = async () => {
+      setUploadProgress(70);
       const base64 = reader.result as string;
+      setUploadType(type);
       uploadFileMutation.mutate({
         fileData: base64,
         fileName: file.name,
         mimeType: file.type,
       });
+      setUploadProgress(90);
     };
     reader.onerror = () => {
       toast.error("Помилка читання файлу");
       setUploading(false);
+      setUploadProgress(0);
     };
     reader.readAsDataURL(file);
+  }, [uploadFileMutation]);
+
+  const handleFileSelect = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    await processFile(file, uploadType);
   };
+
+  // Drag and drop handlers
+  const handleDragEnter = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  }, []);
+
+  const handleDragLeave = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    // Only set isDragging to false if we're leaving the drop zone entirely
+    if (e.currentTarget.contains(e.relatedTarget as Node)) return;
+    setIsDragging(false);
+  }, []);
+
+  const handleDragOver = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+  }, []);
+
+  const handleDrop = useCallback(async (e: React.DragEvent, type: "image" | "video") => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+
+    const files = e.dataTransfer.files;
+    if (files.length === 0) return;
+
+    const file = files[0];
+    await processFile(file, type);
+  }, [processFile]);
 
   return (
     <Card className="p-6 bg-zinc-900 border-zinc-800">
@@ -199,36 +249,59 @@ export function BackgroundUploader({
               </Button>
             </div>
           ) : (
-            <div className="border-2 border-dashed border-zinc-700 rounded-lg p-8 text-center">
-              <ImageIcon className="w-12 h-12 mx-auto mb-4 text-zinc-500" />
-              <p className="text-sm text-zinc-400 mb-4">
-                Завантажте фонове зображення (JPG, PNG, max 10MB)
-              </p>
-              <label htmlFor="image-upload">
-                <Button asChild disabled={uploading}>
-                  <span className="cursor-pointer">
-                    {uploading ? (
-                      <>
-                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                        Завантаження...
-                      </>
+            <div
+              className={`border-2 border-dashed rounded-lg p-8 text-center transition-all duration-200 ${
+                isDragging
+                  ? "border-purple-500 bg-purple-500/10"
+                  : "border-zinc-700 hover:border-zinc-500"
+              }`}
+              onDragEnter={handleDragEnter}
+              onDragLeave={handleDragLeave}
+              onDragOver={handleDragOver}
+              onDrop={(e) => handleDrop(e, "image")}
+            >
+              {uploading ? (
+                <div className="space-y-4">
+                  <Loader2 className="w-12 h-12 mx-auto text-purple-500 animate-spin" />
+                  <div className="w-full bg-zinc-700 rounded-full h-2">
+                    <div
+                      className="bg-purple-500 h-2 rounded-full transition-all duration-300"
+                      style={{ width: `${uploadProgress}%` }}
+                    />
+                  </div>
+                  <p className="text-sm text-zinc-400">Завантаження... {uploadProgress}%</p>
+                </div>
+              ) : (
+                <>
+                  <ImageIcon className={`w-12 h-12 mx-auto mb-4 ${isDragging ? "text-purple-400" : "text-zinc-500"}`} />
+                  <p className="text-sm text-zinc-400 mb-2">
+                    {isDragging ? (
+                      <span className="text-purple-400 font-medium">Відпустіть файл для завантаження</span>
                     ) : (
-                      <>
-                        <Upload className="w-4 h-4 mr-2" />
-                        Обрати файл
-                      </>
+                      <>Перетягніть зображення сюди</>
                     )}
-                  </span>
-                </Button>
-              </label>
-              <input
-                id="image-upload"
-                type="file"
-                accept="image/*"
-                className="hidden"
-                onChange={handleFileSelect}
-                disabled={uploading}
-              />
+                  </p>
+                  <p className="text-xs text-zinc-500 mb-4">
+                    JPG, PNG, WebP • Максимум 10MB
+                  </p>
+                  <label htmlFor="image-upload">
+                    <Button asChild disabled={uploading}>
+                      <span className="cursor-pointer">
+                        <Upload className="w-4 h-4 mr-2" />
+                        Або оберіть файл
+                      </span>
+                    </Button>
+                  </label>
+                  <input
+                    id="image-upload"
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={handleFileSelect}
+                    disabled={uploading}
+                  />
+                </>
+              )}
             </div>
           )}
         </TabsContent>
@@ -251,36 +324,59 @@ export function BackgroundUploader({
               </Button>
             </div>
           ) : (
-            <div className="border-2 border-dashed border-zinc-700 rounded-lg p-8 text-center">
-              <Video className="w-12 h-12 mx-auto mb-4 text-zinc-500" />
-              <p className="text-sm text-zinc-400 mb-4">
-                Завантажте фонове відео (MP4, WebM, max 50MB)
-              </p>
-              <label htmlFor="video-upload">
-                <Button asChild disabled={uploading}>
-                  <span className="cursor-pointer">
-                    {uploading ? (
-                      <>
-                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                        Завантаження...
-                      </>
+            <div
+              className={`border-2 border-dashed rounded-lg p-8 text-center transition-all duration-200 ${
+                isDragging
+                  ? "border-purple-500 bg-purple-500/10"
+                  : "border-zinc-700 hover:border-zinc-500"
+              }`}
+              onDragEnter={handleDragEnter}
+              onDragLeave={handleDragLeave}
+              onDragOver={handleDragOver}
+              onDrop={(e) => handleDrop(e, "video")}
+            >
+              {uploading ? (
+                <div className="space-y-4">
+                  <Loader2 className="w-12 h-12 mx-auto text-purple-500 animate-spin" />
+                  <div className="w-full bg-zinc-700 rounded-full h-2">
+                    <div
+                      className="bg-purple-500 h-2 rounded-full transition-all duration-300"
+                      style={{ width: `${uploadProgress}%` }}
+                    />
+                  </div>
+                  <p className="text-sm text-zinc-400">Завантаження... {uploadProgress}%</p>
+                </div>
+              ) : (
+                <>
+                  <Video className={`w-12 h-12 mx-auto mb-4 ${isDragging ? "text-purple-400" : "text-zinc-500"}`} />
+                  <p className="text-sm text-zinc-400 mb-2">
+                    {isDragging ? (
+                      <span className="text-purple-400 font-medium">Відпустіть файл для завантаження</span>
                     ) : (
-                      <>
-                        <Upload className="w-4 h-4 mr-2" />
-                        Обрати файл
-                      </>
+                      <>Перетягніть відео сюди</>
                     )}
-                  </span>
-                </Button>
-              </label>
-              <input
-                id="video-upload"
-                type="file"
-                accept="video/*"
-                className="hidden"
-                onChange={handleFileSelect}
-                disabled={uploading}
-              />
+                  </p>
+                  <p className="text-xs text-zinc-500 mb-4">
+                    MP4, WebM • Максимум 50MB
+                  </p>
+                  <label htmlFor="video-upload">
+                    <Button asChild disabled={uploading}>
+                      <span className="cursor-pointer">
+                        <Upload className="w-4 h-4 mr-2" />
+                        Або оберіть файл
+                      </span>
+                    </Button>
+                  </label>
+                  <input
+                    id="video-upload"
+                    type="file"
+                    accept="video/*"
+                    className="hidden"
+                    onChange={handleFileSelect}
+                    disabled={uploading}
+                  />
+                </>
+              )}
             </div>
           )}
         </TabsContent>

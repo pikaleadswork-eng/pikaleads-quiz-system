@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Table,
   TableBody,
@@ -20,56 +21,111 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { toast } from "sonner";
-import { ArrowLeft, Plus, TrendingUp, TrendingDown } from "lucide-react";
+import { ArrowLeft, Plus, TrendingUp, TrendingDown, Play, Pause, Trash2, Copy, Edit, FlaskConical } from "lucide-react";
 import { Link } from "wouter";
 import { trpc } from "@/lib/trpc";
-import { quizzes } from "@/lib/quizData";
 import { calculateStatisticalSignificance } from "@/lib/abTesting";
 
 export default function AdminABTests() {
   const { user, loading } = useAuth();
-  const [selectedQuiz, setSelectedQuiz] = useState<string>("meta-furniture");
+  const [selectedQuizId, setSelectedQuizId] = useState<number | null>(null);
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [variantName, setVariantName] = useState("");
   const [trafficPercentage, setTrafficPercentage] = useState(50);
+  const [variantTitle, setVariantTitle] = useState("");
+  const [variantSubtitle, setVariantSubtitle] = useState("");
+  const [variantBonus, setVariantBonus] = useState("");
+
+  // Fetch quizzes from database
+  const { data: dbQuizzes, isLoading: quizzesLoading } = trpc.quizzes.list.useQuery();
+
+  // Set first quiz as selected when loaded
+  useEffect(() => {
+    if (dbQuizzes && dbQuizzes.length > 0 && !selectedQuizId) {
+      setSelectedQuizId(dbQuizzes[0].id);
+    }
+  }, [dbQuizzes, selectedQuizId]);
+
+  const selectedQuiz = dbQuizzes?.find(q => q.id === selectedQuizId);
 
   const { data: testResults, refetch } = trpc.abTest.getTestResults.useQuery(
-    { quizId: selectedQuiz },
-    { enabled: !!selectedQuiz }
+    { quizId: selectedQuiz?.slug || "" },
+    { enabled: !!selectedQuiz?.slug }
+  );
+
+  const { data: variants, refetch: refetchVariants } = trpc.abTest.getVariants.useQuery(
+    { quizId: selectedQuiz?.slug || "" },
+    { enabled: !!selectedQuiz?.slug }
   );
 
   const createVariantMutation = trpc.abTest.createVariant.useMutation({
     onSuccess: () => {
-      toast.success("Variant created successfully!");
+      toast.success("Варіант створено успішно!");
       setIsCreateDialogOpen(false);
-      setVariantName("");
-      setTrafficPercentage(50);
+      resetForm();
       refetch();
+      refetchVariants();
     },
     onError: (error) => {
-      toast.error(error.message || "Failed to create variant");
+      toast.error(error.message || "Помилка створення варіанту");
     },
   });
 
-  if (loading) {
+  const toggleVariantMutation = trpc.abTest.toggleVariant.useMutation({
+    onSuccess: () => {
+      toast.success("Статус варіанту оновлено");
+      refetchVariants();
+    },
+    onError: (error) => {
+      toast.error(error.message || "Помилка оновлення");
+    },
+  });
+
+  const deleteVariantMutation = trpc.abTest.deleteVariant.useMutation({
+    onSuccess: () => {
+      toast.success("Варіант видалено");
+      refetch();
+      refetchVariants();
+    },
+    onError: (error) => {
+      toast.error(error.message || "Помилка видалення");
+    },
+  });
+
+  const resetForm = () => {
+    setVariantName("");
+    setTrafficPercentage(50);
+    setVariantTitle("");
+    setVariantSubtitle("");
+    setVariantBonus("");
+  };
+
+  if (loading || quizzesLoading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <p className="text-muted-foreground">Loading...</p>
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <p className="text-zinc-400">Завантаження...</p>
       </div>
     );
   }
 
   if (!user || user.role !== "admin") {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <Card className="p-8 max-w-md">
-          <h1 className="text-2xl font-bold text-destructive mb-4">Access Denied</h1>
-          <p className="text-muted-foreground mb-6">
-            You need administrator privileges to access this page.
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <Card className="p-8 max-w-md bg-zinc-900 border-zinc-800">
+          <h1 className="text-2xl font-bold text-red-500 mb-4">Доступ заборонено</h1>
+          <p className="text-zinc-400 mb-6">
+            Вам потрібні права адміністратора для доступу до цієї сторінки.
           </p>
           <Link href="/">
-            <Button>Return Home</Button>
+            <Button>Повернутися на головну</Button>
           </Link>
         </Card>
       </div>
@@ -78,14 +134,21 @@ export default function AdminABTests() {
 
   const handleCreateVariant = () => {
     if (!variantName.trim()) {
-      toast.error("Please enter a variant name");
+      toast.error("Введіть назву варіанту");
+      return;
+    }
+
+    if (!selectedQuiz) {
+      toast.error("Оберіть квіз");
       return;
     }
 
     createVariantMutation.mutate({
-      quizId: selectedQuiz,
+      quizId: selectedQuiz.slug,
       variantName: variantName.trim(),
       trafficPercentage,
+      title: variantTitle || undefined,
+      subtitle: variantSubtitle || undefined,
     });
   };
 
@@ -105,46 +168,49 @@ export default function AdminABTests() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-black">
       {/* Header */}
-      <header className="border-b border-border bg-card">
+      <header className="border-b border-zinc-800 bg-zinc-900">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Link href="/admin">
-              <Button variant="ghost" size="sm">
+              <Button variant="ghost" size="sm" className="text-zinc-400 hover:text-white">
                 <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to Admin
+                Назад
               </Button>
             </Link>
-            <h1 className="text-2xl font-bold text-foreground">A/B Test Results</h1>
+            <div className="flex items-center gap-2">
+              <FlaskConical className="w-6 h-6 text-purple-500" />
+              <h1 className="text-2xl font-bold text-white">A/B Тестування</h1>
+            </div>
           </div>
           <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
             <DialogTrigger asChild>
-              <Button>
+              <Button className="bg-purple-600 hover:bg-purple-700">
                 <Plus className="w-4 h-4 mr-2" />
-                Create Variant
+                Створити варіант
               </Button>
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className="bg-zinc-900 border-zinc-800">
               <DialogHeader>
-                <DialogTitle>Create A/B Test Variant</DialogTitle>
-                <DialogDescription>
-                  Create a new variant to test against the control version
+                <DialogTitle className="text-white">Створити A/B варіант</DialogTitle>
+                <DialogDescription className="text-zinc-400">
+                  Створіть новий варіант для тестування проти контрольної версії
                 </DialogDescription>
               </DialogHeader>
               <div className="space-y-4 py-4">
                 <div>
-                  <Label htmlFor="variant-name">Variant Name</Label>
+                  <Label htmlFor="variant-name" className="text-zinc-300 mb-2 block">Назва варіанту</Label>
                   <Input
                     id="variant-name"
                     value={variantName}
                     onChange={(e) => setVariantName(e.target.value)}
-                    placeholder="e.g., Variant A, New Headline"
-                    className="mt-2"
+                    placeholder="напр., Новий заголовок, Синя кнопка"
+                    className="bg-zinc-800 border-zinc-700 text-white"
                   />
                 </div>
                 <div>
-                  <Label htmlFor="traffic">Traffic Percentage</Label>
+                  <Label htmlFor="traffic" className="text-zinc-300 mb-2 block">Відсоток трафіку</Label>
                   <Input
                     id="traffic"
                     type="number"
@@ -152,15 +218,57 @@ export default function AdminABTests() {
                     max="100"
                     value={trafficPercentage}
                     onChange={(e) => setTrafficPercentage(Number(e.target.value))}
-                    className="mt-2"
+                    className="bg-zinc-800 border-zinc-700 text-white"
                   />
-                  <p className="text-sm text-muted-foreground mt-1">
-                    Percentage of traffic to send to this variant
+                  <p className="text-sm text-zinc-500 mt-1">
+                    Відсоток трафіку для цього варіанту
                   </p>
                 </div>
+                
+                <div className="border-t border-zinc-700 pt-4">
+                  <p className="text-sm text-zinc-400 mb-3">Контент варіанту (необов'язково)</p>
+                  
+                  <div className="space-y-3">
+                    <div>
+                      <Label htmlFor="variant-title" className="text-zinc-300 mb-2 block">Заголовок</Label>
+                      <Input
+                        id="variant-title"
+                        value={variantTitle}
+                        onChange={(e) => setVariantTitle(e.target.value)}
+                        placeholder="Альтернативний заголовок квізу"
+                        className="bg-zinc-800 border-zinc-700 text-white"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="variant-subtitle" className="text-zinc-300 mb-2 block">Підзаголовок</Label>
+                      <Textarea
+                        id="variant-subtitle"
+                        value={variantSubtitle}
+                        onChange={(e) => setVariantSubtitle(e.target.value)}
+                        placeholder="Альтернативний підзаголовок"
+                        className="bg-zinc-800 border-zinc-700 text-white"
+                        rows={2}
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="variant-bonus" className="text-zinc-300 mb-2 block">Бонус</Label>
+                      <Input
+                        id="variant-bonus"
+                        value={variantBonus}
+                        onChange={(e) => setVariantBonus(e.target.value)}
+                        placeholder="Альтернативний бонус"
+                        className="bg-zinc-800 border-zinc-700 text-white"
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
-              <Button onClick={handleCreateVariant} disabled={createVariantMutation.isPending}>
-                {createVariantMutation.isPending ? "Creating..." : "Create Variant"}
+              <Button 
+                onClick={handleCreateVariant} 
+                disabled={createVariantMutation.isPending}
+                className="w-full bg-purple-600 hover:bg-purple-700"
+              >
+                {createVariantMutation.isPending ? "Створення..." : "Створити варіант"}
               </Button>
             </DialogContent>
           </Dialog>
@@ -171,39 +279,65 @@ export default function AdminABTests() {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Quiz Selector */}
           <div className="lg:col-span-1">
-            <Card className="p-4">
-              <h3 className="font-semibold text-foreground mb-4">Select Quiz</h3>
-              <div className="space-y-2">
-                {quizzes.map((q) => (
-                  <Button
-                    key={q.id}
-                    variant={selectedQuiz === q.id ? "default" : "ghost"}
-                    className="w-full justify-start text-sm"
-                    onClick={() => setSelectedQuiz(q.id)}
-                  >
-                    {q.title.substring(0, 30)}...
-                  </Button>
-                ))}
+            <Card className="p-4 bg-zinc-900 border-zinc-800">
+              <h3 className="font-semibold text-white mb-4">Оберіть квіз</h3>
+              <div className="space-y-2 max-h-[500px] overflow-y-auto">
+                {dbQuizzes && dbQuizzes.length > 0 ? (
+                  dbQuizzes.map((q) => (
+                    <Button
+                      key={q.id}
+                      variant={selectedQuizId === q.id ? "default" : "ghost"}
+                      className={`w-full justify-start text-sm text-left ${
+                        selectedQuizId === q.id 
+                          ? "bg-purple-600 hover:bg-purple-700 text-white" 
+                          : "text-zinc-400 hover:text-white hover:bg-zinc-800"
+                      }`}
+                      onClick={() => setSelectedQuizId(q.id)}
+                    >
+                      <div className="truncate">
+                        <span className="block truncate">{q.name}</span>
+                        <span className="text-xs opacity-60">{q.platform}</span>
+                      </div>
+                    </Button>
+                  ))
+                ) : (
+                  <p className="text-zinc-500 text-sm">Немає квізів</p>
+                )}
               </div>
             </Card>
           </div>
 
           {/* Results */}
           <div className="lg:col-span-3 space-y-6">
+            {/* Selected Quiz Info */}
+            {selectedQuiz && (
+              <Card className="bg-zinc-900 border-zinc-800">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-white flex items-center gap-2">
+                    <FlaskConical className="w-5 h-5 text-purple-500" />
+                    {selectedQuiz.name}
+                  </CardTitle>
+                  <CardDescription className="text-zinc-400">
+                    Slug: {selectedQuiz.slug} • Платформа: {selectedQuiz.platform}
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+            )}
+
             {/* Statistical Significance Card */}
             {significance && (
-              <Card>
+              <Card className="bg-zinc-900 border-zinc-800">
                 <CardHeader>
-                  <CardTitle>Statistical Significance</CardTitle>
-                  <CardDescription>
-                    Analysis of test results
+                  <CardTitle className="text-white">Статистична значущість</CardTitle>
+                  <CardDescription className="text-zinc-400">
+                    Аналіз результатів тесту
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="text-center p-4 bg-muted rounded-lg">
-                      <p className="text-sm text-muted-foreground mb-1">Uplift</p>
-                      <p className="text-2xl font-bold flex items-center justify-center gap-2">
+                    <div className="text-center p-4 bg-zinc-800 rounded-lg">
+                      <p className="text-sm text-zinc-400 mb-1">Приріст</p>
+                      <p className="text-2xl font-bold flex items-center justify-center gap-2 text-white">
                         {significance.uplift > 0 ? (
                           <TrendingUp className="w-5 h-5 text-green-500" />
                         ) : (
@@ -212,76 +346,171 @@ export default function AdminABTests() {
                         {significance.uplift.toFixed(2)}%
                       </p>
                     </div>
-                    <div className="text-center p-4 bg-muted rounded-lg">
-                      <p className="text-sm text-muted-foreground mb-1">Confidence Level</p>
-                      <p className="text-2xl font-bold">
+                    <div className="text-center p-4 bg-zinc-800 rounded-lg">
+                      <p className="text-sm text-zinc-400 mb-1">Рівень довіри</p>
+                      <p className="text-2xl font-bold text-white">
                         {significance.confidenceLevel.toFixed(1)}%
                       </p>
                     </div>
-                    <div className="text-center p-4 bg-muted rounded-lg">
-                      <p className="text-sm text-muted-foreground mb-1">Status</p>
+                    <div className="text-center p-4 bg-zinc-800 rounded-lg">
+                      <p className="text-sm text-zinc-400 mb-1">Статус</p>
                       <p className={`text-lg font-bold ${significance.isSignificant ? 'text-green-500' : 'text-yellow-500'}`}>
-                        {significance.isSignificant ? "Significant" : "Not Significant"}
+                        {significance.isSignificant ? "Значущий" : "Не значущий"}
                       </p>
                     </div>
                   </div>
                   {significance.isSignificant && (
-                    <p className="text-sm text-muted-foreground mt-4 text-center">
-                      ✅ Results are statistically significant (p &lt; 0.05). You can confidently declare a winner.
+                    <p className="text-sm text-zinc-400 mt-4 text-center">
+                      ✅ Результати статистично значущі (p &lt; 0.05). Можна впевнено визначити переможця.
                     </p>
                   )}
                   {!significance.isSignificant && (
-                    <p className="text-sm text-muted-foreground mt-4 text-center">
-                      ⏳ Not enough data yet. Continue running the test to reach statistical significance.
+                    <p className="text-sm text-zinc-400 mt-4 text-center">
+                      ⏳ Недостатньо даних. Продовжуйте тест для досягнення статистичної значущості.
                     </p>
                   )}
                 </CardContent>
               </Card>
             )}
 
+            {/* Variants Management */}
+            {variants && variants.length > 0 && (
+              <Card className="bg-zinc-900 border-zinc-800">
+                <CardHeader>
+                  <CardTitle className="text-white">Варіанти тесту</CardTitle>
+                  <CardDescription className="text-zinc-400">
+                    Керування варіантами A/B тесту
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
+                    {variants.map((variant) => (
+                      <div 
+                        key={variant.id} 
+                        className={`p-4 rounded-lg border ${
+                          variant.isControl 
+                            ? "bg-blue-900/20 border-blue-700" 
+                            : "bg-zinc-800 border-zinc-700"
+                        }`}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <span className="font-medium text-white">{variant.variantName}</span>
+                              {variant.isControl ? (
+                                <span className="text-xs px-2 py-0.5 bg-blue-600 text-white rounded">Контроль</span>
+                              ) : null}
+                              {variant.isWinner ? (
+                                <span className="text-xs px-2 py-0.5 bg-green-600 text-white rounded">Переможець</span>
+                              ) : null}
+                              {!variant.isActive ? (
+                                <span className="text-xs px-2 py-0.5 bg-zinc-600 text-zinc-300 rounded">Вимкнено</span>
+                              ) : null}
+                            </div>
+                            <p className="text-sm text-zinc-400 mt-1">
+                              Трафік: {variant.trafficPercentage}%
+                              {variant.title && ` • Заголовок: ${variant.title.substring(0, 30)}...`}
+                            </p>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              onClick={() => toggleVariantMutation.mutate({ 
+                                variantId: variant.id, 
+                                isActive: variant.isActive ? 0 : 1 
+                              })}
+                              className="text-zinc-400 hover:text-white"
+                            >
+                              {variant.isActive ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+                            </Button>
+                            {!variant.isControl && (
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                onClick={() => {
+                                  if (confirm("Видалити цей варіант?")) {
+                                    deleteVariantMutation.mutate({ variantId: variant.id });
+                                  }
+                                }}
+                                className="text-red-400 hover:text-red-300"
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </Button>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
             {/* Results Table */}
-            <Card>
+            <Card className="bg-zinc-900 border-zinc-800">
               <CardHeader>
-                <CardTitle>Variant Performance</CardTitle>
-                <CardDescription>
-                  {testResults?.length || 0} active variants
+                <CardTitle className="text-white">Результати варіантів</CardTitle>
+                <CardDescription className="text-zinc-400">
+                  {testResults?.length || 0} активних варіантів
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="rounded-md border">
+                <div className="rounded-md border border-zinc-800">
                   <Table>
                     <TableHeader>
-                      <TableRow>
-                        <TableHead>Variant</TableHead>
-                        <TableHead>Views</TableHead>
-                        <TableHead>Conversions</TableHead>
-                        <TableHead>Conversion Rate</TableHead>
+                      <TableRow className="border-zinc-800">
+                        <TableHead className="text-zinc-400">Варіант</TableHead>
+                        <TableHead className="text-zinc-400">Перегляди</TableHead>
+                        <TableHead className="text-zinc-400">Конверсії</TableHead>
+                        <TableHead className="text-zinc-400">Конверсія %</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
                       {testResults && testResults.length > 0 ? (
                         testResults.map((result) => (
-                          <TableRow key={result.variantId}>
-                            <TableCell className="font-medium">
+                          <TableRow key={result.variantId} className="border-zinc-800">
+                            <TableCell className="font-medium text-white">
                               {result.variantName}
                             </TableCell>
-                            <TableCell>{result.total}</TableCell>
-                            <TableCell>{result.conversions}</TableCell>
-                            <TableCell className="font-bold">
+                            <TableCell className="text-zinc-300">{result.total}</TableCell>
+                            <TableCell className="text-zinc-300">{result.conversions}</TableCell>
+                            <TableCell className="font-bold text-purple-400">
                               {result.conversionRate.toFixed(2)}%
                             </TableCell>
                           </TableRow>
                         ))
                       ) : (
-                        <TableRow>
-                          <TableCell colSpan={4} className="text-center text-muted-foreground py-8">
-                            No test data yet. Create a variant to start testing.
+                        <TableRow className="border-zinc-800">
+                          <TableCell colSpan={4} className="text-center text-zinc-500 py-8">
+                            Немає даних тесту. Створіть варіант для початку тестування.
                           </TableCell>
                         </TableRow>
                       )}
                     </TableBody>
                   </Table>
                 </div>
+              </CardContent>
+            </Card>
+
+            {/* Help Section */}
+            <Card className="bg-zinc-900 border-zinc-800">
+              <CardHeader>
+                <CardTitle className="text-white">Як працює A/B тестування</CardTitle>
+              </CardHeader>
+              <CardContent className="text-zinc-400 space-y-3">
+                <p>
+                  <strong className="text-white">1. Створіть варіант:</strong> Кожен варіант може мати різний заголовок, підзаголовок або бонус.
+                </p>
+                <p>
+                  <strong className="text-white">2. Розподіл трафіку:</strong> Вкажіть відсоток відвідувачів, які побачать кожен варіант.
+                </p>
+                <p>
+                  <strong className="text-white">3. Збір даних:</strong> Система автоматично відстежує перегляди та конверсії.
+                </p>
+                <p>
+                  <strong className="text-white">4. Статистична значущість:</strong> Коли p-value &lt; 0.05, результати вважаються статистично значущими.
+                </p>
               </CardContent>
             </Card>
           </div>
