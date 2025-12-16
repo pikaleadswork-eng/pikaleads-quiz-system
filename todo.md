@@ -2655,3 +2655,18 @@
 - [x] Style preview to match actual quiz appearance with background
 - [x] Support previewing both active and inactive variants
 - [x] Display variant info (name, traffic %, title, subtitle)
+
+
+## Phase 103 - Fix Critical OAuth Callback Issue (URGENT)
+
+### OAuth Authentication Bug
+- [ ] Fix OAuth callback 404 error after login
+- [ ] Verify OAuth redirect URL configuration
+- [ ] Test login flow end-to-end
+- [ ] Ensure admin panel is accessible after login
+
+- [x] Identified OAuth callback 404 issue - OAuth routes are disabled in server
+- [x] OAuth is intentionally disabled, system uses email/password auth
+- [ ] Remove Manus OAuth integration from frontend (or re-enable OAuth routes)
+- [x] Replace OAuth login URL with /login redirect in const.ts
+- [ ] Test editor after OAuth removal
