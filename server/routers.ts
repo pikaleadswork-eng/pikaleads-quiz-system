@@ -21,6 +21,8 @@ import { quizTemplatesRouter } from "./routers/quizTemplates";
 import { questionTemplatesRouter } from "./routers/questionTemplates";
 import { quizzesRouter } from "./routers/quizzes";
 import { healthRouter } from "./routers/health";
+import { prometheusRouter } from "./routers/prometheus";
+import { performanceRouter } from "./routers/performance";
 // import { abTestingRouter } from "./routers/abTesting"; // Disabled - conflicts with existing AB test implementation
 import * as schema from "../drizzle/schema";
 import { getDb } from "./db";
@@ -1631,6 +1633,8 @@ ${input.campaign ? `**Campaign:** ${input.campaign}\n` : ""}
       }),
   }),
   health: healthRouter,
+  prometheus: prometheusRouter,
+  performance: performanceRouter,
 });
 
 export type AppRouter = typeof appRouter;

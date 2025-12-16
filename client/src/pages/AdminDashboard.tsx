@@ -14,7 +14,8 @@ import {
   Package,
   ScrollText,
   Loader2,
-  DollarSign
+  DollarSign,
+  Activity
 } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -148,6 +149,14 @@ export default function AdminDashboard() {
       href: "/admin/scripts",
       color: "text-violet-500",
       bgColor: "bg-violet-500/10"
+    },
+    {
+      title: "Server Monitoring",
+      description: "Real-time server metrics, CPU, memory, and errors",
+      icon: Activity,
+      href: "/admin/monitoring",
+      color: "text-cyan-500",
+      bgColor: "bg-cyan-500/10"
     }
   ];
 

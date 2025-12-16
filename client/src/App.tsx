@@ -38,6 +38,7 @@ import { SettingsRoles } from "./pages/SettingsRoles";
 import { SettingsLeadStatuses } from "./pages/SettingsLeadStatuses";
 import { SettingsIPTelephony } from "./pages/SettingsIPTelephony";
 import ServicesManagement from "./pages/ServicesManagement";
+import { ServerMonitoring } from "./pages/ServerMonitoring";
 import LeadAssignment from "./pages/LeadAssignment";
 import CRMDashboard from "./pages/CRMDashboard";
 import AdminCalendar from "./pages/AdminCalendar";
@@ -104,6 +105,7 @@ function Router() {
       <Route path={"/admin/settings/lead-statuses"} component={SettingsLeadStatuses} />
       <Route path={"/admin/settings/ip-telephony"} component={SettingsIPTelephony} />
       <Route path={"/admin/settings/lead-assignment"} component={LeadAssignment} />
+      <Route path={"/admin/monitoring"} component={ServerMonitoring} />
       <Route path={"/admin/calendar"} component={AdminCalendar} />
       <Route path={"/admin/webhooks"} component={AdminWebhooks} />
       
