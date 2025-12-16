@@ -2733,3 +2733,14 @@
 - [x] Create performance monitoring page (/admin/performance)
 - [x] Fix red connection notification banner (removed HealthMonitor)
 - [x] Create monitoring documentation (SERVER_MONITORING_GUIDE.md)
+
+
+## Dashboard Monitoring Widget & Grafana Setup - December 17, 2025 ✅ COMPLETED
+- [x] Create ServerStatusWidget component for Admin Dashboard
+- [x] Show real-time server health (CPU, memory, database)
+- [x] Add mini-graphs for quick overview
+- [x] Add "View Details" link to full monitoring page
+- [x] Create Grafana/Prometheus VPS installation guide
+- [x] Include docker-compose configuration
+- [x] Add step-by-step setup instructions
+- [x] Test widget on Admin Dashboard

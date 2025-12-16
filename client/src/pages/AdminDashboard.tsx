@@ -22,6 +22,7 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Link } from "wouter";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { ServerStatusWidget } from "@/components/ServerStatusWidget";
 
 export default function AdminDashboard() {
   const { t } = useTranslation();
@@ -179,6 +180,11 @@ export default function AdminDashboard() {
               <LanguageSwitcher />
             </div>
           </div>
+        </div>
+
+        {/* Server Status Widget */}
+        <div className="grid grid-cols-1 gap-6 mb-8">
+          <ServerStatusWidget />
         </div>
 
         {/* Quick Stats */}
