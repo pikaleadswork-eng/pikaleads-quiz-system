@@ -20,6 +20,7 @@ import { quizDesignRouter } from "./routers/quizDesign";
 import { quizTemplatesRouter } from "./routers/quizTemplates";
 import { questionTemplatesRouter } from "./routers/questionTemplates";
 import { quizzesRouter } from "./routers/quizzes";
+import { healthRouter } from "./routers/health";
 // import { abTestingRouter } from "./routers/abTesting"; // Disabled - conflicts with existing AB test implementation
 import * as schema from "../drizzle/schema";
 import { getDb } from "./db";
@@ -1629,6 +1630,7 @@ ${input.campaign ? `**Campaign:** ${input.campaign}\n` : ""}
         return { success: true };
       }),
   }),
+  health: healthRouter,
 });
 
 export type AppRouter = typeof appRouter;

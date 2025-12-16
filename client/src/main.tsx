@@ -10,6 +10,7 @@ import "./index.css";
 import { initMetaPixel } from "./lib/metaPixel";
 import { initGA4 } from "./lib/googleAnalytics";
 import "./lib/i18n";
+import { HealthMonitor } from "./components/HealthMonitor";
 
 // Initialize analytics
 initMetaPixel();
@@ -62,6 +63,7 @@ const trpcClient = trpc.createClient({
 createRoot(document.getElementById("root")!).render(
   <trpc.Provider client={trpcClient} queryClient={queryClient}>
     <QueryClientProvider client={queryClient}>
+      <HealthMonitor />
       <App />
     </QueryClientProvider>
   </trpc.Provider>
