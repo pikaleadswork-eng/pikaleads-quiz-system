@@ -33,6 +33,7 @@ import { ArrowLeft, Plus, TrendingUp, TrendingDown, Play, Pause, Trash2, Copy, E
 import { Link } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { calculateStatisticalSignificance } from "@/lib/abTesting";
+import { ConversionChart } from "@/components/ConversionChart";
 
 export default function AdminABTests() {
   const { user, loading } = useAuth();
@@ -43,6 +44,7 @@ export default function AdminABTests() {
   const [variantTitle, setVariantTitle] = useState("");
   const [variantSubtitle, setVariantSubtitle] = useState("");
   const [variantBonus, setVariantBonus] = useState("");
+  const [dateRange, setDateRange] = useState<number>(30);
 
   // Fetch quizzes from database
   const { data: dbQuizzes, isLoading: quizzesLoading } = trpc.quizzes.list.useQuery();
@@ -63,6 +65,11 @@ export default function AdminABTests() {
 
   const { data: variants, refetch: refetchVariants } = trpc.abTest.getVariants.useQuery(
     { quizId: selectedQuiz?.slug || "" },
+    { enabled: !!selectedQuiz?.slug }
+  );
+
+  const { data: conversionTrends } = trpc.abTest.getConversionTrends.useQuery(
+    { quizId: selectedQuiz?.slug || "", days: dateRange },
     { enabled: !!selectedQuiz?.slug }
   );
 
@@ -322,6 +329,28 @@ export default function AdminABTests() {
                   </CardDescription>
                 </CardHeader>
               </Card>
+            )}
+
+            {/* Conversion Trends Chart */}
+            {conversionTrends && conversionTrends.length > 0 && (
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-semibold text-white">Динаміка конверсій</h3>
+                  <Select value={dateRange.toString()} onValueChange={(v) => setDateRange(Number(v))}>
+                    <SelectTrigger className="w-[180px] bg-zinc-800 border-zinc-700 text-white">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="7">Останні 7 днів</SelectItem>
+                      <SelectItem value="14">Останні 14 днів</SelectItem>
+                      <SelectItem value="30">Останні 30 днів</SelectItem>
+                      <SelectItem value="60">Останні 60 днів</SelectItem>
+                      <SelectItem value="90">Останні 90 днів</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <ConversionChart trends={conversionTrends} />
+              </div>
             )}
 
             {/* Statistical Significance Card */}

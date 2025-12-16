@@ -2590,3 +2590,46 @@
 - [x] Add variant selection in quiz editor
 - [x] Track conversions per variant
 - [x] Show A/B test results in quiz analytics
+
+
+## Phase 101 - Bulk Upload & A/B Analytics Charts (CURRENT)
+
+### Bulk Background Upload
+- [ ] Add multiple file selection support to BackgroundUploader
+- [ ] Handle multiple files in drag-drop zone
+- [ ] Upload multiple files to S3 in parallel
+- [ ] Show progress for each file individually
+- [ ] Display all uploaded images in gallery preview
+- [ ] Add "Select All" / "Deselect All" functionality
+
+### A/B Testing Analytics Charts
+- [ ] Add daily conversion tracking to database schema
+- [ ] Create tRPC procedure to fetch conversion data by date
+- [ ] Install charting library (recharts or chart.js)
+- [ ] Create ConversionChart component
+- [ ] Display line chart with conversion rates over time
+- [ ] Add date range selector (7 days, 14 days, 30 days, all time)
+- [ ] Show comparison between variants on same chart
+- [ ] Add tooltips with detailed metrics
+
+
+## Phase 101 - Bulk Upload & A/B Analytics Charts (COMPLETED ✅)
+
+### Bulk Background Upload
+- [x] Add multiple file selection support to BackgroundUploader
+- [x] Handle multiple files in drag-drop zone
+- [x] Upload multiple files to S3 sequentially
+- [x] Show progress for each file individually
+- [x] Display success/error status for each upload
+- [x] Auto-select first uploaded image
+
+### A/B Testing Analytics Charts
+- [x] Add daily conversion tracking to database schema (using existing createdAt)
+- [x] Create tRPC procedure to fetch conversion data by date (getConversionTrends)
+- [x] Install charting library (recharts)
+- [x] Create ConversionChart component
+- [x] Display line chart with conversion rates over time
+- [x] Add date range selector (7, 14, 30, 60, 90 days)
+- [x] Show comparison between variants on same chart
+- [x] Add tooltips with detailed metrics (rate, conversions, total)
+- [x] Two chart tabs: Conversion Rate (%) and Total Conversions

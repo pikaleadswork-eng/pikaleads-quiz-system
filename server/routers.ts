@@ -1175,6 +1175,62 @@ ${input.campaign ? `**Campaign:** ${input.campaign}\n` : ""}
         
         return stats;
       }),
+
+    getConversionTrends: adminProcedure
+      .input(z.object({ 
+        quizId: z.string(),
+        days: z.number().min(1).max(90).default(30)
+      }))
+      .query(async ({ input }) => {
+        const { getDb } = await import("./db");
+        const db = await getDb();
+        if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Database not available" });
+        
+        const { abTestAssignments, abTestVariants } = await import("../drizzle/schema");
+        const { eq, gte, and, sql } = await import("drizzle-orm");
+        
+        // Get date range
+        const endDate = new Date();
+        const startDate = new Date();
+        startDate.setDate(startDate.getDate() - input.days);
+        
+        // Get variants for this quiz
+        const variants = await db.select()
+          .from(abTestVariants)
+          .where(eq(abTestVariants.quizId, input.quizId));
+        
+        // Get daily stats for each variant
+        const trends = await Promise.all(variants.map(async (variant) => {
+          const dailyStats = await db.select({
+            date: sql<string>`DATE(${abTestAssignments.createdAt})`,
+            total: sql<number>`COUNT(*)`,
+            conversions: sql<number>`SUM(${abTestAssignments.converted})`,
+          })
+          .from(abTestAssignments)
+          .where(
+            and(
+              eq(abTestAssignments.quizId, input.quizId),
+              eq(abTestAssignments.variantId, variant.id),
+              gte(abTestAssignments.createdAt, startDate)
+            )
+          )
+          .groupBy(sql`DATE(${abTestAssignments.createdAt})`)
+          .orderBy(sql`DATE(${abTestAssignments.createdAt})`);
+          
+          return {
+            variantId: variant.id,
+            variantName: variant.variantName,
+            data: dailyStats.map(stat => ({
+              date: stat.date,
+              total: Number(stat.total),
+              conversions: Number(stat.conversions),
+              conversionRate: Number(stat.total) > 0 ? (Number(stat.conversions) / Number(stat.total)) * 100 : 0,
+            })),
+          };
+        }));
+        
+        return trends;
+      }),
     
     getStats: publicProcedure
       .input(z.object({ quizId: z.string() }))
