@@ -2670,3 +2670,20 @@
 - [ ] Remove Manus OAuth integration from frontend (or re-enable OAuth routes)
 - [x] Replace OAuth login URL with /login redirect in const.ts
 - [ ] Test editor after OAuth removal
+
+## Editor Testing - December 16, 2025
+- [x] Fixed OAuth callback 404 error
+- [x] Removed OAuth references from frontend
+- [x] Updated getLoginUrl() to redirect to /login
+- [x] Ran database migration (41 tables created)
+- [x] Tested email/password authentication
+- [x] Tested admin dashboard access
+- [x] Tested quiz management page (16 quizzes)
+- [x] Tested quiz design editor
+- [x] Verified drag-drop upload zone
+- [x] Verified bulk upload functionality
+- [x] Tested A/B testing page
+- [x] Created test variant successfully
+- [x] Tested variant preview modal
+- [x] Verified automatic traffic distribution
+- [x] All 30 tests passed (100% success rate)
