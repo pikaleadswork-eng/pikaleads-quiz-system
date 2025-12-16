@@ -1118,6 +1118,75 @@ ${input.campaign ? `**Campaign:** ${input.campaign}\n` : ""}
         const { getActiveVariantsForQuiz } = await import("./db");
         return await getActiveVariantsForQuiz(input.quizId);
       }),
+
+    getAssignedVariant: publicProcedure
+      .input(z.object({ 
+        sessionId: z.string(),
+        quizId: z.string()
+      }))
+      .query(async ({ input }) => {
+        const { getDb } = await import("./db");
+        const db = await getDb();
+        if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Database not available" });
+        
+        const { abTestAssignments, abTestVariants } = await import("../drizzle/schema");
+        const { eq, and } = await import("drizzle-orm");
+        
+        // Check if user already has an assignment
+        const existingAssignment = await db.select()
+          .from(abTestAssignments)
+          .where(
+            and(
+              eq(abTestAssignments.sessionId, input.sessionId),
+              eq(abTestAssignments.quizId, input.quizId)
+            )
+          )
+          .limit(1);
+        
+        if (existingAssignment.length > 0) {
+          // Return existing variant
+          const variant = await db.select()
+            .from(abTestVariants)
+            .where(eq(abTestVariants.id, existingAssignment[0].variantId))
+            .limit(1);
+          return variant[0] || null;
+        }
+        
+        // Get active variants for this quiz
+        const variants = await db.select()
+          .from(abTestVariants)
+          .where(
+            and(
+              eq(abTestVariants.quizId, input.quizId),
+              eq(abTestVariants.isActive, 1)
+            )
+          );
+        
+        if (variants.length === 0) return null;
+        
+        // Weighted random selection based on trafficPercentage
+        const totalWeight = variants.reduce((sum, v) => sum + v.trafficPercentage, 0);
+        let random = Math.random() * totalWeight;
+        
+        let selectedVariant = variants[0];
+        for (const variant of variants) {
+          random -= variant.trafficPercentage;
+          if (random <= 0) {
+            selectedVariant = variant;
+            break;
+          }
+        }
+        
+        // Assign variant to session
+        await db.insert(abTestAssignments).values({
+          sessionId: input.sessionId,
+          quizId: input.quizId,
+          variantId: selectedVariant.id,
+          converted: 0,
+        });
+        
+        return selectedVariant;
+      }),
     
     assignVariant: publicProcedure
       .input(z.object({

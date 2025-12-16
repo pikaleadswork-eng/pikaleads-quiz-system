@@ -34,6 +34,7 @@ import { Link } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { calculateStatisticalSignificance } from "@/lib/abTesting";
 import { ConversionChart } from "@/components/ConversionChart";
+import { VariantPreviewModal } from "@/components/VariantPreviewModal";
 
 export default function AdminABTests() {
   const { user, loading } = useAuth();
@@ -45,6 +46,7 @@ export default function AdminABTests() {
   const [variantSubtitle, setVariantSubtitle] = useState("");
   const [variantBonus, setVariantBonus] = useState("");
   const [dateRange, setDateRange] = useState<number>(30);
+  const [previewVariant, setPreviewVariant] = useState<any>(null);
 
   // Fetch quizzes from database
   const { data: dbQuizzes, isLoading: quizzesLoading } = trpc.quizzes.list.useQuery();
@@ -444,6 +446,15 @@ export default function AdminABTests() {
                           <div className="flex items-center gap-2">
                             <Button
                               size="sm"
+                              variant="outline"
+                              onClick={() => setPreviewVariant(variant)}
+                              className="text-purple-400 border-purple-600 hover:bg-purple-600 hover:text-white"
+                            >
+                              <Edit className="w-4 h-4 mr-1" />
+                              Preview
+                            </Button>
+                            <Button
+                              size="sm"
                               variant="ghost"
                               onClick={() => toggleVariantMutation.mutate({ 
                                 variantId: variant.id, 
@@ -545,6 +556,17 @@ export default function AdminABTests() {
           </div>
         </div>
       </div>
+
+      {/* Variant Preview Modal */}
+      {previewVariant && selectedQuiz && (
+        <VariantPreviewModal
+          open={!!previewVariant}
+          onClose={() => setPreviewVariant(null)}
+          variant={previewVariant}
+          quizName={selectedQuiz.name}
+          quizDescription={selectedQuiz.description}
+        />
+      )}
     </div>
   );
 }

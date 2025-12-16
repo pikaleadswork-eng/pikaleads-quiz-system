@@ -60,9 +60,27 @@ export default function QuizPage() {
   const [leadData, setLeadData] = useState({ name: "", email: "", phone: "", telegram: "" });
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [sessionId, setSessionId] = useState<string>("");
+
+  // Generate or retrieve session ID
+  useEffect(() => {
+    const storageKey = `quiz_session_${slug}`;
+    let sid = localStorage.getItem(storageKey);
+    if (!sid) {
+      sid = `session_${Date.now()}_${Math.random().toString(36).substring(7)}`;
+      localStorage.setItem(storageKey, sid);
+    }
+    setSessionId(sid);
+  }, [slug]);
 
   // Load quiz by slug
   const { data: quiz, isLoading, error } = trpc.quizzes.getBySlug.useQuery({ slug });
+  
+  // Load assigned A/B test variant
+  const { data: assignedVariant } = trpc.abTest.getAssignedVariant.useQuery(
+    { sessionId, quizId: slug },
+    { enabled: !!sessionId && !!slug }
+  );
   
   // Load quiz design settings
   const { data: designSettings } = trpc.quizDesign.getByQuizId.useQuery(
@@ -100,9 +118,13 @@ export default function QuizPage() {
     },
   });
 
-  // Get translated title and subtitle
-  const title = getTranslatedText(designSettings?.titleText, language) || quiz?.name || "";
-  const subtitle = getTranslatedText(designSettings?.subtitleText, language) || quiz?.description || "";
+  // Get translated title and subtitle (with A/B variant override)
+  const title = assignedVariant?.title 
+    ? getTranslatedText(assignedVariant.title, language)
+    : getTranslatedText(designSettings?.titleText, language) || quiz?.name || "";
+  const subtitle = assignedVariant?.subtitle
+    ? getTranslatedText(assignedVariant.subtitle, language)
+    : getTranslatedText(designSettings?.subtitleText, language) || quiz?.description || "";
   const buttonText = designSettings?.buttonText || (language === "uk" ? "Почати квіз" : language === "ru" ? "Начать квиз" : "Start Quiz");
   const backgroundImage = designSettings?.backgroundImage || "/quiz-images/general-bg.png";
 

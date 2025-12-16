@@ -2633,3 +2633,25 @@
 - [x] Show comparison between variants on same chart
 - [x] Add tooltips with detailed metrics (rate, conversions, total)
 - [x] Two chart tabs: Conversion Rate (%) and Total Conversions
+
+
+## Phase 102 - Auto Traffic Distribution & Variant Preview (CURRENT)
+
+### Automatic Traffic Distribution
+- [x] Analyze current variant assignment logic in backend
+- [x] Implement weighted random selection algorithm based on trafficPercentage
+- [x] Create tRPC procedure to get assigned variant for user session (getAssignedVariant)
+- [x] Update quiz frontend to request variant on load
+- [x] Store variant assignment in session/localStorage
+- [x] Track variant assignments in abTestAssignments table
+- [x] Weighted random distribution based on trafficPercentage
+
+### Variant Preview Functionality
+- [x] Add "Preview" button to each variant in AdminABTests
+- [x] Create preview modal/dialog component (VariantPreviewModal)
+- [x] Render quiz start page with variant-specific content (title, subtitle)
+- [x] Show variant name in preview header
+- [x] Add close button to exit preview
+- [x] Style preview to match actual quiz appearance with background
+- [x] Support previewing both active and inactive variants
+- [x] Display variant info (name, traffic %, title, subtitle)
