@@ -9,6 +9,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Input } from "@/components/ui/input";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { ArrowLeft, ArrowRight, Check, Phone, Mail, User } from "lucide-react";
+import { initTracking, trackQuizView, trackQuizStart, trackLeadSubmission, getTrackingData } from "@/lib/tracking";
 
 // Helper to get translated text
 function getTranslatedText(text: string | null | undefined, language: string): string {
@@ -62,6 +63,14 @@ export default function QuizPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [sessionId, setSessionId] = useState<string>("");
 
+  // Load quiz by slug
+  const { data: quiz, isLoading, error } = trpc.quizzes.getBySlug.useQuery({ slug });
+
+  // Initialize tracking on page load
+  useEffect(() => {
+    initTracking();
+  }, []);
+
   // Generate or retrieve session ID
   useEffect(() => {
     const storageKey = `quiz_session_${slug}`;
@@ -73,8 +82,12 @@ export default function QuizPage() {
     setSessionId(sid);
   }, [slug]);
 
-  // Load quiz by slug
-  const { data: quiz, isLoading, error } = trpc.quizzes.getBySlug.useQuery({ slug });
+  // Track quiz view when quiz loads
+  useEffect(() => {
+    if (quiz) {
+      trackQuizView(quiz.name);
+    }
+  }, [quiz]);
   
   // Load assigned A/B test variant
   const { data: assignedVariant } = trpc.abTest.getAssignedVariant.useQuery(
@@ -93,6 +106,14 @@ export default function QuizPage() {
     { quizId: quiz?.id || 0 },
     { enabled: !!quiz?.id && quizStarted }
   );
+
+  // Track quiz start
+  const handleQuizStart = () => {
+    setQuizStarted(true);
+    if (quiz) {
+      trackQuizStart(quiz.name);
+    }
+  };
 
   // Submit lead mutation
   const submitLead = trpc.quiz.submitLead.useMutation({
@@ -252,7 +273,17 @@ export default function QuizPage() {
       // Get UTM params from URL
       const urlParams = new URLSearchParams(window.location.search);
       
-      await submitLead.mutateAsync({
+      // Get tracking data
+      const trackingData = getTrackingData();
+      
+      // Track lead submission on client-side (Meta Pixel + GTM)
+      const eventId = trackLeadSubmission({
+        quizName: quiz.name,
+        value: 0,
+      });
+      
+      // Submit to server with tracking data
+      const result = await submitLead.mutateAsync({
         quizName: quiz.name,
         answers: JSON.stringify(formattedAnswers),
         questions: JSON.stringify(questions.map(q => q.question)),
@@ -261,12 +292,21 @@ export default function QuizPage() {
         email: leadData.email || undefined,
         telegram: leadData.telegram || undefined,
         language,
-        utmSource: urlParams.get("utm_source") || undefined,
-        utmMedium: urlParams.get("utm_medium") || undefined,
-        utmCampaign: urlParams.get("utm_campaign") || undefined,
-        utmContent: urlParams.get("utm_content") || undefined,
-        utmTerm: urlParams.get("utm_term") || undefined,
+        utmSource: urlParams.get("utm_source") || trackingData.utmParams.utm_source || undefined,
+        utmMedium: urlParams.get("utm_medium") || trackingData.utmParams.utm_medium || undefined,
+        utmCampaign: urlParams.get("utm_campaign") || trackingData.utmParams.utm_campaign || undefined,
+        utmContent: urlParams.get("utm_content") || trackingData.utmParams.utm_content || undefined,
+        utmTerm: urlParams.get("utm_term") || trackingData.utmParams.utm_term || undefined,
+        // Tracking data for server-side events
+        fbp: trackingData.fbp || undefined,
+        fbc: trackingData.fbc || undefined,
+        clientIp: undefined, // Will be detected on server
+        userAgent: trackingData.userAgent,
+        ga4ClientId: trackingData.ga4ClientId || undefined,
+        eventId,
       });
+      
+      console.log("[Quiz] Lead submitted with tracking:", { eventId, leadId: result.leadId });
     };
 
     return (

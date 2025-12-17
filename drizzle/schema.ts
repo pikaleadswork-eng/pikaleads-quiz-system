@@ -54,6 +54,13 @@ export const leads = mysqlTable("leads", {
   leadScore: int("leadScore").default(0), // 0-100 quality score
   spentAmount: decimal("spentAmount", { precision: 10, scale: 2 }).default("0.00"), // Ad spend for this lead
   timeOnSite: int("timeOnSite").default(0), // Time spent on site in seconds
+  // Tracking data for Meta and GA4
+  fbp: varchar("fbp", { length: 255 }), // Facebook browser pixel cookie (_fbp)
+  fbc: varchar("fbc", { length: 255 }), // Facebook click ID cookie (_fbc)
+  clientIp: varchar("clientIp", { length: 50 }), // Client IP address
+  userAgent: text("userAgent"), // Browser user agent
+  ga4ClientId: varchar("ga4ClientId", { length: 255 }), // GA4 client ID
+  eventId: varchar("eventId", { length: 255 }), // Unique event ID for deduplication
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 });
 

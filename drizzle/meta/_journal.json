@@ -288,6 +288,13 @@
       "when": 1765981803348,
       "tag": "0040_sleepy_warlock",
       "breakpoints": true
+    },
+    {
+      "idx": 41,
+      "version": "5",
+      "when": 1766007565348,
+      "tag": "0041_furry_mystique",
+      "breakpoints": true
     }
   ]
 }

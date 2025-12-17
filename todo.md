@@ -3276,3 +3276,37 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Close sidebar when selecting a menu item
 - [x] Prevent body scroll when sidebar is open (not needed - backdrop handles this)
 - [x] Test on mobile viewport (375px, 414px, 768px)
+
+
+## Phase 110 - Meta Pixel + GA4 + GTM Integration (CURRENT)
+
+### Frontend Integration
+- [x] Add Google Tag Manager (GTM-KJR4RP5K) to index.html
+- [x] Add Meta Pixel (720023837850036) to index.html
+- [ ] Add dataLayer events for GTM
+- [ ] Track UTM parameters in localStorage
+- [ ] Save fbp and fbc cookies for attribution
+
+### Server-Side Tracking
+- [ ] Create Meta Conversions API helper
+- [ ] Create GA4 Measurement Protocol helper
+- [ ] Store tracking data in leads table (fbp, fbc, utm_*)
+- [ ] Add server-side event sending
+
+### Quiz Events
+- [ ] PageView - quiz page loaded
+- [ ] ViewContent - quiz started (first question)
+- [ ] CompleteRegistration (Meta) / generate_lead (GA4) - form submitted
+
+### CRM Events (Server-Side)
+- [ ] InitiateCheckout - call/meeting scheduled
+- [ ] AddToCart - callback requested
+- [ ] call_completed - call finished
+- [ ] no_answer - lead didn't answer
+- [ ] meeting_completed - meeting finished
+- [ ] Purchase - sale completed (status = Won)
+- [ ] lost_lead - lead lost (status = Lost)
+
+### Database Schema
+- [ ] Add fbp, fbc, client_ip, user_agent to leads table
+- [ ] Store original UTM parameters for attribution

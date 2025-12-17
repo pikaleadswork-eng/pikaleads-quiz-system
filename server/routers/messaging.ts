@@ -370,7 +370,17 @@ export const messagingRouter = router({
       })
     )
     .mutation(async ({ input, ctx }) => {
-      const { updateLeadStatusOnly } = await import("../db");
+      const { updateLeadStatusOnly, getLeadById } = await import("../db");
+      const { trackMetaScheduleCall, trackMetaCallback, trackMetaPurchase } = await import("../_core/metaConversionsAPI");
+      const { trackGA4ScheduleCall, trackGA4Callback, trackGA4Purchase } = await import("../_core/ga4MeasurementProtocol");
+      
+      // Get lead data before updating
+      const lead = await getLeadById(input.leadId);
+      if (!lead) {
+        throw new TRPCError({ code: "NOT_FOUND", message: "Lead not found" });
+      }
+      
+      // Update status
       await updateLeadStatusOnly(input.leadId, input.statusId);
 
       // Log interaction
@@ -381,6 +391,86 @@ export const messagingRouter = router({
         userId: ctx.user.id,
         metadata: JSON.stringify({ statusId: input.statusId }),
       });
+      
+      // Get status name to determine tracking event
+      const { getLeadStatus } = await import("../db");
+      const status = await getLeadStatus(input.statusId);
+      const statusName = status?.name?.toLowerCase() || "";
+      
+      // Track events based on status change
+      // Status names: "Новий", "В роботі", "Дзвінок заплановано", "Callback", "Виграно", "Програно"
+      if (statusName.includes("дзвінок") || statusName.includes("заплановано")) {
+        // InitiateCheckout - Call scheduled
+        if (lead.eventId && lead.fbp) {
+          await trackMetaScheduleCall({
+            eventId: `${lead.eventId}_schedule_${Date.now()}`,
+            email: lead.email || undefined,
+            phone: lead.phone,
+            clientIp: lead.clientIp || undefined,
+            userAgent: lead.userAgent || undefined,
+            fbp: lead.fbp,
+            fbc: lead.fbc || undefined,
+            callType: "scheduled_call",
+          });
+        }
+        if (lead.ga4ClientId) {
+          await trackGA4ScheduleCall({
+            clientId: lead.ga4ClientId,
+            userId: lead.id.toString(),
+            callType: "scheduled_call",
+          });
+        }
+      } else if (statusName.includes("callback")) {
+        // AddToCart - Callback requested
+        if (lead.eventId && lead.fbp) {
+          await trackMetaCallback({
+            eventId: `${lead.eventId}_callback_${Date.now()}`,
+            email: lead.email || undefined,
+            phone: lead.phone,
+            clientIp: lead.clientIp || undefined,
+            userAgent: lead.userAgent || undefined,
+            fbp: lead.fbp,
+            fbc: lead.fbc || undefined,
+          });
+        }
+        if (lead.ga4ClientId) {
+          await trackGA4Callback({
+            clientId: lead.ga4ClientId,
+            userId: lead.id.toString(),
+          });
+        }
+      } else if (statusName.includes("виграно") || statusName.includes("won")) {
+        // Purchase - Sale completed
+        // TODO: Get actual sale amount from sales table
+        const saleValue = 1000; // Default value, should be fetched from sales table
+        
+        if (lead.eventId && lead.fbp) {
+          await trackMetaPurchase({
+            eventId: `${lead.eventId}_purchase_${Date.now()}`,
+            email: lead.email || undefined,
+            phone: lead.phone,
+            clientIp: lead.clientIp || undefined,
+            userAgent: lead.userAgent || undefined,
+            fbp: lead.fbp,
+            fbc: lead.fbc || undefined,
+            value: saleValue,
+            currency: "UAH",
+            contentName: lead.quizName,
+          });
+        }
+        if (lead.ga4ClientId) {
+          await trackGA4Purchase({
+            clientId: lead.ga4ClientId,
+            userId: lead.id.toString(),
+            transactionId: `lead_${lead.id}_${Date.now()}`,
+            value: saleValue,
+            currency: "UAH",
+            source: lead.utmSource || undefined,
+            medium: lead.utmMedium || undefined,
+            campaign: lead.utmCampaign || undefined,
+          });
+        }
+      }
 
       return { success: true };
     }),

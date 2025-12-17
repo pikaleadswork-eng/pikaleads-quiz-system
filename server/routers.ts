@@ -101,12 +101,21 @@ export const appRouter = router({
           utmMedium: z.string().optional(),
           utmContent: z.string().optional(),
           utmTerm: z.string().optional(),
+          // Tracking data
+          fbp: z.string().optional(),
+          fbc: z.string().optional(),
+          clientIp: z.string().optional(),
+          userAgent: z.string().optional(),
+          ga4ClientId: z.string().optional(),
+          eventId: z.string().optional(),
         })
       )
       .mutation(async ({ input }) => {
         const { createLead, autoAssignLead } = await import("./db");
         const { sendTelegramMessage, formatLeadMessage } = await import("./telegram");
         const { calculateLeadScore } = await import("./leadScoring");
+        const { trackMetaLead } = await import("./_core/metaConversionsAPI");
+        const { trackGA4Lead } = await import("./_core/ga4MeasurementProtocol");
         
         // Calculate lead quality score
         const leadScore = calculateLeadScore({
@@ -138,6 +147,13 @@ export const appRouter = router({
           utmContent: input.utmContent || null,
           utmTerm: input.utmTerm || null,
           leadScore,
+          // Tracking data
+          fbp: input.fbp || null,
+          fbc: input.fbc || null,
+          clientIp: input.clientIp || null,
+          userAgent: input.userAgent || null,
+          ga4ClientId: input.ga4ClientId || null,
+          eventId: input.eventId || null,
         });
         
         // Send to Telegram with full details
@@ -183,6 +199,38 @@ export const appRouter = router({
         const telegramSent = await sendTelegramMessage(message);
         if (!telegramSent) {
           console.warn("[Quiz] Lead saved but Telegram notification failed");
+        }
+        
+        // Send server-side tracking events
+        if (input.eventId) {
+          // Meta Conversions API
+          await trackMetaLead({
+            eventId: input.eventId,
+            email: input.email,
+            phone: input.phone,
+            clientIp: input.clientIp,
+            userAgent: input.userAgent,
+            fbp: input.fbp,
+            fbc: input.fbc,
+            quizName: input.quizName,
+            leadValue: 0,
+          });
+          
+          // GA4 Measurement Protocol
+          if (input.ga4ClientId) {
+            await trackGA4Lead({
+              clientId: input.ga4ClientId,
+              userId: leadId.toString(),
+              quizName: input.quizName,
+              leadValue: 0,
+              currency: "UAH",
+              source: input.utmSource,
+              medium: input.utmMedium,
+              campaign: input.utmCampaign,
+              content: input.utmContent,
+              term: input.utmTerm,
+            });
+          }
         }
         
         return { success: true, leadId };

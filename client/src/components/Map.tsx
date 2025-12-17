@@ -83,6 +83,8 @@ import { cn } from "@/lib/utils";
 declare global {
   interface Window {
     google?: typeof google;
+    fbq?: any;
+    dataLayer?: any[];
   }
 }
 
