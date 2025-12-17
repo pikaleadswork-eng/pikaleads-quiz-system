@@ -15,9 +15,9 @@ export function ServerStatusWidget() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Activity className="w-5 h-5" />
-            Server Status
+            Статус Сервера
           </CardTitle>
-          <CardDescription>Loading server metrics...</CardDescription>
+          <CardDescription>Завантаження метрик сервера...</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-center h-32">
@@ -51,25 +51,25 @@ export function ServerStatusWidget() {
           <div>
             <CardTitle className="flex items-center gap-2">
               <Activity className="w-5 h-5" />
-              Server Status
+              Статус Сервера
               {isHealthy ? (
                 <span className="text-xs font-normal text-green-500 flex items-center gap-1">
                   <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                  Healthy
+                  Здоровий
                 </span>
               ) : (
                 <span className="text-xs font-normal text-red-500 flex items-center gap-1">
                   <AlertCircle className="w-3 h-3" />
-                  Degraded
+                  Погіршено
                 </span>
               )}
             </CardTitle>
-            <CardDescription>Real-time server performance metrics</CardDescription>
+            <CardDescription>Метрики сервера в реальному часі</CardDescription>
           </div>
           <Link href="/admin/monitoring">
             <Button variant="outline" size="sm">
               <TrendingUp className="w-4 h-4 mr-2" />
-              View Details
+              Деталі
             </Button>
           </Link>
         </div>
@@ -82,7 +82,7 @@ export function ServerStatusWidget() {
               <HardDrive className="w-5 h-5 text-primary" />
             </div>
             <div className="flex-1">
-              <p className="text-xs text-muted-foreground">Memory</p>
+              <p className="text-xs text-muted-foreground">Пам'ять</p>
               <p className={`text-xl font-bold ${getMemoryColor(memoryPercent)}`}>
                 {health.memory.usagePercent}
               </p>
@@ -98,12 +98,12 @@ export function ServerStatusWidget() {
               <Cpu className="w-5 h-5 text-primary" />
             </div>
             <div className="flex-1">
-              <p className="text-xs text-muted-foreground">CPU Load</p>
+              <p className="text-xs text-muted-foreground">Навантаження CPU</p>
               <p className={`text-xl font-bold ${getCpuColor(cpuLoad)}`}>
                 {cpuLoad.toFixed(2)}
               </p>
               <p className="text-xs text-muted-foreground">
-                {health.cpu.cores} cores
+                {health.cpu.cores} ядер
               </p>
             </div>
           </div>
@@ -114,7 +114,7 @@ export function ServerStatusWidget() {
               <Database className="w-5 h-5 text-primary" />
             </div>
             <div className="flex-1">
-              <p className="text-xs text-muted-foreground">Database</p>
+              <p className="text-xs text-muted-foreground">База Даних</p>
               <p className={`text-xl font-bold ${health.database.status === "healthy" ? "text-green-500" : "text-red-500"}`}>
                 {health.database.status === "healthy" ? "ONLINE" : "OFFLINE"}
               </p>
@@ -130,7 +130,7 @@ export function ServerStatusWidget() {
               <Activity className="w-5 h-5 text-primary" />
             </div>
             <div className="flex-1">
-              <p className="text-xs text-muted-foreground">Uptime</p>
+              <p className="text-xs text-muted-foreground">Час Роботи</p>
               <p className="text-xl font-bold text-blue-500">
                 {health.uptime.formatted}
               </p>
@@ -146,7 +146,7 @@ export function ServerStatusWidget() {
           <div className="mt-4 p-3 rounded-lg bg-red-500/10 border border-red-500/20">
             <p className="text-sm text-red-500 flex items-center gap-2">
               <AlertCircle className="w-4 h-4" />
-              <strong>High Memory Usage:</strong> Memory usage is at {health.memory.usagePercent}. Consider restarting the server or upgrading resources.
+              <strong>Високе Використання Пам'яті:</strong> Використання пам'яті становить {health.memory.usagePercent}. Розгляньте перезапуск сервера або оновлення ресурсів.
             </p>
           </div>
         )}
@@ -155,7 +155,7 @@ export function ServerStatusWidget() {
           <div className="mt-4 p-3 rounded-lg bg-yellow-500/10 border border-yellow-500/20">
             <p className="text-sm text-yellow-500 flex items-center gap-2">
               <AlertCircle className="w-4 h-4" />
-              <strong>High CPU Load:</strong> CPU load is {cpuLoad.toFixed(2)}. Check for resource-intensive processes.
+              <strong>Високе Навантаження CPU:</strong> Навантаження CPU становить {cpuLoad.toFixed(2)}. Перевірте ресурсомісткі процеси.
             </p>
           </div>
         )}

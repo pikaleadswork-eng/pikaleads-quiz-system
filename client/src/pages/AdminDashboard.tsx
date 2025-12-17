@@ -56,104 +56,104 @@ export default function AdminDashboard() {
 
   const adminSections = [
     {
-      title: "CRM System",
-      description: "Manage leads, statuses, and customer interactions",
+      title: "CRM Система",
+      description: "Управління лідами, статусами та взаємодією з клієнтами",
       icon: Database,
       href: "/crm",
       color: "text-blue-500",
       bgColor: "bg-blue-500/10"
     },
     {
-      title: "Analytics Dashboard",
-      description: "View UTM statistics and campaign performance",
+      title: "Панель Аналітики",
+      description: "Перегляд UTM статистики та ефективності кампаній",
       icon: BarChart3,
       href: "/admin/analytics",
       color: "text-purple-500",
       bgColor: "bg-purple-500/10"
     },
     {
-      title: "Assignment Rules",
-      description: "Configure automatic lead assignment to managers",
+      title: "Правила Призначення",
+      description: "Налаштування автоматичного призначення лідів менеджерам",
       icon: Settings,
       href: "/admin/assignment-rules",
       color: "text-green-500",
       bgColor: "bg-green-500/10"
     },
     {
-      title: "Manager Performance",
-      description: "Track manager metrics and conversion rates",
+      title: "Ефективність Менеджерів",
+      description: "Відстеження метрик менеджерів та конверсії",
       icon: TrendingUp,
       href: "/admin/performance",
       color: "text-orange-500",
       bgColor: "bg-orange-500/10"
     },
     {
-      title: "Manager Invitation",
-      description: "Invite new managers to join the team",
+      title: "Запрошення Менеджерів",
+      description: "Запросіть нових менеджерів приєднатися до команди",
       icon: UserPlus,
       href: "/admin/managers",
       color: "text-pink-500",
       bgColor: "bg-pink-500/10"
     },
     {
-      title: "Quiz Management",
-      description: "Edit quiz content, questions, and offers",
+      title: "Управління Квізами",
+      description: "Редагування контенту квізів, питань та пропозицій",
       icon: FileText,
       href: "/admin/quizzes",
       color: "text-yellow-500",
       bgColor: "bg-yellow-500/10"
     },
     {
-      title: "A/B Testing",
-      description: "Create and manage quiz variants for testing",
+      title: "A/B Тестування",
+      description: "Створення та управління варіантами квізів для тестування",
       icon: TrendingUp,
       href: "/admin/ab-testing",
       color: "text-cyan-500",
       bgColor: "bg-cyan-500/10"
     },
     {
-      title: "Calendar Integration",
-      description: "Manage Calendly and Google Calendar settings",
+      title: "Інтеграція Календаря",
+      description: "Управління налаштуваннями Calendly та Google Calendar",
       icon: Calendar,
       href: "/admin/calendar",
       color: "text-indigo-500",
       bgColor: "bg-indigo-500/10"
     },
     {
-      title: "Messaging Center",
-      description: "Send messages via Telegram, Instagram, WhatsApp",
+      title: "Центр Повідомлень",
+      description: "Надсилання повідомлень через Telegram, Instagram, WhatsApp",
       icon: MessageSquare,
       href: "/admin/inbox",
       color: "text-red-500",
       bgColor: "bg-red-500/10"
     },
     {
-      title: "Services Management",
-      description: "Manage services, pricing, and additional offerings",
+      title: "Управління Послугами",
+      description: "Управління послугами, цінами та додатковими пропозиціями",
       icon: Package,
       href: "/admin/services",
       color: "text-emerald-500",
       bgColor: "bg-emerald-500/10"
     },
     {
-      title: "Sales Statistics",
-      description: "Track revenue, transactions, and sales performance",
+      title: "Статистика Продажів",
+      description: "Відстеження доходів, транзакцій та ефективності продажів",
       icon: DollarSign,
       href: "/admin/sales",
       color: "text-amber-500",
       bgColor: "bg-amber-500/10"
     },
     {
-      title: "Sales Scripts",
-      description: "Manage call scripts for sales team",
+      title: "Скрипти Продажів",
+      description: "Управління скриптами дзвінків для відділу продажів",
       icon: ScrollText,
       href: "/admin/scripts",
       color: "text-violet-500",
       bgColor: "bg-violet-500/10"
     },
     {
-      title: "Server Monitoring",
-      description: "Real-time server metrics, CPU, memory, and errors",
+      title: "Моніторинг Сервера",
+      description: "Метрики сервера в реальному часі, CPU, пам'ять та помилки",
       icon: Activity,
       href: "/admin/monitoring",
       color: "text-cyan-500",
@@ -168,14 +168,14 @@ export default function AdminDashboard() {
         <div className="mb-8">
           <div className="flex items-start justify-between mb-4">
             <div>
-              <h1 className="text-4xl font-bold text-foreground mb-2">Admin Dashboard</h1>
+              <h1 className="text-4xl font-bold text-foreground mb-2">Адмін Панель</h1>
               <p className="text-muted-foreground">
-                Centralized control panel for PIKALEADS Lead Engine
+                Централізована панель керування PIKALEADS Lead Engine
               </p>
             </div>
             <div className="flex gap-2">
               <Link href="/">
-                <Button variant="outline">← Home</Button>
+                <Button variant="outline">← Головна</Button>
               </Link>
               <LanguageSwitcher />
             </div>
@@ -193,7 +193,7 @@ export default function AdminDashboard() {
             <Card>
               <CardHeader className="pb-3">
                 <CardTitle className="text-sm font-medium text-muted-foreground">
-                  Total Leads
+                  Всього Лідів
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -204,7 +204,7 @@ export default function AdminDashboard() {
             <Card>
               <CardHeader className="pb-3">
                 <CardTitle className="text-sm font-medium text-muted-foreground">
-                  Active Managers
+                  Активні Менеджери
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -215,7 +215,7 @@ export default function AdminDashboard() {
             <Card>
               <CardHeader className="pb-3">
                 <CardTitle className="text-sm font-medium text-muted-foreground">
-                  Active A/B Tests
+                  Активні A/B Тести
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -226,7 +226,7 @@ export default function AdminDashboard() {
             <Card>
               <CardHeader className="pb-3">
                 <CardTitle className="text-sm font-medium text-muted-foreground">
-                  Leads Today
+                  Ліди Сьогодні
                 </CardTitle>
               </CardHeader>
               <CardContent>
