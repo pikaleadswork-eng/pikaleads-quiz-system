@@ -295,6 +295,13 @@
       "when": 1766007565348,
       "tag": "0041_furry_mystique",
       "breakpoints": true
+    },
+    {
+      "idx": 42,
+      "version": "5",
+      "when": 1766009596568,
+      "tag": "0042_odd_nova",
+      "breakpoints": true
     }
   ]
 }

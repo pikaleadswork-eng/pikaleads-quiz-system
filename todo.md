@@ -3341,3 +3341,15 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Add lead score display in CRM
 - [x] Test analytics calculations
 - [ ] Save checkpoint
+
+## Phase 115 - Fix UI Issues and Add CRM Features
+- [x] Fix logo not loading in footer
+- [x] Fix spacing in mobile menu (avatar to text)
+- [x] Remove duplicate Meta Pixel (keep only one instance)
+- [x] Create Lead Activity Timeline component
+- [x] Add comments system for leads
+- [x] Add file upload for lead attachments
+- [x] Integrate IP-telephony (Binotel/Ringostat/Zadarma)
+- [x] Add click-to-call functionality
+- [x] Add call history display
+- [x] Test all fixes and features

@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <img src="/logo.png" alt="PIKALEADS" className="w-8 h-8" />
+            <img src="/pikaleads-logo.png" alt="PIKALEADS" className="w-8 h-8" />
             <span className="text-foreground font-semibold">PIKALEADS</span>
           </div>
           

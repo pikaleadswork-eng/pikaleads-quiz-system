@@ -19,6 +19,7 @@ import { analyticsSettingsRouter } from "./routers/analyticsSettings";
 import { quizDesignRouter } from "./routers/quizDesign";
 import { quizTemplatesRouter } from "./routers/quizTemplates";
 import { questionTemplatesRouter } from "./routers/questionTemplates";
+import { leadActivitiesRouter } from "./routers/leadActivities";
 import { quizzesRouter } from "./routers/quizzes";
 import { healthRouter } from "./routers/health";
 import { prometheusRouter } from "./routers/prometheus";
@@ -1490,6 +1491,7 @@ ${input.campaign ? `**Campaign:** ${input.campaign}\n` : ""}
   quizDesign: quizDesignRouter,
   quizTemplates: quizTemplatesRouter,
   questionTemplates: questionTemplatesRouter,
+  leadActivities: leadActivitiesRouter,
 
   // Filter Presets for CRM
   filterPresets: router({

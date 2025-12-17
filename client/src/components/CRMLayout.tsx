@@ -214,7 +214,7 @@ export default function CRMLayout({ children }: CRMLayoutProps) {
           </nav>
 
           {/* User Profile */}
-          <div className="p-4 border-t border-zinc-800">
+          <div className="p-4 border-t border-zinc-800 mt-auto">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center font-bold">
                 {user.name?.[0]?.toUpperCase() || "A"}

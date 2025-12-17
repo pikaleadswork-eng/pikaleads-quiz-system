@@ -898,6 +898,26 @@ export const leadHistory = mysqlTable("lead_history", {
 export type LeadHistory = typeof leadHistory.$inferSelect;
 export type InsertLeadHistory = typeof leadHistory.$inferInsert;
 
+/**
+ * Lead Activities table - timeline of interactions (calls, emails, comments, file uploads)
+ */
+export const leadActivities = mysqlTable("lead_activities", {
+  id: int("id").autoincrement().primaryKey(),
+  leadId: int("leadId").notNull().references(() => leads.id, { onDelete: "cascade" }),
+  userId: int("userId").notNull().references(() => users.id, { onDelete: "cascade" }), // Who performed the activity
+  activityType: varchar("activityType", { length: 50 }).notNull(), // call, email, comment, file_upload, status_change, note
+  title: varchar("title", { length: 255 }).notNull(), // Activity title
+  description: text("description"), // Activity details
+  metadata: text("metadata"), // JSON: call duration, email subject, file info, etc.
+  fileUrl: varchar("fileUrl", { length: 500 }), // S3 URL for uploaded files
+  fileName: varchar("fileName", { length: 255 }), // Original file name
+  fileSize: int("fileSize"), // File size in bytes
+  fileMimeType: varchar("fileMimeType", { length: 100 }), // MIME type
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type LeadActivity = typeof leadActivities.$inferSelect;
+export type InsertLeadActivity = typeof leadActivities.$inferInsert;
 
 /**
  * Password reset tokens
