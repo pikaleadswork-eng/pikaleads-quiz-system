@@ -29,7 +29,7 @@ export const analyticsSettingsRouter = router({
    */
   getByProvider: protectedProcedure
     .input(z.object({
-      provider: z.enum(["ga4", "meta_pixel", "microsoft_clarity"]),
+      provider: z.enum(["ga4", "meta_pixel", "microsoft_clarity", "gtm"]),
     }))
     .query(async ({ input }) => {
       const db = await getDb();
@@ -54,7 +54,7 @@ export const analyticsSettingsRouter = router({
    */
   save: protectedProcedure
     .input(z.object({
-      provider: z.enum(["ga4", "meta_pixel", "microsoft_clarity"]),
+      provider: z.enum(["ga4", "meta_pixel", "microsoft_clarity", "gtm"]),
       trackingId: z.string().min(1),
       isActive: z.boolean().default(true),
     }))
@@ -101,7 +101,7 @@ export const analyticsSettingsRouter = router({
    */
   delete: protectedProcedure
     .input(z.object({
-      provider: z.enum(["ga4", "meta_pixel", "microsoft_clarity"]),
+      provider: z.enum(["ga4", "meta_pixel", "microsoft_clarity", "gtm"]),
     }))
     .mutation(async ({ input }) => {
       const db = await getDb();
@@ -125,7 +125,7 @@ export const analyticsSettingsRouter = router({
    */
   toggleActive: protectedProcedure
     .input(z.object({
-      provider: z.enum(["ga4", "meta_pixel", "microsoft_clarity"]),
+      provider: z.enum(["ga4", "meta_pixel", "microsoft_clarity", "gtm"]),
       isActive: z.boolean(),
     }))
     .mutation(async ({ input }) => {

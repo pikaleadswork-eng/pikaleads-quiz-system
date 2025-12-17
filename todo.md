@@ -3353,3 +3353,18 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Add click-to-call functionality
 - [x] Add call history display
 - [x] Test all fixes and features
+
+## Phase 116: Add GTM Container ID to Analytics Settings
+- [x] Add GTM state variable to AdminSettings
+- [x] Add GTM input field in Analytics tab (after Microsoft Clarity)
+- [x] Load GTM value from database on page load
+- [x] Save GTM value to database when clicking Save button
+- [x] Test GTM editing functionality
+
+## Phase 117: Fix CRMLayout Sidebar Translations
+- [x] Translate "nav.calendar" to proper Ukrainian
+- [x] Translate "nav.scheduleCallsMeetings" to proper Ukrainian
+- [x] Translate "Pipeline" menu item
+- [x] Translate "Attribution" menu item
+- [x] Translate "Profile" button
+- [x] Add spacing (mt-2) between Profile and Logout buttons

@@ -62,8 +62,17 @@
     "revenueTransactions": "Revenue & transactions",
     "scripts": "Scripts",
     "callScriptsLibrary": "Call scripts library",
+    "calendar": "Calendar",
+    "scheduleCallsMeetings": "Schedule calls and meetings",
+    "pipeline": "Pipeline",
+    "pipelineDescription": "Sales funnel and conversion metrics",
+    "attribution": "Attribution",
+    "attributionDescription": "Lead sources and ROAS analysis",
     "settings": "Settings",
     "integrationsAPI": "Integrations & API"
+  },
+  "profile": {
+    "title": "Profile"
   },
   "messaging": {
     "title": "Messaging Inbox",

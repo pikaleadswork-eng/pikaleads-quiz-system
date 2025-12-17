@@ -94,16 +94,16 @@ export default function CRMLayout({ children }: CRMLayoutProps) {
       description: t("nav.scheduleCallsMeetings") || "Schedule calls and meetings",
     },
     {
-      title: "Pipeline",
+      title: t("nav.pipeline"),
       icon: BarChart3,
       href: "/admin/pipeline",
-      description: "Sales funnel and conversion metrics",
+      description: t("nav.pipelineDescription"),
     },
     {
-      title: "Attribution",
+      title: t("nav.attribution"),
       icon: TrendingUp,
       href: "/admin/attribution",
-      description: "Lead sources and ROAS analysis",
+      description: t("nav.attributionDescription"),
     },
     {
       title: t("nav.settings"),
@@ -231,13 +231,13 @@ export default function CRMLayout({ children }: CRMLayoutProps) {
                 className="w-full gap-2 bg-transparent border-zinc-700 hover:bg-zinc-800 hover:border-zinc-600"
               >
                 <User className="w-4 h-4" />
-                {t("profile.title", "Profile")}
+                {t("profile.title")}
               </Button>
             </Link>
             <Button
               variant="outline"
               size="sm"
-              className="w-full gap-2 bg-transparent border-zinc-700 hover:bg-zinc-800 hover:border-red-500 hover:text-red-400"
+              className="mt-2 w-full gap-2 bg-transparent border-zinc-700 hover:bg-zinc-800 hover:border-red-500 hover:text-red-400"
               onClick={() => {
                 window.location.href = "/logout";
               }}

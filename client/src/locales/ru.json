@@ -63,8 +63,17 @@
     "revenueTransactions": "Доход и транзакции",
     "scripts": "Скрипты",
     "callScriptsLibrary": "Библиотека скриптов звонков",
+    "calendar": "Календарь",
+    "scheduleCallsMeetings": "Расписание звонков и встреч",
+    "pipeline": "Воронка продаж",
+    "pipelineDescription": "Воронка продаж и метрики конверсии",
+    "attribution": "Атрибуция",
+    "attributionDescription": "Источники лидов и анализ ROAS",
     "settings": "Настройки",
     "integrationsAPI": "Интеграции и API"
+  },
+  "profile": {
+    "title": "Профиль"
   },
   "messaging": {
     "title": "Входящие сообщения",

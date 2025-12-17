@@ -50,6 +50,7 @@ export default function AdminSettings() {
   const [ga4MeasurementId, setGa4MeasurementId] = useState("");
   const [metaPixelId, setMetaPixelId] = useState("");
   const [clarityProjectId, setClarityProjectId] = useState("");
+  const [gtmContainerId, setGtmContainerId] = useState("");
 
   // Query declarations BEFORE useEffect
   const { data: analyticsSettings, isLoading: analyticsLoading } = trpc.analyticsSettings.getAll.useQuery();
@@ -61,10 +62,12 @@ export default function AdminSettings() {
       const ga4 = analyticsSettings.find(s => s.provider === 'ga4');
       const meta = analyticsSettings.find(s => s.provider === 'meta_pixel');
       const clarity = analyticsSettings.find(s => s.provider === 'microsoft_clarity');
+      const gtm = analyticsSettings.find(s => s.provider === 'gtm');
       
       if (ga4) setGa4MeasurementId(ga4.trackingId);
       if (meta) setMetaPixelId(meta.trackingId);
       if (clarity) setClarityProjectId(clarity.trackingId);
+      if (gtm) setGtmContainerId(gtm.trackingId);
     }
   }, [analyticsSettings]);
 
@@ -747,6 +750,27 @@ export default function AdminSettings() {
                   </div>
                 </div>
 
+                {/* Google Tag Manager */}
+                <div className="space-y-4 p-4 bg-zinc-800 rounded-lg">
+                  <div className="flex items-center gap-2 mb-2">
+                    <svg className="w-5 h-5 text-yellow-500" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 0L1.608 6v12L12 24l10.392-6V6L12 0zm0 2.5l8.392 4.85v9.3L12 21.5l-8.392-4.85v-9.3L12 2.5zm0 2.5L6.5 8.25v7.5L12 19l5.5-3.25v-7.5L12 5z"/>
+                    </svg>
+                    <h3 className="text-lg font-semibold text-white">Google Tag Manager</h3>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="gtm-container-id" className="mb-2 block">GTM Container ID</Label>
+                    <Input
+                      id="gtm-container-id"
+                      placeholder="GTM-XXXXXXX"
+                      value={gtmContainerId}
+                      onChange={(e) => setGtmContainerId(e.target.value)}
+                      className="bg-zinc-900 border-zinc-700"
+                    />
+                    <p className="text-xs text-gray-400">Enter your Google Tag Manager Container ID (e.g., GTM-KJR4RP5K)</p>
+                  </div>
+                </div>
+
                 <div className="bg-blue-900/20 border border-blue-500/30 p-4 rounded-lg text-sm text-blue-200">
                   <p className="font-semibold mb-2">ℹ️ {t('settings.analyticsNote')}</p>
                   <p>{t('settings.analyticsNoteDescription')}</p>
@@ -783,6 +807,16 @@ export default function AdminSettings() {
                           saveAnalyticsMutation.mutateAsync({
                             provider: 'microsoft_clarity',
                             trackingId: clarityProjectId,
+                            isActive: true,
+                          })
+                        );
+                      }
+                      
+                      if (gtmContainerId) {
+                        promises.push(
+                          saveAnalyticsMutation.mutateAsync({
+                            provider: 'gtm',
+                            trackingId: gtmContainerId,
                             isActive: true,
                           })
                         );
