@@ -1,4 +1,4 @@
-import { ReactNode, useState, useEffect } from "react";
+import { useState, useEffect, ReactNode } from "react";
 import { Link, useLocation } from "wouter";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
@@ -30,7 +30,29 @@ export default function CRMLayout({ children }: CRMLayoutProps) {
 
   const { user, loading: authLoading } = useAuth();
   const [location] = useLocation();
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(() => {
+    // Default open on desktop (>= 1024px), closed on mobile
+    return typeof window !== 'undefined' && window.innerWidth >= 1024;
+  });
+
+  // Close sidebar when clicking on a menu item (mobile only)
+  const handleMenuClick = () => {
+    if (window.innerWidth < 1024) { // lg breakpoint
+      setSidebarOpen(false);
+    }
+  };
+
+  // Update sidebar state on window resize
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        setSidebarOpen(true); // Always open on desktop
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const navItems = [
     {
@@ -115,11 +137,20 @@ export default function CRMLayout({ children }: CRMLayoutProps) {
 
   return (
     <div className="min-h-screen bg-black text-white flex">
+      {/* Mobile Backdrop */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/70 z-40 lg:hidden backdrop-blur-sm transition-opacity duration-300"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
       {/* Sidebar */}
       <aside
         className={cn(
-          "fixed left-0 top-0 h-full bg-zinc-900 border-r border-zinc-800 transition-all duration-300 z-50",
-          sidebarOpen ? "w-64" : "w-0 -translate-x-full"
+          "fixed left-0 top-0 h-full bg-zinc-900 border-r border-zinc-800 transition-transform duration-300 z-50",
+          sidebarOpen ? "translate-x-0 w-64" : "-translate-x-full w-64",
+          "lg:translate-x-0" // Always visible on desktop
         )}
       >
         <div className="flex flex-col h-full">
@@ -149,6 +180,7 @@ export default function CRMLayout({ children }: CRMLayoutProps) {
               return (
                 <Link key={item.href} href={item.href}>
                   <a
+                    onClick={handleMenuClick}
                     className={cn(
                       "flex items-start gap-3 p-3 rounded-lg transition-all cursor-pointer group",
                       isActive
@@ -204,12 +236,7 @@ export default function CRMLayout({ children }: CRMLayoutProps) {
       </aside>
 
       {/* Main Content */}
-      <div
-        className={cn(
-          "flex-1 transition-all duration-300",
-          sidebarOpen ? "lg:ml-64" : "ml-0"
-        )}
-      >
+      <div className="flex-1 lg:ml-64 transition-all duration-300">
         {/* Top Header */}
         <header className="sticky top-0 z-40 bg-zinc-900/95 backdrop-blur border-b border-zinc-800">
           <div className="flex items-center justify-between p-4">
@@ -237,13 +264,6 @@ export default function CRMLayout({ children }: CRMLayoutProps) {
         </main>
       </div>
 
-      {/* Mobile Overlay */}
-      {sidebarOpen && (
-        <div
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
     </div>
   );
 }
