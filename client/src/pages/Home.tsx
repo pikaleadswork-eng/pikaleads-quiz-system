@@ -5,6 +5,8 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/lib/translations";
 import { trpc } from "@/lib/trpc";
 import { Link } from "wouter";
+import { SEO } from "@/components/SEO";
+import { createOrganizationSchema, createWebSiteSchema } from "@/lib/structuredData";
 
 // Niche display names
 const NICHE_LABELS: Record<string, { uk: string; ru: string; en: string }> = {
@@ -19,6 +21,15 @@ const NICHE_LABELS: Record<string, { uk: string; ru: string; en: string }> = {
 export default function Home() {
   const { language } = useLanguage();
   const t = translations[language];
+
+  // Structured data for homepage
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      createOrganizationSchema(),
+      createWebSiteSchema(),
+    ],
+  };
 
   // Load quizzes from database
   const { data: allQuizzes = [], isLoading } = trpc.quizzes.list.useQuery();
@@ -63,11 +74,31 @@ export default function Home() {
   const googleQuizzes = allQuizzes.filter(q => q.platform === 'google_ads');
 
   return (
-    <QuizLayout
-      title={t.homeTitle}
-      subtitle={t.homeSubtitle}
-    >
-      <div className="max-w-7xl mx-auto space-y-16">
+    <>
+      <SEO
+        title={{
+          uk: "PIKALEADS - Професійна реклама Meta Ads та Google Ads | Збільште продажі на 300%",
+          ru: "PIKALEADS - Профессиональная реклама Meta Ads и Google Ads | Увеличьте продажи на 300%",
+          en: "PIKALEADS - Professional Meta Ads & Google Ads Marketing | Increase Sales by 300%",
+        }}
+        description={{
+          uk: "Запускаємо ефективну рекламу в Meta (Facebook, Instagram) та Google з фокусом на реальний результат. Безкоштовний маркетинговий аналіз для вашого бізнесу. Меблі, ремонт, e-commerce, Telegram, будівництво, доставка їжі, B2B.",
+          ru: "Запускаем эффективную рекламу в Meta (Facebook, Instagram) и Google с фокусом на реальный результат. Бесплатный маркетинговый анализ для вашего бизнеса. Мебель, ремонт, e-commerce, Telegram, строительство, доставка еды, B2B.",
+          en: "Launch effective Meta (Facebook, Instagram) and Google advertising focused on real results. Free marketing analysis for your business. Furniture, renovation, e-commerce, Telegram, construction, food delivery, B2B.",
+        }}
+        keywords={{
+          uk: "meta ads україна, google ads, таргетована реклама, реклама facebook, реклама instagram, google реклама, просування бізнесу, інтернет маркетинг, реклама меблів, реклама ремонту, реклама e-commerce, реклама telegram, будівельна реклама, реклама доставки їжі, b2b реклама",
+          ru: "meta ads украина, google ads, таргетированная реклама, реклама facebook, реклама instagram, google реклама, продвижение бизнеса, интернет маркетинг, реклама мебели, реклама ремонта, реклама e-commerce, реклама telegram, строительная реклама, реклама доставки еды, b2b реклама",
+          en: "meta ads ukraine, google ads, targeted advertising, facebook ads, instagram ads, google advertising, business promotion, internet marketing, furniture ads, renovation ads, e-commerce ads, telegram ads, construction ads, food delivery ads, b2b advertising",
+        }}
+        canonical="/"
+        structuredData={structuredData}
+      />
+      <QuizLayout
+        title={t.homeTitle}
+        subtitle={t.homeSubtitle}
+      >
+        <div className="max-w-7xl mx-auto space-y-16">
         {/* META ADS Quizzes */}
         {metaQuizzes.length > 0 && (
           <section>
@@ -102,5 +133,6 @@ export default function Home() {
         )}
       </div>
     </QuizLayout>
+    </>
   );
 }

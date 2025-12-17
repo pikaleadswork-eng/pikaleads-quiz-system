@@ -1,0 +1,28 @@
+# robots.txt for PIKALEADS Lead Engine
+
+# Allow all search engines to index public pages
+User-agent: *
+
+# Allow public pages
+Allow: /
+Allow: /quiz/
+Allow: /meta-*
+Allow: /google-*
+Allow: /thank-you
+Allow: /privacy
+Allow: /contact
+
+# Disallow CRM and admin pages
+Disallow: /crm
+Disallow: /admin
+Disallow: /manager
+Disallow: /profile
+Disallow: /settings
+Disallow: /messaging
+Disallow: /services
+Disallow: /sales
+Disallow: /scripts
+Disallow: /api/
+
+# Sitemap location
+Sitemap: https://pikaleadsquiz-eccrelaa.manus.space/sitemap.xml
