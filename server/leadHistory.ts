@@ -1,6 +1,6 @@
 import { getDb } from "./db";
-import { leadHistory, leads } from "../drizzle/schema";
-import { eq } from "drizzle-orm";
+import { leadHistory, leads, users } from "../drizzle/schema";
+import { eq, and, gte, lte, isNull, desc } from "drizzle-orm";
 
 /**
  * Log a change to a lead field
@@ -32,7 +32,7 @@ export async function logLeadChange(params: {
 }
 
 /**
- * Get lead change history
+ * Get lead change history with user names
  */
 export async function getLeadHistory(leadId: number) {
   const db = await getDb();
@@ -49,8 +49,10 @@ export async function getLeadHistory(leadId: number) {
       newValue: leadHistory.newValue,
       changedAt: leadHistory.changedAt,
       userId: leadHistory.userId,
+      userName: users.name,
     })
     .from(leadHistory)
+    .leftJoin(users, eq(leadHistory.userId, users.id))
     .where(eq(leadHistory.leadId, leadId))
     .orderBy(leadHistory.changedAt);
 

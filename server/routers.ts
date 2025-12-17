@@ -823,6 +823,13 @@ ${input.campaign ? `**Campaign:** ${input.campaign}\n` : ""}
         return { success: true };
       }),
     
+    getHistory: protectedProcedure
+      .input(z.object({ leadId: z.number() }))
+      .query(async ({ input }) => {
+        const { getLeadHistory } = await import("./leadHistory");
+        return await getLeadHistory(input.leadId);
+      }),
+    
     updateLead: protectedProcedure
       .input(z.object({
         leadId: z.number(),
@@ -831,13 +838,30 @@ ${input.campaign ? `**Campaign:** ${input.campaign}\n` : ""}
         email: z.string().optional(),
         telegram: z.string().optional(),
       }))
-      .mutation(async ({ input }) => {
+      .mutation(async ({ input, ctx }) => {
         const db = await import("./db").then(m => m.getDb());
         if (!db) throw new Error("Database not available");
         const { leads } = await import("../drizzle/schema");
         const { eq } = await import("drizzle-orm");
+        const { logLeadChanges } = await import("./leadHistory");
+        
         const { leadId, ...updates } = input;
+        
+        // Get old data for logging
+        const [oldLead] = await db.select().from(leads).where(eq(leads.id, leadId));
+        if (!oldLead) throw new Error("Lead not found");
+        
+        // Update lead
         await db.update(leads).set(updates).where(eq(leads.id, leadId));
+        
+        // Log changes
+        await logLeadChanges({
+          leadId,
+          userId: ctx.user.id,
+          oldData: oldLead,
+          newData: { ...oldLead, ...updates },
+        });
+        
         return { success: true };
       }),
     

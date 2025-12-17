@@ -2976,3 +2976,33 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [ ] Send email with reset link (expires in 1 hour)
 - [ ] Add translations for forgot password flow
 - [ ] Test complete flow from request to reset
+
+
+## New Feature Implementation
+
+### Lead Change History Integration
+- [x] Add logging to crm.updateLead procedure
+- [x] Add logging to crm.updateLeadStatus procedure
+- [x] Add logging to crm.assignLead procedure
+- [x] Create backend procedure to get lead history with user names
+- [x] Create LeadTimeline UI component with icons for different change types
+- [x] Add History tab to EditLeadForm modal
+- [x] Display timeline with "who changed what when"
+- [ ] Test with multiple edits and verify logging
+
+### Personal Telegram Notifications
+- [x] Add telegramChatId field to users table
+- [ ] Update event notifications to use user's personal chat ID (requires user to set their chat ID first)
+- [ ] Add UI in user settings to configure Telegram chat ID
+- [ ] Update notification job to send to personal chats
+- [ ] Test with multiple managers having different chat IDs
+
+### Forgot Password Flow
+- [ ] Create password_reset_tokens table (id, userId, token, expiresAt, usedAt)
+- [ ] Add "Forgot Password?" link on Login page
+- [ ] Create ForgotPassword page with email input
+- [ ] Create backend procedure to generate reset token and send email
+- [ ] Create ResetPassword page with token validation
+- [ ] Add backend procedure to verify token and update password
+- [ ] Add email templates for password reset
+- [ ] Test complete flow from forgot to reset

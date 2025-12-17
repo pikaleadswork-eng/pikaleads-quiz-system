@@ -286,6 +286,11 @@ export async function createMessage(message: InsertMessage) {
 export async function updateLeadStatusById(leadId: number, statusId: number, userId: number) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
+  
+  // Get old status for logging
+  const [oldLead] = await db.select().from(leads).where(eq(leads.id, leadId));
+  if (!oldLead) throw new Error("Lead not found");
+  
   await db.update(leads).set({ statusId }).where(eq(leads.id, leadId));
   
   // Log activity
@@ -295,19 +300,44 @@ export async function updateLeadStatusById(leadId: number, statusId: number, use
     action: "status_change",
     details: JSON.stringify({ newStatusId: statusId }),
   });
+  
+  // Log to lead history
+  const { logLeadChange } = await import("./leadHistory");
+  await logLeadChange({
+    leadId,
+    userId,
+    field: "statusId",
+    oldValue: oldLead.statusId ? String(oldLead.statusId) : null,
+    newValue: String(statusId),
+  });
 }
 
 export async function assignLeadToManager(leadId: number, managerId: number, adminId: number) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
+  
+  // Get old assignment for logging
+  const [oldLead] = await db.select().from(leads).where(eq(leads.id, leadId));
+  if (!oldLead) throw new Error("Lead not found");
+  
   await db.update(leads).set({ assignedTo: managerId }).where(eq(leads.id, leadId));
   
   // Log activity
   await logActivity({
     userId: adminId,
     leadId,
-    action: "lead_assigned",
+     action: "assign_lead",
     details: JSON.stringify({ managerId }),
+  });
+  
+  // Log to lead history
+  const { logLeadChange } = await import("./leadHistory");
+  await logLeadChange({
+    leadId,
+    userId: adminId,
+    field: "assignedTo",
+    oldValue: oldLead.assignedTo ? String(oldLead.assignedTo) : null,
+    newValue: String(managerId),
   });
 }
 

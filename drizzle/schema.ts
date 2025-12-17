@@ -16,6 +16,7 @@ export const users = mysqlTable("users", {
   passwordHash: varchar("passwordHash", { length: 255 }).notNull(),
   isActive: boolean("isActive").default(true).notNull(),
   role: mysqlEnum("role", ["user", "admin", "manager"]).default("user").notNull(),
+  telegramChatId: varchar("telegramChatId", { length: 255 }),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
   lastSignedIn: timestamp("lastSignedIn").defaultNow().notNull(),

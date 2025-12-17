@@ -16,6 +16,8 @@ import { toast } from "sonner";
 import { Loader2, Send, MessageCircle, Mail } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { LeadComments } from "@/components/LeadComments";
+import LeadTimeline from "@/components/LeadTimeline";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface EditLeadFormProps {
   lead: any;
@@ -305,11 +307,19 @@ export function EditLeadForm({ lead, onClose, onSuccess }: EditLeadFormProps) {
         </div>
       </div>
 
-      {/* Lead Comments */}
-      <div>
-        <h3 className="text-lg font-semibold mb-4">{t('editLead.comments')}</h3>
-        <LeadComments leadId={lead.id} />
-      </div>
+      {/* Comments and History Tabs */}
+      <Tabs defaultValue="comments" className="w-full">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="comments">{t('editLead.comments')}</TabsTrigger>
+          <TabsTrigger value="history">{t('editLead.history')}</TabsTrigger>
+        </TabsList>
+        <TabsContent value="comments" className="mt-4">
+          <LeadComments leadId={lead.id} />
+        </TabsContent>
+        <TabsContent value="history" className="mt-4">
+          <LeadTimeline leadId={lead.id} />
+        </TabsContent>
+      </Tabs>
 
       {/* Actions */}
       <div className="flex justify-between">
