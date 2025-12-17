@@ -16,6 +16,7 @@ export function AnalyticsScripts() {
     const ga4 = analyticsSettings.find(s => s.provider === 'ga4' && s.isActive);
     const metaPixel = analyticsSettings.find(s => s.provider === 'meta_pixel' && s.isActive);
     const clarity = analyticsSettings.find(s => s.provider === 'microsoft_clarity' && s.isActive);
+    const gtm = analyticsSettings.find(s => s.provider === 'google_tag_manager' && s.isActive);
 
     // Inject Google Analytics 4
     if (ga4) {
@@ -65,6 +66,34 @@ export function AnalyticsScripts() {
         img.src = `https://www.facebook.com/tr?id=${metaPixel.trackingId}&ev=PageView&noscript=1`;
         noscript.appendChild(img);
         document.body.appendChild(noscript);
+      }
+    }
+
+    // Inject Google Tag Manager
+    if (gtm) {
+      if (!document.querySelector(`script[data-gtm-id="${gtm.trackingId}"]`)) {
+        // GTM Head Script
+        const headScript = document.createElement('script');
+        headScript.setAttribute('data-gtm-id', gtm.trackingId);
+        headScript.innerHTML = `
+          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+          })(window,document,'script','dataLayer','${gtm.trackingId}');
+        `;
+        document.head.insertBefore(headScript, document.head.firstChild);
+
+        // GTM Body Noscript
+        const noscript = document.createElement('noscript');
+        const iframe = document.createElement('iframe');
+        iframe.src = `https://www.googletagmanager.com/ns.html?id=${gtm.trackingId}`;
+        iframe.height = '0';
+        iframe.width = '0';
+        iframe.style.display = 'none';
+        iframe.style.visibility = 'hidden';
+        noscript.appendChild(iframe);
+        document.body.insertBefore(noscript, document.body.firstChild);
       }
     }
 

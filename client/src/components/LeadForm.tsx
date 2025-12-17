@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { ClarityEvents } from "@/lib/clarityEvents";
 
 const translations = {
   uk: {
@@ -93,8 +94,17 @@ export default function LeadForm({ onSubmit, isLoading }: LeadFormProps) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (name && phone) {
+      ClarityEvents.trackLeadFormSubmit('lead_form', !!email, !!telegram);
       onSubmit({ name, phone, telegram, email });
     }
+  };
+
+  const handleFieldFocus = (fieldName: string) => {
+    ClarityEvents.trackFormFieldFocus(fieldName, 'lead_form');
+  };
+
+  const handleFieldBlur = (fieldName: string, value: string) => {
+    ClarityEvents.trackFormFieldBlur(fieldName, 'lead_form', !!value);
   };
 
   return (
@@ -116,6 +126,8 @@ export default function LeadForm({ onSubmit, isLoading }: LeadFormProps) {
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              onFocus={() => handleFieldFocus('name')}
+              onBlur={() => handleFieldBlur('name', name)}
               required
               placeholder={t.namePlaceholder}
               className="h-14 text-lg bg-input border-2 border-border focus:border-primary text-foreground"
@@ -130,6 +142,8 @@ export default function LeadForm({ onSubmit, isLoading }: LeadFormProps) {
               type="tel"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
+              onFocus={() => handleFieldFocus('phone')}
+              onBlur={() => handleFieldBlur('phone', phone)}
               required
               placeholder={t.phonePlaceholder}
               className="h-14 text-lg bg-input border-2 border-border focus:border-primary text-foreground"
@@ -144,6 +158,8 @@ export default function LeadForm({ onSubmit, isLoading }: LeadFormProps) {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              onFocus={() => handleFieldFocus('email')}
+              onBlur={() => handleFieldBlur('email', email)}
               placeholder={t.emailPlaceholder}
               className="h-14 text-lg bg-input border-2 border-border focus:border-primary text-foreground"
             />

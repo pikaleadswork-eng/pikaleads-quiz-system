@@ -935,3 +935,19 @@ export const passwordResetTokens = mysqlTable("password_reset_tokens", {
 
 export type PasswordResetToken = typeof passwordResetTokens.$inferSelect;
 export type InsertPasswordResetToken = typeof passwordResetTokens.$inferInsert;
+
+// Events Log for Analytics Monitoring
+export const events_log = mysqlTable("events_log", {
+  id: int("id").autoincrement().primaryKey(),
+  eventType: varchar("event_type", { length: 100 }).notNull(), // quiz_start, form_submit, cta_click, etc.
+  platform: varchar("platform", { length: 50 }).notNull(), // ga4, meta_pixel, gtm, clarity
+  status: varchar("status", { length: 20 }).notNull().default("success"), // success, fail, pending
+  eventData: json("event_data"), // Full event payload
+  errorMessage: text("error_message"), // Error details if failed
+  userId: varchar("user_id", { length: 255 }), // User/session identifier
+  quizId: varchar("quiz_id", { length: 255 }), // Quiz identifier if applicable
+  timestamp: timestamp("timestamp").defaultNow().notNull(),
+  responseTime: int("response_time"), // API response time in ms
+  ipAddress: varchar("ip_address", { length: 45 }), // User IP
+  userAgent: text("user_agent"), // Browser info
+});

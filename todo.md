@@ -1,6 +1,19 @@
 # PIKALEADS CRM System TODO
 
-## Phase 32 - 3-Column Messaging Inbox with Lead Info Panel (CURRENT)
+## Phase 120: Analytics Enhancements (CURRENT)
+- [x] Make GTM dynamic - move Container ID from index.html to AnalyticsScripts.tsx
+- [x] Update analytics_settings to load GTM dynamically from database
+- [x] Add Clarity custom events for CTA clicks
+- [x] Add Clarity custom events for form field interactions
+- [x] Add Clarity custom events for quiz drop-off tracking
+- [x] Create events_log table in database for event monitoring
+- [x] Create Events Dashboard page in CRM (/admin/events)
+- [x] Display last 100 events with status (success/fail)
+- [x] Add real-time auto-refresh to Events Dashboard
+- [x] Add event filtering by type and platform
+- [x] Test all analytics enhancements
+
+## Phase 32 - 3-Column Messaging Inbox with Lead Info Panel
 
 ### Database Schema Updates
 - [x] Create scheduled_messages table (leadId, channel, message, scheduledAt, status)

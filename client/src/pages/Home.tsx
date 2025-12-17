@@ -7,6 +7,7 @@ import { trpc } from "@/lib/trpc";
 import { Link } from "wouter";
 import { SEO } from "@/components/SEO";
 import { createOrganizationSchema, createWebSiteSchema } from "@/lib/structuredData";
+import { ClarityEvents } from "@/lib/clarityEvents";
 
 // Niche display names
 const NICHE_LABELS: Record<string, { uk: string; ru: string; en: string }> = {
@@ -60,6 +61,7 @@ export default function Home() {
             <Button
               variant="default"
               className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex-shrink-0"
+              onClick={() => ClarityEvents.trackCTAClick(t.learnMore, `home_quiz_${quiz.slug}`)}
             >
               {t.learnMore}
             </Button>

@@ -18,7 +18,8 @@ import {
   Calendar,
   User,
   BarChart3,
-  TrendingUp
+  TrendingUp,
+  Activity
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -104,6 +105,12 @@ export default function CRMLayout({ children }: CRMLayoutProps) {
       icon: TrendingUp,
       href: "/admin/attribution",
       description: t("nav.attributionDescription"),
+    },
+    {
+      title: t("nav.events") || "Events",
+      icon: Activity,
+      href: "/admin/events",
+      description: t("nav.eventsDescription") || "Real-time analytics monitoring",
     },
     {
       title: t("nav.settings"),

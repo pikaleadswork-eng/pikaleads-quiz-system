@@ -15,6 +15,7 @@ import { trackQuizStep as trackMetaStep, trackQuizComplete as trackMetaComplete,
 import { trackQuizStep as trackGA4Step, trackQuizComplete as trackGA4Complete, trackFormView, trackFormSubmit as trackGA4FormSubmit, trackDropOff } from "@/lib/googleAnalytics";
 import { getOrCreateSessionId, getCurrentAssignment, assignVariant } from "@/lib/abTesting";
 import { useUTMParams } from "@/hooks/useUTMParams";
+import { ClarityEvents } from "@/lib/clarityEvents";
 
 interface QuizProps {
   config: QuizConfig;
@@ -39,6 +40,22 @@ export default function Quiz({ config }: QuizProps) {
   const t = translations[language];
   const totalSteps = (quizData?.questions.length || config.questions.length) + 1;
   const isFormStep = currentStep > (quizData?.questions.length || config.questions.length);
+  const [quizStartTime] = useState(() => Date.now());
+
+  // Track quiz start on mount
+  useEffect(() => {
+    const quizName = quizData?.title || config.id;
+    ClarityEvents.trackQuizStart(config.id, quizName);
+  }, [config.id, quizData?.title]);
+
+  // Track question views
+  useEffect(() => {
+    if (!isFormStep) {
+      ClarityEvents.trackQuizQuestionView(config.id, currentStep, totalSteps - 1);
+    } else {
+      ClarityEvents.trackLeadFormStart(config.id);
+    }
+  }, [currentStep, isFormStep, config.id, totalSteps]);
 
   // Assign A/B test variant on mount
   useEffect(() => {
@@ -66,6 +83,7 @@ export default function Quiz({ config }: QuizProps) {
     const handleBeforeUnload = () => {
       if (!isFormStep) {
         trackDropOff(config.id, currentStep, totalSteps);
+        ClarityEvents.trackQuizDropOff(config.id, currentStep, totalSteps - 1, 'page_exit');
       }
     };
     window.addEventListener("beforeunload", handleBeforeUnload);
@@ -97,6 +115,7 @@ export default function Quiz({ config }: QuizProps) {
     // Track step completion
     trackMetaStep(config.id, currentStep, totalSteps);
     trackGA4Step(config.id, currentStep, totalSteps, answer);
+    ClarityEvents.trackQuizQuestionAnswer(config.id, currentStep, answer);
 
     // Auto-advance after selection
     setTimeout(() => {

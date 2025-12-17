@@ -28,6 +28,7 @@ import { emailAuthRouter } from "./routers/emailAuth";
 import { commentsRouter } from "./routers/comments";
 import { profileRouter } from "./routers/profile";
 import { calendarRouter } from "./routers/calendar";
+import { eventsLogRouter } from "./routers/eventsLog";
 // import { abTestingRouter } from "./routers/abTesting"; // Disabled - conflicts with existing AB test implementation
 import * as schema from "../drizzle/schema";
 import { getDb } from "./db";
@@ -1488,6 +1489,7 @@ ${input.campaign ? `**Campaign:** ${input.campaign}\n` : ""}
   analytics: analyticsRouter,
   settings: settingsRouter,
   analyticsSettings: analyticsSettingsRouter,
+  eventsLog: eventsLogRouter,
   quizDesign: quizDesignRouter,
   quizTemplates: quizTemplatesRouter,
   questionTemplates: questionTemplatesRouter,
