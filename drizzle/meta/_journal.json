@@ -260,6 +260,20 @@
       "when": 1765833742636,
       "tag": "0036_panoramic_wendigo",
       "breakpoints": true
+    },
+    {
+      "idx": 37,
+      "version": "5",
+      "when": 1765980324853,
+      "tag": "0037_abandoned_omega_red",
+      "breakpoints": true
+    },
+    {
+      "idx": 38,
+      "version": "5",
+      "when": 1765980607582,
+      "tag": "0038_shocking_bloodscream",
+      "breakpoints": true
     }
   ]
 }

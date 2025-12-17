@@ -834,3 +834,58 @@ export const questionTemplates = mysqlTable("question_templates", {
 
 export type QuestionTemplate = typeof questionTemplates.$inferSelect;
 export type InsertQuestionTemplate = typeof questionTemplates.$inferInsert;
+
+/**
+ * Calendar Events table - stores scheduled calls and meetings
+ */
+export const calendarEvents = mysqlTable("calendar_events", {
+  id: int("id").autoincrement().primaryKey(),
+  leadId: int("leadId").references(() => leads.id, { onDelete: "cascade" }),
+  userId: int("userId").notNull().references(() => users.id, { onDelete: "cascade" }), // Manager assigned
+  title: varchar("title", { length: 255 }).notNull(),
+  description: text("description"),
+  startTime: timestamp("startTime").notNull(),
+  endTime: timestamp("endTime").notNull(),
+  meetingLink: text("meetingLink"), // Google Meet or Zoom link
+  meetingType: varchar("meetingType", { length: 50 }), // call, meeting, demo
+  status: varchar("status", { length: 50 }).default("scheduled").notNull(), // scheduled, completed, cancelled, no_show
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type CalendarEvent = typeof calendarEvents.$inferSelect;
+export type InsertCalendarEvent = typeof calendarEvents.$inferInsert;
+
+/**
+ * Event Notifications table - tracks sent reminders
+ */
+export const eventNotifications = mysqlTable("event_notifications", {
+  id: int("id").autoincrement().primaryKey(),
+  eventId: int("eventId").notNull().references(() => calendarEvents.id, { onDelete: "cascade" }),
+  userId: int("userId").notNull().references(() => users.id, { onDelete: "cascade" }),
+  notificationType: varchar("notificationType", { length: 50 }).default("reminder_15min").notNull(), // reminder_15min, reminder_1hour, reminder_1day
+  scheduledFor: timestamp("scheduledFor").notNull(), // When notification should be sent
+  sentAt: timestamp("sentAt"), // When notification was actually sent
+  status: varchar("status", { length: 50 }).default("pending").notNull(), // pending, sent, failed
+  errorMessage: text("errorMessage"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type EventNotification = typeof eventNotifications.$inferSelect;
+export type InsertEventNotification = typeof eventNotifications.$inferInsert;
+
+/**
+ * Lead History table - tracks all changes to leads
+ */
+export const leadHistory = mysqlTable("lead_history", {
+  id: int("id").autoincrement().primaryKey(),
+  leadId: int("leadId").notNull().references(() => leads.id, { onDelete: "cascade" }),
+  userId: int("userId").notNull().references(() => users.id, { onDelete: "cascade" }), // Who made the change
+  field: varchar("field", { length: 100 }).notNull(), // Field that was changed (status, assignedTo, name, phone, email, notes, etc.)
+  oldValue: text("oldValue"), // Previous value (null for new leads)
+  newValue: text("newValue"), // New value
+  changedAt: timestamp("changedAt").defaultNow().notNull(),
+});
+
+export type LeadHistory = typeof leadHistory.$inferSelect;
+export type InsertLeadHistory = typeof leadHistory.$inferInsert;

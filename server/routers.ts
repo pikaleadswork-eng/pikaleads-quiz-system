@@ -25,6 +25,7 @@ import { prometheusRouter } from "./routers/prometheus";
 import { performanceRouter } from "./routers/performance";
 import { emailAuthRouter } from "./routers/emailAuth";
 import { commentsRouter } from "./routers/comments";
+import { calendarRouter } from "./routers/calendar";
 // import { abTestingRouter } from "./routers/abTesting"; // Disabled - conflicts with existing AB test implementation
 import * as schema from "../drizzle/schema";
 import { getDb } from "./db";
@@ -1396,6 +1397,7 @@ ${input.campaign ? `**Campaign:** ${input.campaign}\n` : ""}
   messaging: messagingRouter,
   services: servicesRouter,
   comments: commentsRouter,
+  calendar: calendarRouter,
   sales: salesRouter,
   salesScripts: salesScriptsRouter,
   integrations: integrationsRouter,
@@ -1409,42 +1411,6 @@ ${input.campaign ? `**Campaign:** ${input.campaign}\n` : ""}
   quizDesign: quizDesignRouter,
   quizTemplates: quizTemplatesRouter,
   questionTemplates: questionTemplatesRouter,
-
-  calendar: router({
-    getAppointments: protectedProcedure.query(async () => {
-      const { getAppointments } = await import("./db");
-      return await getAppointments();
-    }),
-
-    createAppointment: protectedProcedure
-      .input(z.object({
-        leadId: z.number(),
-        title: z.string(),
-        description: z.string().optional(),
-        scheduledAt: z.string(),
-        duration: z.number(),
-        meetingLink: z.string().optional(),
-      }))
-      .mutation(async ({ input, ctx }) => {
-        const { createAppointment } = await import("./db");
-        const appointmentId = await createAppointment({
-          ...input,
-          managerId: ctx.user.id,
-        });
-        return { success: true, appointmentId };
-      }),
-
-    updateAppointmentStatus: protectedProcedure
-      .input(z.object({
-        appointmentId: z.number(),
-        status: z.string(),
-      }))
-      .mutation(async ({ input }) => {
-        const { updateAppointmentStatus } = await import("./db");
-        await updateAppointmentStatus(input.appointmentId, input.status);
-        return { success: true };
-      }),
-  }),
 
   // Filter Presets for CRM
   filterPresets: router({

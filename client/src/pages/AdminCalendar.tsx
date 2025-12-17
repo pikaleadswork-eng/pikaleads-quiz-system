@@ -24,8 +24,8 @@ export default function AdminCalendar() {
 
   const { data: allLeads } = trpc.crm.getLeads.useQuery();
   const leads = allLeads || [];
-  const { data: appointments } = trpc.calendar.getAppointments.useQuery();
-  const createAppointment = trpc.calendar.createAppointment.useMutation();
+  const { data: appointments } = trpc.calendar.getMyEvents.useQuery({});
+  const createEvent = trpc.calendar.createEvent.useMutation();
 
   const handleCreateAppointment = async () => {
     if (!selectedLead || !title || !scheduledAt) {
@@ -34,14 +34,18 @@ export default function AdminCalendar() {
     }
 
     try {
-      await createAppointment.mutateAsync({
-        leadId: selectedLead,
-        title,
-        description,
-        scheduledAt: new Date(scheduledAt).toISOString(),
-        duration: parseInt(duration),
-        meetingLink,
-      });
+    const startTime = new Date(scheduledAt);
+    const endTime = new Date(startTime.getTime() + parseInt(duration) * 60000);
+    
+    await createEvent.mutateAsync({
+      leadId: selectedLead,
+      title,
+      description,
+      startTime: startTime.toISOString(),
+      endTime: endTime.toISOString(),
+      meetingLink,
+      meetingType: "call",
+    });
 
       // Reset form
       setSelectedLead(null);
@@ -174,8 +178,8 @@ export default function AdminCalendar() {
               />
             </div>
 
-            <Button onClick={handleCreateAppointment} className="w-full" disabled={createAppointment.isPending}>
-              {createAppointment.isPending ? t("calendar.creating") : t("calendar.createAppointment")}
+            <Button onClick={handleCreateAppointment} className="w-full" disabled={createEvent.isPending}>
+              {createEvent.isPending ? t("calendar.creating") : t("calendar.createAppointment")}
             </Button>
           </CardContent>
         </Card>

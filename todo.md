@@ -2925,3 +2925,54 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Load saved email on component mount
 - [x] Save email on successful form submission
 - [x] Test with browser autofill after page refresh
+
+
+## Feature Enhancements
+
+### 1. Automatic Push Notifications for Scheduled Calls
+- [x] Create notifications table (id, userId, eventId, eventType, scheduledFor, sentAt, status)
+- [x] Create calendar_events table for storing scheduled calls
+- [x] Add background job/cron to check upcoming events every minute
+- [x] Send Telegram notification 15 minutes before calendar event
+- [x] Integrate with existing calendar router
+- [ ] Add notification preferences to user settings (future enhancement)
+- [ ] Show notification history in UI (future enhancement)
+- [ ] Test with real calendar events
+
+### 2. Lead Change History Timeline
+- [x] Create lead_history table (id, leadId, userId, field, oldValue, newValue, changedAt)
+- [x] Create helper functions for logging lead changes
+- [ ] Integrate logging into CRM update procedures (requires extensive changes)
+- [ ] Create backend procedure to get lead history
+- [ ] Design timeline UI component with icons for different change types
+- [ ] Add timeline tab/section to EditLeadForm
+- [ ] Show "who changed what when" with user names and timestamps
+- [ ] Test with multiple edits and status changes
+
+**Note**: Full integration requires adding logging to all lead update points. Foundation is ready for future implementation.
+
+### 3. Remember Me Checkbox on Login
+- [x] Add "Remember Me" checkbox to Login form
+- [x] Update localStorage logic to respect checkbox state
+- [x] Clear localStorage when checkbox is unchecked
+- [x] Checkbox defaults to checked for better UX
+- [x] Test checkbox persistence across sessions
+
+### 4. Password Visibility Toggle
+- [x] Add eye icon button to password input in Login.tsx
+- [x] Toggle input type between "password" and "text"
+- [x] Add emoji icons for show/hide password
+- [x] Add proper ARIA labels for accessibility
+- [x] Test toggle functionality
+- [ ] Apply same toggle to password change forms (future enhancement)
+
+### 5. Forgot Password Flow
+- [ ] Create password_reset_tokens table (id, userId, token, expiresAt, usedAt)
+- [ ] Add "Forgot Password?" link on Login page
+- [ ] Create ForgotPassword.tsx page with email input
+- [ ] Create backend procedure to generate reset token and send email
+- [ ] Create ResetPassword.tsx page with token validation
+- [ ] Add password reset form with new password + confirm
+- [ ] Send email with reset link (expires in 1 hour)
+- [ ] Add translations for forgot password flow
+- [ ] Test complete flow from request to reset

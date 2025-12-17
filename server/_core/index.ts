@@ -74,6 +74,11 @@ async function startServer() {
 
   server.listen(port, () => {
     console.log(`Server running on http://localhost:${port}/`);
+    
+    // Start event notifications cron job
+    import("../jobs/eventNotifications").then(({ startEventNotificationsCron }) => {
+      startEventNotificationsCron();
+    }).catch(console.error);
   });
 }
 
