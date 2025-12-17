@@ -3368,3 +3368,39 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Translate "Attribution" menu item
 - [x] Translate "Profile" button
 - [x] Add spacing (mt-2) between Profile and Logout buttons
+
+## Phase 118: Analytics Enhancements - API Secret, Toggles, Testing
+- [ ] Add apiSecret column to analytics_settings table
+- [ ] Update analytics schema in drizzle
+- [ ] Add GA4 API Secret input field in UI
+- [ ] Add on/off Switch toggle for each tracker (GA4, Meta Pixel, GTM, Clarity)
+- [ ] Create test procedures for each tracker (send test events)
+- [ ] Add "Test" button for each tracker
+- [ ] Show success/error toast after test
+- [ ] Update save logic to include apiSecret
+- [ ] Test all functionality
+
+## Phase 118: Analytics Enhancements - All API Tokens, Toggles, Testing
+- [ ] Add apiSecret column to analytics_settings (for all providers)
+- [ ] Add serverContainerUrl column (for GTM Server)
+- [ ] Update analytics schema in drizzle
+- [ ] Push schema changes to database
+- [ ] Import Switch component in AdminSettings
+- [ ] Add GA4 API Secret input field
+- [ ] Add Meta Pixel Access Token input field
+- [ ] Add GTM Server Container URL input field
+- [ ] Add on/off Switch toggle for each tracker (GA4, Meta Pixel, GTM, Clarity)
+- [ ] Create test procedures for each tracker (send test events)
+- [ ] Add "Test" button for each tracker
+- [ ] Show success/error toast after test
+- [ ] Update save logic to include all new fields
+- [ ] Test all functionality
+## Phase 118: Add Analytics API Tokens and Test Buttons
+- [x] Add GA4 API Secret field
+- [x] Add Meta Pixel Access Token field
+- [x] Add GTM Server Container URL field
+- [x] Add on/off toggles for all trackers
+- [x] Add test buttons for all trackers
+- [x] Implement test procedures
+- [x] Write vitest tests
+- [x] All tests passing (11/11)

@@ -42,26 +42,40 @@ describe("Analytics Settings Router", () => {
     }
   });
 
-  it("should save GA4 analytics setting", async () => {
+  it("should save GA4 analytics setting with API Secret", async () => {
     const result = await caller.analyticsSettings.save({
       provider: "ga4",
       trackingId: "G-TEST123456",
+      apiSecret: "test_api_secret_123",
       isActive: true,
     });
 
     expect(result.success).toBe(true);
     createdProviders.push("ga4");
+    
+    // Verify API Secret was saved
+    const setting = await caller.analyticsSettings.getByProvider({
+      provider: "ga4",
+    });
+    expect(setting?.apiSecret).toBe("test_api_secret_123");
   });
 
-  it("should save Meta Pixel analytics setting", async () => {
+  it("should save Meta Pixel analytics setting with Access Token", async () => {
     const result = await caller.analyticsSettings.save({
       provider: "meta_pixel",
       trackingId: "1234567890123456",
+      apiSecret: "meta_access_token_xyz",
       isActive: true,
     });
 
     expect(result.success).toBe(true);
     createdProviders.push("meta_pixel");
+    
+    // Verify Access Token was saved
+    const setting = await caller.analyticsSettings.getByProvider({
+      provider: "meta_pixel",
+    });
+    expect(setting?.apiSecret).toBe("meta_access_token_xyz");
   });
 
   it("should save Microsoft Clarity analytics setting", async () => {
@@ -130,6 +144,42 @@ describe("Analytics Settings Router", () => {
     });
 
     expect(setting?.isActive).toBe(false);
+  });
+
+  it("should save GTM with Server Container URL", async () => {
+    const result = await caller.analyticsSettings.save({
+      provider: "gtm",
+      trackingId: "GTM-TEST123",
+      serverContainerUrl: "https://server.example.com",
+      isActive: true,
+    });
+
+    expect(result.success).toBe(true);
+    createdProviders.push("gtm");
+    
+    // Verify Server Container URL was saved
+    const setting = await caller.analyticsSettings.getByProvider({
+      provider: "gtm",
+    });
+    expect(setting?.serverContainerUrl).toBe("https://server.example.com");
+  });
+
+  it("should test GTM configuration", async () => {
+    const result = await caller.analyticsSettings.test({
+      provider: "gtm",
+    });
+
+    expect(result.success).toBe(true);
+    expect(result.message).toContain("gtm");
+  });
+
+  it("should test Clarity configuration", async () => {
+    const result = await caller.analyticsSettings.test({
+      provider: "microsoft_clarity",
+    });
+
+    expect(result.success).toBe(true);
+    expect(result.message).toContain("microsoft_clarity");
   });
 
   it("should delete analytics setting", async () => {

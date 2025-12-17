@@ -11,6 +11,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Switch } from "@/components/ui/switch";
 import { Loader2, Instagram, MessageCircle, Mail, Calendar, Save, CheckCircle2 } from "lucide-react";
 import { useAuth } from "@/_core/hooks/useAuth";
 import CRMLayout from "@/components/CRMLayout";
@@ -48,9 +49,16 @@ export default function AdminSettings() {
 
   // Analytics Tracking state
   const [ga4MeasurementId, setGa4MeasurementId] = useState("");
+  const [ga4ApiSecret, setGa4ApiSecret] = useState("");
+  const [ga4IsActive, setGa4IsActive] = useState(true);
   const [metaPixelId, setMetaPixelId] = useState("");
+  const [metaAccessToken, setMetaAccessToken] = useState("");
+  const [metaIsActive, setMetaIsActive] = useState(true);
   const [clarityProjectId, setClarityProjectId] = useState("");
+  const [clarityIsActive, setClarityIsActive] = useState(true);
   const [gtmContainerId, setGtmContainerId] = useState("");
+  const [gtmServerUrl, setGtmServerUrl] = useState("");
+  const [gtmIsActive, setGtmIsActive] = useState(true);
 
   // Query declarations BEFORE useEffect
   const { data: analyticsSettings, isLoading: analyticsLoading } = trpc.analyticsSettings.getAll.useQuery();
@@ -64,10 +72,25 @@ export default function AdminSettings() {
       const clarity = analyticsSettings.find(s => s.provider === 'microsoft_clarity');
       const gtm = analyticsSettings.find(s => s.provider === 'gtm');
       
-      if (ga4) setGa4MeasurementId(ga4.trackingId);
-      if (meta) setMetaPixelId(meta.trackingId);
-      if (clarity) setClarityProjectId(clarity.trackingId);
-      if (gtm) setGtmContainerId(gtm.trackingId);
+      if (ga4) {
+        setGa4MeasurementId(ga4.trackingId);
+        setGa4ApiSecret(ga4.apiSecret || "");
+        setGa4IsActive(ga4.isActive);
+      }
+      if (meta) {
+        setMetaPixelId(meta.trackingId);
+        setMetaAccessToken(meta.apiSecret || "");
+        setMetaIsActive(meta.isActive);
+      }
+      if (clarity) {
+        setClarityProjectId(clarity.trackingId);
+        setClarityIsActive(clarity.isActive);
+      }
+      if (gtm) {
+        setGtmContainerId(gtm.trackingId);
+        setGtmServerUrl(gtm.serverContainerUrl || "");
+        setGtmIsActive(gtm.isActive);
+      }
     }
   }, [analyticsSettings]);
 
@@ -97,6 +120,12 @@ export default function AdminSettings() {
     },
     onError: (error: any) => {
       toast.error(`Failed to save analytics settings: ${error.message}`);
+    },
+  });
+
+  const testAnalyticsMutation = trpc.analyticsSettings.test.useMutation({
+    onError: (error: any) => {
+      toast.error(`Test failed: ${error.message}`);
     },
   });
 
@@ -689,11 +718,17 @@ export default function AdminSettings() {
               <CardContent className="space-y-6">
                 {/* Google Analytics 4 */}
                 <div className="space-y-4 p-4 bg-zinc-800 rounded-lg">
-                  <div className="flex items-center gap-2 mb-2">
-                    <svg className="w-5 h-5 text-orange-500" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M22.84 2.998v17.999l-3.998 1.5v-17.999l3.998-1.5zm-5.998 2.25v17.999l-10.998 1.5v-17.999l10.998-1.5zm-12.998 1.5v17.999l-3.844 1.253v-17.999l3.844-1.253z"/>
-                    </svg>
-                    <h3 className="text-lg font-semibold text-white">Google Analytics 4</h3>
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-2">
+                      <svg className="w-5 h-5 text-orange-500" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M22.84 2.998v17.999l-3.998 1.5v-17.999l3.998-1.5zm-5.998 2.25v17.999l-10.998 1.5v-17.999l10.998-1.5zm-12.998 1.5v17.999l-3.844 1.253v-17.999l3.844-1.253z"/>
+                      </svg>
+                      <h3 className="text-lg font-semibold text-white">Google Analytics 4</h3>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <label className="text-sm text-gray-400">{ga4IsActive ? 'Active' : 'Inactive'}</label>
+                      <Switch checked={ga4IsActive} onCheckedChange={setGa4IsActive} />
+                    </div>
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="ga4-measurement-id" className="mb-2 block">{t('settings.measurementId')}</Label>
@@ -706,15 +741,54 @@ export default function AdminSettings() {
                     />
                     <p className="text-xs text-gray-400">{t('settings.ga4Help')}</p>
                   </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="ga4-api-secret" className="mb-2 block">API Secret (for server-side tracking)</Label>
+                    <Input
+                      id="ga4-api-secret"
+                      type="password"
+                      placeholder="Enter GA4 API Secret"
+                      value={ga4ApiSecret}
+                      onChange={(e) => setGa4ApiSecret(e.target.value)}
+                      className="bg-zinc-900 border-zinc-700"
+                    />
+                    <p className="text-xs text-gray-400">Required for Measurement Protocol API (server-side events)</p>
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={async () => {
+                      try {
+                        await testAnalyticsMutation.mutateAsync({ provider: 'ga4' });
+                        toast.success('GA4 test event sent successfully!');
+                      } catch (error: any) {
+                        toast.error(error.message || 'GA4 test failed');
+                      }
+                    }}
+                    disabled={!ga4MeasurementId || testAnalyticsMutation.isPending}
+                    className="w-full"
+                  >
+                    {testAnalyticsMutation.isPending ? (
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    ) : (
+                      <CheckCircle2 className="w-4 h-4 mr-2" />
+                    )}
+                    Test GA4 Connection
+                  </Button>
                 </div>
 
                 {/* Meta Pixel */}
                 <div className="space-y-4 p-4 bg-zinc-800 rounded-lg">
-                  <div className="flex items-center gap-2 mb-2">
-                    <svg className="w-5 h-5 text-blue-500" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                    </svg>
-                    <h3 className="text-lg font-semibold text-white">Meta Pixel (Facebook)</h3>
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-2">
+                      <svg className="w-5 h-5 text-blue-500" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                      </svg>
+                      <h3 className="text-lg font-semibold text-white">Meta Pixel (Facebook)</h3>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <label className="text-sm text-gray-400">{metaIsActive ? 'Active' : 'Inactive'}</label>
+                      <Switch checked={metaIsActive} onCheckedChange={setMetaIsActive} />
+                    </div>
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="meta-pixel-id" className="mb-2 block">{t('settings.pixelId')}</Label>
@@ -727,15 +801,54 @@ export default function AdminSettings() {
                     />
                     <p className="text-xs text-gray-400">{t('settings.metaPixelHelp')}</p>
                   </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="meta-access-token" className="mb-2 block">Access Token (for Conversions API)</Label>
+                    <Input
+                      id="meta-access-token"
+                      type="password"
+                      placeholder="Enter Meta Pixel Access Token"
+                      value={metaAccessToken}
+                      onChange={(e) => setMetaAccessToken(e.target.value)}
+                      className="bg-zinc-900 border-zinc-700"
+                    />
+                    <p className="text-xs text-gray-400">Required for server-side Conversions API events</p>
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={async () => {
+                      try {
+                        await testAnalyticsMutation.mutateAsync({ provider: 'meta_pixel' });
+                        toast.success('Meta Pixel test event sent successfully!');
+                      } catch (error: any) {
+                        toast.error(error.message || 'Meta Pixel test failed');
+                      }
+                    }}
+                    disabled={!metaPixelId || testAnalyticsMutation.isPending}
+                    className="w-full"
+                  >
+                    {testAnalyticsMutation.isPending ? (
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    ) : (
+                      <CheckCircle2 className="w-4 h-4 mr-2" />
+                    )}
+                    Test Meta Pixel Connection
+                  </Button>
                 </div>
 
                 {/* Microsoft Clarity */}
                 <div className="space-y-4 p-4 bg-zinc-800 rounded-lg">
-                  <div className="flex items-center gap-2 mb-2">
-                    <svg className="w-5 h-5 text-cyan-500" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M0 0v11.408h11.408V0H0zm12.594 0v11.408H24V0H12.594zM0 12.594V24h11.408V12.594H0zm12.594 0V24H24V12.594H12.594z"/>
-                    </svg>
-                    <h3 className="text-lg font-semibold text-white">Microsoft Clarity</h3>
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-2">
+                      <svg className="w-5 h-5 text-cyan-500" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M0 0v11.408h11.408V0H0zm12.594 0v11.408H24V0H12.594zM0 12.594V24h11.408V12.594H0zm12.594 0V24H24V12.594H12.594z"/>
+                      </svg>
+                      <h3 className="text-lg font-semibold text-white">Microsoft Clarity</h3>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <label className="text-sm text-gray-400">{clarityIsActive ? 'Active' : 'Inactive'}</label>
+                      <Switch checked={clarityIsActive} onCheckedChange={setClarityIsActive} />
+                    </div>
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="clarity-project-id" className="mb-2 block">{t('settings.projectId')}</Label>
@@ -748,15 +861,42 @@ export default function AdminSettings() {
                     />
                     <p className="text-xs text-gray-400">{t('settings.clarityHelp')}</p>
                   </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={async () => {
+                      try {
+                        await testAnalyticsMutation.mutateAsync({ provider: 'microsoft_clarity' });
+                        toast.success('Microsoft Clarity configuration verified!');
+                      } catch (error: any) {
+                        toast.error(error.message || 'Clarity test failed');
+                      }
+                    }}
+                    disabled={!clarityProjectId || testAnalyticsMutation.isPending}
+                    className="w-full"
+                  >
+                    {testAnalyticsMutation.isPending ? (
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    ) : (
+                      <CheckCircle2 className="w-4 h-4 mr-2" />
+                    )}
+                    Test Clarity Configuration
+                  </Button>
                 </div>
 
                 {/* Google Tag Manager */}
                 <div className="space-y-4 p-4 bg-zinc-800 rounded-lg">
-                  <div className="flex items-center gap-2 mb-2">
-                    <svg className="w-5 h-5 text-yellow-500" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M12 0L1.608 6v12L12 24l10.392-6V6L12 0zm0 2.5l8.392 4.85v9.3L12 21.5l-8.392-4.85v-9.3L12 2.5zm0 2.5L6.5 8.25v7.5L12 19l5.5-3.25v-7.5L12 5z"/>
-                    </svg>
-                    <h3 className="text-lg font-semibold text-white">Google Tag Manager</h3>
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-2">
+                      <svg className="w-5 h-5 text-yellow-500" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0L1.608 6v12L12 24l10.392-6V6L12 0zm0 2.5l8.392 4.85v9.3L12 21.5l-8.392-4.85v-9.3L12 2.5zm0 2.5L6.5 8.25v7.5L12 19l5.5-3.25v-7.5L12 5z"/>
+                      </svg>
+                      <h3 className="text-lg font-semibold text-white">Google Tag Manager</h3>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <label className="text-sm text-gray-400">{gtmIsActive ? 'Active' : 'Inactive'}</label>
+                      <Switch checked={gtmIsActive} onCheckedChange={setGtmIsActive} />
+                    </div>
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="gtm-container-id" className="mb-2 block">GTM Container ID</Label>
@@ -769,6 +909,38 @@ export default function AdminSettings() {
                     />
                     <p className="text-xs text-gray-400">Enter your Google Tag Manager Container ID (e.g., GTM-KJR4RP5K)</p>
                   </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="gtm-server-url" className="mb-2 block">Server Container URL (optional)</Label>
+                    <Input
+                      id="gtm-server-url"
+                      placeholder="https://your-server-container.com"
+                      value={gtmServerUrl}
+                      onChange={(e) => setGtmServerUrl(e.target.value)}
+                      className="bg-zinc-900 border-zinc-700"
+                    />
+                    <p className="text-xs text-gray-400">GTM Server-side tagging container URL (if using server-side GTM)</p>
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={async () => {
+                      try {
+                        await testAnalyticsMutation.mutateAsync({ provider: 'gtm' });
+                        toast.success('GTM Container ID verified!');
+                      } catch (error: any) {
+                        toast.error(error.message || 'GTM test failed');
+                      }
+                    }}
+                    disabled={!gtmContainerId || testAnalyticsMutation.isPending}
+                    className="w-full"
+                  >
+                    {testAnalyticsMutation.isPending ? (
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    ) : (
+                      <CheckCircle2 className="w-4 h-4 mr-2" />
+                    )}
+                    Test GTM Configuration
+                  </Button>
                 </div>
 
                 <div className="bg-blue-900/20 border border-blue-500/30 p-4 rounded-lg text-sm text-blue-200">
@@ -787,7 +959,8 @@ export default function AdminSettings() {
                           saveAnalyticsMutation.mutateAsync({
                             provider: 'ga4',
                             trackingId: ga4MeasurementId,
-                            isActive: true,
+                            apiSecret: ga4ApiSecret || undefined,
+                            isActive: ga4IsActive,
                           })
                         );
                       }
@@ -797,7 +970,8 @@ export default function AdminSettings() {
                           saveAnalyticsMutation.mutateAsync({
                             provider: 'meta_pixel',
                             trackingId: metaPixelId,
-                            isActive: true,
+                            apiSecret: metaAccessToken || undefined,
+                            isActive: metaIsActive,
                           })
                         );
                       }
@@ -807,7 +981,7 @@ export default function AdminSettings() {
                           saveAnalyticsMutation.mutateAsync({
                             provider: 'microsoft_clarity',
                             trackingId: clarityProjectId,
-                            isActive: true,
+                            isActive: clarityIsActive,
                           })
                         );
                       }
@@ -817,7 +991,8 @@ export default function AdminSettings() {
                           saveAnalyticsMutation.mutateAsync({
                             provider: 'gtm',
                             trackingId: gtmContainerId,
-                            isActive: true,
+                            serverContainerUrl: gtmServerUrl || undefined,
+                            isActive: gtmIsActive,
                           })
                         );
                       }

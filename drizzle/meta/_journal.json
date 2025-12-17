@@ -302,6 +302,20 @@
       "when": 1766009596568,
       "tag": "0042_odd_nova",
       "breakpoints": true
+    },
+    {
+      "idx": 43,
+      "version": "5",
+      "when": 1766010627418,
+      "tag": "0043_material_cassandra_nova",
+      "breakpoints": true
+    },
+    {
+      "idx": 44,
+      "version": "5",
+      "when": 1766010737998,
+      "tag": "0044_swift_shaman",
+      "breakpoints": true
     }
   ]
 }

@@ -754,8 +754,10 @@ export type InsertQuizQuestionEvent = typeof quizQuestionEvents.$inferInsert;
  */
 export const analyticsSettings = mysqlTable("analytics_settings", {
   id: int("id").autoincrement().primaryKey(),
-  provider: varchar("provider", { length: 50 }).notNull().unique(), // ga4, meta_pixel, microsoft_clarity
-  trackingId: varchar("trackingId", { length: 255 }).notNull(), // Measurement ID, Pixel ID, Project ID
+  provider: varchar("provider", { length: 50 }).notNull().unique(), // ga4, meta_pixel, microsoft_clarity, gtm
+  trackingId: varchar("trackingId", { length: 255 }).notNull(), // Measurement ID, Pixel ID, Project ID, GTM Container ID
+  apiSecret: varchar("apiSecret", { length: 500 }), // GA4 API Secret, Meta Pixel Access Token
+  serverContainerUrl: varchar("serverContainerUrl", { length: 500 }), // GTM Server Container URL
   isActive: boolean("isActive").default(true).notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
