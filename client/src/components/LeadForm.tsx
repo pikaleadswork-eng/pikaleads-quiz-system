@@ -94,7 +94,7 @@ export default function LeadForm({ onSubmit, isLoading }: LeadFormProps) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (name && phone) {
-      ClarityEvents.trackLeadFormSubmit('lead_form', !!email, !!telegram);
+      ClarityEvents.trackLeadFormSubmit('lead_form', { hasEmail: !!email, hasTelegram: !!telegram, name, phone });
       onSubmit({ name, phone, telegram, email });
     }
   };

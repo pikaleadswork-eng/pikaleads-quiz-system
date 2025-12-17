@@ -41,6 +41,9 @@ const translations = {
     platformDistribution: "Розподіл по платформах",
     recording: "Запис",
     viewRecording: "Переглянути запис",
+    onlyWithRecordings: "Тільки з записами",
+    sessionReplay: "Відтворення сесії",
+    closeModal: "Закрити",
   },
   ru: {
     title: "Мониторинг Событий",
@@ -75,6 +78,9 @@ const translations = {
     platformDistribution: "Распределение по платформам",
     recording: "Запись",
     viewRecording: "Просмотреть запись",
+    onlyWithRecordings: "Только с записями",
+    sessionReplay: "Воспроизведение сессии",
+    closeModal: "Закрыть",
   },
   en: {
     title: "Events Monitoring",
@@ -109,6 +115,9 @@ const translations = {
     platformDistribution: "Platform Distribution",
     recording: "Recording",
     viewRecording: "View Recording",
+    onlyWithRecordings: "Only with recordings",
+    sessionReplay: "Session Replay",
+    closeModal: "Close",
   },
 };
 
@@ -120,13 +129,20 @@ export default function EventsDashboard() {
   const [status, setStatus] = useState<"success" | "fail" | "pending" | "all">("all");
   const [timeRange, setTimeRange] = useState<"1h" | "24h" | "7d" | "30d">("24h");
   const [autoRefresh, setAutoRefresh] = useState(true);
+  const [onlyWithRecordings, setOnlyWithRecordings] = useState(false);
+  const [selectedSessionUrl, setSelectedSessionUrl] = useState<string | null>(null);
 
   // Fetch events
-  const { data: events = [], refetch: refetchEvents, isLoading: eventsLoading } = trpc.eventsLog.getRecentEvents.useQuery({
+  const { data: allEvents = [], refetch: refetchEvents, isLoading: eventsLoading } = trpc.eventsLog.getRecentEvents.useQuery({
     limit: 100,
     platform,
     status,
   });
+
+  // Filter events based on recordings checkbox
+  const events = onlyWithRecordings
+    ? allEvents.filter(e => e.clarityUserId && e.claritySessionId && e.clarityProjectId)
+    : allEvents;
 
   // Fetch stats
   const { data: stats, refetch: refetchStats, isLoading: statsLoading } = trpc.eventsLog.getEventStats.useQuery({
@@ -195,7 +211,16 @@ export default function EventsDashboard() {
           <h1 className="text-3xl font-bold text-foreground">{t.title}</h1>
           <p className="text-muted-foreground mt-1">{t.subtitle}</p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
+          <label className="flex items-center gap-2 text-sm cursor-pointer bg-card px-3 py-2 rounded-md border">
+            <input
+              type="checkbox"
+              checked={onlyWithRecordings}
+              onChange={(e) => setOnlyWithRecordings(e.target.checked)}
+              className="rounded border-gray-300"
+            />
+            {t.onlyWithRecordings}
+          </label>
           <Button
             variant={autoRefresh ? "default" : "outline"}
             size="sm"
@@ -390,7 +415,7 @@ export default function EventsDashboard() {
                             size="sm"
                             onClick={() => {
                               const url = `https://clarity.microsoft.com/player/${event.clarityProjectId}/${event.clarityUserId}/${event.claritySessionId}`;
-                              window.open(url, '_blank');
+                              setSelectedSessionUrl(url);
                             }}
                           >
                             {t.viewRecording || "View Recording"}
@@ -450,6 +475,28 @@ export default function EventsDashboard() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Session Replay Modal */}
+      {selectedSessionUrl && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={() => setSelectedSessionUrl(null)}>
+          <div className="bg-card rounded-lg shadow-xl w-full max-w-7xl h-[90vh] flex flex-col" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center justify-between p-4 border-b">
+              <h2 className="text-xl font-semibold">{t.sessionReplay}</h2>
+              <Button variant="outline" size="sm" onClick={() => setSelectedSessionUrl(null)}>
+                {t.closeModal}
+              </Button>
+            </div>
+            <div className="flex-1 overflow-hidden">
+              <iframe
+                src={selectedSessionUrl}
+                className="w-full h-full border-0"
+                title="Clarity Session Replay"
+                allow="fullscreen"
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

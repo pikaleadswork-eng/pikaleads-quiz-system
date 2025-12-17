@@ -52,8 +52,6 @@ export default function Quiz({ config }: QuizProps) {
   useEffect(() => {
     if (!isFormStep) {
       ClarityEvents.trackQuizQuestionView(config.id, currentStep, totalSteps - 1);
-    } else {
-      ClarityEvents.trackLeadFormStart(config.id);
     }
   }, [currentStep, isFormStep, config.id, totalSteps]);
 

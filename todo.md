@@ -1,5 +1,14 @@
 # PIKALEADS CRM System TODO
 
+## Phase 122: Final Clarity Enhancements & VPS Deployment (CURRENT)
+- [x] Integrate automatic Clarity event logging with session IDs to backend
+- [x] Add "Only with recordings" filter checkbox to Events Dashboard
+- [x] Create session replay modal with iframe embed
+- [x] Verify all analytics integrations (Meta, GA4, GTM, Telegram)
+- [ ] Create deployment archive with all configurations
+- [ ] Prepare VPS deployment instructions
+- [ ] Set up database with admin and manager users
+
 ## Phase 121: Clarity Session Recordings Integration (COMPLETED)
 - [x] Research Clarity Session Recordings API
 - [x] Add Clarity session ID tracking to events_log
