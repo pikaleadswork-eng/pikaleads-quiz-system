@@ -2909,3 +2909,19 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Test access to Calendar
 - [x] Verify cannot access Analytics
 - [x] Verify cannot access Admin Settings
+
+
+## Login Page Autofill Issue - December 17, 2025
+
+### Bug Description
+- [x] Login page clears email and password fields after page refresh (F5)
+- [x] Browser autofill not working properly
+- [x] User cannot login because credentials disappear
+
+### Fix Required
+- [x] Add proper autocomplete attributes to email and password inputs
+- [x] Add name and id attributes for browser recognition
+- [x] Add localStorage to persist email between sessions
+- [x] Load saved email on component mount
+- [x] Save email on successful form submission
+- [x] Test with browser autofill after page refresh

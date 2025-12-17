@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation } from 'wouter';
 import { trpc } from '../lib/trpc';
 
@@ -8,6 +8,14 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  // Load saved email from localStorage on mount
+  useEffect(() => {
+    const savedEmail = localStorage.getItem('pikaleads_login_email');
+    if (savedEmail) {
+      setEmail(savedEmail);
+    }
+  }, []);
 
   const loginMutation = trpc.auth.login.useMutation({
     onSuccess: (data) => {
@@ -31,6 +39,9 @@ export default function Login() {
     e.preventDefault();
     setError('');
     setLoading(true);
+
+    // Save email to localStorage for next time
+    localStorage.setItem('pikaleads_login_email', email);
 
     try {
       await loginMutation.mutateAsync({ email, password });
@@ -101,6 +112,9 @@ export default function Login() {
             </label>
             <input
               type="email"
+              name="email"
+              id="email"
+              autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -129,6 +143,9 @@ export default function Login() {
             </label>
             <input
               type="password"
+              name="password"
+              id="password"
+              autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
