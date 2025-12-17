@@ -16,7 +16,9 @@ import {
   X,
   Loader2,
   Calendar,
-  User
+  User,
+  BarChart3,
+  TrendingUp
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -90,6 +92,18 @@ export default function CRMLayout({ children }: CRMLayoutProps) {
       icon: Calendar,
       href: "/admin/calendar",
       description: t("nav.scheduleCallsMeetings") || "Schedule calls and meetings",
+    },
+    {
+      title: "Pipeline",
+      icon: BarChart3,
+      href: "/admin/pipeline",
+      description: "Sales funnel and conversion metrics",
+    },
+    {
+      title: "Attribution",
+      icon: TrendingUp,
+      href: "/admin/attribution",
+      description: "Lead sources and ROAS analysis",
     },
     {
       title: t("nav.settings"),

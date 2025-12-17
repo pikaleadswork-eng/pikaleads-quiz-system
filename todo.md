@@ -3331,3 +3331,13 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Change to publicProcedure or add conditional execution
 - [x] Test home page without login
 - [ ] Save checkpoint
+
+## Phase 114 - CRM Analytics System
+- [x] Design lead_scores table schema
+- [x] Create analytics calculation procedures (pipeline metrics, attribution, ROAS)
+- [x] Build Sales Pipeline Dashboard with funnel visualization
+- [x] Build Lead Source Attribution Report with UTM breakdown
+- [x] Implement Automated Lead Scoring algorithm
+- [x] Add lead score display in CRM
+- [x] Test analytics calculations
+- [ ] Save checkpoint

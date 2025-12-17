@@ -3,7 +3,7 @@ import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { getDb } from "../db";
 import * as schema from "../../drizzle/schema";
-import { eq, and, gte, sql } from "drizzle-orm";
+import { eq, and, gte, lte, sql, desc, count } from "drizzle-orm";
 
 export const analyticsRouter = router({
   getQuizAnalytics: protectedProcedure
@@ -185,5 +185,261 @@ export const analyticsRouter = router({
         timeAnalysis,
         questionPerformance,
       };
+    }),
+
+  /**
+   * Get Sales Pipeline metrics
+   * Returns funnel data with conversion rates at each stage
+   */
+  getPipelineMetrics: protectedProcedure
+    .input(z.object({
+      startDate: z.string().optional(),
+      endDate: z.string().optional(),
+    }))
+    .query(async ({ input }) => {
+      const db = await getDb();
+      
+      if (!db) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Database not available",
+        });
+      }
+
+      const startDate = input.startDate ? new Date(input.startDate) : new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+      const endDate = input.endDate ? new Date(input.endDate) : new Date();
+
+      // Get all leads in date range
+      const allLeads = await db
+        .select({ count: count() })
+        .from(schema.leads)
+        .where(
+          and(
+            gte(schema.leads.createdAt, startDate),
+            lte(schema.leads.createdAt, endDate)
+          )
+        );
+
+      const totalLeads = allLeads[0]?.count || 0;
+
+      // Get leads with calls scheduled
+      const leadsWithCalls = await db
+        .select({ count: count() })
+        .from(schema.leads)
+        .innerJoin(schema.leadStatuses, eq(schema.leads.statusId, schema.leadStatuses.id))
+        .where(
+          and(
+            gte(schema.leads.createdAt, startDate),
+            lte(schema.leads.createdAt, endDate),
+            sql`${schema.leadStatuses.name} IN ('Дзвінок заплановано', 'Call Scheduled', 'Contacted')`
+          )
+        );
+
+      const callsScheduled = leadsWithCalls[0]?.count || 0;
+
+      // Get leads with sales
+      const leadsWithSales = await db
+        .select({ count: count() })
+        .from(schema.leads)
+        .innerJoin(schema.sales, eq(schema.leads.id, schema.sales.leadId))
+        .where(
+          and(
+            gte(schema.leads.createdAt, startDate),
+            lte(schema.leads.createdAt, endDate)
+          )
+        );
+
+      const salesClosed = leadsWithSales[0]?.count || 0;
+
+      // Calculate total revenue
+      const revenueData = await db
+        .select({ 
+          totalRevenue: sql<number>`SUM(${schema.sales.totalAmount})`,
+        })
+        .from(schema.sales)
+        .innerJoin(schema.leads, eq(schema.sales.leadId, schema.leads.id))
+        .where(
+          and(
+            gte(schema.leads.createdAt, startDate),
+            lte(schema.leads.createdAt, endDate)
+          )
+        );
+
+      const totalRevenue = (revenueData[0]?.totalRevenue || 0) / 100;
+
+      // Calculate total ad spend
+      const spendData = await db
+        .select({ 
+          totalSpend: sql<number>`SUM(${schema.leads.spentAmount})`,
+        })
+        .from(schema.leads)
+        .where(
+          and(
+            gte(schema.leads.createdAt, startDate),
+            lte(schema.leads.createdAt, endDate)
+          )
+        );
+
+      const totalSpend = parseFloat(spendData[0]?.totalSpend?.toString() || "0");
+
+      // Calculate metrics
+      const leadToCallRate = totalLeads > 0 ? (callsScheduled / totalLeads) * 100 : 0;
+      const callToSaleRate = callsScheduled > 0 ? (salesClosed / callsScheduled) * 100 : 0;
+      const leadToSaleRate = totalLeads > 0 ? (salesClosed / totalLeads) * 100 : 0;
+      const averageCheck = salesClosed > 0 ? totalRevenue / salesClosed : 0;
+      const roas = totalSpend > 0 ? totalRevenue / totalSpend : 0;
+      const cpl = totalLeads > 0 ? totalSpend / totalLeads : 0;
+      const cpa = salesClosed > 0 ? totalSpend / salesClosed : 0;
+
+      return {
+        totalLeads,
+        callsScheduled,
+        salesClosed,
+        totalRevenue,
+        totalSpend,
+        leadToCallRate: Math.round(leadToCallRate * 10) / 10,
+        callToSaleRate: Math.round(callToSaleRate * 10) / 10,
+        leadToSaleRate: Math.round(leadToSaleRate * 10) / 10,
+        averageCheck: Math.round(averageCheck * 100) / 100,
+        roas: Math.round(roas * 100) / 100,
+        cpl: Math.round(cpl * 100) / 100,
+        cpa: Math.round(cpa * 100) / 100,
+      };
+    }),
+
+  /**
+   * Get Lead Source Attribution Report
+   */
+  getSourceAttribution: protectedProcedure
+    .input(z.object({
+      startDate: z.string().optional(),
+      endDate: z.string().optional(),
+      groupBy: z.enum(["source", "campaign", "medium"]).default("source"),
+    }))
+    .query(async ({ input }) => {
+      const db = await getDb();
+      
+      if (!db) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Database not available",
+        });
+      }
+
+      const startDate = input.startDate ? new Date(input.startDate) : new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+      const endDate = input.endDate ? new Date(input.endDate) : new Date();
+
+      const groupByField = 
+        input.groupBy === "source" ? schema.leads.utmSource :
+        input.groupBy === "campaign" ? schema.leads.utmCampaign :
+        schema.leads.utmMedium;
+
+      const attributionData = await db
+        .select({
+          source: groupByField,
+          leadCount: count(schema.leads.id),
+          totalSpend: sql<number>`SUM(${schema.leads.spentAmount})`,
+          totalRevenue: sql<number>`COALESCE(SUM(${schema.sales.totalAmount}), 0)`,
+          salesCount: sql<number>`COUNT(DISTINCT ${schema.sales.id})`,
+        })
+        .from(schema.leads)
+        .leftJoin(schema.sales, eq(schema.leads.id, schema.sales.leadId))
+        .where(
+          and(
+            gte(schema.leads.createdAt, startDate),
+            lte(schema.leads.createdAt, endDate)
+          )
+        )
+        .groupBy(groupByField)
+        .orderBy(desc(sql`leadCount`));
+
+      const results = attributionData.map((row) => {
+        const source = row.source || "Unknown";
+        const leadCount = row.leadCount || 0;
+        const totalSpend = parseFloat(row.totalSpend?.toString() || "0");
+        const totalRevenue = (row.totalRevenue || 0) / 100;
+        const salesCount = row.salesCount || 0;
+
+        const conversionRate = leadCount > 0 ? (salesCount / leadCount) * 100 : 0;
+        const roas = totalSpend > 0 ? totalRevenue / totalSpend : 0;
+        const cpl = leadCount > 0 ? totalSpend / leadCount : 0;
+        const cpa = salesCount > 0 ? totalSpend / salesCount : 0;
+        const averageCheck = salesCount > 0 ? totalRevenue / salesCount : 0;
+
+        return {
+          source,
+          leadCount,
+          salesCount,
+          totalSpend: Math.round(totalSpend * 100) / 100,
+          totalRevenue: Math.round(totalRevenue * 100) / 100,
+          conversionRate: Math.round(conversionRate * 10) / 10,
+          roas: Math.round(roas * 100) / 100,
+          cpl: Math.round(cpl * 100) / 100,
+          cpa: Math.round(cpa * 100) / 100,
+          averageCheck: Math.round(averageCheck * 100) / 100,
+        };
+      });
+
+      return results;
+    }),
+
+  /**
+   * Get top performing campaigns
+   */
+  getTopCampaigns: protectedProcedure
+    .input(z.object({
+      startDate: z.string().optional(),
+      endDate: z.string().optional(),
+      limit: z.number().default(10),
+    }))
+    .query(async ({ input }) => {
+      const db = await getDb();
+      
+      if (!db) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Database not available",
+        });
+      }
+
+      const startDate = input.startDate ? new Date(input.startDate) : new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+      const endDate = input.endDate ? new Date(input.endDate) : new Date();
+
+      const campaigns = await db
+        .select({
+          campaign: schema.leads.utmCampaign,
+          source: schema.leads.utmSource,
+          leadCount: count(schema.leads.id),
+          totalRevenue: sql<number>`COALESCE(SUM(${schema.sales.totalAmount}), 0)`,
+          salesCount: sql<number>`COUNT(DISTINCT ${schema.sales.id})`,
+          totalSpend: sql<number>`SUM(${schema.leads.spentAmount})`,
+        })
+        .from(schema.leads)
+        .leftJoin(schema.sales, eq(schema.leads.id, schema.sales.leadId))
+        .where(
+          and(
+            gte(schema.leads.createdAt, startDate),
+            lte(schema.leads.createdAt, endDate)
+          )
+        )
+        .groupBy(schema.leads.utmCampaign, schema.leads.utmSource)
+        .orderBy(desc(sql`totalRevenue`))
+        .limit(input.limit);
+
+      return campaigns.map((row) => {
+        const totalSpend = parseFloat(row.totalSpend?.toString() || "0");
+        const totalRevenue = (row.totalRevenue || 0) / 100;
+        const roas = totalSpend > 0 ? totalRevenue / totalSpend : 0;
+
+        return {
+          campaign: row.campaign || "Unknown",
+          source: row.source || "Unknown",
+          leadCount: row.leadCount || 0,
+          salesCount: row.salesCount || 0,
+          totalRevenue: Math.round(totalRevenue * 100) / 100,
+          totalSpend: Math.round(totalSpend * 100) / 100,
+          roas: Math.round(roas * 100) / 100,
+        };
+      });
     }),
 });

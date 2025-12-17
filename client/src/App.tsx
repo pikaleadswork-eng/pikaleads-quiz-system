@@ -43,6 +43,8 @@ import LeadAssignment from "./pages/LeadAssignment";
 import CRMDashboard from "./pages/CRMDashboard";
 import AdminCalendar from "./pages/AdminCalendar";
 import AdminWebhooks from "./pages/AdminWebhooks";
+import { PipelineDashboard } from "./pages/PipelineDashboard";
+import { AttributionReport } from "./pages/AttributionReport";
 import ManagerDashboard from "./pages/ManagerDashboard";
 import CRM from "./pages/CRM";
 import Privacy from "./pages/Privacy";
@@ -115,6 +117,10 @@ function Router() {
       <Route path={"/manager"} component={ManagerDashboard} />
       <Route path={"/crm-dashboard"} component={CRMDashboard} />
       <Route path={"/crm"} component={CRM} />
+      
+      {/* Analytics Dashboards */}
+      <Route path={"/admin/pipeline"} component={PipelineDashboard} />
+      <Route path={"/admin/attribution"} component={AttributionReport} />
       
       {/* Legal Pages */}
       <Route path={"/privacy"} component={Privacy} />

@@ -113,18 +113,23 @@ export const appRouter = router({
       .mutation(async ({ input }) => {
         const { createLead, autoAssignLead } = await import("./db");
         const { sendTelegramMessage, formatLeadMessage } = await import("./telegram");
-        const { calculateLeadScore } = await import("./leadScoring");
+        const { calculateLeadScore } = await import("./_core/leadScoring");
         const { trackMetaLead } = await import("./_core/metaConversionsAPI");
         const { trackGA4Lead } = await import("./_core/ga4MeasurementProtocol");
         
         // Calculate lead quality score
+        const answers = JSON.parse(input.answers || '[]');
         const leadScore = calculateLeadScore({
-          answers: input.answers,
-          utmCampaign: input.utmCampaign,
-          utmKeyword: input.utmKeyword,
+          responseSpeed: undefined, // TODO: Track quiz start time
+          answerCompleteness: answers.length > 0 ? 1 : 0,
+          answerQuality: input.answers,
           utmSource: input.utmSource,
-          email: input.email,
-          telegram: input.telegram,
+          utmCampaign: input.utmCampaign,
+          utmMedium: input.utmMedium,
+          timeOnSite: 0, // TODO: Track from frontend
+          hasEmail: !!input.email,
+          hasTelegram: !!input.telegram,
+          hasPhone: !!input.phone,
         });
         
         // Save to database with UTM parameters and score
