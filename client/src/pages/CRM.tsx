@@ -857,6 +857,7 @@ export default function CRM() {
                             <SelectTrigger className="w-[150px]">
                               <SelectValue>
                                 <Badge
+                                  className="border-2 border-white/20 shadow-lg text-white font-semibold"
                                   style={{
                                     backgroundColor: getStatusColor(
                                       lead.statusId
@@ -874,6 +875,7 @@ export default function CRM() {
                                   value={status.id.toString()}
                                 >
                                   <Badge
+                                    className="border-2 border-white/20 shadow-lg text-white font-semibold"
                                     style={{ backgroundColor: status.color }}
                                   >
                                     {status.name}

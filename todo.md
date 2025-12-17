@@ -3063,3 +3063,127 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Show empty state if no comments exist
 - [x] Add translations for Ukrainian/Russian/English
 - [x] Test with manager and admin roles
+
+
+## Phase 103 - Forgot Password Flow (PENDING)
+
+### Frontend Pages
+- [ ] Add "Forgot Password?" link on Login page
+- [ ] Create ForgotPassword page with email input form
+- [ ] Create ResetPassword page with token validation and new password form
+- [ ] Add success/error messages for each step
+- [ ] Add redirect to login after successful password reset
+
+### Backend Implementation
+- [ ] Create password_reset_tokens table (email, token, expiresAt, used)
+- [ ] Add tRPC procedure: auth.requestPasswordReset (send email with token)
+- [ ] Add tRPC procedure: auth.validateResetToken (check if token is valid)
+- [ ] Add tRPC procedure: auth.resetPassword (update password with token)
+- [ ] Implement email sending with reset link
+- [ ] Set token expiration (e.g., 1 hour)
+- [ ] Mark token as used after password reset
+
+### Security
+- [ ] Generate secure random tokens (crypto.randomBytes)
+- [ ] Hash passwords with bcrypt before storing
+- [ ] Validate token hasn't expired
+- [ ] Prevent token reuse
+- [ ] Rate limit password reset requests
+
+### UI/UX
+- [ ] Add loading states during email sending
+- [ ] Show clear error messages (email not found, token expired, etc.)
+- [ ] Add countdown timer on reset link expiration
+- [ ] Translate all messages (UA/RU/EN)
+
+
+## Phase 104 - Unified Lead Activity Feed (PENDING)
+
+### Database Schema
+- [ ] Create unified_activity table (leadId, type, userId, metadata JSON, timestamp)
+- [ ] Activity types: comment, status_change, call, message, note, meeting, reminder
+- [ ] Migrate existing data from comments, call_logs, interaction_history
+
+### Backend Procedures
+- [ ] Add tRPC procedure: leads.getActivityFeed (fetch all activities for lead)
+- [ ] Add tRPC procedure: leads.addActivity (generic activity creation)
+- [ ] Update existing procedures to log activities:
+  * comments.add → log as 'comment'
+  * messaging.initiateCall → log as 'call'
+  * messaging.sendMessage → log as 'message'
+  * leads.updateStatus → log as 'status_change'
+
+### Frontend Component
+- [ ] Create UnifiedActivityFeed component
+- [ ] Replace separate tabs (Comments, History, Messages) with single feed
+- [ ] Group activities by date (Today, Yesterday, This Week, etc.)
+- [ ] Add icons for each activity type
+- [ ] Add filtering by activity type (All, Comments, Calls, Messages, etc.)
+- [ ] Add search within activity feed
+- [ ] Add "Load More" pagination for long histories
+
+### Activity Types UI
+- [ ] Comment: Show avatar, user name, comment text, timestamp
+- [ ] Status Change: Show "Status changed from X to Y by User"
+- [ ] Call: Show call duration, outcome, recording link
+- [ ] Message: Show platform icon, message preview
+- [ ] Meeting: Show meeting platform, link, scheduled time
+- [ ] Note: Show note text with highlight
+
+### Integration
+- [ ] Replace LeadDetailModal tabs with UnifiedActivityFeed
+- [ ] Update LeadCommentsModal to use unified feed
+- [ ] Add real-time updates (refetch on new activity)
+
+
+## Phase 105 - Personal Telegram Notifications for Managers (PENDING)
+
+### Database Schema
+- [ ] Add telegramChatId field to user table (nullable)
+- [ ] Create notification_preferences table (userId, notifyOnNewLead, notifyOnComment, notifyOnStatusChange)
+
+### Telegram Bot Setup
+- [ ] Create /start command to link manager's Telegram account
+- [ ] Generate unique verification code for each manager
+- [ ] Store telegramChatId when manager sends /start with code
+- [ ] Add /settings command to manage notification preferences
+
+### Backend Implementation
+- [ ] Update notifyOwner function to support personal notifications
+- [ ] Create notifyManager(userId, message) function
+- [ ] Update event notifications job to send to assigned manager's chat
+- [ ] Add notification triggers:
+  * New lead assigned to manager
+  * Comment added to manager's lead
+  * Lead status changed
+  * Scheduled call/meeting reminder
+
+### Frontend Settings
+- [ ] Add "Telegram Notifications" section in user profile
+- [ ] Show QR code or link to connect Telegram account
+- [ ] Display connection status (Connected / Not Connected)
+- [ ] Add notification preferences checkboxes
+- [ ] Add "Test Notification" button
+
+### Notification Templates
+- [ ] New Lead: "🆕 Новий лід #{id}: {name}, {phone}"
+- [ ] Comment: "💬 Коментар до ліда #{id} від {userName}: {comment}"
+- [ ] Status Change: "🔄 Статус ліда #{id} змінено: {oldStatus} → {newStatus}"
+- [ ] Call Reminder: "📞 Нагадування: дзвінок ліду {name} о {time}"
+- [ ] Meeting Reminder: "🎥 Нагадування: зустріч з {name} о {time}"
+
+### Testing
+- [ ] Test notification delivery to personal chats
+- [ ] Test notification preferences (enable/disable)
+- [ ] Test multiple managers with different preferences
+- [ ] Verify no notifications sent to unlinked accounts
+
+
+## Phase 106 - Status Badge Visibility Fix (CURRENT)
+
+### UI Improvements
+- [x] Add white border (border-2 border-white/20) to status badges
+- [x] Add shadow (shadow-lg) for depth
+- [x] Make text bold (font-semibold) and white for contrast
+- [x] Apply styling to both table badges and dropdown badges
+- [x] Test visibility on dark background
