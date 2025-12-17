@@ -1,6 +1,15 @@
 # PIKALEADS CRM System TODO
 
-## Phase 120: Analytics Enhancements (CURRENT)
+## Phase 121: Clarity Session Recordings Integration (COMPLETED)
+- [x] Research Clarity Session Recordings API
+- [x] Add Clarity session ID tracking to events_log
+- [x] Create backend API for fetching Clarity session URLs
+- [x] Add session recordings column to Events Dashboard table
+- [x] Add "View Recording" button for Clarity events
+- [x] Test session recordings playback
+- [x] Update ClarityEvents to send session IDs to backend
+
+## Phase 120: Analytics Enhancements (COMPLETED)
 - [x] Make GTM dynamic - move Container ID from index.html to AnalyticsScripts.tsx
 - [x] Update analytics_settings to load GTM dynamically from database
 - [x] Add Clarity custom events for CTA clicks

@@ -39,6 +39,8 @@ const translations = {
     "30d": "30 днів",
     topEvents: "Топ подій",
     platformDistribution: "Розподіл по платформах",
+    recording: "Запис",
+    viewRecording: "Переглянути запис",
   },
   ru: {
     title: "Мониторинг Событий",
@@ -71,6 +73,8 @@ const translations = {
     "30d": "30 дней",
     topEvents: "Топ событий",
     platformDistribution: "Распределение по платформам",
+    recording: "Запись",
+    viewRecording: "Просмотреть запись",
   },
   en: {
     title: "Events Monitoring",
@@ -103,6 +107,8 @@ const translations = {
     "30d": "30 days",
     topEvents: "Top Events",
     platformDistribution: "Platform Distribution",
+    recording: "Recording",
+    viewRecording: "View Recording",
   },
 };
 
@@ -342,21 +348,22 @@ export default function EventsDashboard() {
                   <th className="text-left py-3 px-4 font-medium">{t.eventType}</th>
                   <th className="text-left py-3 px-4 font-medium">{t.timestamp}</th>
                   <th className="text-left py-3 px-4 font-medium">{t.responseTime}</th>
+                  <th className="text-left py-3 px-4 font-medium">{t.recording || "Recording"}</th>
                 </tr>
               </thead>
               <tbody>
                 {eventsLoading ? (
-                  <tr>
-                    <td colSpan={5} className="text-center py-8 text-muted-foreground">
-                      {t.loading}
-                    </td>
-                  </tr>
+                <tr>
+                  <td colSpan={6} className="text-center py-8 text-muted-foreground">
+                    {t.loading}
+                  </td>
+                </tr>
                 ) : events.length === 0 ? (
-                  <tr>
-                    <td colSpan={5} className="text-center py-8 text-muted-foreground">
-                      {t.noEvents}
-                    </td>
-                  </tr>
+                <tr>
+                  <td colSpan={6} className="text-center py-8 text-muted-foreground">
+                    {t.noEvents}
+                  </td>
+                </tr>
                 ) : (
                   events.map((event) => (
                     <tr key={event.id} className="border-b hover:bg-muted/50">
@@ -375,6 +382,22 @@ export default function EventsDashboard() {
                       </td>
                       <td className="py-3 px-4 text-sm">
                         {event.responseTime ? `${event.responseTime}ms` : "-"}
+                      </td>
+                      <td className="py-3 px-4">
+                        {event.platform === "clarity" && event.clarityUserId && event.claritySessionId && event.clarityProjectId ? (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => {
+                              const url = `https://clarity.microsoft.com/player/${event.clarityProjectId}/${event.clarityUserId}/${event.claritySessionId}`;
+                              window.open(url, '_blank');
+                            }}
+                          >
+                            {t.viewRecording || "View Recording"}
+                          </Button>
+                        ) : (
+                          <span className="text-muted-foreground text-sm">-</span>
+                        )}
                       </td>
                     </tr>
                   ))

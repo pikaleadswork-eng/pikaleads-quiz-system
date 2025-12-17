@@ -950,4 +950,7 @@ export const events_log = mysqlTable("events_log", {
   responseTime: int("response_time"), // API response time in ms
   ipAddress: varchar("ip_address", { length: 45 }), // User IP
   userAgent: text("user_agent"), // Browser info
+  clarityUserId: varchar("clarity_user_id", { length: 255 }), // Clarity user ID for session recording
+  claritySessionId: varchar("clarity_session_id", { length: 255 }), // Clarity session ID for session recording
+  clarityProjectId: varchar("clarity_project_id", { length: 255 }), // Clarity project ID
 });

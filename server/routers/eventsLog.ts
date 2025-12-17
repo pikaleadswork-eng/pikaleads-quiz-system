@@ -25,6 +25,9 @@ export const eventsLogRouter = router({
         responseTime: z.number().optional(),
         ipAddress: z.string().optional(),
         userAgent: z.string().optional(),
+        clarityUserId: z.string().optional(),
+        claritySessionId: z.string().optional(),
+        clarityProjectId: z.string().optional(),
       })
     )
     .mutation(async ({ input }) => {
@@ -44,6 +47,9 @@ export const eventsLogRouter = router({
         responseTime: input.responseTime,
         ipAddress: input.ipAddress,
         userAgent: input.userAgent,
+        clarityUserId: input.clarityUserId,
+        claritySessionId: input.claritySessionId,
+        clarityProjectId: input.clarityProjectId,
       });
 
       return {

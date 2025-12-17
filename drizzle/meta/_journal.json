@@ -323,6 +323,13 @@
       "when": 1766011980574,
       "tag": "0045_lame_rogue",
       "breakpoints": true
+    },
+    {
+      "idx": 46,
+      "version": "5",
+      "when": 1766012401383,
+      "tag": "0046_lazy_abomination",
+      "breakpoints": true
     }
   ]
 }

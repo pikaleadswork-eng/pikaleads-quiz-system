@@ -9,6 +9,66 @@ declare global {
   }
 }
 
+interface ClarityMetadata {
+  projectId: string;
+  userId: string;
+  sessionId: string;
+}
+
+/**
+ * Get Clarity session metadata (userId, sessionId, projectId)
+ */
+function getClarityMetadata(): Promise<ClarityMetadata | null> {
+  return new Promise((resolve) => {
+    if (!window.clarity) {
+      resolve(null);
+      return;
+    }
+
+    try {
+      window.clarity('metadata', (metadata: ClarityMetadata) => {
+        if (metadata && metadata.projectId && metadata.userId && metadata.sessionId) {
+          resolve(metadata);
+        } else {
+          resolve(null);
+        }
+      });
+      
+      // Timeout after 2 seconds
+      setTimeout(() => resolve(null), 2000);
+    } catch (error) {
+      console.error('Error getting Clarity metadata:', error);
+      resolve(null);
+    }
+  });
+}
+
+/**
+ * Build Clarity session recording URL
+ */
+function buildClaritySessionURL(metadata: ClarityMetadata): string {
+  return `https://clarity.microsoft.com/player/${metadata.projectId}/${metadata.userId}/${metadata.sessionId}`;
+}
+
+/**
+ * Log event with Clarity session tracking
+ */
+async function logClarityEvent(eventName: string, eventData: any) {
+  if (!window.clarity) return;
+
+  // Track event in Clarity
+  window.clarity('event', eventName, eventData);
+
+  // Get session metadata for backend logging
+  const metadata = await getClarityMetadata();
+  
+  // TODO: Send to backend eventsLog.logEvent with clarityUserId, claritySessionId, clarityProjectId
+  // This will be implemented when integrating with backend
+  if (metadata) {
+    console.log('Clarity session:', buildClaritySessionURL(metadata));
+  }
+}
+
 export const ClarityEvents = {
   /**
    * Track CTA button clicks
