@@ -818,6 +818,14 @@ export async function getSalesByManager(managerId: number) {
   return db.select().from(sales).where(eq(sales.managerId, managerId)).orderBy(desc(sales.saleDate));
 }
 
+export async function getSaleByLeadId(leadId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const { sales } = await import("../drizzle/schema");
+  const result = await db.select().from(sales).where(eq(sales.leadId, leadId)).orderBy(desc(sales.saleDate)).limit(1);
+  return result[0] || null;
+}
+
 export async function getSalesStats() {
   const db = await getDb();
   if (!db) throw new Error("Database not available");

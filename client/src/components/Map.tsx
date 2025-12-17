@@ -83,7 +83,7 @@ import { cn } from "@/lib/utils";
 declare global {
   interface Window {
     google?: typeof google;
-    fbq?: any;
+    fbq?: (action: string, event: string, params?: Record<string, any>) => void;
     dataLayer?: any[];
   }
 }

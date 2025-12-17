@@ -3310,3 +3310,18 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 ### Database Schema
 - [ ] Add fbp, fbc, client_ip, user_agent to leads table
 - [ ] Store original UTM parameters for attribution
+
+## Phase 111 - Fix Home Page Auth Error
+- [ ] Identify protected tRPC query on home page
+- [ ] Change to publicProcedure or add auth check
+- [ ] Test home page without login
+- [ ] Save checkpoint
+
+## Phase 112 - Sales Integration & Analytics Setup
+- [x] Integrate sales table for real Purchase amount
+- [x] Add Meta Pixel to analytics_settings database
+- [x] Add GA4 to analytics_settings database
+- [x] Add GTM Server Container configuration
+- [x] Create Meta Ads Custom Conversions guide
+- [x] Test tracking with real sales data
+- [ ] Save checkpoint

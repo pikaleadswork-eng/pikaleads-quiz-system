@@ -441,8 +441,10 @@ export const messagingRouter = router({
         }
       } else if (statusName.includes("виграно") || statusName.includes("won")) {
         // Purchase - Sale completed
-        // TODO: Get actual sale amount from sales table
-        const saleValue = 1000; // Default value, should be fetched from sales table
+        // Get actual sale amount from sales table
+        const { getSaleByLeadId } = await import("../db");
+        const sale = await getSaleByLeadId(input.leadId);
+        const saleValue = sale ? Math.round(sale.totalAmount / 100) : 1000; // Convert from cents to UAH, default 1000 if no sale
         
         if (lead.eventId && lead.fbp) {
           await trackMetaPurchase({

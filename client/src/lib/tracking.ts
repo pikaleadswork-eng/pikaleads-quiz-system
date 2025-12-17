@@ -87,12 +87,11 @@ export function trackMetaEvent(
   eventId?: string
 ): void {
   if (typeof window.fbq === "function") {
-    if (eventId) {
-      window.fbq("track", eventName, params, { eventID: eventId });
-    } else {
-      window.fbq("track", eventName, params);
-    }
-    console.log(`[Meta Pixel] ${eventName}`, params, eventId ? { eventID: eventId } : undefined);
+    // Meta Pixel accepts only 3 arguments: action, event, params
+    // eventID should be inside params object
+    const pixelParams = eventId ? { ...params, eventID: eventId } : params;
+    window.fbq("track", eventName, pixelParams);
+    console.log(`[Meta Pixel] ${eventName}`, pixelParams);
   }
 }
 
