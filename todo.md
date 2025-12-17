@@ -2135,7 +2135,7 @@
 ### Fix
 - [ ] Remove auth requirement from public pages
 - [ ] Keep auth only for /admin routes
-- [ ] Test home page and quiz pages without login
+- [x] Test home page and quiz pages without login
 
 
 ## Phase 93 - Configure Telegram Bot & Test Quiz Flow
@@ -3313,8 +3313,8 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 
 ## Phase 111 - Fix Home Page Auth Error
 - [ ] Identify protected tRPC query on home page
-- [ ] Change to publicProcedure or add auth check
-- [ ] Test home page without login
+- [x] Change to publicProcedure or add auth check
+- [x] Test home page without login
 - [ ] Save checkpoint
 
 ## Phase 112 - Sales Integration & Analytics Setup
@@ -3324,4 +3324,10 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Add GTM Server Container configuration
 - [x] Create Meta Ads Custom Conversions guide
 - [x] Test tracking with real sales data
+- [ ] Save checkpoint
+
+## Phase 113 - Fix Home Page Authentication Error
+- [x] Identify protected query causing "Please login (10001)" error
+- [x] Change to publicProcedure or add conditional execution
+- [x] Test home page without login
 - [ ] Save checkpoint

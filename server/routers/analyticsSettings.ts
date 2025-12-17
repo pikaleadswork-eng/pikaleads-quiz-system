@@ -1,4 +1,4 @@
-import { router, protectedProcedure } from "../_core/trpc";
+import { router, protectedProcedure, publicProcedure } from "../_core/trpc";
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { getDb } from "../db";
@@ -8,8 +8,9 @@ import { eq } from "drizzle-orm";
 export const analyticsSettingsRouter = router({
   /**
    * Get all analytics settings
+   * Public procedure - needed for analytics scripts on all pages including home
    */
-  getAll: protectedProcedure.query(async () => {
+  getAll: publicProcedure.query(async () => {
     const db = await getDb();
     
     if (!db) {
