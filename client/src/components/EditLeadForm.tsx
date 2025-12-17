@@ -15,6 +15,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
 import { Loader2, Send, MessageCircle, Mail } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { LeadComments } from "@/components/LeadComments";
 
 interface EditLeadFormProps {
   lead: any;
@@ -302,6 +303,12 @@ export function EditLeadForm({ lead, onClose, onSuccess }: EditLeadFormProps) {
             />
           </div>
         </div>
+      </div>
+
+      {/* Lead Comments */}
+      <div>
+        <h3 className="text-lg font-semibold mb-4">{t('editLead.comments')}</h3>
+        <LeadComments leadId={lead.id} />
       </div>
 
       {/* Actions */}

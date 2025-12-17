@@ -2851,3 +2851,61 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [ ] Verify each manager sees only their assigned leads
 - [ ] Test admin access to all pages
 - [ ] Verify logout works correctly
+
+
+## Manager Permissions & Lead Comments System - December 17, 2025
+
+### Database Schema
+- [x] Add lead_comments table (id, leadId, userId, comment, createdAt)
+- [x] Add indexes for fast comment retrieval
+
+### Backend tRPC Procedures
+- [x] Create comments.add procedure (leadId, comment)
+- [x] Create comments.getByLeadId procedure
+- [x] Update leads.getAll to filter by assignedTo for managers
+- [x] Add role check middleware for delete operations
+
+### CRM UI Updates
+- [x] Add comments section to EditLeadForm modal
+- [x] Add "Copy Phone" button to each lead row
+- [x] Add "Send Email" button (mailto: link) to each lead row
+- [x] Hide delete button for manager role
+- [x] Hide bulk delete checkbox for manager role
+- [x] Hide CSV/Excel export buttons for manager role
+- [x] Show only assigned leads for manager role
+
+### Manager Access Rights
+- [x] Managers CAN edit leads (name, phone, email, status, notes)
+- [x] Managers CAN add comments to leads
+- [x] Managers CAN change lead status
+- [x] Managers CAN copy phone numbers
+- [x] Managers CAN send emails via button
+- [x] Managers CAN access Messaging Inbox (переписка)
+- [x] Managers CAN access Sales Scripts (read + create)
+- [x] Managers CAN access Services (select for sales calculation)
+- [x] Managers CAN access Calendar (schedule calls with Google Meet/Zoom)
+- [x] Managers CANNOT delete leads
+- [x] Managers CANNOT download CSV/Excel
+- [x] Managers CANNOT access Analytics Dashboard
+- [x] Managers CANNOT access Manager Performance
+- [x] Managers CANNOT access Assignment Rules
+- [x] Managers CANNOT access Quiz Management
+- [x] Managers CANNOT access A/B Testing
+- [x] Managers CANNOT access Admin Settings
+
+### Testing
+- [x] Login as manager1@pikaleads.com (Олександр)
+- [x] Verify sees only leads 1, 3, 5
+- [x] Test editing lead details
+- [x] Test adding comment to lead
+- [x] Test changing lead status
+- [x] Test copy phone button works
+- [x] Test send email button works
+- [x] Verify delete button is hidden
+- [x] Verify export buttons are hidden
+- [x] Test access to Messaging Inbox
+- [x] Test access to Sales Scripts
+- [x] Test access to Services
+- [x] Test access to Calendar
+- [x] Verify cannot access Analytics
+- [x] Verify cannot access Admin Settings

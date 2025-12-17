@@ -241,7 +241,22 @@ export async function deleteLeadStatus(id: number) {
 export async function getLeadComments(leadId: number) {
   const db = await getDb();
   if (!db) return [];
-  return await db.select().from(leadComments).where(eq(leadComments.leadId, leadId));
+  
+  const comments = await db
+    .select({
+      id: leadComments.id,
+      leadId: leadComments.leadId,
+      userId: leadComments.userId,
+      comment: leadComments.comment,
+      createdAt: leadComments.createdAt,
+      userName: users.name,
+    })
+    .from(leadComments)
+    .leftJoin(users, eq(leadComments.userId, users.id))
+    .where(eq(leadComments.leadId, leadId))
+    .orderBy(desc(leadComments.createdAt));
+  
+  return comments;
 }
 
 export async function createLeadComment(comment: InsertLeadComment) {

@@ -36,7 +36,7 @@ import Footer from "@/components/Footer";
 import { EditLeadForm } from "@/components/EditLeadForm";
 import { LeadDetailModal } from "@/components/LeadDetailModal";
 import CRMLayout from "@/components/CRMLayout";
-import { Loader2, MessageSquare, Send, Filter, X, Calendar, Users, Tag, Trash2 } from "lucide-react";
+import { Loader2, MessageSquare, Send, Filter, X, Calendar, Users, Tag, Trash2, Copy, Mail } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { addDays, format as formatDate } from "date-fns";
@@ -737,14 +737,16 @@ export default function CRM() {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead className="w-12">
-                      <input
-                        type="checkbox"
-                        checked={selectedLeadIds.length === filteredLeads?.length && filteredLeads?.length > 0}
-                        onChange={toggleSelectAll}
-                        className="w-4 h-4 cursor-pointer"
-                      />
-                    </TableHead>
+                    {user?.role === 'admin' && (
+                      <TableHead className="w-12">
+                        <input
+                          type="checkbox"
+                          checked={selectedLeadIds.length === filteredLeads?.length && filteredLeads?.length > 0}
+                          onChange={toggleSelectAll}
+                          className="w-4 h-4 cursor-pointer"
+                        />
+                      </TableHead>
+                    )}
                     <TableHead>{t('common.id')}</TableHead>
                     <TableHead>{t('common.date')}</TableHead>
                     <TableHead>{t('common.source')}</TableHead>
@@ -763,14 +765,16 @@ export default function CRM() {
                   {filteredLeads && filteredLeads.length > 0 ? (
                     paginatedLeads.map((lead) => (
                       <TableRow key={lead.id}>
-                        <TableCell className="w-12">
-                          <input
-                            type="checkbox"
-                            checked={selectedLeadIds.includes(lead.id)}
-                            onChange={() => toggleLeadSelection(lead.id)}
-                            className="w-4 h-4 cursor-pointer"
-                          />
-                        </TableCell>
+                        {user?.role === 'admin' && (
+                          <TableCell className="w-12">
+                            <input
+                              type="checkbox"
+                              checked={selectedLeadIds.includes(lead.id)}
+                              onChange={() => toggleLeadSelection(lead.id)}
+                              className="w-4 h-4 cursor-pointer"
+                            />
+                          </TableCell>
+                        )}
                         <TableCell className="font-mono text-xs">
                           {lead.id}
                         </TableCell>
@@ -787,7 +791,30 @@ export default function CRM() {
                         </TableCell>
                         <TableCell>{lead.name}</TableCell>
                         <TableCell className="font-mono text-xs">
-                          {lead.phone}
+                          <div className="flex items-center gap-2">
+                            <span>{lead.phone}</span>
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              className="h-6 w-6 p-0"
+                              onClick={() => {
+                                navigator.clipboard.writeText(lead.phone);
+                                toast.success(t('common.copied'));
+                              }}
+                            >
+                              <Copy className="w-3 h-3" />
+                            </Button>
+                            {lead.email && (
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                className="h-6 w-6 p-0"
+                                onClick={() => window.open(`mailto:${lead.email}`, '_blank')}
+                              >
+                                <Mail className="w-3 h-3" />
+                              </Button>
+                            )}
+                          </div>
                         </TableCell>
                         <TableCell className="text-xs">
                           {lead.utmCampaign || "-"}
@@ -876,19 +903,21 @@ export default function CRM() {
                             >
                               {t('crm.edit')}
                             </Button>
-                            <Button
-                              size="sm"
-                              variant="ghost"
-                              className="text-destructive hover:text-destructive hover:bg-destructive/10"
-                              onClick={() => {
-                                if (confirm(language === 'uk' ? `Видалити лід #${lead.id}?` : `Delete lead #${lead.id}?`)) {
-                                  deleteLeadsMutation.mutate({ leadIds: [lead.id] });
-                                }
-                              }}
-                              disabled={deleteLeadsMutation.isPending}
-                            >
-                              <Trash2 className="w-4 h-4" />
-                            </Button>
+                            {user?.role === 'admin' && (
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                className="text-destructive hover:text-destructive hover:bg-destructive/10"
+                                onClick={() => {
+                                  if (confirm(language === 'uk' ? `Видалити лід #${lead.id}?` : `Delete lead #${lead.id}?`)) {
+                                    deleteLeadsMutation.mutate({ leadIds: [lead.id] });
+                                  }
+                                }}
+                                disabled={deleteLeadsMutation.isPending}
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </Button>
+                            )}
                           </div>
                         </TableCell>
                       </TableRow>
@@ -1373,7 +1402,7 @@ export default function CRM() {
       <Footer />
       
       {/* Bulk Actions Floating Bar */}
-      {showBulkActionsBar && (
+      {showBulkActionsBar && user?.role === 'admin' && (
         <div className="fixed bottom-0 left-0 right-0 bg-zinc-900 border-t border-zinc-800 shadow-lg z-50 p-4">
           <div className="container mx-auto flex items-center justify-between gap-4">
             <div className="flex items-center gap-4">

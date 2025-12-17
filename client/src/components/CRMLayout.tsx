@@ -14,7 +14,8 @@ import {
   LogOut,
   Menu,
   X,
-  Loader2
+  Loader2,
+  Calendar
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -62,6 +63,12 @@ export default function CRMLayout({ children }: CRMLayoutProps) {
       description: t("nav.callScriptsLibrary"),
     },
     {
+      title: t("nav.calendar") || "Calendar",
+      icon: Calendar,
+      href: "/admin/calendar",
+      description: t("nav.scheduleCallsMeetings") || "Schedule calls and meetings",
+    },
+    {
       title: t("nav.settings"),
       icon: Settings,
       href: "/admin/settings",
@@ -82,17 +89,28 @@ export default function CRMLayout({ children }: CRMLayoutProps) {
     return null;
   }
 
-  if (user.role !== "admin") {
+  if (user.role !== "admin" && user.role !== "manager") {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-black text-white">
         <h1 className="text-2xl font-bold mb-4">Access Denied</h1>
-        <p className="text-gray-400 mb-4">You need admin privileges to access the CRM.</p>
+        <p className="text-gray-400 mb-4">You need admin or manager privileges to access the CRM.</p>
         <Link href="/">
           <Button>Return Home</Button>
         </Link>
       </div>
     );
   }
+
+  // Filter navigation items based on role
+  const filteredNavItems = user.role === "manager" 
+    ? navItems.filter(item => 
+        item.href === "/admin/inbox" || 
+        item.href === "/crm" || 
+        item.href === "/admin/services" || 
+        item.href === "/admin/scripts" ||
+        item.href === "/admin/calendar"
+      )
+    : navItems;
 
   return (
     <div className="min-h-screen bg-black text-white flex">
@@ -124,7 +142,7 @@ export default function CRMLayout({ children }: CRMLayoutProps) {
 
           {/* Navigation */}
           <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
-            {navItems.map((item) => {
+            {filteredNavItems.map((item) => {
               const Icon = item.icon;
               const isActive = location === item.href;
               return (

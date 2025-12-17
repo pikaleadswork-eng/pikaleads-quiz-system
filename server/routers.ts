@@ -24,6 +24,7 @@ import { healthRouter } from "./routers/health";
 import { prometheusRouter } from "./routers/prometheus";
 import { performanceRouter } from "./routers/performance";
 import { emailAuthRouter } from "./routers/emailAuth";
+import { commentsRouter } from "./routers/comments";
 // import { abTestingRouter } from "./routers/abTesting"; // Disabled - conflicts with existing AB test implementation
 import * as schema from "../drizzle/schema";
 import { getDb } from "./db";
@@ -1394,6 +1395,7 @@ ${input.campaign ? `**Campaign:** ${input.campaign}\n` : ""}
 
   messaging: messagingRouter,
   services: servicesRouter,
+  comments: commentsRouter,
   sales: salesRouter,
   salesScripts: salesScriptsRouter,
   integrations: integrationsRouter,

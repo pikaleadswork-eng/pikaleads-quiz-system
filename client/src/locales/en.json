@@ -48,7 +48,8 @@
     "configure_api_credentials_for_instagram_whatsapp_email_and_google_calendar_integration": "Configure API credentials for Instagram, WhatsApp, Email and Google Calendar integration",
     "name": "Name",
     "learnMore": "Learn More →",
-    "create": "Create"
+    "create": "Create",
+    "copied": "Copied"
   },
   "nav": {
     "messaging": "Messaging",
@@ -535,6 +536,15 @@
     "clear": "Clear",
     "clearAll": "Clear All",
     "activeFilters": "Active Filters"
+  },
+  "comments": {
+    "add": "Add Comment",
+    "placeholder": "Write a comment...",
+    "added": "Comment added",
+    "error": "Error adding comment",
+    "empty": "Comment cannot be empty",
+    "noComments": "No comments yet",
+    "unknown": "Unknown user"
   },
   "table": {
     "id": "ID",
