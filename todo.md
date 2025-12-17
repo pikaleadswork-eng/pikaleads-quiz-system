@@ -3038,3 +3038,28 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [ ] Add icons for different activity types
 - [ ] Replace separate tabs with unified feed
 - [ ] Test with multiple activity types
+
+
+## Phase 102 - Quick Comments Access in CRM Table (CURRENT)
+
+### Add Comments Button to CRM Table
+- [x] Add "Коментарі" button in Actions column of CRM table
+- [x] Create LeadCommentsModal component for quick access
+- [ ] Show comment count badge on button (e.g., "Коментарі (3)") - Future enhancement
+- [x] Modal should display all comments with timestamps and authors
+- [x] Add textarea for adding new comment
+- [x] Add "Додати коментар" button in modal
+- [x] Close modal after successful comment submission
+- [x] Refresh comments list after adding new comment
+
+### Backend Integration
+- [x] Use existing comments.getByLeadId procedure
+- [x] Use existing comments.add procedure
+- [x] No new backend changes needed (already implemented)
+
+### UI/UX Improvements
+- [x] Modal should be accessible without opening full EditLeadForm
+- [x] Show loading state while fetching comments
+- [x] Show empty state if no comments exist
+- [x] Add translations for Ukrainian/Russian/English
+- [x] Test with manager and admin roles

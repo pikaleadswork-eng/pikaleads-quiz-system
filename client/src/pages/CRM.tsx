@@ -35,6 +35,7 @@ import { Badge } from "@/components/ui/badge";
 import Footer from "@/components/Footer";
 import { EditLeadForm } from "@/components/EditLeadForm";
 import { LeadDetailModal } from "@/components/LeadDetailModal";
+import { LeadCommentsModal } from "@/components/LeadCommentsModal";
 import CRMLayout from "@/components/CRMLayout";
 import { Loader2, MessageSquare, Send, Filter, X, Calendar, Users, Tag, Trash2, Copy, Mail } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -71,6 +72,8 @@ export default function CRM() {
   const [editingLead, setEditingLead] = useState<any>(null);
   const [showLeadDetailModal, setShowLeadDetailModal] = useState(false);
   const [detailLead, setDetailLead] = useState<any>(null);
+  const [showCommentsModal, setShowCommentsModal] = useState(false);
+  const [commentsLead, setCommentsLead] = useState<any>(null);
   
   // Bulk actions
   const [selectedLeadIds, setSelectedLeadIds] = useState<number[]>([]);
@@ -886,11 +889,21 @@ export default function CRM() {
                               size="sm"
                               variant="outline"
                               onClick={() => {
+                                setCommentsLead(lead);
+                                setShowCommentsModal(true);
+                              }}
+                            >
+                              <MessageSquare className="w-4 h-4 mr-2" />
+                              {t('comments.title') || 'Коментарі'}
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => {
                                 setDetailLead(lead);
                                 setShowLeadDetailModal(true);
                               }}
                             >
-                              <MessageSquare className="w-4 h-4 mr-2" />
                               {t('crm.view')}
                             </Button>
                             <Button
@@ -1345,6 +1358,16 @@ export default function CRM() {
         comments={[]}
         messages={[]}
       />
+
+      {/* Lead Comments Modal */}
+      {commentsLead && (
+        <LeadCommentsModal
+          leadId={commentsLead.id}
+          leadName={commentsLead.name}
+          open={showCommentsModal}
+          onOpenChange={setShowCommentsModal}
+        />
+      )}
 
       {/* Save Preset Dialog */}
       <Dialog open={showSavePresetDialog} onOpenChange={setShowSavePresetDialog}>

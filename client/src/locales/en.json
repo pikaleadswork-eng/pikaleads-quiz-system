@@ -538,11 +538,13 @@
     "activeFilters": "Active Filters"
   },
   "comments": {
+    "title": "Comments",
+    "description": "Comment history and notes for this lead",
     "add": "Add Comment",
     "placeholder": "Write a comment...",
     "added": "Comment added",
     "error": "Error adding comment",
-    "empty": "Comment cannot be empty",
+    "empty": "No comments yet",
     "noComments": "No comments yet",
     "unknown": "Unknown user"
   },
