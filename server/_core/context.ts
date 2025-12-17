@@ -20,7 +20,7 @@ export async function createContext(
     const token = opts.req.cookies?.auth_token;
     if (token) {
       const decoded = jwt.verify(token, JWT_SECRET) as any;
-      user = await getUserById(decoded.id) || null;
+      user = await getUserById(decoded.userId) || null;
     }
   } catch (error) {
     // Authentication is optional for public procedures.

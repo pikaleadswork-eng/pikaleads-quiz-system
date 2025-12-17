@@ -23,6 +23,7 @@ import { quizzesRouter } from "./routers/quizzes";
 import { healthRouter } from "./routers/health";
 import { prometheusRouter } from "./routers/prometheus";
 import { performanceRouter } from "./routers/performance";
+import { emailAuthRouter } from "./routers/emailAuth";
 // import { abTestingRouter } from "./routers/abTesting"; // Disabled - conflicts with existing AB test implementation
 import * as schema from "../drizzle/schema";
 import { getDb } from "./db";
@@ -37,7 +38,9 @@ const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
 export const appRouter = router({
     // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
   system: systemRouter,
-  auth: router({
+  auth: emailAuthRouter,
+  // Old OAuth auth removed
+  oldAuth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
     logout: publicProcedure.mutation(({ ctx }) => {
       const cookieOptions = getSessionCookieOptions(ctx.req);

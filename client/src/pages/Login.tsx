@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useLocation } from 'wouter';
+import { trpc } from '../lib/trpc';
 
 export default function Login() {
   const [, setLocation] = useLocation();
@@ -8,37 +9,33 @@ export default function Login() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
+  const loginMutation = trpc.auth.login.useMutation({
+    onSuccess: (data) => {
+      setLoading(false);
+      // Redirect based on role
+      if (data.user.role === 'admin') {
+        window.location.href = '/admin';
+      } else if (data.user.role === 'manager') {
+        window.location.href = '/manager';
+      } else {
+        window.location.href = '/crm';
+      }
+    },
+    onError: (err) => {
+      setError(err.message || 'Invalid email or password');
+      setLoading(false);
+    },
+  });
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     setLoading(true);
 
     try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.error || 'Login failed');
-      }
-
-      const data = await response.json();
-      
-      // Redirect based on role
-      if (data.user.role === 'admin') {
-        setLocation('/admin');
-      } else if (data.user.role === 'manager') {
-        setLocation('/manager');
-      } else {
-        setLocation('/crm');
-      }
-    } catch (err: any) {
-      setError(err.message || 'Invalid email or password');
-    } finally {
-      setLoading(false);
+      await loginMutation.mutateAsync({ email, password });
+    } catch (error) {
+      // Error handled by onError
     }
   };
 

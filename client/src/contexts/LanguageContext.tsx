@@ -43,7 +43,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (geoData && !localStorage.getItem("pikaleads_language")) {
-      setLanguageState(geoData.language);
+      setLanguageState(geoData.language as Language);
     }
   }, [geoData]);
 
