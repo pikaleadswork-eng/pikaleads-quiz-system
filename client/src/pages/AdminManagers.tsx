@@ -39,6 +39,7 @@ export default function AdminManagers() {
   const [invitationUrl, setInvitationUrl] = useState("");
 
   const { data: invitations, refetch } = trpc.managers.getInvitations.useQuery();
+  const { data: activeManagers } = trpc.managers.getActiveManagers.useQuery();
 
   const inviteManager = trpc.managers.inviteManager.useMutation({
     onSuccess: (data) => {
@@ -190,6 +191,56 @@ export default function AdminManagers() {
           </Dialog>
         </div>
 
+        {/* Active Managers Section */}
+        <Card className="bg-zinc-900 border-zinc-800 mb-6">
+          <CardHeader>
+            <CardTitle className="text-white">Active Managers</CardTitle>
+            <CardDescription className="text-zinc-400">
+              Currently active team members with manager access
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            {activeManagers && activeManagers.length > 0 ? (
+              <Table>
+                <TableHeader>
+                  <TableRow className="border-zinc-800">
+                    <TableHead className="text-zinc-300">Name</TableHead>
+                    <TableHead className="text-zinc-300">Email</TableHead>
+                    <TableHead className="text-zinc-300">Role</TableHead>
+                    <TableHead className="text-zinc-300">Joined</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {activeManagers.map((manager) => (
+                    <TableRow key={manager.id} className="border-zinc-800">
+                      <TableCell className="text-white font-medium">
+                        {manager.name}
+                      </TableCell>
+                      <TableCell className="text-zinc-400">
+                        {manager.email}
+                      </TableCell>
+                      <TableCell>
+                        <Badge className="bg-green-600 text-white">
+                          {manager.role}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="text-zinc-400">
+                        {new Date(manager.createdAt).toLocaleDateString()}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            ) : (
+              <div className="text-center py-12 text-zinc-500">
+                <UserPlus className="w-16 h-16 mx-auto mb-4 opacity-50" />
+                <p>No active managers yet</p>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        {/* Invitations Section */}
         <Card className="bg-zinc-900 border-zinc-800">
           <CardHeader>
             <CardTitle className="text-white">Manager Invitations</CardTitle>

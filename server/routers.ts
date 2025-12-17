@@ -1062,6 +1062,25 @@ ${input.campaign ? `**Campaign:** ${input.campaign}\n` : ""}
       return await getAllManagerInvitations();
     }),
     
+    // Get all active managers
+    getActiveManagers: adminProcedure.query(async () => {
+      const db = await getDb();
+      if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Database connection failed" });
+      
+      const { users } = await import("../drizzle/schema");
+      const { eq } = await import("drizzle-orm");
+      
+      const managers = await db.select({
+        id: users.id,
+        name: users.name,
+        email: users.email,
+        role: users.role,
+        createdAt: users.createdAt,
+      }).from(users).where(eq(users.role, "manager"));
+      
+      return managers;
+    }),
+    
     // Verify invitation token
     verifyInvitation: publicProcedure
       .input(z.object({ token: z.string() }))

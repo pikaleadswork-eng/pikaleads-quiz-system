@@ -2828,3 +2828,26 @@ Note: Analytics Dashboard already had complete Ukrainian translations in uk.json
 - [ ] Test logout functionality (TODO)
 
 Note: Login works via tRPC API, but React form submission needs debugging. Auth system is functional.
+
+
+## Manager Management & Role-Based Access Control - December 17, 2025
+- [ ] Add "Active Managers" section to Manager Management page
+- [ ] Show list of all users with role='manager' from users table
+- [ ] Add ability to deactivate/remove managers
+- [ ] Test admin role - full access to all pages
+- [ ] Test manager role - access to CRM, leads, messaging only
+- [ ] Test user role - limited access
+- [ ] Verify protected routes work correctly
+- [ ] Test logout functionality
+
+
+## Manager Management & Role Sync - December 17, 2025
+- [x] Add tRPC procedure to get all active managers from users table
+- [x] Update ManagerInvitation page to show both invitations AND active managers
+- [x] Add "Active Managers" section with list of current managers
+- [x] Update manager names to Олександр and Артур
+- [x] Configure lead distribution between managers (Олександр: leads 1,3,5 | Артур: leads 2,4,6)
+- [ ] Test manager access to CRM and leads
+- [ ] Verify each manager sees only their assigned leads
+- [ ] Test admin access to all pages
+- [ ] Verify logout works correctly
