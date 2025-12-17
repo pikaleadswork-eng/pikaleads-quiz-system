@@ -1,6 +1,7 @@
 import { trpc } from "@/lib/trpc";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useEffect, useState } from "react";
+import { HistoricalTrends } from "@/components/HistoricalTrends";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -296,6 +297,11 @@ export function ServerMonitoring() {
             </div>
           </CardContent>
         </Card>
+      </div>
+
+      {/* Historical Trends Section */}
+      <div className="mt-8">
+        <HistoricalTrends />
       </div>
     </div>
   );

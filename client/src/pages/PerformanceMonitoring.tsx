@@ -2,6 +2,31 @@ import { trpc } from "@/lib/trpc";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { AlertTriangle, TrendingUp, Clock, XCircle } from "lucide-react";
+import { Line, Bar } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler,
+} from "chart.js";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler
+);
 
 export function PerformanceMonitoring() {
   const { data: stats } = trpc.performance.getStats.useQuery(undefined, {
@@ -88,6 +113,67 @@ export function PerformanceMonitoring() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Response Time Graph */}
+      {stats && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <TrendingUp className="w-5 h-5 text-blue-500" />
+              API Response Times
+            </CardTitle>
+            <CardDescription>
+              Average response time for each endpoint (lower is better)
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="h-[300px]">
+              <Bar
+                data={{
+                  labels: Object.keys(stats).slice(0, 15),
+                  datasets: [
+                    {
+                      label: "Avg Response Time (ms)",
+                      data: Object.values(stats).slice(0, 15).map((s: any) => s.avgTime),
+                      backgroundColor: Object.values(stats).slice(0, 15).map((s: any) => {
+                        if (s.avgTime < 100) return "rgba(34, 197, 94, 0.5)";
+                        if (s.avgTime < 500) return "rgba(234, 179, 8, 0.5)";
+                        if (s.avgTime < 1000) return "rgba(249, 115, 22, 0.5)";
+                        return "rgba(239, 68, 68, 0.5)";
+                      }),
+                      borderColor: Object.values(stats).slice(0, 15).map((s: any) => {
+                        if (s.avgTime < 100) return "rgb(34, 197, 94)";
+                        if (s.avgTime < 500) return "rgb(234, 179, 8)";
+                        if (s.avgTime < 1000) return "rgb(249, 115, 22)";
+                        return "rgb(239, 68, 68)";
+                      }),
+                      borderWidth: 1,
+                    },
+                  ],
+                }}
+                options={{
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  plugins: {
+                    legend: {
+                      display: false,
+                    },
+                  },
+                  scales: {
+                    y: {
+                      beginAtZero: true,
+                      title: {
+                        display: true,
+                        text: "Response Time (ms)",
+                      },
+                    },
+                  },
+                }}
+              />
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Bottlenecks Table */}
       {bottlenecks && bottlenecks.length > 0 && (

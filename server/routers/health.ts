@@ -1,6 +1,13 @@
 import { publicProcedure, router } from "../_core/trpc.js";
 import { getDb } from "../db.js";
 import os from "os";
+import { sendHighMemoryAlert, sendHighCPUAlert, sendDatabaseDownAlert } from "../utils/emailAlerts";
+
+// Track last alert time to avoid spam (5 minutes cooldown)
+const alertCooldown = 5 * 60 * 1000; // 5 minutes in milliseconds
+let lastMemoryAlert = 0;
+let lastCPUAlert = 0;
+let lastDBAlert = 0;
 
 export const healthRouter = router({
   /**
@@ -22,6 +29,13 @@ export const healthRouter = router({
     } catch (error) {
       dbStatus = "unhealthy";
       console.error("[Health Check] Database error:", error);
+      
+      // Send email alert if database is down (with cooldown)
+      const now = Date.now();
+      if (now - lastDBAlert > alertCooldown) {
+        await sendDatabaseDownAlert(`${dbResponseTime}ms`);
+        lastDBAlert = now;
+      }
     }
 
     // Get system metrics
@@ -35,6 +49,23 @@ export const healthRouter = router({
     const uptimeMinutes = Math.floor((uptime % 3600) / 60);
 
     const responseTime = Date.now() - startTime;
+
+    // Send email alerts for critical conditions (with cooldown)
+    const now = Date.now();
+    if (memoryUsagePercent > 85 && now - lastMemoryAlert > alertCooldown) {
+      await sendHighMemoryAlert(
+        `${memoryUsagePercent}%`,
+        `${Math.round(usedMemory / 1024 / 1024)}MB`,
+        `${Math.round(totalMemory / 1024 / 1024)}MB`
+      );
+      lastMemoryAlert = now;
+    }
+
+    const cpuLoad = os.loadavg()[0];
+    if (cpuLoad > 2 && now - lastCPUAlert > alertCooldown) {
+      await sendHighCPUAlert(cpuLoad, os.cpus().length);
+      lastCPUAlert = now;
+    }
 
     return {
       status: dbStatus === "healthy" ? "healthy" : "degraded",
