@@ -18,6 +18,27 @@ initGA4();
 
 const queryClient = new QueryClient();
 
+// Public routes that don't require authentication
+const PUBLIC_ROUTES = [
+  '/',
+  '/login',
+  '/thank-you',
+  '/privacy',
+  '/contact',
+];
+
+const isPublicRoute = (path: string): boolean => {
+  // Exact match for public routes
+  if (PUBLIC_ROUTES.includes(path)) return true;
+  
+  // Pattern match for quiz routes
+  if (path.startsWith('/quiz/')) return true;
+  if (path.startsWith('/meta-')) return true;
+  if (path.startsWith('/google-')) return true;
+  
+  return false;
+};
+
 const redirectToLoginIfUnauthorized = (error: unknown) => {
   if (!(error instanceof TRPCClientError)) return;
   if (typeof window === "undefined") return;
@@ -25,6 +46,13 @@ const redirectToLoginIfUnauthorized = (error: unknown) => {
   const isUnauthorized = error.message === UNAUTHED_ERR_MSG;
 
   if (!isUnauthorized) return;
+  
+  // Don't redirect to login if user is on a public route
+  const currentPath = window.location.pathname;
+  if (isPublicRoute(currentPath)) {
+    console.log('[Auth] Skipping redirect on public route:', currentPath);
+    return;
+  }
 
   window.location.href = getLoginUrl();
 };

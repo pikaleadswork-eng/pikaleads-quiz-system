@@ -3187,3 +3187,26 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Make text bold (font-semibold) and white for contrast
 - [x] Apply styling to both table badges and dropdown badges
 - [x] Test visibility on dark background
+
+
+## Phase 107 - Fix Public vs Protected Routes (CURRENT)
+
+### Routing Issue
+- [x] Home page (/) redirects to login - should be public
+- [x] Quiz pages (/quiz/*) redirect to login - should be public
+- [x] CRM panel pages should remain protected (require authentication)
+
+### Implementation
+- [x] Separate public routes (Home, Quizzes) from protected routes (CRM)
+- [x] Remove authentication requirement from public routes
+- [x] Keep authentication requirement for CRM routes (/crm, /messaging, /services, /sales, /scripts, /settings, /admin)
+- [x] Update main.tsx with public routes whitelist
+- [x] Test public access to home and quiz pages
+- [x] Verify CRM pages still require login for authenticated users
+
+### Solution
+- Added PUBLIC_ROUTES whitelist in main.tsx
+- Added isPublicRoute() function to check if current path is public
+- Modified redirectToLoginIfUnauthorized() to skip redirect on public routes
+- Public routes: /, /login, /thank-you, /privacy, /contact, /quiz/*, /meta-*, /google-*
+- Protected routes still redirect to login when accessed without authentication
