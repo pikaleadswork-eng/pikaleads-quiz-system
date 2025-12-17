@@ -25,6 +25,7 @@ import { prometheusRouter } from "./routers/prometheus";
 import { performanceRouter } from "./routers/performance";
 import { emailAuthRouter } from "./routers/emailAuth";
 import { commentsRouter } from "./routers/comments";
+import { profileRouter } from "./routers/profile";
 import { calendarRouter } from "./routers/calendar";
 // import { abTestingRouter } from "./routers/abTesting"; // Disabled - conflicts with existing AB test implementation
 import * as schema from "../drizzle/schema";
@@ -1421,6 +1422,7 @@ ${input.campaign ? `**Campaign:** ${input.campaign}\n` : ""}
   messaging: messagingRouter,
   services: servicesRouter,
   comments: commentsRouter,
+  profile: profileRouter,
   calendar: calendarRouter,
   sales: salesRouter,
   salesScripts: salesScriptsRouter,

@@ -15,7 +15,8 @@ import {
   Menu,
   X,
   Loader2,
-  Calendar
+  Calendar,
+  User
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -177,6 +178,16 @@ export default function CRMLayout({ children }: CRMLayoutProps) {
                 <div className="text-xs text-gray-500 truncate">{user.email}</div>
               </div>
             </div>
+            <Link href="/profile">
+              <Button
+                variant="outline"
+                size="sm"
+                className="w-full gap-2 bg-transparent border-zinc-700 hover:bg-zinc-800 hover:border-zinc-600"
+              >
+                <User className="w-4 h-4" />
+                {t("profile.title", "Profile")}
+              </Button>
+            </Link>
             <Button
               variant="outline"
               size="sm"

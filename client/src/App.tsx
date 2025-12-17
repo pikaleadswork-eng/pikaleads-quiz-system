@@ -53,6 +53,7 @@ import ApartmentRenovationQuiz from "./pages/ApartmentRenovationQuiz";
 import ECommerceQuiz from "./pages/ECommerceQuiz";
 import QuizPage from "./pages/QuizPage";
 import Login from "./pages/Login";
+import Profile from "./pages/Profile";
 
 function Router() {
   return (
@@ -104,6 +105,7 @@ function Router() {
       <Route path={"/admin/settings/roles"} component={SettingsRoles} />
       <Route path={"/admin/settings/lead-statuses"} component={SettingsLeadStatuses} />
       <Route path={"/admin/settings/ip-telephony"} component={SettingsIPTelephony} />
+      <Route path={"/profile"} component={Profile} />
       <Route path={"/admin/settings/lead-assignment"} component={LeadAssignment} />
       <Route path={"/admin/monitoring"} component={ServerMonitoring} />
       <Route path={"/admin/calendar"} component={AdminCalendar} />

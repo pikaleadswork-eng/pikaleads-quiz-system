@@ -281,6 +281,13 @@
       "when": 1765981443128,
       "tag": "0039_little_lifeguard",
       "breakpoints": true
+    },
+    {
+      "idx": 40,
+      "version": "5",
+      "when": 1765981803348,
+      "tag": "0040_sleepy_warlock",
+      "breakpoints": true
     }
   ]
 }

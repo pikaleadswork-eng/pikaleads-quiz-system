@@ -3006,3 +3006,35 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [ ] Add backend procedure to verify token and update password
 - [ ] Add email templates for password reset
 - [ ] Test complete flow from forgot to reset
+
+
+## Final Features Implementation
+
+### Telegram Chat ID Settings UI
+- [x] Create Settings → Profile page
+- [x] Add Telegram Chat ID input field
+- [x] Add backend procedure to update user telegramChatId
+- [x] Add instructions on how to get Telegram Chat ID
+- [x] Add Profile link to CRMLayout navigation
+- [ ] Update event notifications to use personal chat IDs (requires implementation)
+- [ ] Test with real Telegram bot
+
+### Forgot Password Flow
+- [x] Create password_reset_tokens table (id, userId, token, expiresAt, usedAt)
+- [ ] Add "Forgot Password?" link on Login page
+- [ ] Create ForgotPassword page with email input
+- [ ] Create backend procedure to generate reset token
+- [ ] Send password reset email with token link
+- [ ] Create ResetPassword page with token validation
+- [ ] Add backend procedure to verify token and update password
+- [ ] Test complete flow from forgot to reset
+
+**Note**: Database schema ready, UI implementation pending.
+
+### Unified Lead Activity Feed
+- [ ] Create LeadActivityFeed component
+- [ ] Fetch and merge history, comments, and activity log
+- [ ] Sort all activities by timestamp
+- [ ] Add icons for different activity types
+- [ ] Replace separate tabs with unified feed
+- [ ] Test with multiple activity types
