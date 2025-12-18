@@ -3444,3 +3444,279 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Test event transmission to Clarity
 - [x] Create comprehensive event tracking report
 - [x] Verify all events are properly configured
+
+
+---
+
+# 🌐 AGENCY WEBSITE - NEW MAIN SITE
+
+## Phase 100: Planning & Preparation
+- [ ] Update AGENCY_WEBSITE_PLAN.md with testimonials, videos, and niches sections
+- [ ] Define text structure for all sections
+
+## Phase 101: AI Illustrations Generation
+- [x] Generate Pikachu logo without background (transparent PNG)
+- [x] Generate Meta Ads service illustration (Pikachu with Meta logo)
+- [x] Generate Google Ads service illustration (Pikachu with Google logo)
+- [x] Generate Quiz service illustration (Pikachu with tablet/form)
+- [x] Generate CRM service illustration (Pikachu with dashboard)
+- [x] Generate Analytics service illustration (Pikachu with graphs)
+- [x] Generate Creative/Design service illustration (Pikachu with palette)
+- [x] Generate Telegram Ads service illustration (Pikachu with Telegram logo)
+- [x] Generate Audit service illustration (Pikachu with magnifying glass)
+- [x] Generate Hero section background illustration (isometric office/tech)
+- [ ] Optimize all images for web (WebP format, lazy loading)
+
+## Phase 102: Route Restructuring
+- [ ] Move all quiz routes to /quiz-service prefix
+- [ ] Update quiz system navigation and links
+- [ ] Update CRM routes to /quiz-service/crm
+- [ ] Update admin routes to /quiz-service/admin
+- [ ] Test all quiz functionality after migration
+- [ ] Update authentication redirects for quiz system
+
+## Phase 103: Global Theme & Design System
+- [ ] Set up color palette (yellow #FFD93D, purple #5B2E90, electric blue #00D9FF)
+- [ ] Configure Tailwind with custom colors and gradients
+- [ ] Add Montserrat and Inter fonts via Google Fonts
+- [ ] Create reusable button components (primary, secondary, outline)
+- [ ] Create card component with neon borders
+- [ ] Create gradient backgrounds and particle effects
+- [ ] Set up dark theme as default
+- [ ] Configure responsive breakpoints
+
+## Phase 104: Hero Section & Navigation
+- [ ] Create main header with logo and navigation
+- [ ] Implement mobile hamburger menu
+- [ ] Build Hero section with gradient background
+- [ ] Add animated Pikachu mascot to Hero
+- [ ] Add H1 headline with typing animation
+- [ ] Add CTA buttons (Start Working, Take Quiz)
+- [ ] Implement parallax scrolling effect
+- [ ] Add particles/lightning effects
+
+## Phase 105: Core Sections
+- [ ] Section: Advantages (6 cards with icons and descriptions)
+- [ ] Section: Client logos (infinite scroll with placeholders)
+- [ ] Section: Services (8 cards with AI illustrations and descriptions)
+- [ ] Section: Why work with us (6-8 reasons with animated counters)
+
+## Phase 106: Content Sections
+- [ ] Section: Cases skeleton (grid with filter by niche, 30 placeholder cards)
+- [ ] Create individual case page template (/cases/[slug])
+- [ ] Section: Our tools (CRM, Quiz Builder, Analytics, Telegram Bot, Creative Library)
+- [ ] Section: Metrics (8 animated counters with key statistics)
+- [ ] Section: Testimonials/Reviews (carousel with client feedback)
+- [ ] Section: Video gallery (YouTube embeds in grid/carousel)
+- [ ] Section: Niches we work in (categories with icons)
+
+## Phase 107: Additional Pages
+- [ ] Create /blog page (skeleton with article grid)
+- [ ] Create /blog/[slug] article template
+- [ ] Create /news page (timeline format)
+- [ ] Create /niches page (detailed niche descriptions)
+- [ ] Create contact form section with CRM integration
+- [ ] Update footer with all new navigation links
+
+## Phase 108: Polish & Optimization
+- [ ] Add scroll animations (fade in, slide up)
+- [ ] Add hover effects on all interactive elements
+- [ ] Implement counter animations for metrics
+- [ ] Test mobile responsiveness for all sections
+- [ ] Optimize images (WebP, lazy loading, responsive images)
+- [ ] Add loading states for forms
+- [ ] Test form submissions and CRM integration
+- [ ] Add meta tags for SEO
+- [ ] Configure Open Graph tags for social sharing
+- [ ] Test cross-browser compatibility
+
+## Phase 109: Testing & Delivery
+- [ ] Test all navigation links
+- [ ] Test quiz system on /quiz-service
+- [ ] Test CRM access on /quiz-service/crm
+- [ ] Test form submissions
+- [ ] Test mobile menu and navigation
+- [ ] Test video embeds
+- [ ] Verify all images load correctly
+- [ ] Check page load performance
+- [ ] Create checkpoint
+- [ ] Deliver website to user
+
+
+## Phase 123: Cyberpunk Digital Redesign (CURRENT)
+
+### Design System & Global Styles
+- [ ] Create cyberpunk color palette (neon green #00FF00, purple #B026FF, cyan #00F0FF)
+- [ ] Add futuristic fonts (Orbitron, Rajdhani, Space Mono from Google Fonts)
+- [ ] Implement dark theme with gradient backgrounds
+- [ ] Add neon glow effects to buttons and cards
+- [ ] Create animated grid background
+- [ ] Add scan-line effects
+- [ ] Implement glitch text animations
+- [ ] Add holographic card effects
+
+### Landing Page Redesign
+- [ ] Create cyberpunk hero section with animated background
+- [ ] Add neon-styled quiz cards with hover effects
+- [ ] Implement futuristic navigation menu
+- [ ] Add particle effects
+- [ ] Create "Matrix-style" text animations
+- [ ] Add cyberpunk-styled CTA buttons
+- [ ] Implement responsive design for mobile
+
+### Quiz Interface Redesign
+- [ ] Redesign quiz cards with neon borders
+- [ ] Add progress bar with neon glow
+- [ ] Create futuristic question cards
+- [ ] Add animated transitions between questions
+- [ ] Implement cyberpunk-styled radio buttons/checkboxes
+- [ ] Add holographic result cards
+- [ ] Create animated score visualization
+
+### CRM Dashboard Redesign
+- [ ] Redesign sidebar with neon accents
+- [ ] Add cyberpunk-styled stat cards
+- [ ] Implement glowing data tables
+- [ ] Add futuristic charts and graphs
+- [ ] Create neon-styled buttons and inputs
+- [ ] Add animated loading states
+- [ ] Implement holographic modals
+
+### Component Library
+- [ ] Create NeonButton component
+- [ ] Create CyberpunkCard component
+- [ ] Create GlitchText component
+- [ ] Create HolographicPanel component
+- [ ] Create FuturisticInput component
+- [ ] Create NeonBadge component
+- [ ] Create AnimatedBackground component
+
+### Animations & Effects
+- [ ] Add CSS keyframe animations for glitch effects
+- [ ] Implement neon pulse animations
+- [ ] Add hover glow effects
+- [ ] Create scan-line overlay
+- [ ] Add particle system
+- [ ] Implement smooth page transitions
+- [ ] Add loading animations with cyberpunk theme
+
+
+### Full Cyberpunk Visual Redesign (User Request)
+- [ ] Add cyberpunk AI robot character/illustration (like Her.AI template)
+- [ ] Create large neon "CYBERPUNK" style hero text with glitch effects
+- [ ] Add animated statistics/metrics display (97K+ style)
+- [ ] Implement 3D geometric shapes with gradients (like Astra)
+- [ ] Add holographic card effects for quiz cards
+- [ ] Create "ENTER THE FUTURE" / "Digital Dystopia" messaging
+- [ ] Add floating particles animation background
+- [ ] Implement neon border effects on all cards
+- [ ] Generate or find cyberpunk character images
+- [ ] Add neon glow to all interactive elements
+- [ ] Create futuristic progress bars and badges
+- [ ] Add scan-line overlay effects
+
+
+### Cyberpunk Redesign Based on Logo Style
+- [ ] Use yellow (#FFD93D) and purple (#5B2E90) as main colors
+- [ ] Add Pikachu with sunglasses logo as hero element
+- [ ] Create large "PIKALEADS" text with neon glow
+- [ ] Add cyber grid animated background
+- [ ] Create neon-bordered quiz cards
+- [ ] Add glitch text effects on main headings
+- [ ] Implement scan-line overlay
+- [ ] Add floating particles animation
+- [ ] Create futuristic statistics section
+- [ ] Add neon glow to all buttons and interactive elements
+
+
+### Cyberpunk Navigation Menu for /quiz-service
+- [ ] Create cyberpunk navigation header component
+- [ ] Add black menu bar with neon bottom border
+- [ ] Add menu items: Головна, Контакти, Відгуки, Про нас
+- [ ] Add social media icons (Instagram, Facebook, LinkedIn)
+- [ ] Add phone number display
+- [ ] Add Telegram icon with link
+- [ ] Create burger menu for mobile version
+- [ ] Make logo smaller (not full screen)
+- [ ] Add neon glow effects to menu items on hover
+- [ ] Make navigation sticky on scroll
+- [ ] Add responsive design for mobile/tablet/desktop
+
+
+### Fix Quiz Cards Button Text Wrapping
+- [ ] Fix "ДІЗНАТИСЬ БІЛЬШЕ" button text to be on single line
+- [ ] Remove Sparkles icon from button (causing wrapping)
+- [ ] Keep arrow icon only
+- [ ] Make button text not wrap with whitespace-nowrap
+- [ ] Move logo to navigation menu (not center hero)
+
+
+### Add Navigation to Agency Home Page
+- [ ] Import CyberpunkNavigation to AgencyHome.tsx
+- [ ] Add navigation menu at the top of agency homepage
+- [ ] Ensure menu works on both / and /quiz-service routes
+
+
+### Brache-Style Homepage Redesign with Pokemon Theme
+- [ ] Change color scheme from purple/yellow to orange/black (Brache style)
+- [ ] Update navigation social icons to: Instagram, Facebook, Telegram, YouTube (with proper icons)
+- [ ] Create hero section with Pikachu in orange hoodie style
+- [ ] Add "STEP INTO THE PIKALEADS DIMENSION" text
+- [ ] Add statistics display "120+ COMBINATION OF INNOVATION" style
+- [ ] Add orange progress bars/lines
+- [ ] Create futuristic Pokemon character illustrations
+- [ ] Update all accent colors to orange (#FF6B35)
+- [ ] Add dark gray/black gradient backgrounds
+- [ ] Update typography to match Brache style
+- [ ] Create grid-based sections with orange accents
+
+
+### Generate Cool Pikachu Hero Image
+- [ ] Generate Pikachu in cap with smirk/confident smile
+- [ ] Cyberpunk/futuristic style like Brache template
+- [ ] Cool, edgy, professional look
+- [ ] Yellow (#FFD93D) + Purple (#5B2E90) color scheme
+
+### Redesign Homepage in Brache Style with Pikachu Theme
+- [ ] Keep Brache dark layout structure
+- [ ] Use yellow/purple colors instead of orange
+- [ ] Replace human character with generated Pikachu
+- [ ] "STEP INTO THE PIKALEADS DIMENSION" hero text
+- [ ] Statistics with Pokemon theme
+- [ ] Progress bars in yellow/purple
+- [ ] Futuristic Pokemon aesthetic
+
+
+### Add Sunglasses to Pikachu Hero Image
+- [ ] Regenerate Pikachu with cool sunglasses (like logo)
+- [ ] Keep cyberpunk style, cap, and smirk
+- [ ] Black/dark sunglasses with purple reflection
+
+
+### Generate 3 More Pikachu Variants for Selection
+- [ ] Variant 2: Different pose/angle
+- [ ] Variant 3: Different expression/style
+- [ ] Variant 4: Alternative look
+- [ ] All with sunglasses, cap, transparent background
+
+
+### Fix Pikachu Variant 2 Ear
+- [ ] Edit pikachu-variant-2.png to make ear more visible/clear
+
+### Create Brache-Style Homepage with Pikachu
+- [ ] Copy pikachu-variant-2.png to hero image location
+- [ ] Redesign AgencyHome.tsx in Brache style
+- [ ] Add "FUTURISTIC" large background text
+- [ ] Add "STEP INTO THE PIKALEADS DIMENSION" hero text
+- [ ] Add statistics (45+, 120+)
+- [ ] Add yellow/purple progress bars
+- [ ] Add neon glow effects around Pikachu
+- [ ] Keep yellow (#FFD93D) + purple (#5B2E90) color scheme
+
+
+### Fix Homepage Issues
+- [x] Fix Pikachu PNG transparency (remove gray checkerboard)
+- [x] Convert Pikachu to WebP or fix CSS background
+- [ ] Add more content sections (services, benefits, cases, testimonials)
+- [ ] Improve text layout and visibility
+- [ ] Add animations and interactions

@@ -43,82 +43,132 @@
 }
 
 :root {
-  /* Purple #5B2E90 converted to OKLCH */
-  --primary: oklch(0.38 0.15 300);
+  /* Brache Orange #FF6B35 */
+  --neon-orange: oklch(0.70 0.20 40);
+  --neon-orange-glow: oklch(0.70 0.20 40 / 0.5);
+  
+  /* Secondary Orange tones */
+  --orange-light: oklch(0.75 0.18 45);
+  --orange-dark: oklch(0.55 0.22 35);
+  
+  /* Keep some accent colors */
+  --neon-cyan: oklch(0.90 0.20 210);
+  --neon-cyan-glow: oklch(0.90 0.20 210 / 0.5);
+  
+  /* White glow for text */
+  --neon-white: oklch(0.98 0 0);
+  --neon-white-glow: oklch(0.98 0 0 / 0.5);
+  
+  /* Primary colors - Orange */
+  --primary: oklch(0.70 0.20 40);
   --primary-foreground: oklch(0.98 0 0);
-  /* Yellow #FFD93D converted to OKLCH */
+  
+  /* Accent - Orange */
+  --accent: oklch(0.70 0.20 40);
+  --accent-foreground: oklch(0.98 0 0);
+  
+  /* Yellow accent kept */
   --accent-yellow: oklch(0.88 0.15 85);
   --accent-yellow-foreground: oklch(0.15 0 0);
-  --sidebar-primary: oklch(0.38 0.15 300);
+  
+  /* Sidebar - Dark with purple accent */
+  --sidebar-primary: oklch(0.60 0.28 300);
   --sidebar-primary-foreground: oklch(0.98 0 0);
-  --chart-1: oklch(0.88 0.15 85);
-  --chart-2: oklch(0.38 0.15 300);
-  --chart-3: oklch(0.48 0.15 300);
-  --chart-4: oklch(0.28 0.15 300);
-  --chart-5: oklch(0.18 0.15 300);
-  --radius: 0.75rem;
-  /* Pure black background #000000 */
+  
+  /* Charts - Cyberpunk colors */
+  --chart-1: oklch(0.95 0.30 145); /* Neon Green */
+  --chart-2: oklch(0.60 0.28 300); /* Neon Purple */
+  --chart-3: oklch(0.90 0.20 210); /* Neon Cyan */
+  --chart-4: oklch(0.65 0.30 350); /* Neon Pink */
+  --chart-5: oklch(0.88 0.15 85);  /* Yellow */
+  
+  --radius: 0.5rem;
+  
+  /* Pure black background */
   --background: oklch(0 0 0);
-  --foreground: oklch(0.95 0 0);
-  --card: oklch(0.08 0 0);
-  --card-foreground: oklch(0.95 0 0);
-  --popover: oklch(0.08 0 0);
-  --popover-foreground: oklch(0.95 0 0);
-  --secondary: oklch(0.15 0 0);
-  --secondary-foreground: oklch(0.85 0 0);
-  --muted: oklch(0.2 0 0);
-  --muted-foreground: oklch(0.6 0 0);
-  --accent: oklch(0.88 0.15 85);
-  --accent-foreground: oklch(0.15 0 0);
+  --foreground: oklch(0.98 0 0);
+  
+  /* Card - Very dark with slight purple tint */
+  --card: oklch(0.10 0.02 300);
+  --card-foreground: oklch(0.98 0 0);
+  
+  /* Popover */
+  --popover: oklch(0.08 0.02 300);
+  --popover-foreground: oklch(0.98 0 0);
+  
+  /* Secondary - Dark gray */
+  --secondary: oklch(0.18 0.02 300);
+  --secondary-foreground: oklch(0.90 0 0);
+  
+  /* Muted */
+  --muted: oklch(0.22 0.02 300);
+  --muted-foreground: oklch(0.65 0 0);
+  
+  /* Destructive - Red */
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.25 0 0);
-  --input: oklch(0.15 0 0);
-  --ring: oklch(0.38 0.15 300);
-  --sidebar: oklch(0.05 0 0);
-  --sidebar-foreground: oklch(0.95 0 0);
-  --sidebar-accent: oklch(0.15 0 0);
-  --sidebar-accent-foreground: oklch(0.95 0 0);
-  --sidebar-border: oklch(0.25 0 0);
-  --sidebar-ring: oklch(0.38 0.15 300);
+  
+  /* Border - Subtle purple tint */
+  --border: oklch(0.28 0.05 300);
+  --input: oklch(0.18 0.02 300);
+  --ring: oklch(0.60 0.28 300);
+  
+  /* Sidebar */
+  --sidebar: oklch(0.06 0.02 300);
+  --sidebar-foreground: oklch(0.98 0 0);
+  --sidebar-accent: oklch(0.18 0.02 300);
+  --sidebar-accent-foreground: oklch(0.98 0 0);
+  --sidebar-border: oklch(0.28 0.05 300);
+  --sidebar-ring: oklch(0.60 0.28 300);
 }
 
 .dark {
-  /* Same as root for dark theme consistency */
-  --primary: oklch(0.38 0.15 300);
+  /* Same as root for consistency */
+  --neon-green: oklch(0.95 0.30 145);
+  --neon-green-glow: oklch(0.95 0.30 145 / 0.5);
+  --neon-purple: oklch(0.60 0.28 300);
+  --neon-purple-glow: oklch(0.60 0.28 300 / 0.5);
+  --neon-cyan: oklch(0.90 0.20 210);
+  --neon-cyan-glow: oklch(0.90 0.20 210 / 0.5);
+  --neon-pink: oklch(0.65 0.30 350);
+  --neon-pink-glow: oklch(0.65 0.30 350 / 0.5);
+  
+  --primary: oklch(0.60 0.28 300);
   --primary-foreground: oklch(0.98 0 0);
+  --accent: oklch(0.95 0.30 145);
+  --accent-foreground: oklch(0.10 0 0);
   --accent-yellow: oklch(0.88 0.15 85);
   --accent-yellow-foreground: oklch(0.15 0 0);
-  --sidebar-primary: oklch(0.38 0.15 300);
+  --sidebar-primary: oklch(0.60 0.28 300);
   --sidebar-primary-foreground: oklch(0.98 0 0);
   --background: oklch(0 0 0);
-  --foreground: oklch(0.95 0 0);
-  --card: oklch(0.08 0 0);
-  --card-foreground: oklch(0.95 0 0);
-  --popover: oklch(0.08 0 0);
-  --popover-foreground: oklch(0.95 0 0);
-  --secondary: oklch(0.15 0 0);
-  --secondary-foreground: oklch(0.85 0 0);
-  --muted: oklch(0.2 0 0);
-  --muted-foreground: oklch(0.6 0 0);
-  --accent: oklch(0.88 0.15 85);
-  --accent-foreground: oklch(0.15 0 0);
+  --foreground: oklch(0.98 0 0);
+  --card: oklch(0.10 0.02 300);
+  --card-foreground: oklch(0.98 0 0);
+  --popover: oklch(0.08 0.02 300);
+  --popover-foreground: oklch(0.98 0 0);
+  --secondary: oklch(0.18 0.02 300);
+  --secondary-foreground: oklch(0.90 0 0);
+  --muted: oklch(0.22 0.02 300);
+  --muted-foreground: oklch(0.65 0 0);
+  --accent: oklch(0.95 0.30 145);
+  --accent-foreground: oklch(0.10 0 0);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.25 0 0);
-  --input: oklch(0.15 0 0);
-  --ring: oklch(0.38 0.15 300);
-  --chart-1: oklch(0.88 0.15 85);
-  --chart-2: oklch(0.38 0.15 300);
-  --chart-3: oklch(0.48 0.15 300);
-  --chart-4: oklch(0.28 0.15 300);
-  --chart-5: oklch(0.18 0.15 300);
-  --sidebar: oklch(0.05 0 0);
-  --sidebar-foreground: oklch(0.95 0 0);
-  --sidebar-accent: oklch(0.15 0 0);
-  --sidebar-accent-foreground: oklch(0.95 0 0);
-  --sidebar-border: oklch(0.25 0 0);
-  --sidebar-ring: oklch(0.38 0.15 300);
+  --border: oklch(0.28 0.05 300);
+  --input: oklch(0.18 0.02 300);
+  --ring: oklch(0.60 0.28 300);
+  --chart-1: oklch(0.95 0.30 145);
+  --chart-2: oklch(0.60 0.28 300);
+  --chart-3: oklch(0.90 0.20 210);
+  --chart-4: oklch(0.65 0.30 350);
+  --chart-5: oklch(0.88 0.15 85);
+  --sidebar: oklch(0.06 0.02 300);
+  --sidebar-foreground: oklch(0.98 0 0);
+  --sidebar-accent: oklch(0.18 0.02 300);
+  --sidebar-accent-foreground: oklch(0.98 0 0);
+  --sidebar-border: oklch(0.28 0.05 300);
+  --sidebar-ring: oklch(0.60 0.28 300);
 }
 
 @layer base {
@@ -127,11 +177,14 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: 'Rajdhani', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-weight: 500;
   }
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: 'Orbitron', 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
   }
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
@@ -147,24 +200,11 @@
 }
 
 @layer components {
-  /**
-   * Custom container utility that centers content and adds responsive padding.
-   *
-   * This overrides Tailwind's default container behavior to:
-   * - Auto-center content (mx-auto)
-   * - Add responsive horizontal padding
-   * - Set max-width for large screens
-   *
-   * Usage: <div className="container">...</div>
-   *
-   * For custom widths, use max-w-* utilities directly:
-   * <div className="max-w-6xl mx-auto px-4">...</div>
-   */
   .container {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 1rem; /* 16px - mobile padding */
+    padding-left: 1rem;
     padding-right: 1rem;
   }
 
@@ -175,16 +215,167 @@
 
   @media (min-width: 640px) {
     .container {
-      padding-left: 1.5rem; /* 24px - tablet padding */
+      padding-left: 1.5rem;
       padding-right: 1.5rem;
     }
   }
 
   @media (min-width: 1024px) {
     .container {
-      padding-left: 2rem; /* 32px - desktop padding */
+      padding-left: 2rem;
       padding-right: 2rem;
-      max-width: 1280px; /* Standard content width */
+      max-width: 1280px;
+    }
+  }
+  
+  /* Cyberpunk Neon Glow Effects */
+  .neon-glow-green {
+    text-shadow: 
+      0 0 5px var(--neon-green-glow),
+      0 0 10px var(--neon-green-glow),
+      0 0 20px var(--neon-green-glow),
+      0 0 40px var(--neon-green-glow);
+  }
+  
+  .neon-glow-purple {
+    text-shadow: 
+      0 0 5px var(--neon-purple-glow),
+      0 0 10px var(--neon-purple-glow),
+      0 0 20px var(--neon-purple-glow),
+      0 0 40px var(--neon-purple-glow);
+  }
+  
+  .neon-glow-cyan {
+    text-shadow: 
+      0 0 5px var(--neon-cyan-glow),
+      0 0 10px var(--neon-cyan-glow),
+      0 0 20px var(--neon-cyan-glow),
+      0 0 40px var(--neon-cyan-glow);
+  }
+  
+  .neon-border-green {
+    border: 2px solid var(--neon-green);
+    box-shadow: 
+      0 0 5px var(--neon-green-glow),
+      0 0 10px var(--neon-green-glow),
+      inset 0 0 5px var(--neon-green-glow);
+  }
+  
+  .neon-border-purple {
+    border: 2px solid var(--neon-purple);
+    box-shadow: 
+      0 0 5px var(--neon-purple-glow),
+      0 0 10px var(--neon-purple-glow),
+      inset 0 0 5px var(--neon-purple-glow);
+  }
+  
+  .neon-border-cyan {
+    border: 2px solid var(--neon-cyan);
+    box-shadow: 
+      0 0 5px var(--neon-cyan-glow),
+      0 0 10px var(--neon-cyan-glow),
+      inset 0 0 5px var(--neon-cyan-glow);
+  }
+  
+  /* Cyberpunk Grid Background */
+  .cyber-grid {
+    background-image: 
+      linear-gradient(var(--neon-purple-glow) 1px, transparent 1px),
+      linear-gradient(90deg, var(--neon-purple-glow) 1px, transparent 1px);
+    background-size: 50px 50px;
+    background-position: -1px -1px;
+  }
+  
+  /* Scan Line Effect */
+  .scan-lines::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.15),
+      rgba(0, 0, 0, 0.15) 1px,
+      transparent 1px,
+      transparent 2px
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+  
+  /* Glitch Animation */
+  @keyframes glitch {
+    0% {
+      transform: translate(0);
+    }
+    20% {
+      transform: translate(-2px, 2px);
+    }
+    40% {
+      transform: translate(-2px, -2px);
+    }
+    60% {
+      transform: translate(2px, 2px);
+    }
+    80% {
+      transform: translate(2px, -2px);
+    }
+    100% {
+      transform: translate(0);
+    }
+  }
+  
+  .glitch {
+    animation: glitch 0.3s infinite;
+  }
+  
+  /* Neon Pulse Animation */
+  @keyframes neon-pulse {
+    0%, 100% {
+      opacity: 1;
+      text-shadow: 
+        0 0 5px var(--neon-green-glow),
+        0 0 10px var(--neon-green-glow),
+        0 0 20px var(--neon-green-glow);
+    }
+    50% {
+      opacity: 0.8;
+      text-shadow: 
+        0 0 2px var(--neon-green-glow),
+        0 0 5px var(--neon-green-glow),
+        0 0 10px var(--neon-green-glow);
+    }
+  }
+  
+  .neon-pulse {
+    animation: neon-pulse 2s ease-in-out infinite;
+  }
+  
+  /* Holographic Effect */
+  .holographic {
+    background: linear-gradient(
+      45deg,
+      var(--neon-cyan) 0%,
+      var(--neon-purple) 25%,
+      var(--neon-pink) 50%,
+      var(--neon-purple) 75%,
+      var(--neon-cyan) 100%
+    );
+    background-size: 200% 200%;
+    animation: holographic-shift 3s ease infinite;
+  }
+  
+  @keyframes holographic-shift {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
     }
   }
 }
