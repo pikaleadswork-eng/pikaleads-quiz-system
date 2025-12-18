@@ -401,6 +401,7 @@ export default function QuizSettingsPanel({
                   onClick={() => {
                     onSettingsChange("backgroundColor", color);
                     onSettingsChange("backgroundGradient", "");
+                    onSettingsChange("backgroundImage", "");
                   }}
                 />
               ))}
@@ -411,6 +412,7 @@ export default function QuizSettingsPanel({
               onChange={(e) => {
                 onSettingsChange("backgroundColor", e.target.value);
                 onSettingsChange("backgroundGradient", "");
+                onSettingsChange("backgroundImage", "");
               }}
               className="w-full h-8 mt-2 rounded cursor-pointer"
             />
@@ -432,6 +434,7 @@ export default function QuizSettingsPanel({
                   onClick={() => {
                     onSettingsChange("backgroundGradient", gradient);
                     onSettingsChange("backgroundColor", "");
+                    onSettingsChange("backgroundImage", "");
                   }}
                 />
               ))}

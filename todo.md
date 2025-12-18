@@ -5,9 +5,9 @@
 - [x] Add "Only with recordings" filter checkbox to Events Dashboard
 - [x] Create session replay modal with iframe embed
 - [x] Verify all analytics integrations (Meta, GA4, GTM, Telegram)
-- [ ] Create deployment archive with all configurations
-- [ ] Prepare VPS deployment instructions
-- [ ] Set up database with admin and manager users
+- [x] Create deployment archive with all configurations
+- [x] Prepare VPS deployment instructions
+- [x] Set up database with admin and manager users
 
 ## Phase 121: Clarity Session Recordings Integration (COMPLETED)
 - [x] Research Clarity Session Recordings API

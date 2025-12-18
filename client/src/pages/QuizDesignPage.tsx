@@ -43,7 +43,7 @@ export default function QuizDesignPage() {
   });
 
   // Load design settings from database
-  const { data: savedSettings } = trpc.quizDesign.getByQuizId.useQuery(
+  const { data: savedSettings, isLoading: settingsLoading, error: settingsError } = trpc.quizDesign.getByQuizId.useQuery(
     { quizId: quizId || 0 },
     { enabled: !!quizId }
   );
