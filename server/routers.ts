@@ -1708,6 +1708,25 @@ ${input.campaign ? `**Campaign:** ${input.campaign}\n` : ""}
   health: healthRouter,
   prometheus: prometheusRouter,
   performance: performanceRouter,
+  contact: router({
+    submit: publicProcedure
+      .input(z.object({
+        name: z.string(),
+        email: z.string().email(),
+        message: z.string(),
+      }))
+      .mutation(async ({ input }) => {
+        const { notifyOwner } = await import("./_core/notification");
+        
+        // Send notification to owner
+        await notifyOwner({
+          title: `New contact form submission from ${input.name}`,
+          content: `Email: ${input.email}\n\nMessage:\n${input.message}`,
+        });
+        
+        return { success: true };
+      }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;

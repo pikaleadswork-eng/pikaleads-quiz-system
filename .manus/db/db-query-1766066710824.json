@@ -1,0 +1,15 @@
+{
+  "query": "SELECT quizId, titleText, subtitleText FROM quiz_design_settings WHERE quizId = 12;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user b5yJbKNBA74GJz4.0729dd994af9 --database EcCrELAaL5JgQGs8z45yv6 --execute SELECT quizId, titleText, subtitleText FROM quiz_design_settings WHERE quizId = 12;",
+  "rows": [
+    {
+      "quizId": "12",
+      "titleText": "Ремонт без заявок — значить реклама налаштована криво",
+      "subtitleText": "Беремо Meta рекламу для ремонту квартир під контроль: заявки, стабільність, масштаб"
+    }
+  ],
+  "messages": [],
+  "stdout": "quizId\ttitleText\tsubtitleText\n12\tРемонт без заявок — значить реклама налаштована криво\tБеремо Meta рекламу для ремонту квартир під контроль: заявки, стабільність, масштаб\n",
+  "stderr": "",
+  "execution_time_ms": 91
+}

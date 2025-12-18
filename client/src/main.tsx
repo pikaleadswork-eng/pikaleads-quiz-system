@@ -8,14 +8,10 @@ import { HelmetProvider } from "react-helmet-async";
 import App from "./App";
 import { getLoginUrl } from "./const";
 import "./index.css";
-import { initMetaPixel } from "./lib/metaPixel";
-import { initGA4 } from "./lib/googleAnalytics";
 import "./lib/i18n";
 import "./lib/removeConnectionNotification";
 
-// Initialize analytics
-initMetaPixel();
-initGA4();
+// Analytics are now loaded dynamically via AnalyticsScripts component
 
 const queryClient = new QueryClient();
 

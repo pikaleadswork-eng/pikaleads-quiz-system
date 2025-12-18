@@ -50,6 +50,9 @@ import CRM from "./pages/CRM";
 import EventsDashboard from "./pages/EventsDashboard";
 import Privacy from "./pages/Privacy";
 import Contact from "./pages/Contact";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import CookiePolicy from "./pages/CookiePolicy";
+import Disclaimer from "./pages/Disclaimer";
 
 import FurnitureQuiz from "./pages/FurnitureQuiz";
 import ApartmentRenovationQuiz from "./pages/ApartmentRenovationQuiz";
@@ -127,6 +130,9 @@ function Router() {
       {/* Legal Pages */}
       <Route path={"/privacy"} component={Privacy} />
       <Route path={"/contact"} component={Contact} />
+      <Route path={"/privacy-policy"} component={PrivacyPolicy} />
+      <Route path={"/cookie-policy"} component={CookiePolicy} />
+      <Route path={"/disclaimer"} component={Disclaimer} />
       
 
       

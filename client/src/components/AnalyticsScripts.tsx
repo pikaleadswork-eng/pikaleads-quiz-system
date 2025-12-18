@@ -40,6 +40,7 @@ export function AnalyticsScripts() {
 
     // Inject Meta Pixel
     if (metaPixel) {
+      // Check if already loaded (prevent duplicates)
       if (!document.querySelector(`script[data-pixel-id="${metaPixel.trackingId}"]`)) {
         const script = document.createElement('script');
         script.setAttribute('data-pixel-id', metaPixel.trackingId);
@@ -57,15 +58,20 @@ export function AnalyticsScripts() {
         `;
         document.head.appendChild(script);
 
-        // Add noscript fallback
-        const noscript = document.createElement('noscript');
-        const img = document.createElement('img');
-        img.height = 1;
-        img.width = 1;
-        img.style.display = 'none';
-        img.src = `https://www.facebook.com/tr?id=${metaPixel.trackingId}&ev=PageView&noscript=1`;
-        noscript.appendChild(img);
-        document.body.appendChild(noscript);
+        // Add noscript fallback (only if not already present)
+        // Note: This is for browsers with JavaScript disabled
+        // Meta Pixel Helper may count this as "2 pixels" but it's correct implementation
+        if (!document.querySelector(`noscript img[src*="${metaPixel.trackingId}"]`)) {
+          const noscript = document.createElement('noscript');
+          const img = document.createElement('img');
+          img.height = 1;
+          img.width = 1;
+          img.style.display = 'none';
+          img.src = `https://www.facebook.com/tr?id=${metaPixel.trackingId}&ev=PageView&noscript=1`;
+          noscript.appendChild(img);
+          // Insert at the beginning of body (Facebook's recommendation)
+          document.body.insertBefore(noscript, document.body.firstChild);
+        }
       }
     }
 

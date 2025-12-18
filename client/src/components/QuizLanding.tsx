@@ -5,8 +5,8 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { getQuizTranslation } from "@/lib/quizTranslations";
 import { translations } from "@/lib/translations";
 import { Lock } from "lucide-react";
-import { initMetaPixel, trackQuizStart as trackMetaQuizStart } from "@/lib/metaPixel";
-import { initGA4, trackQuizStart as trackGA4QuizStart } from "@/lib/googleAnalytics";
+import { trackQuizStart as trackMetaQuizStart } from "@/lib/metaPixel";
+import { trackQuizStart as trackGA4QuizStart } from "@/lib/googleAnalytics";
 
 interface QuizLandingProps {
   quizId: string;
@@ -19,11 +19,7 @@ export default function QuizLanding({ quizId, onStartQuiz }: QuizLandingProps) {
   const quizData = getQuizTranslation(quizId, language);
   const t = translations[language];
 
-  useEffect(() => {
-    // Initialize analytics on mount
-    initMetaPixel();
-    initGA4();
-  }, []);
+  // Analytics are now loaded dynamically via AnalyticsScripts component
 
   if (!quizData) {
     return <div>Quiz not found</div>;
