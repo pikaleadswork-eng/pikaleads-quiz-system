@@ -10,7 +10,7 @@ export default function CyberpunkNavigation({ currentPath = "/" }: CyberpunkNavi
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const menuItems = [
-    { label: "Головна", href: "/quiz-service" },
+    { label: "Головна", href: "/" },
     { label: "Контакти", href: "/contact" },
     { label: "Відгуки", href: "/reviews" },
     { label: "Про нас", href: "/about" },
@@ -30,7 +30,7 @@ export default function CyberpunkNavigation({ currentPath = "/" }: CyberpunkNavi
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link href="/quiz-service">
+          <Link href="/">
             <div className="flex items-center gap-3 group cursor-pointer">
               <img 
                 src="/pikaleads-logo-dark.png" 
@@ -91,11 +91,11 @@ export default function CyberpunkNavigation({ currentPath = "/" }: CyberpunkNavi
             {/* Contact Info */}
             <div className="flex items-center gap-4">
               <a 
-                href="tel:+380123456789" 
+                href="tel:+380992377117" 
                 className="flex items-center gap-2 text-gray-300 hover:text-[#FFD93D] transition-colors group"
               >
                 <Phone className="w-4 h-4 group-hover:animate-pulse" />
-                <span className="text-sm font-bold">+380 12 345 67 89</span>
+                <span className="text-sm font-bold">+380 99 23 77 117</span>
               </a>
               
               <a 
@@ -170,11 +170,11 @@ export default function CyberpunkNavigation({ currentPath = "/" }: CyberpunkNavi
             {/* Contact Info */}
             <div className="flex flex-col gap-3">
               <a 
-                href="tel:+380123456789" 
+                href="tel:+380992377117" 
                 className="flex items-center justify-center gap-2 px-4 py-3 text-gray-300 hover:text-[#FFD93D] hover:bg-[#5B2E90]/10 rounded-lg transition-all"
               >
                 <Phone className="w-5 h-5" />
-                <span className="text-sm font-bold">+380 12 345 67 89</span>
+                <span className="text-sm font-bold">+380 99 23 77 117</span>
               </a>
               
               <a 

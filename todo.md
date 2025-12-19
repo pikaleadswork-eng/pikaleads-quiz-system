@@ -3741,3 +3741,14 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Verify all quiz cards display correctly
 - [x] Test quiz navigation works (e.g., /quiz/ecommerce-meta)
 
+
+### Fix Quiz Navigation & Update Phone Number (Dec 19, 2025 - Session 2)
+- [x] Update phone number to +380 99 23 77 117 in CyberpunkNavigation
+- [x] Update phone number in all quiz pages (not needed - no hardcoded numbers in quiz pages)
+- [x] Update phone number in Home.tsx (not needed - uses CyberpunkNavigation)
+- [x] Test clicking on quiz cards from home page
+- [x] Check if quiz pages load correctly
+- [x] Verify quiz slug routing works
+- [x] Fix navigation links in CyberpunkNavigation (changed /quiz-service to /)
+- [x] Test all quiz types (META ADS and GOOGLE ADS) - tested ecommerce-meta, ecommerce-google, furniture-meta
+
