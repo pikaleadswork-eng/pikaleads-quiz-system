@@ -378,4 +378,103 @@
       background-position: 0% 50%;
     }
   }
+
+  /* Orbit Animation for Platform Logos */
+  @keyframes orbit {
+    0% {
+      transform: rotate(0deg) translateX(180px) rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg) translateX(180px) rotate(-360deg);
+    }
+  }
+
+  @media (max-width: 1024px) {
+    @keyframes orbit {
+      0% {
+        transform: rotate(0deg) translateX(140px) rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg) translateX(140px) rotate(-360deg);
+      }
+    }
+  }
+
+  /* Float Animation for Pikachu */
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  /* Grid Move Animation */
+  @keyframes gridMove {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(50px);
+    }
+  }
+
+  /* Energy Pulse Animation */
+  @keyframes energyPulse {
+    0%, 100% {
+      opacity: 0.3;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.6;
+      transform: scale(1.05);
+    }
+  }
+
+  /* Ring Rotate Animation */
+  @keyframes ringRotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* Lightning Animation */
+  @keyframes lightning {
+    0%, 100% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+  /* Particle Float Animation */
+  @keyframes particleFloat {
+    0% {
+      opacity: 0;
+      transform: translateY(0) scale(0);
+    }
+    50% {
+      opacity: 0.8;
+      transform: translateY(-100px) scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-200px) scale(0);
+    }
+  }
+
+  /* Bar Pulse Animation */
+  @keyframes barPulse {
+    0%, 100% {
+      transform: scaleY(1);
+    }
+    50% {
+      transform: scaleY(1.2);
+    }
+  }
 }
