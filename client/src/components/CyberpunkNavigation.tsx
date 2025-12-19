@@ -11,6 +11,7 @@ export default function CyberpunkNavigation({ currentPath = "/" }: CyberpunkNavi
 
   const menuItems = [
     { label: "Головна", href: "/" },
+    { label: "Квізи", href: "/quizzes" },
     { label: "Контакти", href: "/contact" },
     { label: "Відгуки", href: "/reviews" },
     { label: "Про нас", href: "/about" },

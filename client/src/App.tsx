@@ -72,8 +72,8 @@ import Disclaimer from "./pages/Disclaimer";
 function Router() {
   return (
     <Switch>
-      {/* ========== QUIZ SERVICE (Main Page) ========== */}
-      <Route path={"/"} component={Home} />
+      {/* ========== AGENCY WEBSITE (Main Page) ========== */}
+      <Route path={"/"} component={AgencyHome} />
       
       {/* Legal Pages (accessible from main site) */}
       <Route path={"/privacy"} component={Privacy} />
@@ -82,8 +82,8 @@ function Router() {
       <Route path={"/cookie-policy"} component={CookiePolicy} />
       <Route path={"/disclaimer"} component={Disclaimer} />
       
-      {/* ========== AGENCY WEBSITE ========== */}
-      <Route path={"/agency"} component={AgencyHome} />
+      {/* ========== QUIZ CATALOG ========== */}
+      <Route path="/quizzes" component={Home} />
       <Route path={"/login"} component={Login} />
       <Route path={"/thank-you"} component={ThankYou} />
       

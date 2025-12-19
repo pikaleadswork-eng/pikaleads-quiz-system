@@ -3752,3 +3752,13 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Fix navigation links in CyberpunkNavigation (changed /quiz-service to /)
 - [x] Test all quiz types (META ADS and GOOGLE ADS) - tested ecommerce-meta, ecommerce-google, furniture-meta
 
+
+### Restore Correct Page Structure (Dec 19, 2025 - Session 3)
+- [x] Move AgencyHome back to / (root)
+- [x] Move quiz catalog (Home.tsx) to /quizzes
+- [x] Update CyberpunkNavigation links (added "Квізи" menu item)
+- [x] Update any internal links to quiz catalog (quiz links use /quiz/slug, no changes needed)
+- [x] Test agency home page loads on /
+- [x] Test quiz catalog loads on /quizzes
+- [x] Verify all quiz links still work (tested ecommerce-meta from /quizzes)
+
