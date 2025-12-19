@@ -67,30 +67,30 @@ export default function CyberpunkNavigation({ currentPath = "/" }: CyberpunkNavi
             {/* Divider */}
             <div className="h-8 w-px bg-[#5B2E90]" />
 
-            {/* Social Links */}
-            <div className="flex items-center gap-3">
-              {socialLinks.map((social) => {
-                const IconComponent = social.icon;
-                return (
-                  <a
-                    key={social.name}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-gray-300 hover:text-[#FF6B35] transition-colors"
-                    title={social.name}
-                  >
-                    <IconComponent className="w-5 h-5" />
-                  </a>
-                );
-              })}
-            </div>
-
-            {/* Divider */}
-            <div className="h-8 w-px bg-[#5B2E90]" />
-
             {/* Contact Info */}
             <div className="flex items-center gap-4">
+              {/* Compact Social Links */}
+              <div className="flex items-center gap-2">
+                {socialLinks.map((social) => {
+                  const IconComponent = social.icon;
+                  return (
+                    <a
+                      key={social.name}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-8 h-8 flex items-center justify-center rounded-lg bg-[#5B2E90]/20 text-gray-300 hover:bg-[#5B2E90]/40 hover:text-[#FFD93D] transition-all"
+                      title={social.name}
+                    >
+                      <IconComponent className="w-4 h-4" />
+                    </a>
+                  );
+                })}
+              </div>
+              
+              {/* Divider */}
+              <div className="h-8 w-px bg-[#5B2E90]/30" />
+              
               <a 
                 href="tel:+380992377117" 
                 className="flex items-center gap-2 text-gray-300 hover:text-[#FFD93D] transition-colors group"
