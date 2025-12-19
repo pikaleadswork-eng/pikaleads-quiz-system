@@ -3720,3 +3720,24 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [ ] Add more content sections (services, benefits, cases, testimonials)
 - [ ] Improve text layout and visibility
 - [ ] Add animations and interactions
+
+
+### Fix Quiz Buttons
+- [ ] Check all quiz pages for button issues
+- [x] Fix "ДІЗНАТИСЬ БІЛЬШЕ" button text wrapping
+- [x] Ensure all quiz navigation works properly
+- [ ] Test quiz flow from start to finish
+
+
+## Current Session - Fix Quiz Service Page Errors (Dec 19, 2025)
+
+### Fix tRPC Errors on /quiz-service
+- [x] Check if quizzes router exists in server/routers.ts
+- [x] Verify quizzes.list procedure is properly defined
+- [x] Ensure quizzes router is registered in appRouter
+- [x] Move quiz catalog from /quiz-service to / (root)
+- [x] Update all routes to remove /quiz-service prefix
+- [x] Test home page loads without errors
+- [x] Verify all quiz cards display correctly
+- [x] Test quiz navigation works (e.g., /quiz/ecommerce-meta)
+

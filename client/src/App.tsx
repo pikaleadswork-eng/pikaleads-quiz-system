@@ -72,8 +72,8 @@ import Disclaimer from "./pages/Disclaimer";
 function Router() {
   return (
     <Switch>
-      {/* ========== AGENCY WEBSITE (Main Domain) ========== */}
-      <Route path={"/"} component={AgencyHome} />
+      {/* ========== QUIZ SERVICE (Main Page) ========== */}
+      <Route path={"/"} component={Home} />
       
       {/* Legal Pages (accessible from main site) */}
       <Route path={"/privacy"} component={Privacy} />
@@ -82,69 +82,69 @@ function Router() {
       <Route path={"/cookie-policy"} component={CookiePolicy} />
       <Route path={"/disclaimer"} component={Disclaimer} />
       
-      {/* ========== QUIZ SERVICE (Subdirectory) ========== */}
-      <Route path={"/quiz-service"} component={Home} />
-      <Route path={"/quiz-service/login"} component={Login} />
-      <Route path={"/quiz-service/thank-you"} component={ThankYou} />
+      {/* ========== AGENCY WEBSITE ========== */}
+      <Route path={"/agency"} component={AgencyHome} />
+      <Route path={"/login"} component={Login} />
+      <Route path={"/thank-you"} component={ThankYou} />
       
       {/* Dynamic Quiz Page - must be before static routes */}
-      <Route path={"/quiz-service/quiz/:slug"} component={QuizPage} />
+      <Route path={"/quiz/:slug"} component={QuizPage} />
       
       {/* New Quiz Pages with Offers */}
-      <Route path={"/quiz-service/quiz/furniture"} component={FurnitureQuiz} />
-      <Route path={"/quiz-service/quiz/apartment-renovation"} component={ApartmentRenovationQuiz} />
-      <Route path={"/quiz-service/quiz/e-commerce"} component={ECommerceQuiz} />
+      <Route path={"/quiz/furniture"} component={FurnitureQuiz} />
+      <Route path={"/quiz/apartment-renovation"} component={ApartmentRenovationQuiz} />
+      <Route path={"/quiz/e-commerce"} component={ECommerceQuiz} />
       
       {/* META Ads Quizzes */}
-      <Route path={"/quiz-service/meta-furniture"} component={MetaFurniture} />
-      <Route path={"/quiz-service/meta-repair"} component={MetaRepair} />
-      <Route path={"/quiz-service/meta-ecom"} component={MetaEcom} />
-      <Route path={"/quiz-service/meta-products"} component={MetaProducts} />
-      <Route path={"/quiz-service/meta-telegram"} component={MetaTelegram} />
+      <Route path={"/meta-furniture"} component={MetaFurniture} />
+      <Route path={"/meta-repair"} component={MetaRepair} />
+      <Route path={"/meta-ecom"} component={MetaEcom} />
+      <Route path={"/meta-products"} component={MetaProducts} />
+      <Route path={"/meta-telegram"} component={MetaTelegram} />
       
       {/* Google Ads Quizzes */}
-      <Route path={"/quiz-service/google-furniture"} component={GoogleFurniture} />
-      <Route path={"/quiz-service/google-repair"} component={GoogleRepair} />
-      <Route path={"/quiz-service/google-ecom"} component={GoogleEcom} />
-      <Route path={"/quiz-service/google-products"} component={GoogleProducts} />
-      <Route path={"/quiz-service/google-telegram"} component={GoogleTelegram} />
+      <Route path={"/google-furniture"} component={GoogleFurniture} />
+      <Route path={"/google-repair"} component={GoogleRepair} />
+      <Route path={"/google-ecom"} component={GoogleEcom} />
+      <Route path={"/google-products"} component={GoogleProducts} />
+      <Route path={"/google-telegram"} component={GoogleTelegram} />
       
-      {/* ========== CRM & ADMIN (under /quiz-service) ========== */}
-      <Route path={"/quiz-service/admin"} component={AdminDashboard} />
-      <Route path={"/quiz-service/admin/quizzes"} component={AdminQuizzes} />
-      <Route path={"/quiz-service/admin/quizzes/:id/analytics"} component={QuizAnalytics} />
-      <Route path={"/quiz-service/admin/quizzes/:quizId/design"} component={QuizDesignPage} />
-      <Route path={"/quiz-service/admin/ab-tests"} component={AdminABTests} />
-      <Route path={"/quiz-service/admin/ab-testing"} component={AdminABTests} />
-      <Route path={"/quiz-service/admin/managers"} component={AdminManagers} />
-      <Route path={"/quiz-service/admin/analytics"} component={AdminAnalytics} />
-      <Route path={"/quiz-service/admin/assignment-rules"} component={AdminAssignmentRules} />
-      <Route path={"/quiz-service/admin/performance"} component={AdminPerformance} />
-      <Route path={"/quiz-service/admin/retargeting"} component={AdminRetargeting} />
-      <Route path={"/quiz-service/admin/messaging"} component={AdminMessaging} />
-      <Route path={"/quiz-service/admin/inbox"} component={MessagingInbox} />
-      <Route path={"/quiz-service/admin/sales"} component={SalesStatistics} />
-      <Route path={"/quiz-service/admin/scripts"} component={SalesScripts} />
-      <Route path={"/quiz-service/admin/services"} component={ServicesManagement} />
-      <Route path={"/quiz-service/admin/settings"} component={AdminSettings} />
-      <Route path={"/quiz-service/admin/settings/roles"} component={SettingsRoles} />
-      <Route path={"/quiz-service/admin/settings/lead-statuses"} component={SettingsLeadStatuses} />
-      <Route path={"/quiz-service/admin/settings/ip-telephony"} component={SettingsIPTelephony} />
-      <Route path={"/quiz-service/profile"} component={Profile} />
-      <Route path={"/quiz-service/admin/settings/lead-assignment"} component={LeadAssignment} />
-      <Route path={"/quiz-service/admin/monitoring"} component={ServerMonitoring} />
-      <Route path={"/quiz-service/admin/calendar"} component={AdminCalendar} />
-      <Route path={"/quiz-service/admin/webhooks"} component={AdminWebhooks} />
-      <Route path={"/quiz-service/admin/events"} component={EventsDashboard} />
+      {/* ========== CRM & ADMIN ========== */}
+      <Route path={"/admin"} component={AdminDashboard} />
+      <Route path={"/admin/quizzes"} component={AdminQuizzes} />
+      <Route path={"/admin/quizzes/:id/analytics"} component={QuizAnalytics} />
+      <Route path={"/admin/quizzes/:quizId/design"} component={QuizDesignPage} />
+      <Route path={"/admin/ab-tests"} component={AdminABTests} />
+      <Route path={"/admin/ab-testing"} component={AdminABTests} />
+      <Route path={"/admin/managers"} component={AdminManagers} />
+      <Route path={"/admin/analytics"} component={AdminAnalytics} />
+      <Route path={"/admin/assignment-rules"} component={AdminAssignmentRules} />
+      <Route path={"/admin/performance"} component={AdminPerformance} />
+      <Route path={"/admin/retargeting"} component={AdminRetargeting} />
+      <Route path={"/admin/messaging"} component={AdminMessaging} />
+      <Route path={"/admin/inbox"} component={MessagingInbox} />
+      <Route path={"/admin/sales"} component={SalesStatistics} />
+      <Route path={"/admin/scripts"} component={SalesScripts} />
+      <Route path={"/admin/services"} component={ServicesManagement} />
+      <Route path={"/admin/settings"} component={AdminSettings} />
+      <Route path={"/admin/settings/roles"} component={SettingsRoles} />
+      <Route path={"/admin/settings/lead-statuses"} component={SettingsLeadStatuses} />
+      <Route path={"/admin/settings/ip-telephony"} component={SettingsIPTelephony} />
+      <Route path={"/profile"} component={Profile} />
+      <Route path={"/admin/settings/lead-assignment"} component={LeadAssignment} />
+      <Route path={"/admin/monitoring"} component={ServerMonitoring} />
+      <Route path={"/admin/calendar"} component={AdminCalendar} />
+      <Route path={"/admin/webhooks"} component={AdminWebhooks} />
+      <Route path={"/admin/events"} component={EventsDashboard} />
       
       {/* CRM & Manager Dashboard */}
-      <Route path={"/quiz-service/manager"} component={ManagerDashboard} />
-      <Route path={"/quiz-service/crm-dashboard"} component={CRMDashboard} />
-      <Route path={"/quiz-service/crm"} component={CRM} />
+      <Route path={"/manager"} component={ManagerDashboard} />
+      <Route path={"/crm-dashboard"} component={CRMDashboard} />
+      <Route path={"/crm"} component={CRM} />
       
       {/* Analytics Dashboards */}
-      <Route path={"/quiz-service/admin/pipeline"} component={PipelineDashboard} />
-      <Route path={"/quiz-service/admin/attribution"} component={AttributionReport} />
+      <Route path={"/admin/pipeline"} component={PipelineDashboard} />
+      <Route path={"/admin/attribution"} component={AttributionReport} />
       
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}

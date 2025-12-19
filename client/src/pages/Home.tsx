@@ -29,7 +29,7 @@ export default function Home() {
   if (isLoading) {
     return (
       <>
-        <CyberpunkNavigation currentPath="/quiz-service" />
+        <CyberpunkNavigation currentPath="/" />
         <div className="min-h-screen bg-black cyber-grid relative">
           <div className="absolute inset-0 scan-lines opacity-10" />
           <div className="relative z-10 flex items-center justify-center min-h-screen">
@@ -65,17 +65,22 @@ export default function Home() {
                 {quiz.description || t.learnMore}
               </p>
             </div>
-            <NeonButton
-              variant="green"
-              size="md"
-              className="w-full flex-shrink-0 bg-[#FFD93D] text-black border-[#FFD93D] hover:bg-[#FFD93D]/90 whitespace-nowrap"
-              onClick={() => ClarityEvents.trackCTAClick(t.learnMore, `home_quiz_${quiz.slug}`)}
+            <button
+              className="w-full flex-shrink-0 px-6 py-3 bg-[#FFD93D] text-black font-bold rounded-lg border-2 border-[#FFD93D] hover:bg-[#FFD93D]/90 transition-all whitespace-nowrap"
+              style={{
+                boxShadow: '0 0 20px rgba(255, 217, 61, 0.3)',
+                fontFamily: 'Rajdhani, sans-serif'
+              }}
+              onClick={(e) => {
+                e.preventDefault();
+                ClarityEvents.trackCTAClick(t.learnMore, `home_quiz_${quiz.slug}`);
+              }}
             >
-              <span className="inline-flex items-center gap-2">
+              <span className="inline-flex items-center justify-center gap-2">
                 ДІЗНАТИСЬ БІЛЬШЕ
                 <ArrowRight className="w-4 h-4" />
               </span>
-            </NeonButton>
+            </button>
           </CyberpunkCard>
         </Link>
       ))}
