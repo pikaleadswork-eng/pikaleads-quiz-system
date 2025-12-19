@@ -278,7 +278,7 @@ export default function AgencyHome() {
 
                 {/* Pikachu Image */}
                 <img 
-                  src="/pikachu-hero-transparent.png" 
+                  src="/pikachu-hero-clean-final.png" 
                   alt="PikaLeads Cyber Power" 
                   className="relative z-10 w-full max-w-[550px] lg:max-w-[650px] h-auto object-contain"
                   style={{
