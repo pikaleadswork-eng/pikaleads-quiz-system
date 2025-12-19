@@ -86,18 +86,19 @@ export default function AgencyHome() {
                   <h1 
                     className="text-5xl md:text-6xl lg:text-7xl font-black leading-tight"
                     style={{
-                      fontFamily: "Orbitron, sans-serif",
-                      textShadow: "0 0 30px rgba(255, 217, 61, 0.3)"
+                      fontFamily: "Bungee, sans-serif",
+                      textShadow: "0 0 30px rgba(255, 217, 61, 0.3)",
+                      letterSpacing: "0.02em"
                     }}
                   >
                     <span className="text-white inline-block animate-glitch">
-                      Обирай не агенство.
+                      ОБИРАЙ НЕ АГЕНСТВО.
                     </span>
                     <br />
                     <span className="text-[#FFD93D] inline-block" style={{
                       textShadow: "0 0 40px rgba(255, 217, 61, 0.6), 0 0 80px rgba(255, 217, 61, 0.3)"
                     }}>
-                      Обирай результат.
+                      ОБИРАЙ РЕЗУЛЬТАТ.
                     </span>
                   </h1>
                   
