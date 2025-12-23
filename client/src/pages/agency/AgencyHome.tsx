@@ -237,12 +237,12 @@ export default function AgencyHome() {
           </div>
 
           {/* Features Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 items-stretch">
             
             {/* Feature 1 - Performance Marketing */}
-            <div className="group relative" style={{ animation: "fadeInUp 0.8s ease-out 0.2s both" }}>
+            <div className="group relative h-full" style={{ animation: "fadeInUp 0.8s ease-out 0.2s both" }}>
               <div className="absolute inset-0 bg-gradient-to-br from-[#FFD93D]/20 to-transparent rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300" />
-              <div className="relative bg-zinc-900/50 backdrop-blur-sm border border-[#FFD93D]/20 rounded-2xl p-6 sm:p-8 hover:border-[#FFD93D]/40 transition-all duration-300">
+              <div className="relative bg-zinc-900/50 backdrop-blur-sm border border-[#FFD93D]/20 rounded-2xl p-6 sm:p-8 hover:border-[#FFD93D]/40 transition-all duration-300 h-full flex flex-col">
                 {/* Icon */}
                 <div className="w-16 h-16 bg-[#FFD93D]/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                   <svg className="w-8 h-8 text-[#FFD93D]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -250,19 +250,19 @@ export default function AgencyHome() {
                   </svg>
                 </div>
                 
-                <h3 className="text-lg font-bold text-white mb-4" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
+                <h3 className="text-sm sm:text-base md:text-lg font-bold text-white mb-4 whitespace-nowrap" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
                   PERFORMANCE
                 </h3>
-                <p className="text-sm text-gray-400 leading-relaxed">
+                <p className="text-sm text-gray-400 leading-relaxed mt-auto">
                   Платиш тільки за результат. Кожна гривня працює на твій прибуток.
                 </p>
               </div>
             </div>
 
             {/* Feature 2 - AI Technology */}
-            <div className="group relative" style={{ animation: "fadeInUp 0.8s ease-out 0.4s both" }}>
+            <div className="group relative h-full" style={{ animation: "fadeInUp 0.8s ease-out 0.4s both" }}>
               <div className="absolute inset-0 bg-gradient-to-br from-[#00F0FF]/20 to-transparent rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300" />
-              <div className="relative bg-zinc-900/50 backdrop-blur-sm border border-[#00F0FF]/20 rounded-2xl p-6 sm:p-8 hover:border-[#00F0FF]/40 transition-all duration-300">
+              <div className="relative bg-zinc-900/50 backdrop-blur-sm border border-[#00F0FF]/20 rounded-2xl p-6 sm:p-8 hover:border-[#00F0FF]/40 transition-all duration-300 h-full flex flex-col">
                 {/* Icon */}
                 <div className="w-16 h-16 bg-[#00F0FF]/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                   <svg className="w-8 h-8 text-[#00F0FF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -270,19 +270,19 @@ export default function AgencyHome() {
                   </svg>
                 </div>
                 
-                <h3 className="text-lg font-bold text-white mb-4" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
+                <h3 className="text-sm sm:text-base md:text-lg font-bold text-white mb-4 whitespace-nowrap" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
                   AI-TECH
                 </h3>
-                <p className="text-sm text-gray-400 leading-relaxed">
+                <p className="text-sm text-gray-400 leading-relaxed mt-auto">
                   Штучний інтелект аналізує поведінку та підбирає найкращі рішення для кожного ліда.
                 </p>
               </div>
             </div>
 
             {/* Feature 3 - Full Analytics */}
-            <div className="group relative" style={{ animation: "fadeInUp 0.8s ease-out 0.6s both" }}>
+            <div className="group relative h-full" style={{ animation: "fadeInUp 0.8s ease-out 0.6s both" }}>
               <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-transparent rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300" />
-              <div className="relative bg-zinc-900/50 backdrop-blur-sm border border-purple-500/20 rounded-2xl p-6 sm:p-8 hover:border-purple-500/40 transition-all duration-300">
+              <div className="relative bg-zinc-900/50 backdrop-blur-sm border border-purple-500/20 rounded-2xl p-6 sm:p-8 hover:border-purple-500/40 transition-all duration-300 h-full flex flex-col">
                 {/* Icon */}
                 <div className="w-16 h-16 bg-purple-500/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                   <svg className="w-8 h-8 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -290,19 +290,19 @@ export default function AgencyHome() {
                   </svg>
                 </div>
                 
-                <h3 className="text-lg font-bold text-white mb-4" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
+                <h3 className="text-sm sm:text-base md:text-lg font-bold text-white mb-4 whitespace-nowrap" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
                   АНАЛІТИКА
                 </h3>
-                <p className="text-sm text-gray-400 leading-relaxed">
+                <p className="text-sm text-gray-400 leading-relaxed mt-auto">
                   Бачиш кожен крок клієнта: від кліку до покупки. Прозорість на 100%.
                 </p>
               </div>
             </div>
 
             {/* Feature 4 - Expert Team */}
-            <div className="group relative" style={{ animation: "fadeInUp 0.8s ease-out 0.8s both" }}>
+            <div className="group relative h-full" style={{ animation: "fadeInUp 0.8s ease-out 0.8s both" }}>
               <div className="absolute inset-0 bg-gradient-to-br from-[#FFD93D]/20 to-transparent rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300" />
-              <div className="relative bg-zinc-900/50 backdrop-blur-sm border border-[#FFD93D]/20 rounded-2xl p-6 sm:p-8 hover:border-[#FFD93D]/40 transition-all duration-300">
+              <div className="relative bg-zinc-900/50 backdrop-blur-sm border border-[#FFD93D]/20 rounded-2xl p-6 sm:p-8 hover:border-[#FFD93D]/40 transition-all duration-300 h-full flex flex-col">
                 {/* Icon */}
                 <div className="w-16 h-16 bg-[#FFD93D]/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                   <svg className="w-8 h-8 text-[#FFD93D]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -310,10 +310,10 @@ export default function AgencyHome() {
                   </svg>
                 </div>
                 
-                <h3 className="text-lg font-bold text-white mb-4" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
+                <h3 className="text-sm sm:text-base md:text-lg font-bold text-white mb-4 whitespace-nowrap" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
                   ЕКСПЕРТИ
                 </h3>
-                <p className="text-sm text-gray-400 leading-relaxed">
+                <p className="text-sm text-gray-400 leading-relaxed mt-auto">
                   Досвід у нішах: e-commerce, фінанси, освіта, нерухомість. Знаємо, що працює.
                 </p>
               </div>

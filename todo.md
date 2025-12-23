@@ -4211,3 +4211,11 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Fix "ВСІБЛОГ-СТАТТІ" button text to "ВСІ БЛОГ-СТАТТІ" (add space)
 - [x] Test both buttons on mobile and desktop
 - [x] Save checkpoint
+
+## Phase 144: Fix Why Us Section Card Alignment (CURRENT)
+- [x] Fix "PERFORMANCE" text overflow in first card
+- [x] Align all 4 cards to equal height
+- [x] Test responsive layout on mobile (320px-768px)
+- [x] Test responsive layout on tablet (768px-1024px)
+- [x] Test responsive layout on desktop (1024px+)
+- [ ] Save checkpoint
