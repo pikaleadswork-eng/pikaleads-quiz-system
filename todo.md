@@ -3924,3 +3924,19 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Change hero title font to cyberpunk style (Orbitron/Rajdhani/Exo 2)
 - [x] Fix 300% card position - move higher to not overlap Pikachu glasses
 - [x] Find and install square technical font matching reference image (Nasalization/Eurostile style)
+
+## Phase 123: Hero Title Font Size Adjustment
+- [x] Reduce hero title font size for better readability
+
+## Phase 124: Why Us Section Implementation
+- [x] Create "Чому ми?" section with cyberpunk styling
+- [x] Add 4 feature cards with icons and descriptions
+- [x] Apply neon accents and grid background
+- [x] Ensure responsive layout
+
+## Phase 125: Why Us Section Optimization & Mobile Check
+- [x] Remove "ПЕРЕВАГИ СИСТЕМИ" badge
+- [x] Reduce section padding to move block higher (py-24 → py-16)
+- [x] Verify mobile responsiveness for Hero section
+- [x] Verify mobile responsiveness for Why Us section
+- [x] Optimize card padding for mobile (p-8 → p-6 sm:p-8)
