@@ -1174,3 +1174,121 @@ export async function getInteractionHistory(leadId: number) {
     .where(eq(interactionHistory.leadId, leadId))
     .orderBy(interactionHistory.createdAt);
 }
+
+// ============= TEAM MEMBERS =============
+
+export async function getAllTeamMembers() {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const { teamMembers } = await import("../drizzle/schema");
+  
+  return db
+    .select()
+    .from(teamMembers)
+    .where(eq(teamMembers.isActive, 1))
+    .orderBy(teamMembers.orderIndex);
+}
+
+export async function getTeamMemberById(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const { teamMembers } = await import("../drizzle/schema");
+  
+  const result = await db
+    .select()
+    .from(teamMembers)
+    .where(eq(teamMembers.id, id))
+    .limit(1);
+  
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function createTeamMember(data: {
+  name: string;
+  position: string;
+  bio?: string;
+  photoUrl?: string;
+  experience?: string;
+  metaBlueprintCertified?: number;
+  googleAdsCertified?: number;
+  tiktokCertified?: number;
+  linkedinUrl?: string;
+  facebookUrl?: string;
+  instagramUrl?: string;
+  telegramUrl?: string;
+  orderIndex?: number;
+  isActive?: number;
+}) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const { teamMembers } = await import("../drizzle/schema");
+  
+  const result = await db.insert(teamMembers).values({
+    name: data.name,
+    position: data.position,
+    bio: data.bio,
+    photoUrl: data.photoUrl,
+    experience: data.experience,
+    metaBlueprintCertified: data.metaBlueprintCertified ?? 0,
+    googleAdsCertified: data.googleAdsCertified ?? 0,
+    tiktokCertified: data.tiktokCertified ?? 0,
+    linkedinUrl: data.linkedinUrl,
+    facebookUrl: data.facebookUrl,
+    instagramUrl: data.instagramUrl,
+    telegramUrl: data.telegramUrl,
+    orderIndex: data.orderIndex ?? 0,
+    isActive: data.isActive ?? 1,
+  });
+  
+  return result;
+}
+
+export async function updateTeamMember(id: number, updates: {
+  name?: string;
+  position?: string;
+  bio?: string;
+  photoUrl?: string;
+  experience?: string;
+  metaBlueprintCertified?: number;
+  googleAdsCertified?: number;
+  tiktokCertified?: number;
+  linkedinUrl?: string;
+  facebookUrl?: string;
+  instagramUrl?: string;
+  telegramUrl?: string;
+  orderIndex?: number;
+  isActive?: number;
+}) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const { teamMembers } = await import("../drizzle/schema");
+  
+  return db
+    .update(teamMembers)
+    .set(updates)
+    .where(eq(teamMembers.id, id));
+}
+
+export async function deleteTeamMember(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const { teamMembers } = await import("../drizzle/schema");
+  
+  return db.delete(teamMembers).where(eq(teamMembers.id, id));
+}
+
+export async function updateTeamMemberOrder(updates: { id: number; orderIndex: number }[]) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const { teamMembers } = await import("../drizzle/schema");
+  
+  // Update each team member's order
+  for (const update of updates) {
+    await db
+      .update(teamMembers)
+      .set({ orderIndex: update.orderIndex })
+      .where(eq(teamMembers.id, update.id));
+  }
+  
+  return { success: true };
+}

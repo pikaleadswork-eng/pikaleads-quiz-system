@@ -50,6 +50,7 @@ import { SettingsRoles } from "./pages/SettingsRoles";
 import { SettingsLeadStatuses } from "./pages/SettingsLeadStatuses";
 import { SettingsIPTelephony } from "./pages/SettingsIPTelephony";
 import BlogManagement from "./pages/crm/BlogManagement";
+import AdminTeam from "./pages/admin/AdminTeam";
 import BlogList from "./pages/BlogList";
 import BlogPost from "./pages/BlogPost";
 import ServicesManagement from "./pages/ServicesManagement";
@@ -145,6 +146,7 @@ function Router() {
       <Route path={"/admin/sales"} component={SalesStatistics} />
       <Route path={"/admin/scripts"} component={SalesScripts} />
         <Route path="/admin/blog" component={BlogManagement} />
+      <Route path="/admin/team" component={AdminTeam} />
       <Route path="/admin/case-studies" component={AdminCaseStudies} />
       <Route path={"/admin/services"} component={ServicesManagement} />
       <Route path={"/admin/settings"} component={AdminSettings} />

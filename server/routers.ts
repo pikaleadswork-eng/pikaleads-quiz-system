@@ -32,6 +32,7 @@ import { eventsLogRouter } from "./routers/eventsLog";
 import { blogRouter } from "./routers/blog";
 import { contactRouter } from "./routers/contact";
 import { caseStudiesRouter } from "./routers/caseStudies";
+import { teamRouter } from "./routers/team";
 // import { abTestingRouter } from "./routers/abTesting"; // Disabled - conflicts with existing AB test implementation
 import * as schema from "../drizzle/schema";
 import { getDb } from "./db";
@@ -1485,6 +1486,7 @@ ${input.campaign ? `**Campaign:** ${input.campaign}\n` : ""}
   blog: blogRouter,
   contact: contactRouter,
   caseStudies: caseStudiesRouter,
+  team: teamRouter,
   sales: salesRouter,
   salesScripts: salesScriptsRouter,
   integrations: integrationsRouter,

@@ -1,0 +1,20 @@
+CREATE TABLE `team_members` (
+	`id` int AUTO_INCREMENT NOT NULL,
+	`name` varchar(255) NOT NULL,
+	`position` varchar(255) NOT NULL,
+	`bio` text,
+	`photoUrl` varchar(500),
+	`experience` varchar(100),
+	`metaBlueprintCertified` int NOT NULL DEFAULT 0,
+	`googleAdsCertified` int NOT NULL DEFAULT 0,
+	`tiktokCertified` int NOT NULL DEFAULT 0,
+	`linkedinUrl` varchar(500),
+	`facebookUrl` varchar(500),
+	`instagramUrl` varchar(500),
+	`telegramUrl` varchar(500),
+	`orderIndex` int NOT NULL DEFAULT 0,
+	`isActive` int NOT NULL DEFAULT 1,
+	`createdAt` timestamp NOT NULL DEFAULT (now()),
+	`updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+	CONSTRAINT `team_members_id` PRIMARY KEY(`id`)
+);

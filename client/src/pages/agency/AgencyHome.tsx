@@ -13,6 +13,8 @@ import ClientsCarousel from "@/components/agency/ClientsCarousel";
 import WorkProcessSection from "@/components/agency/WorkProcessSection";
 import BlogSection from "@/components/agency/BlogSection";
 import { AboutUsSection } from "@/components/agency/AboutUsSection";
+import GuaranteesSection from "@/components/agency/GuaranteesSection";
+import TeamSection from "@/components/agency/TeamSection";
 import CaseStudiesSection from "@/components/CaseStudiesSection";
 import FAQSection from "@/components/agency/FAQSection";
 import Footer from "@/components/Footer";
@@ -210,7 +212,7 @@ export default function AgencyHome() {
       </section>
 
       {/* Why Us Section - Cyberpunk Style */}
-      <section className="relative py-8 sm:py-12 bg-black overflow-hidden">
+      <section className="relative py-8 sm:py-12 bg-black overflow-hidden" id="why-us">
         {/* Background Grid */}
         <div 
           className="absolute inset-0 opacity-10"
@@ -734,11 +736,17 @@ export default function AgencyHome() {
       {/* Google Reviews Section */}
       <GoogleReviews />
 
+      {/* Team Section - After Why Us */}
+      <TeamSection />
+
       {/* Niches Section */}
+      <NichesSection />
+
       {/* About Us Section */}
       <AboutUsSection />
 
-      <NichesSection />
+      {/* Guarantees Section - After About Us */}
+      <GuaranteesSection />
 
       {/* Clients Carousel Section */}
       <ClientsCarousel />

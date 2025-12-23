@@ -20,7 +20,8 @@ import {
   BarChart3,
   TrendingUp,
   Activity,
-  FileText
+  FileText,
+  UsersRound
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -94,6 +95,12 @@ export default function CRMLayout({ children }: CRMLayoutProps) {
       icon: FileText,
       href: "/admin/blog",
       description: "Управління статтями блогу",
+    },
+    {
+      title: "Команда",
+      icon: UsersRound,
+      href: "/admin/team",
+      description: "Управління командою на сайті",
     },
     {
       title: t("nav.calendar") || "Calendar",

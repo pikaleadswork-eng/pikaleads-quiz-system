@@ -1056,3 +1056,32 @@ export const contactMessages = mysqlTable("contact_messages", {
 
 export type ContactMessage = typeof contactMessages.$inferSelect;
 export type InsertContactMessage = typeof contactMessages.$inferInsert;
+
+/**
+ * Team Members table - for displaying team on agency homepage
+ */
+export const teamMembers = mysqlTable("team_members", {
+  id: int("id").autoincrement().primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  position: varchar("position", { length: 255 }).notNull(), // e.g., "Performance Marketing Manager"
+  bio: text("bio"), // Short biography
+  photoUrl: varchar("photoUrl", { length: 500 }), // S3 URL to photo
+  experience: varchar("experience", { length: 100 }), // e.g., "5+ років досвіду"
+  // Certifications
+  metaBlueprintCertified: int("metaBlueprintCertified").default(0).notNull(), // 0 = no, 1 = yes
+  googleAdsCertified: int("googleAdsCertified").default(0).notNull(),
+  tiktokCertified: int("tiktokCertified").default(0).notNull(),
+  // Social media links
+  linkedinUrl: varchar("linkedinUrl", { length: 500 }),
+  facebookUrl: varchar("facebookUrl", { length: 500 }),
+  instagramUrl: varchar("instagramUrl", { length: 500 }),
+  telegramUrl: varchar("telegramUrl", { length: 500 }),
+  // Display settings
+  orderIndex: int("orderIndex").default(0).notNull(), // For sorting
+  isActive: int("isActive").default(1).notNull(), // 0 = hidden, 1 = visible
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type TeamMember = typeof teamMembers.$inferSelect;
+export type InsertTeamMember = typeof teamMembers.$inferInsert;

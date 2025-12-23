@@ -1,5 +1,17 @@
 # PIKALEADS CRM System TODO
 
+## Phase 152: Add Guarantees and Team Sections (COMPLETED)
+- [x] Create database schema for team_members table
+- [x] Create tRPC router for team management (CRUD operations)
+- [x] Create GuaranteesSection component with 4 guarantees
+- [x] Create TeamSection component with team member cards
+- [x] Create AdminTeam page for managing team members
+- [x] Add "Команда" menu item to CRM sidebar
+- [x] Integrate GuaranteesSection after About Us section
+- [x] Integrate TeamSection after Why Us section
+- [x] Add placeholder team members with photos
+- [x] Test all CRUD operations for team management
+
 ## Phase 151: Remove Cancel Button from Lead Form Modal (COMPLETED)
 - [x] Remove "Скасувати" button from LeadFormModal to increase conversion
 - [x] Remove "Не знайшли відповідь на своє питання?" section with contact button from FAQSection
