@@ -25,13 +25,13 @@ export default function AgencyHome() {
           }}
         />
 
-        <div className="container mx-auto px-6 lg:px-12 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
             
             {/* Left - Text Content */}
-            <div className="space-y-8 text-center lg:text-left">
+            <div className="space-y-8 text-center lg:text-left" style={{ animation: "fadeInUp 0.8s ease-out" }}>
               {/* Status Badge */}
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#00F0FF]/30 bg-black/50 backdrop-blur-sm">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#00F0FF]/30 bg-black/50 backdrop-blur-sm" style={{ animation: "fadeIn 0.6s ease-out" }}>
                 <div className="w-2 h-2 bg-[#00F0FF] rounded-full animate-pulse" />
                 <span className="text-[#FFD93D] text-sm font-mono tracking-wider">
                   SYSTEM: LEAD ENGINE ACTIVE
@@ -40,7 +40,7 @@ export default function AgencyHome() {
 
               {/* Main Heading */}
                     <h1 
-                className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 leading-tight"
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-6 leading-tight"
                 style={{
                   fontFamily: "'Eurostile Bold Extended', 'Nasalization', 'Rajdhani', sans-serif",
                   letterSpacing: "0.05em",
@@ -67,18 +67,18 @@ export default function AgencyHome() {
               </h1>
 
               {/* Description */}
-              <p className="text-lg md:text-xl text-gray-400 max-w-xl mx-auto lg:mx-0">
+              <p className="text-base sm:text-lg md:text-xl text-gray-400 max-w-xl mx-auto lg:mx-0 px-4 lg:px-0">
                 <span className="text-[#FFD93D] font-semibold">PikaLeads</span> – твій партнер з performance-маркетингу. Коли кожен лід має значення.
               </p>
 
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 items-center lg:items-start justify-center lg:justify-start">
                 <Link href="/quizzes" className="w-full sm:w-auto">
-                  <button className="w-full sm:w-auto px-8 py-4 bg-[#FFD93D] hover:bg-[#FFD93D]/90 text-black font-bold rounded-xl transition-all duration-300 shadow-lg shadow-[#FFD93D]/30">
+                  <button className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-[#FFD93D] hover:bg-[#FFD93D]/90 text-black font-bold rounded-xl transition-all duration-300 shadow-lg shadow-[#FFD93D]/30">
                     Отримати консультацію
                   </button>
                 </Link>
-                <button className="w-full sm:w-auto px-8 py-4 border-2 border-[#FFD93D] text-[#FFD93D] hover:bg-[#FFD93D]/10 font-bold rounded-xl transition-all duration-300 flex items-center justify-center gap-2">
+                <button className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 border-2 border-[#FFD93D] text-[#FFD93D] hover:bg-[#FFD93D]/10 font-bold rounded-xl transition-all duration-300 flex items-center justify-center gap-2">
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
                     <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd" />
@@ -92,7 +92,7 @@ export default function AgencyHome() {
             <div className="relative h-[500px] md:h-[600px] lg:h-[800px] flex items-center justify-center">
               
               {/* Pikachu Character - Center */}
-              <div className="relative z-0">
+              <div className="relative z-0" style={{ animation: "fadeInScale 1s ease-out" }}>
                 <img 
                   src="/pikachu-transparent-user.png" 
                   alt="Pikachu Lead Generator"
@@ -181,7 +181,7 @@ export default function AgencyHome() {
 
         <div className="container mx-auto px-6 relative z-10">
           {/* Section Header */}
-          <div className="text-center mb-8">
+          <div className="text-center mb-8" style={{ animation: "fadeInUp 0.8s ease-out" }}>
             <h2 
               className="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4"
               style={{
@@ -200,7 +200,7 @@ export default function AgencyHome() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             
             {/* Feature 1 - Performance Marketing */}
-            <div className="group relative">
+            <div className="group relative" style={{ animation: "fadeInUp 0.8s ease-out 0.2s both" }}>
               <div className="absolute inset-0 bg-gradient-to-br from-[#FFD93D]/20 to-transparent rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300" />
               <div className="relative bg-zinc-900/50 backdrop-blur-sm border border-[#FFD93D]/20 rounded-2xl p-6 sm:p-8 hover:border-[#FFD93D]/40 transition-all duration-300">
                 {/* Icon */}
@@ -220,7 +220,7 @@ export default function AgencyHome() {
             </div>
 
             {/* Feature 2 - AI Technology */}
-            <div className="group relative">
+            <div className="group relative" style={{ animation: "fadeInUp 0.8s ease-out 0.4s both" }}>
               <div className="absolute inset-0 bg-gradient-to-br from-[#00F0FF]/20 to-transparent rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300" />
               <div className="relative bg-zinc-900/50 backdrop-blur-sm border border-[#00F0FF]/20 rounded-2xl p-6 sm:p-8 hover:border-[#00F0FF]/40 transition-all duration-300">
                 {/* Icon */}
@@ -240,7 +240,7 @@ export default function AgencyHome() {
             </div>
 
             {/* Feature 3 - Full Analytics */}
-            <div className="group relative">
+            <div className="group relative" style={{ animation: "fadeInUp 0.8s ease-out 0.6s both" }}>
               <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-transparent rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300" />
               <div className="relative bg-zinc-900/50 backdrop-blur-sm border border-purple-500/20 rounded-2xl p-6 sm:p-8 hover:border-purple-500/40 transition-all duration-300">
                 {/* Icon */}
@@ -260,7 +260,7 @@ export default function AgencyHome() {
             </div>
 
             {/* Feature 4 - Expert Team */}
-            <div className="group relative">
+            <div className="group relative" style={{ animation: "fadeInUp 0.8s ease-out 0.8s both" }}>
               <div className="absolute inset-0 bg-gradient-to-br from-[#FFD93D]/20 to-transparent rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300" />
               <div className="relative bg-zinc-900/50 backdrop-blur-sm border border-[#FFD93D]/20 rounded-2xl p-6 sm:p-8 hover:border-[#FFD93D]/40 transition-all duration-300">
                 {/* Icon */}
