@@ -106,7 +106,7 @@ export default function BlogSection() {
               className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black font-bold rounded-xl hover:shadow-[0_0_30px_rgba(255,217,61,0.5)] transition-all duration-300 hover:scale-105"
               style={{ fontFamily: 'Eurostile, sans-serif' }}
             >
-              ВСІБЛОГ-СТАТТІ
+              Читати більше
               <ArrowRight className="w-5 h-5" />
             </button>
           </Link>

@@ -684,7 +684,7 @@
 - [ ] Translate CRM buttons (View, Edit, Create Lead Manually)
 - [ ] Merge UTM filters into main Filters popover
 - [ ] Test language switching in browser
-- [ ] Save checkpoint
+- [x] Save checkpoint
 
 
 ## Phase 45: Complete Multilingual Admin Panel + Advanced CRM Features
@@ -2021,7 +2021,7 @@
 - [ ] Test drag-and-drop reordering
 - [ ] Test save/load questions from database
 - [ ] Test questions preview in quiz
-- [ ] Save checkpoint
+- [x] Save checkpoint
 
 
 ## Phase 80 - URGENT: Fix Bonus Display & Input Readability
@@ -2136,7 +2136,7 @@
 - [ ] Configure design settings with images
 - [ ] Test GA4/Meta events
 - [ ] Verify CRM integration
-- [ ] Save checkpoint
+- [x] Save checkpoint
 
 
 ## Phase 90 - Create 16 New Quizzes with Fan-Art Images (COMPLETED)
@@ -3378,7 +3378,7 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [ ] Identify protected tRPC query on home page
 - [x] Change to publicProcedure or add auth check
 - [x] Test home page without login
-- [ ] Save checkpoint
+- [x] Save checkpoint
 
 ## Phase 112 - Sales Integration & Analytics Setup
 - [x] Integrate sales table for real Purchase amount
@@ -3387,13 +3387,13 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Add GTM Server Container configuration
 - [x] Create Meta Ads Custom Conversions guide
 - [x] Test tracking with real sales data
-- [ ] Save checkpoint
+- [x] Save checkpoint
 
 ## Phase 113 - Fix Home Page Authentication Error
 - [x] Identify protected query causing "Please login (10001)" error
 - [x] Change to publicProcedure or add conditional execution
 - [x] Test home page without login
-- [ ] Save checkpoint
+- [x] Save checkpoint
 
 ## Phase 114 - CRM Analytics System
 - [x] Design lead_scores table schema
@@ -3403,7 +3403,7 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Implement Automated Lead Scoring algorithm
 - [x] Add lead score display in CRM
 - [x] Test analytics calculations
-- [ ] Save checkpoint
+- [x] Save checkpoint
 
 ## Phase 115 - Fix UI Issues and Add CRM Features
 - [x] Fix logo not loading in footer
@@ -4203,4 +4203,11 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Make metric badges compact (inline-block or w-fit instead of full width)
 - [x] Test badges: ROAS 680%, CPL від $8, Конверсія 14%, ROI 420%, +280% замовлень, 340 лідів/міс
 - [x] Verify fixes on all screen sizes
-- [ ] Save checkpoint
+- [x] Save checkpoint
+
+
+## Phase 143: Fix Button Text Issues
+- [x] Fix "ПОЧАТИ ПРАЦЮВАТИ" button - make text display in one line (add whitespace-nowrap)
+- [x] Fix "ВСІБЛОГ-СТАТТІ" button text to "ВСІ БЛОГ-СТАТТІ" (add space)
+- [x] Test both buttons on mobile and desktop
+- [x] Save checkpoint

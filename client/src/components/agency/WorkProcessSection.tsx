@@ -229,7 +229,7 @@ export default function WorkProcessSection() {
               Залиште заявку і отримайте безкоштовний аудит вашого проекту протягом 24 годин
             </p>
             <button
-              className="inline-flex items-center gap-2 px-10 py-5 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black font-bold text-lg rounded-xl hover:shadow-[0_0_40px_rgba(255,217,61,0.6)] transition-all duration-300 hover:scale-105"
+              className="inline-flex items-center gap-2 px-10 py-5 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black font-bold text-lg rounded-xl hover:shadow-[0_0_40px_rgba(255,217,61,0.6)] transition-all duration-300 hover:scale-105 whitespace-nowrap"
               style={{ fontFamily: 'Eurostile, sans-serif' }}
             >
               ПОЧАТИ ПРАЦЮВАТИ
