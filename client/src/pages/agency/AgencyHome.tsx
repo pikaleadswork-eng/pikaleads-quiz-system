@@ -717,8 +717,7 @@ export default function AgencyHome() {
                         fontFamily: "'Rajdhani', sans-serif"
                       }}
                     >
-                      <span className="hidden sm:inline">{isSubmitting ? "ВІДПРАВКА..." : "ОТРИМАТИ БЕЗКОШТОВНИЙ АУДИТ"}</span>
-                      <span className="sm:hidden">{isSubmitting ? "ВІДПРАВКА..." : "ОТРИМАТИ АУДИТ"}</span>
+                      {isSubmitting ? "ВІДПРАВКА..." : "ОТРИМАТИ АУДИТ"}
                     </button>
                   </form>
                 </div>
