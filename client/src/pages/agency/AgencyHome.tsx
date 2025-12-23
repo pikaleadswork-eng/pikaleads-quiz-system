@@ -550,19 +550,19 @@ export default function AgencyHome() {
       </section>
 
       {/* Lead Magnet Section - Free Audit Offer */}
-      <section className="py-20 px-4 sm:px-6 lg:px-12">
+      <section className="py-12 md:py-20 px-4 sm:px-6 lg:px-12">
         <div className="max-w-7xl mx-auto">
-          <div className="relative bg-gradient-to-br from-zinc-900/90 to-zinc-950/90 backdrop-blur-sm border border-yellow-400/20 rounded-3xl p-8 md:p-16 overflow-hidden">
+          <div className="relative bg-gradient-to-br from-zinc-900/90 to-zinc-950/90 backdrop-blur-sm border border-yellow-400/20 rounded-2xl md:rounded-3xl p-6 md:p-12 lg:p-16 overflow-hidden">
             {/* Background effects */}
             <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/5 via-transparent to-purple-500/5 rounded-3xl" />
             <div className="absolute top-0 right-0 w-96 h-96 bg-yellow-400/10 rounded-full blur-3xl" />
             
-            <div className="relative z-10 grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+            <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 lg:gap-16">
               {/* Left Side - Compelling Text */}
-              <div className="space-y-8">
+              <div className="space-y-6 md:space-y-8">
                 {/* Main Headline */}
-                <div className="space-y-4">
-                  <h2 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight">
+                <div className="space-y-3 md:space-y-4">
+                  <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-tight">
                     <span className="block text-white" style={{
                       fontFamily: "'Eurostile Bold Extended', 'Rajdhani', sans-serif",
                       letterSpacing: "-0.02em"
@@ -590,7 +590,7 @@ export default function AgencyHome() {
                     </span>
                   </h2>
                   
-                  <p className="text-xl md:text-2xl text-gray-400 leading-relaxed" style={{
+                  <p className="text-lg sm:text-xl md:text-2xl text-gray-400 leading-relaxed" style={{
                     fontFamily: "'Inter', sans-serif"
                   }}>
                     Або не приносить <span className="text-white font-semibold">очікуваний результат?</span>
@@ -598,7 +598,7 @@ export default function AgencyHome() {
                 </div>
 
                 {/* Benefits */}
-                <div className="space-y-4">
+                <div className="space-y-3 md:space-y-4">
                   <p className="text-lg font-bold text-white" style={{
                     fontFamily: "'Rajdhani', sans-serif"
                   }}>
@@ -634,10 +634,10 @@ export default function AgencyHome() {
               </div>
 
               {/* Right Side - Form & Timer */}
-              <div className="space-y-6">
+              <div className="space-y-4 md:space-y-6">
                 {/* Countdown Timer */}
-                <div className="space-y-4">
-                  <p className="text-center text-sm text-gray-400 uppercase tracking-widest" style={{
+                <div className="space-y-3 md:space-y-4">
+                  <p className="text-center text-xs sm:text-sm text-gray-400 uppercase tracking-widest" style={{
                     fontFamily: "'Rajdhani', sans-serif",
                     letterSpacing: '0.15em'
                   }}>

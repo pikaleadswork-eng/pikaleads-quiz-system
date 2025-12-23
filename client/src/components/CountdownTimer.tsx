@@ -59,18 +59,18 @@ export function CountdownTimer({ className = '' }: CountdownTimerProps) {
 
   return (
     <div className={`w-full ${className}`}>
-      <div className="flex items-center justify-center gap-3">
+      <div className="flex items-center justify-center gap-2 sm:gap-3">
         {/* Hours */}
-        <div className="relative group flex-1 max-w-[140px]">
-          <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/20 to-purple-500/20 rounded-xl blur-lg group-hover:blur-xl transition-all" />
-          <div className="relative bg-zinc-900/80 border-2 border-yellow-400/40 rounded-xl px-4 py-5 text-center backdrop-blur-sm">
-            <div className="text-5xl font-black text-[#FFD93D] font-mono tracking-tight" style={{
-              textShadow: '0 0 20px rgba(255, 217, 61, 0.8), 0 0 40px rgba(255, 217, 61, 0.4)',
+        <div className="relative group flex-1 max-w-[90px] sm:max-w-[110px] md:max-w-[140px]">
+          <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/20 to-purple-500/20 rounded-lg sm:rounded-xl blur-md sm:blur-lg group-hover:blur-xl transition-all" />
+          <div className="relative bg-zinc-900/80 border border-yellow-400/40 sm:border-2 rounded-lg sm:rounded-xl px-2 py-3 sm:px-3 sm:py-4 md:px-4 md:py-5 text-center backdrop-blur-sm">
+            <div className="text-3xl sm:text-4xl md:text-5xl font-black text-[#FFD93D] font-mono tracking-tight" style={{
+              textShadow: '0 0 15px rgba(255, 217, 61, 0.8), 0 0 30px rgba(255, 217, 61, 0.4)',
               fontFamily: "'Rajdhani', monospace"
             }}>
               {String(hours).padStart(2, '0')}
             </div>
-            <div className="text-xs text-zinc-400 uppercase tracking-widest mt-2 font-bold" style={{
+            <div className="text-[9px] sm:text-[10px] md:text-xs text-zinc-400 uppercase tracking-wider sm:tracking-widest mt-1 sm:mt-2 font-bold" style={{
               fontFamily: "'Rajdhani', sans-serif"
             }}>
               годин
@@ -79,19 +79,19 @@ export function CountdownTimer({ className = '' }: CountdownTimerProps) {
         </div>
 
         {/* Separator */}
-        <div className="text-4xl font-black text-yellow-400/60 pb-6">:</div>
+        <div className="text-2xl sm:text-3xl md:text-4xl font-black text-yellow-400/60 pb-4 sm:pb-5 md:pb-6">:</div>
 
         {/* Minutes */}
-        <div className="relative group flex-1 max-w-[140px]">
-          <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/20 to-purple-500/20 rounded-xl blur-lg group-hover:blur-xl transition-all" />
-          <div className="relative bg-zinc-900/80 border-2 border-yellow-400/40 rounded-xl px-4 py-5 text-center backdrop-blur-sm">
-            <div className="text-5xl font-black text-[#FFD93D] font-mono tracking-tight" style={{
-              textShadow: '0 0 20px rgba(255, 217, 61, 0.8), 0 0 40px rgba(255, 217, 61, 0.4)',
+        <div className="relative group flex-1 max-w-[90px] sm:max-w-[110px] md:max-w-[140px]">
+          <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/20 to-purple-500/20 rounded-lg sm:rounded-xl blur-md sm:blur-lg group-hover:blur-xl transition-all" />
+          <div className="relative bg-zinc-900/80 border border-yellow-400/40 sm:border-2 rounded-lg sm:rounded-xl px-2 py-3 sm:px-3 sm:py-4 md:px-4 md:py-5 text-center backdrop-blur-sm">
+            <div className="text-3xl sm:text-4xl md:text-5xl font-black text-[#FFD93D] font-mono tracking-tight" style={{
+              textShadow: '0 0 15px rgba(255, 217, 61, 0.8), 0 0 30px rgba(255, 217, 61, 0.4)',
               fontFamily: "'Rajdhani', monospace"
             }}>
               {String(minutes).padStart(2, '0')}
             </div>
-            <div className="text-xs text-zinc-400 uppercase tracking-widest mt-2 font-bold" style={{
+            <div className="text-[9px] sm:text-[10px] md:text-xs text-zinc-400 uppercase tracking-wider sm:tracking-widest mt-1 sm:mt-2 font-bold" style={{
               fontFamily: "'Rajdhani', sans-serif"
             }}>
               хвилин
@@ -100,19 +100,19 @@ export function CountdownTimer({ className = '' }: CountdownTimerProps) {
         </div>
 
         {/* Separator */}
-        <div className="text-4xl font-black text-yellow-400/60 pb-6">:</div>
+        <div className="text-2xl sm:text-3xl md:text-4xl font-black text-yellow-400/60 pb-4 sm:pb-5 md:pb-6">:</div>
 
         {/* Seconds */}
-        <div className="relative group flex-1 max-w-[140px]">
-          <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/20 to-purple-500/20 rounded-xl blur-lg group-hover:blur-xl transition-all" />
-          <div className="relative bg-zinc-900/80 border-2 border-yellow-400/40 rounded-xl px-4 py-5 text-center backdrop-blur-sm">
-            <div className="text-5xl font-black text-[#FFD93D] font-mono tracking-tight" style={{
-              textShadow: '0 0 20px rgba(255, 217, 61, 0.8), 0 0 40px rgba(255, 217, 61, 0.4)',
+        <div className="relative group flex-1 max-w-[90px] sm:max-w-[110px] md:max-w-[140px]">
+          <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/20 to-purple-500/20 rounded-lg sm:rounded-xl blur-md sm:blur-lg group-hover:blur-xl transition-all" />
+          <div className="relative bg-zinc-900/80 border border-yellow-400/40 sm:border-2 rounded-lg sm:rounded-xl px-2 py-3 sm:px-3 sm:py-4 md:px-4 md:py-5 text-center backdrop-blur-sm">
+            <div className="text-3xl sm:text-4xl md:text-5xl font-black text-[#FFD93D] font-mono tracking-tight" style={{
+              textShadow: '0 0 15px rgba(255, 217, 61, 0.8), 0 0 30px rgba(255, 217, 61, 0.4)',
               fontFamily: "'Rajdhani', monospace"
             }}>
               {String(seconds).padStart(2, '0')}
             </div>
-            <div className="text-xs text-zinc-400 uppercase tracking-widest mt-2 font-bold" style={{
+            <div className="text-[9px] sm:text-[10px] md:text-xs text-zinc-400 uppercase tracking-wider sm:tracking-widest mt-1 sm:mt-2 font-bold" style={{
               fontFamily: "'Rajdhani', sans-serif"
             }}>
               секунд
