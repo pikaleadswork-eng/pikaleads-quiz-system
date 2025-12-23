@@ -253,7 +253,7 @@ export default function AgencyHome() {
                 <h3 className="text-lg font-bold text-white mb-4" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
                   PERFORMANCE
                 </h3>
-                <p className="text-gray-400 leading-relaxed">
+                <p className="text-sm text-gray-400 leading-relaxed">
                   Платиш тільки за результат. Кожна гривня працює на твій прибуток.
                 </p>
               </div>
@@ -273,7 +273,7 @@ export default function AgencyHome() {
                 <h3 className="text-lg font-bold text-white mb-4" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
                   AI-TECH
                 </h3>
-                <p className="text-gray-400 leading-relaxed">
+                <p className="text-sm text-gray-400 leading-relaxed">
                   Штучний інтелект аналізує поведінку та підбирає найкращі рішення для кожного ліда.
                 </p>
               </div>
@@ -293,7 +293,7 @@ export default function AgencyHome() {
                 <h3 className="text-lg font-bold text-white mb-4" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
                   АНАЛІТИКА
                 </h3>
-                <p className="text-gray-400 leading-relaxed">
+                <p className="text-sm text-gray-400 leading-relaxed">
                   Бачиш кожен крок клієнта: від кліку до покупки. Прозорість на 100%.
                 </p>
               </div>
@@ -313,7 +313,7 @@ export default function AgencyHome() {
                 <h3 className="text-lg font-bold text-white mb-4" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
                   ЕКСПЕРТИ
                 </h3>
-                <p className="text-gray-400 leading-relaxed">
+                <p className="text-sm text-gray-400 leading-relaxed">
                   Досвід у нішах: e-commerce, фінанси, освіта, нерухомість. Знаємо, що працює.
                 </p>
               </div>

@@ -4194,3 +4194,13 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Test alignment across all 10 niche cards (E-commerce, Real Estate, Furniture, Repair, B2B, Restaurants, Construction, Mobile Apps, Telegram, Instagram)
 - [x] Verify badges (ROAS 680%, CPL від $8, Конверсія 14%, ROI 420%, etc.) are at same height
 - [x] Save checkpoint
+
+
+## Phase 142: Fix Display Issues (Why Us Section + Metric Badges)
+- [x] Analyze Why Us section text display problem (first screenshot)
+- [x] Fix Why Us section card text rendering
+- [x] Analyze niche card metric badges width issue (second screenshot)
+- [x] Make metric badges compact (inline-block or w-fit instead of full width)
+- [x] Test badges: ROAS 680%, CPL від $8, Конверсія 14%, ROI 420%, +280% замовлень, 340 лідів/міс
+- [x] Verify fixes on all screen sizes
+- [ ] Save checkpoint

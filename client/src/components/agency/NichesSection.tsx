@@ -156,7 +156,7 @@ export default function NichesSection() {
               </p>
 
               {/* Stats Badge */}
-              <div className="inline-block px-3 py-1.5 bg-black/50 border border-yellow-400/20 rounded-lg mt-auto">
+              <div className="w-fit px-3 py-1.5 bg-black/50 border border-yellow-400/20 rounded-lg mt-auto">
                 <span className="text-yellow-400 text-xs font-semibold">
                   {niche.stats}
                 </span>
