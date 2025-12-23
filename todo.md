@@ -3978,3 +3978,13 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Add flex-col to service card inner containers
 - [x] Add mt-auto to buttons to push them to bottom
 - [x] Verify all buttons align in straight line
+
+## Phase 133: Lead Magnet Section (Free Audit Offer)
+- [x] Generate gift box image without background (cyberpunk style)
+- [x] Create countdown timer component (15 minutes)
+- [x] Implement IP-based timer reset (once per day per IP)
+- [x] Create lead magnet section with compelling copy
+- [x] Add lead capture form (Name, Phone, Email, Telegram)
+- [x] Integrate form with CRM and Telegram notifications
+- [x] Add animations and cyberpunk styling
+- [x] Test timer functionality and form submission
