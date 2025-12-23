@@ -58,32 +58,65 @@ export function CountdownTimer({ className = '' }: CountdownTimerProps) {
   const seconds = Math.floor((timeLeft % 60000) / 1000);
 
   return (
-    <div className={`flex items-center gap-2 ${className}`}>
-      <div className="flex items-center gap-1">
-        <div className="bg-zinc-900 border border-yellow-400/30 rounded-lg px-3 py-2 min-w-[60px] text-center">
-          <div className="text-2xl font-bold text-yellow-400 font-mono">
-            {String(hours).padStart(2, '0')}
-          </div>
-          <div className="text-[10px] text-zinc-400 uppercase tracking-wider">
-            годин
+    <div className={`w-full ${className}`}>
+      <div className="flex items-center justify-center gap-3">
+        {/* Hours */}
+        <div className="relative group flex-1 max-w-[140px]">
+          <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/20 to-purple-500/20 rounded-xl blur-lg group-hover:blur-xl transition-all" />
+          <div className="relative bg-zinc-900/80 border-2 border-yellow-400/40 rounded-xl px-4 py-5 text-center backdrop-blur-sm">
+            <div className="text-5xl font-black text-[#FFD93D] font-mono tracking-tight" style={{
+              textShadow: '0 0 20px rgba(255, 217, 61, 0.8), 0 0 40px rgba(255, 217, 61, 0.4)',
+              fontFamily: "'Rajdhani', monospace"
+            }}>
+              {String(hours).padStart(2, '0')}
+            </div>
+            <div className="text-xs text-zinc-400 uppercase tracking-widest mt-2 font-bold" style={{
+              fontFamily: "'Rajdhani', sans-serif"
+            }}>
+              годин
+            </div>
           </div>
         </div>
-        <div className="text-yellow-400 text-2xl font-bold">:</div>
-        <div className="bg-zinc-900 border border-yellow-400/30 rounded-lg px-3 py-2 min-w-[60px] text-center">
-          <div className="text-2xl font-bold text-yellow-400 font-mono">
-            {String(minutes).padStart(2, '0')}
-          </div>
-          <div className="text-[10px] text-zinc-400 uppercase tracking-wider">
-            хвилин
+
+        {/* Separator */}
+        <div className="text-4xl font-black text-yellow-400/60 pb-6">:</div>
+
+        {/* Minutes */}
+        <div className="relative group flex-1 max-w-[140px]">
+          <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/20 to-purple-500/20 rounded-xl blur-lg group-hover:blur-xl transition-all" />
+          <div className="relative bg-zinc-900/80 border-2 border-yellow-400/40 rounded-xl px-4 py-5 text-center backdrop-blur-sm">
+            <div className="text-5xl font-black text-[#FFD93D] font-mono tracking-tight" style={{
+              textShadow: '0 0 20px rgba(255, 217, 61, 0.8), 0 0 40px rgba(255, 217, 61, 0.4)',
+              fontFamily: "'Rajdhani', monospace"
+            }}>
+              {String(minutes).padStart(2, '0')}
+            </div>
+            <div className="text-xs text-zinc-400 uppercase tracking-widest mt-2 font-bold" style={{
+              fontFamily: "'Rajdhani', sans-serif"
+            }}>
+              хвилин
+            </div>
           </div>
         </div>
-        <div className="text-yellow-400 text-2xl font-bold">:</div>
-        <div className="bg-zinc-900 border border-yellow-400/30 rounded-lg px-3 py-2 min-w-[60px] text-center">
-          <div className="text-2xl font-bold text-yellow-400 font-mono">
-            {String(seconds).padStart(2, '0')}
-          </div>
-          <div className="text-[10px] text-zinc-400 uppercase tracking-wider">
-            секунд
+
+        {/* Separator */}
+        <div className="text-4xl font-black text-yellow-400/60 pb-6">:</div>
+
+        {/* Seconds */}
+        <div className="relative group flex-1 max-w-[140px]">
+          <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/20 to-purple-500/20 rounded-xl blur-lg group-hover:blur-xl transition-all" />
+          <div className="relative bg-zinc-900/80 border-2 border-yellow-400/40 rounded-xl px-4 py-5 text-center backdrop-blur-sm">
+            <div className="text-5xl font-black text-[#FFD93D] font-mono tracking-tight" style={{
+              textShadow: '0 0 20px rgba(255, 217, 61, 0.8), 0 0 40px rgba(255, 217, 61, 0.4)',
+              fontFamily: "'Rajdhani', monospace"
+            }}>
+              {String(seconds).padStart(2, '0')}
+            </div>
+            <div className="text-xs text-zinc-400 uppercase tracking-widest mt-2 font-bold" style={{
+              fontFamily: "'Rajdhani', sans-serif"
+            }}>
+              секунд
+            </div>
           </div>
         </div>
       </div>

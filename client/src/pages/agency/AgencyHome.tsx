@@ -636,15 +636,14 @@ export default function AgencyHome() {
               {/* Right Side - Form & Timer */}
               <div className="space-y-6">
                 {/* Countdown Timer */}
-                <div className="bg-zinc-900/50 border border-yellow-400/30 rounded-2xl p-6">
-                  <p className="text-center text-sm text-gray-400 uppercase tracking-wider mb-4" style={{
-                    fontFamily: "'Rajdhani', sans-serif"
+                <div className="space-y-4">
+                  <p className="text-center text-sm text-gray-400 uppercase tracking-widest" style={{
+                    fontFamily: "'Rajdhani', sans-serif",
+                    letterSpacing: '0.15em'
                   }}>
-                    Пропозиція діє ще:
+                    ПРОПОЗИЦІЯ ДІЄ ЩЕ:
                   </p>
-                  <div className="flex justify-center">
-                    <CountdownTimer />
-                  </div>
+                  <CountdownTimer />
                 </div>
 
                 {/* Lead Form */}
