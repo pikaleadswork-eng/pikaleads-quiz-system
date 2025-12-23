@@ -4052,3 +4052,10 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Add "Почати працювати" CTA button at the end
 - [x] Integrate all blocks into AgencyHome.tsx
 - [x] Test responsive design on mobile/tablet/desktop
+
+## Phase 138: Add Social Media Growth Niches
+- [x] Add Telegram channel growth niche card (500 subscribers/day)
+- [x] Add Instagram follower growth niche card (1000/day)
+- [x] Update niche grid to accommodate 10 cards total
+- [x] Test responsive layout with new cards
+- [x] Save checkpoint and deliver preview

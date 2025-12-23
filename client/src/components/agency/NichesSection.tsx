@@ -1,4 +1,4 @@
-import { ShoppingCart, Home, Sofa, Hammer, Briefcase, Utensils, Building2, Smartphone } from 'lucide-react';
+import { ShoppingCart, Home, Sofa, Hammer, Briefcase, Utensils, Building2, Smartphone, Send, Instagram } from 'lucide-react';
 
 interface Niche {
   id: number;
@@ -73,6 +73,22 @@ const niches: Niche[] = [
     description: "Просування застосунків iOS/Android. App Install кампанії в Meta, Google, TikTok. CPI від $0.85, retention 45%.",
     stats: "CPI $0.85",
     color: "#A855F7"
+  },
+  {
+    id: 9,
+    icon: <Send className="w-8 h-8" />,
+    title: "TELEGRAM КАНАЛИ",
+    description: "Розвиток Telegram каналів та груп. Органічне зростання підписників, таргетована реклама, контент-стратегія. Стабільні результати.",
+    stats: "500 підписників/день",
+    color: "#0088CC"
+  },
+  {
+    id: 10,
+    icon: <Instagram className="w-8 h-8" />,
+    title: "INSTAGRAM GROWTH",
+    description: "Набір підписників Instagram через таргетовану рекламу, Reels, Stories. Якісна аудиторія, висока активність, стабільний ріст.",
+    stats: "1000 підписників/день",
+    color: "#E4405F"
   }
 ];
 
@@ -104,7 +120,7 @@ export default function NichesSection() {
         </div>
 
         {/* Niches Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 lg:gap-8">
           {niches.map((niche, index) => (
             <div
               key={niche.id}
