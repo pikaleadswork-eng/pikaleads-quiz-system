@@ -250,10 +250,10 @@ export default function AgencyHome() {
                   </svg>
                 </div>
                 
-                <h3 className="text-sm sm:text-base md:text-lg font-bold text-white mb-4 whitespace-nowrap" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
+                <h3 className="text-base font-bold text-white mb-4 whitespace-nowrap" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
                   PERFORMANCE
                 </h3>
-                <p className="text-sm text-gray-400 leading-relaxed mt-auto">
+                <p className="text-sm text-gray-400 leading-relaxed">
                   Платиш тільки за результат. Кожна гривня працює на твій прибуток.
                 </p>
               </div>
@@ -270,10 +270,10 @@ export default function AgencyHome() {
                   </svg>
                 </div>
                 
-                <h3 className="text-sm sm:text-base md:text-lg font-bold text-white mb-4 whitespace-nowrap" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
+                <h3 className="text-base font-bold text-white mb-4 whitespace-nowrap" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
                   AI-TECH
                 </h3>
-                <p className="text-sm text-gray-400 leading-relaxed mt-auto">
+                <p className="text-sm text-gray-400 leading-relaxed">
                   Штучний інтелект аналізує поведінку та підбирає найкращі рішення для кожного ліда.
                 </p>
               </div>
@@ -290,10 +290,10 @@ export default function AgencyHome() {
                   </svg>
                 </div>
                 
-                <h3 className="text-sm sm:text-base md:text-lg font-bold text-white mb-4 whitespace-nowrap" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
+                <h3 className="text-base font-bold text-white mb-4 whitespace-nowrap" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
                   АНАЛІТИКА
                 </h3>
-                <p className="text-sm text-gray-400 leading-relaxed mt-auto">
+                <p className="text-sm text-gray-400 leading-relaxed">
                   Бачиш кожен крок клієнта: від кліку до покупки. Прозорість на 100%.
                 </p>
               </div>
@@ -310,10 +310,10 @@ export default function AgencyHome() {
                   </svg>
                 </div>
                 
-                <h3 className="text-sm sm:text-base md:text-lg font-bold text-white mb-4 whitespace-nowrap" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
+                <h3 className="text-base font-bold text-white mb-4 whitespace-nowrap" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
                   ЕКСПЕРТИ
                 </h3>
-                <p className="text-sm text-gray-400 leading-relaxed mt-auto">
+                <p className="text-sm text-gray-400 leading-relaxed">
                   Досвід у нішах: e-commerce, фінанси, освіта, нерухомість. Знаємо, що працює.
                 </p>
               </div>
