@@ -53,7 +53,8 @@ export function CountdownTimer({ className = '' }: CountdownTimerProps) {
     return () => clearInterval(interval);
   }, []);
 
-  const minutes = Math.floor(timeLeft / 60000);
+  const hours = Math.floor(timeLeft / 3600000);
+  const minutes = Math.floor((timeLeft % 3600000) / 60000);
   const seconds = Math.floor((timeLeft % 60000) / 1000);
 
   return (
@@ -61,10 +62,19 @@ export function CountdownTimer({ className = '' }: CountdownTimerProps) {
       <div className="flex items-center gap-1">
         <div className="bg-zinc-900 border border-yellow-400/30 rounded-lg px-3 py-2 min-w-[60px] text-center">
           <div className="text-2xl font-bold text-yellow-400 font-mono">
+            {String(hours).padStart(2, '0')}
+          </div>
+          <div className="text-[10px] text-zinc-400 uppercase tracking-wider">
+            годин
+          </div>
+        </div>
+        <div className="text-yellow-400 text-2xl font-bold">:</div>
+        <div className="bg-zinc-900 border border-yellow-400/30 rounded-lg px-3 py-2 min-w-[60px] text-center">
+          <div className="text-2xl font-bold text-yellow-400 font-mono">
             {String(minutes).padStart(2, '0')}
           </div>
           <div className="text-[10px] text-zinc-400 uppercase tracking-wider">
-            хв
+            хвилин
           </div>
         </div>
         <div className="text-yellow-400 text-2xl font-bold">:</div>
@@ -73,7 +83,7 @@ export function CountdownTimer({ className = '' }: CountdownTimerProps) {
             {String(seconds).padStart(2, '0')}
           </div>
           <div className="text-[10px] text-zinc-400 uppercase tracking-wider">
-            сек
+            секунд
           </div>
         </div>
       </div>

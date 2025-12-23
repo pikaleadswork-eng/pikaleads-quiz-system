@@ -3993,3 +3993,12 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Move lead magnet section from Home.tsx to AgencyHome.tsx (actual homepage)
 - [x] Verify lead magnet appears on main homepage (/)
 - [x] Test timer and form functionality on correct page
+
+## Phase 133.2: Redesign Lead Magnet Section
+- [x] Remove gift image (not fitting the design)
+- [x] Move form + timer to right side
+- [x] Redesign left side with compelling typography
+- [x] Use multiple fonts for visual hierarchy
+- [x] Add modern, clean styling
+- [x] Update timer to hours:minutes:seconds format
+- [x] Test responsive layout
