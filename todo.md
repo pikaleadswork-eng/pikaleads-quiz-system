@@ -4237,3 +4237,88 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Implement fade-in animations with staggered delays
 - [x] Test responsive layout on all screen sizes
 - [x] Integrate into AgencyHome.tsx after Google Reviews
+
+## Phase 146: Professional Footer & Policies System (CURRENT)
+- [ ] Download partner logos (Meta, Google, TikTok, GA4 Blueprint) without background
+- [ ] Create Footer component with 4 columns (About, Services, Legal, Contact)
+- [ ] Add partner logos section with certifications
+- [ ] Create Privacy Policy page with full GDPR compliance text
+- [ ] Create Cookie Policy page
+- [ ] Create Terms of Service page
+- [ ] Integrate footer into all pages (AgencyHome, Quiz pages, Blog, etc.)
+- [ ] Test footer responsiveness on mobile/tablet/desktop
+
+## Phase 147: Contact Page with Feedback Form
+- [ ] Create Contact page component
+- [ ] Add contact information (phone +380 99 23 77 117, email, address)
+- [ ] Create feedback form (name, email, phone, message)
+- [ ] Add tRPC procedure for contact form submission
+- [ ] Send Telegram notification on form submission
+- [ ] Add success/error toast notifications
+- [ ] Test form validation and submission
+
+## Phase 148: Case Studies System - Database & Backend
+- [ ] Create case_studies table (id, title, slug, client, industry, challenge, solution, results, coverImage, beforeImage, afterImage, metrics, publishedAt, status, views)
+- [ ] Create case_study_metrics table (caseId, metricName, beforeValue, afterValue, improvement, unit)
+- [ ] Add tRPC procedures: cases.list, cases.getBySlug, cases.create, cases.update, cases.delete
+- [ ] Run database migration
+
+## Phase 149: CRM Case Studies Management
+- [ ] Create CaseStudiesManagement page in CRM
+- [ ] Add "Кейси" menu item to CRMLayout sidebar
+- [ ] Add TipTap rich text editor for case content
+- [ ] Add image upload for cover, before/after screenshots
+- [ ] Add metrics builder (metric name, before, after, improvement %)
+- [ ] Add slug auto-generation from title
+- [ ] Add draft/published status toggle
+- [ ] Test CRUD operations
+
+## Phase 150: Frontend Case Studies Section
+- [ ] Create CaseStudiesSection component for homepage
+- [ ] Create 4 example case studies with real data:
+  * E-commerce furniture store (CPL $8 → $3.5, ROI 420%)
+  * Dental clinic (87 leads, $12 CPL)
+  * Law firm (45 leads, $18 CPL)
+  * Tech store (ROAS 680%)
+- [ ] Generate before/after screenshots for each case
+- [ ] Create individual case study page (/cases/:slug)
+- [ ] Add metrics visualization with progress bars
+- [ ] Add social share buttons
+- [ ] Integrate into AgencyHome after About Us section
+- [ ] Test responsive layout
+
+## Phase 146: Professional Footer with Partner Logos
+- [x] Create Footer component with partner logos (Meta, Google, TikTok, GA4, Blueprint)
+- [x] Add certification badges
+- [x] Include all policy links
+
+## Phase 147: Privacy Policy Pages
+- [x] Create Privacy Policy page
+- [x] Create Cookie Policy page
+- [x] Create Terms of Service page
+- [x] Add routes to App.tsx
+
+## Phase 148: Contact Page with Form
+- [x] Create ContactPage component
+- [x] Add contact form with validation
+- [x] Create contact router backend
+- [x] Add email/Telegram notifications
+- [x] Add route to App.tsx
+
+## Phase 149: Case Studies System - Backend
+- [x] Add case_studies table to schema
+- [x] Add contact_messages table to schema
+- [x] Push database migrations
+- [x] Create case studies router
+- [x] Create contact router
+- [x] Register routers in main routers.ts
+
+## Phase 150: Case Studies System - Frontend
+- [x] Create AdminCaseStudies CRM page
+- [x] Add rich text editor for content
+- [x] Add image upload support
+- [x] Create CaseStudiesSection component
+- [x] Create CaseStudyPage for single case
+- [x] Add 4 example case studies with seed script
+- [x] Add routes to App.tsx
+- [x] Integrate CaseStudiesSection into AgencyHome

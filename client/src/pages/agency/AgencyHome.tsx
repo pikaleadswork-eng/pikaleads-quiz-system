@@ -13,6 +13,7 @@ import ClientsCarousel from "@/components/agency/ClientsCarousel";
 import WorkProcessSection from "@/components/agency/WorkProcessSection";
 import BlogSection from "@/components/agency/BlogSection";
 import { AboutUsSection } from "@/components/agency/AboutUsSection";
+import CaseStudiesSection from "@/components/CaseStudiesSection";
 
 export default function AgencyHome() {
   const { t } = useTranslation();
@@ -742,6 +743,9 @@ export default function AgencyHome() {
 
       {/* Work Process Section */}
       <WorkProcessSection />
+
+      {/* Case Studies Section */}
+      <CaseStudiesSection />
 
       {/* Blog Section */}
       <BlogSection />

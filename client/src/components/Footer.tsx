@@ -7,96 +7,85 @@ import {
   Twitter, 
   Youtube,
   Mail,
-  Phone
+  Phone,
+  MapPin
 } from "lucide-react";
-import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { useState } from "react";
-import { trpc } from "@/lib/trpc";
 
 export default function Footer() {
   const { language } = useLanguage();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
-  
-  const contactMutation = trpc.contact.submit.useMutation({
-    onSuccess: () => {
-      toast.success(t.messageSent);
-      setName("");
-      setEmail("");
-      setMessage("");
-    },
-    onError: () => {
-      toast.error(t.messageError);
-    }
-  });
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!name || !email || !message) {
-      toast.error("Please fill all fields");
-      return;
-    }
-    contactMutation.mutate({ name, email, message });
-  };
 
   const content = {
     uk: {
-      services: "Послуги",
       about: "Про нас",
-      blog: "Блог",
-      news: "Новини",
-      faq: "F.A.Q",
-      portfolio: "Портфоліо",
-      partners: "Партнери",
+      aboutText: "PIKA LEADS - професійне агентство цифрового маркетингу, спеціалізується на генерації лідів та перформанс-маркетингу.",
+      services: "Послуги",
+      metaAds: "Meta Ads",
+      googleAds: "Google Ads",
+      tiktokAds: "TikTok Ads",
+      analytics: "Аналітика GA4",
+      leadGen: "Генерація лідів",
+      crmSystems: "CRM системи",
       legal: "Юридична інформація",
       privacy: "Політика конфіденційності",
       cookies: "Політика кукіс",
-      disclaimer: "Дисклеймер",
+      terms: "Умови використання",
       contacts: "Контакти",
-      phone: "Тел.:",
-      email: "Пошта:",
-      company: "ФОП \"Грибук Роман Миколайович\"",
+      phone: "Телефон:",
+      email: "Email:",
+      address: "Адреса:",
+      addressText: "Україна, Київ",
       followUs: "Слідкуйте за нами",
-      comingSoon: "Незабаром",
+      partners: "Наші партнери та сертифікації",
       rights: "© 2025 PIKA LEADS. Всі права захищені.",
-      contactForm: "Зв'яжіться з нами",
-      name: "Ім'я",
-      message: "Повідомлення",
-      send: "Надіслати",
-      sending: "Надсилання...",
-      messageSent: "Повідомлення надіслано!",
-      messageError: "Помилка надсилання"
+      company: "ФОП \"Грибук Роман Миколайович\""
     },
     en: {
-      services: "Services",
       about: "About Us",
-      blog: "Blog",
-      news: "News",
-      faq: "F.A.Q",
-      portfolio: "Portfolio",
-      partners: "Partners",
+      aboutText: "PIKA LEADS is a professional digital marketing agency specializing in lead generation and performance marketing.",
+      services: "Services",
+      metaAds: "Meta Ads",
+      googleAds: "Google Ads",
+      tiktokAds: "TikTok Ads",
+      analytics: "GA4 Analytics",
+      leadGen: "Lead Generation",
+      crmSystems: "CRM Systems",
       legal: "Legal Information",
       privacy: "Privacy Policy",
       cookies: "Cookie Policy",
-      disclaimer: "Disclaimer",
+      terms: "Terms of Service",
       contacts: "Contacts",
       phone: "Phone:",
       email: "Email:",
-      company: "FOP \"Hrybuk Roman Mykolaiovych\"",
+      address: "Address:",
+      addressText: "Ukraine, Kyiv",
       followUs: "Follow Us",
-      comingSoon: "Coming Soon",
+      partners: "Our Partners & Certifications",
       rights: "© 2025 PIKA LEADS. All rights reserved.",
-      contactForm: "Contact Us",
-      name: "Name",
-      message: "Message",
-      send: "Send",
-      sending: "Sending...",
-      messageSent: "Message sent!",
-      messageError: "Error sending message"
+      company: "FOP \"Hrybuk Roman Mykolaiovych\""
+    },
+    ru: {
+      about: "О нас",
+      aboutText: "PIKA LEADS - профессиональное агентство цифрового маркетинга, специализируется на генерации лидов и перформанс-маркетинге.",
+      services: "Услуги",
+      metaAds: "Meta Ads",
+      googleAds: "Google Ads",
+      tiktokAds: "TikTok Ads",
+      analytics: "Аналитика GA4",
+      leadGen: "Генерация лидов",
+      crmSystems: "CRM системы",
+      legal: "Юридическая информация",
+      privacy: "Политика конфиденциальности",
+      cookies: "Политика куки",
+      terms: "Условия использования",
+      contacts: "Контакты",
+      phone: "Телефон:",
+      email: "Email:",
+      address: "Адрес:",
+      addressText: "Украина, Киев",
+      followUs: "Следите за нами",
+      partners: "Наши партнеры и сертификации",
+      rights: "© 2025 PIKA LEADS. Все права защищены.",
+      company: "ФОП \"Грибук Роман Николаевич\""
     }
   };
 
@@ -110,197 +99,55 @@ export default function Footer() {
     { name: "YouTube", icon: Youtube, url: "https://youtube.com/@pikaleads", color: "hover:text-red-500" }
   ];
 
-  const handleComingSoon = (e: React.MouseEvent, section: string) => {
-    e.preventDefault();
-    toast.info(`${section} - ${t.comingSoon}`);
-  };
+  const partnerLogos = [
+    { name: "Meta Business Partner", src: "/partners/meta-partner.png", alt: "Meta Business Partner" },
+    { name: "Google Partner", src: "/partners/google-partner.png", alt: "Google Partner" },
+    { name: "TikTok Marketing Partner", src: "/partners/tiktok-partner.jpg", alt: "TikTok Marketing Partner" },
+    { name: "GA4 Certified", src: "/partners/ga4-certified.jpg", alt: "Google Analytics 4 Certified" },
+    { name: "Meta Blueprint Certified", src: "/partners/meta-blueprint.png", alt: "Meta Blueprint Certified" }
+  ];
 
   return (
-    <footer className="bg-gradient-to-b from-background to-muted/20 border-t border-border mt-auto">
-      <div className="container mx-auto px-4 py-12">
-        {/* Contact Form Section */}
-        <div className="mb-12 max-w-2xl mx-auto">
-          <h3 className="font-semibold text-2xl text-foreground mb-6 text-center">{t.contactForm}</h3>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Input
-                type="text"
-                placeholder={t.name}
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="bg-background"
-              />
-              <Input
-                type="email"
-                placeholder={t.email}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="bg-background"
-              />
-            </div>
-            <Textarea
-              placeholder={t.message}
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              className="bg-background min-h-[120px]"
-            />
-            <Button 
-              type="submit" 
-              className="w-full"
-              disabled={contactMutation.isPending}
-            >
-              {contactMutation.isPending ? t.sending : t.send}
-            </Button>
-          </form>
+    <footer className="bg-gradient-to-b from-zinc-950 to-black border-t border-yellow-500/20 mt-auto">
+      <div className="container mx-auto px-4 py-16">
+        {/* Partners & Certifications Section */}
+        <div className="mb-16">
+          <h3 className="font-semibold text-xl text-center text-yellow-400 mb-8">{t.partners}</h3>
+          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
+            {partnerLogos.map((logo) => (
+              <div 
+                key={logo.name}
+                className="grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
+              >
+                <img 
+                  src={logo.src} 
+                  alt={logo.alt}
+                  className="h-16 md:h-20 w-auto object-contain"
+                />
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Main Footer Content */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 mb-12">
-          {/* Column 1: Services & About */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+          {/* Column 1: About */}
           <div className="space-y-4">
-            <h3 className="font-semibold text-lg text-foreground">{t.services}</h3>
-            <ul className="space-y-2">
-              <li>
-                <button 
-                  onClick={(e) => handleComingSoon(e, t.services)}
-                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
-                >
-                  {t.comingSoon}
-                </button>
-              </li>
-            </ul>
+            <div className="flex items-center gap-2 mb-4">
+              <img 
+                src="/pika-logo.svg" 
+                alt="PIKA LEADS" 
+                className="h-8 w-auto"
+              />
+              <span className="font-bold text-xl text-yellow-400">PIKA LEADS</span>
+            </div>
+            <p className="text-zinc-400 text-sm leading-relaxed">
+              {t.aboutText}
+            </p>
             
-            <h3 className="font-semibold text-lg text-foreground mt-6">{t.about}</h3>
-            <ul className="space-y-2">
-              <li>
-                <button 
-                  onClick={(e) => handleComingSoon(e, t.about)}
-                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
-                >
-                  {t.comingSoon}
-                </button>
-              </li>
-            </ul>
-          </div>
-
-          {/* Column 2: Blog & News */}
-          <div className="space-y-4">
-            <h3 className="font-semibold text-lg text-foreground">{t.blog}</h3>
-            <ul className="space-y-2">
-              <li>
-                <button 
-                  onClick={(e) => handleComingSoon(e, t.blog)}
-                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
-                >
-                  {t.comingSoon}
-                </button>
-              </li>
-            </ul>
-            
-            <h3 className="font-semibold text-lg text-foreground mt-6">{t.news}</h3>
-            <ul className="space-y-2">
-              <li>
-                <button 
-                  onClick={(e) => handleComingSoon(e, t.news)}
-                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
-                >
-                  {t.comingSoon}
-                </button>
-              </li>
-            </ul>
-          </div>
-
-          {/* Column 3: Resources */}
-          <div className="space-y-4">
-            <h3 className="font-semibold text-lg text-foreground">{t.faq}</h3>
-            <ul className="space-y-2">
-              <li>
-                <button 
-                  onClick={(e) => handleComingSoon(e, t.faq)}
-                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
-                >
-                  {t.comingSoon}
-                </button>
-              </li>
-            </ul>
-            
-            <h3 className="font-semibold text-lg text-foreground mt-6">{t.portfolio}</h3>
-            <ul className="space-y-2">
-              <li>
-                <button 
-                  onClick={(e) => handleComingSoon(e, t.portfolio)}
-                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
-                >
-                  {t.comingSoon}
-                </button>
-              </li>
-            </ul>
-
-            <h3 className="font-semibold text-lg text-foreground mt-6">{t.partners}</h3>
-            <ul className="space-y-2">
-              <li>
-                <button 
-                  onClick={(e) => handleComingSoon(e, t.partners)}
-                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
-                >
-                  {t.comingSoon}
-                </button>
-              </li>
-            </ul>
-          </div>
-
-          {/* Column 4: Legal */}
-          <div className="space-y-4">
-            <h3 className="font-semibold text-lg text-foreground">{t.legal}</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link href="/privacy-policy" className="text-muted-foreground hover:text-primary transition-colors text-sm block">
-                  {t.privacy}
-                </Link>
-              </li>
-              <li>
-                <Link href="/cookie-policy" className="text-muted-foreground hover:text-primary transition-colors text-sm block">
-                  {t.cookies}
-                </Link>
-              </li>
-              <li>
-                <Link href="/disclaimer" className="text-muted-foreground hover:text-primary transition-colors text-sm block">
-                  {t.disclaimer}
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Column 5: Contacts */}
-          <div className="space-y-4">
-            <h3 className="font-semibold text-lg text-foreground">{t.contacts}</h3>
-            <ul className="space-y-3">
-              <li className="flex items-start gap-2">
-                <Phone className="w-4 h-4 mt-0.5 text-primary flex-shrink-0" />
-                <a 
-                  href="tel:+380992377117" 
-                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
-                >
-                  +38 099 23 77 117
-                </a>
-              </li>
-              <li className="flex items-start gap-2">
-                <Mail className="w-4 h-4 mt-0.5 text-primary flex-shrink-0" />
-                <a 
-                  href="mailto:support@pika-leads.com" 
-                  className="text-muted-foreground hover:text-primary transition-colors text-sm break-all"
-                >
-                  support@pika-leads.com
-                </a>
-              </li>
-              <li className="text-muted-foreground text-sm mt-4">
-                {t.company}
-              </li>
-            </ul>
-
             {/* Social Media */}
             <div className="mt-6">
-              <h4 className="font-semibold text-sm text-foreground mb-3">{t.followUs}</h4>
+              <h4 className="font-semibold text-sm text-zinc-300 mb-3">{t.followUs}</h4>
               <div className="flex flex-wrap gap-3">
                 {socialLinks.map((social) => {
                   const Icon = social.icon;
@@ -310,7 +157,7 @@ export default function Footer() {
                       href={social.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`text-muted-foreground ${social.color} transition-colors`}
+                      className={`text-zinc-400 ${social.color} transition-colors`}
                       aria-label={social.name}
                     >
                       <Icon className="w-5 h-5" />
@@ -320,12 +167,112 @@ export default function Footer() {
               </div>
             </div>
           </div>
+
+          {/* Column 2: Services */}
+          <div className="space-y-4">
+            <h3 className="font-semibold text-lg text-yellow-400">{t.services}</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link href="/services/meta-ads" className="text-zinc-400 hover:text-yellow-400 transition-colors text-sm block">
+                  {t.metaAds}
+                </Link>
+              </li>
+              <li>
+                <Link href="/services/google-ads" className="text-zinc-400 hover:text-yellow-400 transition-colors text-sm block">
+                  {t.googleAds}
+                </Link>
+              </li>
+              <li>
+                <Link href="/services/tiktok-ads" className="text-zinc-400 hover:text-yellow-400 transition-colors text-sm block">
+                  {t.tiktokAds}
+                </Link>
+              </li>
+              <li>
+                <Link href="/services/analytics" className="text-zinc-400 hover:text-yellow-400 transition-colors text-sm block">
+                  {t.analytics}
+                </Link>
+              </li>
+              <li>
+                <Link href="/services/lead-generation" className="text-zinc-400 hover:text-yellow-400 transition-colors text-sm block">
+                  {t.leadGen}
+                </Link>
+              </li>
+              <li>
+                <Link href="/services/crm" className="text-zinc-400 hover:text-yellow-400 transition-colors text-sm block">
+                  {t.crmSystems}
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 3: Legal */}
+          <div className="space-y-4">
+            <h3 className="font-semibold text-lg text-yellow-400">{t.legal}</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link href="/privacy-policy" className="text-zinc-400 hover:text-yellow-400 transition-colors text-sm block">
+                  {t.privacy}
+                </Link>
+              </li>
+              <li>
+                <Link href="/cookie-policy" className="text-zinc-400 hover:text-yellow-400 transition-colors text-sm block">
+                  {t.cookies}
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms-of-service" className="text-zinc-400 hover:text-yellow-400 transition-colors text-sm block">
+                  {t.terms}
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 4: Contacts */}
+          <div className="space-y-4">
+            <h3 className="font-semibold text-lg text-yellow-400">{t.contacts}</h3>
+            <ul className="space-y-3">
+              <li className="flex items-start gap-2">
+                <Phone className="w-4 h-4 mt-0.5 text-yellow-400 flex-shrink-0" />
+                <div>
+                  <div className="text-zinc-500 text-xs">{t.phone}</div>
+                  <a 
+                    href="tel:+380992377117" 
+                    className="text-zinc-300 hover:text-yellow-400 transition-colors text-sm"
+                  >
+                    +38 099 23 77 117
+                  </a>
+                </div>
+              </li>
+              <li className="flex items-start gap-2">
+                <Mail className="w-4 h-4 mt-0.5 text-yellow-400 flex-shrink-0" />
+                <div>
+                  <div className="text-zinc-500 text-xs">{t.email}</div>
+                  <a 
+                    href="mailto:support@pika-leads.com" 
+                    className="text-zinc-300 hover:text-yellow-400 transition-colors text-sm break-all"
+                  >
+                    support@pika-leads.com
+                  </a>
+                </div>
+              </li>
+              <li className="flex items-start gap-2">
+                <MapPin className="w-4 h-4 mt-0.5 text-yellow-400 flex-shrink-0" />
+                <div>
+                  <div className="text-zinc-500 text-xs">{t.address}</div>
+                  <div className="text-zinc-300 text-sm">
+                    {t.addressText}
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-border pt-8">
-          <div className="text-center text-sm text-muted-foreground">
-            {t.rights}
+        <div className="border-t border-zinc-800 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-zinc-500">
+            <div>{t.rights}</div>
+            <div>{t.company}</div>
           </div>
         </div>
       </div>

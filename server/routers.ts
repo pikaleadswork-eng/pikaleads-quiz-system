@@ -30,6 +30,8 @@ import { profileRouter } from "./routers/profile";
 import { calendarRouter } from "./routers/calendar";
 import { eventsLogRouter } from "./routers/eventsLog";
 import { blogRouter } from "./routers/blog";
+import { contactRouter } from "./routers/contact";
+import { caseStudiesRouter } from "./routers/caseStudies";
 // import { abTestingRouter } from "./routers/abTesting"; // Disabled - conflicts with existing AB test implementation
 import * as schema from "../drizzle/schema";
 import { getDb } from "./db";
@@ -1481,6 +1483,8 @@ ${input.campaign ? `**Campaign:** ${input.campaign}\n` : ""}
   profile: profileRouter,
   calendar: calendarRouter,
   blog: blogRouter,
+  contact: contactRouter,
+  caseStudies: caseStudiesRouter,
   sales: salesRouter,
   salesScripts: salesScriptsRouter,
   integrations: integrationsRouter,
@@ -1710,25 +1714,6 @@ ${input.campaign ? `**Campaign:** ${input.campaign}\n` : ""}
   health: healthRouter,
   prometheus: prometheusRouter,
   performance: performanceRouter,
-  contact: router({
-    submit: publicProcedure
-      .input(z.object({
-        name: z.string(),
-        email: z.string().email(),
-        message: z.string(),
-      }))
-      .mutation(async ({ input }) => {
-        const { notifyOwner } = await import("./_core/notification");
-        
-        // Send notification to owner
-        await notifyOwner({
-          title: `New contact form submission from ${input.name}`,
-          content: `Email: ${input.email}\n\nMessage:\n${input.message}`,
-        });
-        
-        return { success: true };
-      }),
-  }),
   leads: router({
     create: publicProcedure
       .input(z.object({

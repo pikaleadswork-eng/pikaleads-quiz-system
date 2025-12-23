@@ -72,6 +72,10 @@ import Contact from "./pages/Contact";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import CookiePolicy from "./pages/CookiePolicy";
 import Disclaimer from "./pages/Disclaimer";
+import TermsOfService from "./pages/TermsOfService";
+import ContactPage from "./pages/ContactPage";
+import AdminCaseStudies from "./pages/AdminCaseStudies";
+import CaseStudyPage from "./pages/CaseStudyPage";
 
 function Router() {
   return (
@@ -80,13 +84,16 @@ function Router() {
       <Route path={"/"} component={AgencyHome} />
       <Route path="/blog" component={BlogList} />
       <Route path="/blog/:slug" component={BlogPost} />
+      <Route path="/case-studies/:slug" component={CaseStudyPage} />
       
       {/* Legal Pages (accessible from main site) */}
       <Route path={"/privacy"} component={Privacy} />
       <Route path={"/contact"} component={Contact} />
+      <Route path={"/contacts"} component={ContactPage} />
       <Route path={"/privacy-policy"} component={PrivacyPolicy} />
       <Route path={"/cookie-policy"} component={CookiePolicy} />
       <Route path={"/disclaimer"} component={Disclaimer} />
+      <Route path={"/terms-of-service"} component={TermsOfService} />
       
       {/* ========== QUIZ CATALOG ========== */}
       <Route path="/quizzes" component={Home} />
@@ -132,7 +139,8 @@ function Router() {
       <Route path={"/admin/inbox"} component={MessagingInbox} />
       <Route path={"/admin/sales"} component={SalesStatistics} />
       <Route path={"/admin/scripts"} component={SalesScripts} />
-      <Route path={"/admin/blog"} component={BlogManagement} />
+        <Route path="/admin/blog" component={BlogManagement} />
+      <Route path="/admin/case-studies" component={AdminCaseStudies} />
       <Route path={"/admin/services"} component={ServicesManagement} />
       <Route path={"/admin/settings"} component={AdminSettings} />
       <Route path={"/admin/settings/roles"} component={SettingsRoles} />

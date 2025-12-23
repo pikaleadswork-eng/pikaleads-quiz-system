@@ -1010,3 +1010,49 @@ export const blogSeo = mysqlTable("blog_seo", {
 
 export type BlogSeo = typeof blogSeo.$inferSelect;
 export type InsertBlogSeo = typeof blogSeo.$inferInsert;
+
+/**
+ * Case Studies table - store portfolio/success stories
+ */
+export const caseStudies = mysqlTable("case_studies", {
+  id: int("id").autoincrement().primaryKey(),
+  title: varchar("title", { length: 255 }).notNull(),
+  slug: varchar("slug", { length: 255 }).notNull().unique(), // URL-friendly identifier
+  client: varchar("client", { length: 255 }).notNull(), // Client name
+  industry: varchar("industry", { length: 100 }), // Industry/niche
+  description: text("description").notNull(), // Short description
+  content: text("content").notNull(), // Full case study content (HTML/Markdown with rich formatting)
+  coverImage: varchar("coverImage", { length: 500 }), // Main cover image URL
+  images: text("images"), // JSON array of additional image URLs
+  results: text("results"), // JSON object with metrics (e.g., {roi: "300%", leads: "500+", roas: "5.2x"})
+  tags: text("tags"), // JSON array of tags (e.g., ["Meta Ads", "E-commerce", "ROAS 5x"])
+  isPublished: boolean("isPublished").default(false).notNull(),
+  publishedAt: timestamp("publishedAt"),
+  viewCount: int("viewCount").default(0).notNull(),
+  orderIndex: int("orderIndex").default(0).notNull(), // Display order
+  createdBy: int("createdBy").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type CaseStudy = typeof caseStudies.$inferSelect;
+export type InsertCaseStudy = typeof caseStudies.$inferInsert;
+
+/**
+ * Contact Messages table - store contact form submissions
+ */
+export const contactMessages = mysqlTable("contact_messages", {
+  id: int("id").autoincrement().primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  email: varchar("email", { length: 320 }).notNull(),
+  phone: varchar("phone", { length: 50 }),
+  message: text("message").notNull(),
+  status: mysqlEnum("status", ["new", "read", "replied", "archived"]).default("new").notNull(),
+  assignedTo: int("assignedTo"), // Manager user id
+  notes: text("notes"), // Internal notes
+  repliedAt: timestamp("repliedAt"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type ContactMessage = typeof contactMessages.$inferSelect;
+export type InsertContactMessage = typeof contactMessages.$inferInsert;
