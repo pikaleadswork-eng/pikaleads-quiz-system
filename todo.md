@@ -4018,3 +4018,25 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Add responsive breakpoints (sm, md, lg)
 - [x] Adjust padding and spacing for mobile
 - [x] Ensure all content is visible and accessible
+
+## Phase 134: Google Reviews Section (5th Block) - COMPLETED
+- [x] Create GoogleReviews component with star rating system
+- [x] Add 6 realistic client testimonials with names, dates, ratings
+- [x] Style cards in Google Reviews format (dark cards, profile avatars, 5 stars)
+- [x] Add overall rating display (5.0/5.0) with star visualization
+- [x] Add Google logo/branding with original colors
+- [x] Integrate into AgencyHome page after Lead Magnet section
+- [x] Make responsive for mobile/tablet/desktop (1/2/3 column grid)
+- [x] Add fade-in animations with staggered delays
+- [x] Add cyberpunk styling (yellow accents, dark theme, glow effects)
+- [x] Add CTA button "ЗАЛИШИТИ ВІДГУК НА GOOGLE"
+- [x] Test on all screen sizes
+
+## Phase 135: Mobile Spacing & Button Text Fixes
+- [x] Add top padding to hero section (after navigation menu)
+- [x] Reduce spacing between all sections (py-20 → py-12 or py-16)
+- [x] Shorten button text on mobile: "ОТРИМАТИ АУДИТ" instead of "ОТРИМАТИ БЕЗКОШТОВНИЙ АУДИТ"
+- [x] Test on mobile viewport (375px width)
+- [x] Verify all sections visible without excessive scrolling
+- [x] Change Google Reviews button text on mobile: "ЧИТАТИ БІЛЬШЕ ВІДГУКІВ" instead of "ЗАЛИШИТИ ВІДГУК НА GOOGLE"
+- [x] Keep Google icon visible on mobile

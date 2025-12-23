@@ -7,6 +7,7 @@ import ServiceDetailModal, { ServiceDetail } from "@/components/ServiceDetailMod
 import { servicesData } from "@/data/servicesData";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { toast } from "sonner";
+import GoogleReviews from "@/components/GoogleReviews";
 
 export default function AgencyHome() {
   const { t } = useTranslation();
@@ -42,7 +43,7 @@ export default function AgencyHome() {
       
     <div className="min-h-screen bg-black text-white">
       {/* Hero Section - AI Neural Network Style */}
-      <section className="relative min-h-screen flex items-center overflow-hidden">
+      <section className="relative min-h-screen flex items-center overflow-hidden pt-20">
         {/* Background Grid */}
         <div 
           className="absolute inset-0 opacity-20"
@@ -200,7 +201,7 @@ export default function AgencyHome() {
       </section>
 
       {/* Why Us Section - Cyberpunk Style */}
-      <section className="relative py-16 bg-black overflow-hidden">
+      <section className="relative py-12 bg-black overflow-hidden">
         {/* Background Grid */}
         <div 
           className="absolute inset-0 opacity-10"
@@ -318,7 +319,7 @@ export default function AgencyHome() {
       </section>
 
       {/* Services Section - Cyberpunk Style */}
-      <section className="relative py-24 bg-gradient-to-b from-black via-zinc-950 to-black overflow-hidden">
+      <section className="relative py-12 bg-gradient-to-b from-black via-zinc-950 to-black overflow-hidden">
         {/* Background Effects */}
         <div className="absolute inset-0 opacity-10">
           <div 
@@ -550,7 +551,7 @@ export default function AgencyHome() {
       </section>
 
       {/* Lead Magnet Section - Free Audit Offer */}
-      <section className="py-12 md:py-20 px-4 sm:px-6 lg:px-12">
+      <section className="py-12 px-4 sm:px-6 lg:px-12">
         <div className="max-w-7xl mx-auto">
           <div className="relative bg-gradient-to-br from-zinc-900/90 to-zinc-950/90 backdrop-blur-sm border border-yellow-400/20 rounded-2xl md:rounded-3xl p-6 md:p-12 lg:p-16 overflow-hidden">
             {/* Background effects */}
@@ -711,7 +712,8 @@ export default function AgencyHome() {
                         fontFamily: "'Rajdhani', sans-serif"
                       }}
                     >
-                      {isSubmitting ? "ВІДПРАВКА..." : "ОТРИМАТИ БЕЗКОШТОВНИЙ АУДИТ"}
+                      <span className="hidden sm:inline">{isSubmitting ? "ВІДПРАВКА..." : "ОТРИМАТИ БЕЗКОШТОВНИЙ АУДИТ"}</span>
+                      <span className="sm:hidden">{isSubmitting ? "ВІДПРАВКА..." : "ОТРИМАТИ АУДИТ"}</span>
                     </button>
                   </form>
                 </div>
@@ -720,6 +722,9 @@ export default function AgencyHome() {
           </div>
         </div>
       </section>
+
+      {/* Google Reviews Section */}
+      <GoogleReviews />
     </div>
 
       {/* Lead Form Modals */}
