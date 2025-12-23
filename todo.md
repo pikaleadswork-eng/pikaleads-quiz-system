@@ -1,6 +1,12 @@
 # PIKALEADS CRM System TODO
 
-## Phase 122: Final Clarity Enhancements & VPS Deployment (CURRENT)
+## Phase 151: Remove Cancel Button from Lead Form Modal (COMPLETED)
+- [x] Remove "Скасувати" button from LeadFormModal to increase conversion
+- [x] Remove "Не знайшли відповідь на своє питання?" section with contact button from FAQSection
+- [x] Test modal functionality after changes
+- [x] Verify form submission works correctly
+
+## Phase 122: Final Clarity Enhancements & VPS Deployment (COMPLETED)
 - [x] Integrate automatic Clarity event logging with session IDs to backend
 - [x] Add "Only with recordings" filter checkbox to Events Dashboard
 - [x] Create session replay modal with iframe embed

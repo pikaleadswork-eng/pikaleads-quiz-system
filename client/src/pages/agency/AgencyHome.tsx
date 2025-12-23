@@ -14,6 +14,7 @@ import WorkProcessSection from "@/components/agency/WorkProcessSection";
 import BlogSection from "@/components/agency/BlogSection";
 import { AboutUsSection } from "@/components/agency/AboutUsSection";
 import CaseStudiesSection from "@/components/CaseStudiesSection";
+import FAQSection from "@/components/agency/FAQSection";
 import Footer from "@/components/Footer";
 
 export default function AgencyHome() {
@@ -750,6 +751,9 @@ export default function AgencyHome() {
 
       {/* Blog Section */}
       <BlogSection />
+
+      {/* FAQ Section */}
+      <FAQSection />
 
       {/* Footer */}
       <Footer />

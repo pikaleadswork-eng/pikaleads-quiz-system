@@ -158,19 +158,11 @@ export default function LeadFormModal({ isOpen, onClose, formType }: LeadFormMod
           </div>
 
           {/* Submit Button */}
-          <div className="flex gap-3 pt-4">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={onClose}
-              className="flex-1 border-zinc-700 text-gray-300 hover:bg-zinc-800"
-            >
-              Скасувати
-            </Button>
+          <div className="pt-4">
             <Button
               type="submit"
               disabled={createLead.isPending}
-              className="flex-1 bg-[#FFD93D] hover:bg-[#FFD93D]/90 text-black font-bold"
+              className="w-full bg-[#FFD93D] hover:bg-[#FFD93D]/90 text-black font-bold"
             >
               {createLead.isPending ? "Відправка..." : "Відправити заявку"}
             </Button>
