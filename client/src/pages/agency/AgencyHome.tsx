@@ -453,6 +453,24 @@ export default function AgencyHome() {
               </div>
             </div>
 
+            {/* Service 8 - Design Development */}
+            <div className="group relative" style={{ animation: "fadeInUp 0.8s ease-out 0.8s both" }}>
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-transparent rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300" />
+              <div className="relative bg-zinc-900/50 backdrop-blur-sm border border-emerald-500/20 rounded-2xl p-6 hover:border-emerald-500/40 transition-all duration-300 h-full">
+                <div className="w-14 h-14 bg-emerald-500/10 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <svg className="w-7 h-7 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-bold text-white mb-3" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
+                  РОЗРОБКА ДИЗАЙНУ
+                </h3>
+                <p className="text-gray-400 text-sm leading-relaxed">
+                  UI/UX дизайн, брендинг, логотипи, банери. Створюємо візуал, що продає.
+                </p>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>

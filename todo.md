@@ -3960,3 +3960,8 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Create thank-you page component
 - [x] Implement Google Analytics event tracking
 - [x] Test all features on different screen sizes
+
+## Phase 130: Add Design Service Card
+- [x] Add 8th service card "Розробка дизайну"
+- [x] Style with appropriate icon and color (green/emerald theme)
+- [x] Verify 8-card grid layout on all screen sizes
