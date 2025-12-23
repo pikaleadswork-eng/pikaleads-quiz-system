@@ -3922,3 +3922,5 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [ ] Deploy changes to VPS
 - [x] Increase Pikachu image size to fill vertical space without gaps
 - [x] Change hero title font to cyberpunk style (Orbitron/Rajdhani/Exo 2)
+- [x] Fix 300% card position - move higher to not overlap Pikachu glasses
+- [x] Find and install square technical font matching reference image (Nasalization/Eurostile style)

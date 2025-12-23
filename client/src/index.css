@@ -3,8 +3,8 @@
 
 /* Custom Fonts */
 @font-face {
-  font-family: 'Adriana';
-  src: url('/adriana.ttf') format('truetype');
+  font-family: 'Nasalization';
+  src: url('/Nasalization.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;

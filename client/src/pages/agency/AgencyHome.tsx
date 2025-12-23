@@ -39,10 +39,10 @@ export default function AgencyHome() {
               </div>
 
               {/* Main Heading */}
-              <h1 
-                className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight"
+                    <h1 
+                className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 leading-tight"
                 style={{
-                  fontFamily: "'Adriana', 'Rajdhani', 'Orbitron', sans-serif",
+                  fontFamily: "'Nasalization', 'Rajdhani', sans-serif",
                   letterSpacing: "0.1em",
                   fontWeight: 400
                 }}
@@ -109,7 +109,7 @@ export default function AgencyHome() {
                 
                 {/* Card 1: 300% - Top Left */}
                 <div 
-                  className="absolute top-[8%] left-[5%] bg-gradient-to-br from-black/90 to-black/70 backdrop-blur-xl border border-[#FFD93D]/20 rounded-2xl p-6 shadow-2xl"
+                  className="absolute top-[1%] left-[5%] bg-gradient-to-br from-black/90 to-black/70 backdrop-blur-xl border border-[#FFD93D]/20 rounded-2xl p-6 shadow-2xl"
                   style={{
                     boxShadow: "0 0 40px rgba(255, 217, 61, 0.15)",
                     animation: "floatCard 5s ease-in-out infinite"
