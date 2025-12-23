@@ -14,6 +14,7 @@ import WorkProcessSection from "@/components/agency/WorkProcessSection";
 import BlogSection from "@/components/agency/BlogSection";
 import { AboutUsSection } from "@/components/agency/AboutUsSection";
 import CaseStudiesSection from "@/components/CaseStudiesSection";
+import Footer from "@/components/Footer";
 
 export default function AgencyHome() {
   const { t } = useTranslation();
@@ -749,6 +750,9 @@ export default function AgencyHome() {
 
       {/* Blog Section */}
       <BlogSection />
+
+      {/* Footer */}
+      <Footer />
     </div>
 
       {/* Lead Form Modals */}

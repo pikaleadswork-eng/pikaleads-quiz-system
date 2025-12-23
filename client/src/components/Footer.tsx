@@ -35,7 +35,7 @@ export default function Footer() {
       address: "Адреса:",
       addressText: "Україна, Київ",
       followUs: "Слідкуйте за нами",
-      partners: "Наші партнери та сертифікації",
+      partners: "Сертифіковані партнери",
       rights: "© 2025 PIKA LEADS. Всі права захищені.",
       company: "ФОП \"Грибук Роман Миколайович\""
     },
@@ -59,7 +59,7 @@ export default function Footer() {
       address: "Address:",
       addressText: "Ukraine, Kyiv",
       followUs: "Follow Us",
-      partners: "Our Partners & Certifications",
+      partners: "Certified Partners",
       rights: "© 2025 PIKA LEADS. All rights reserved.",
       company: "FOP \"Hrybuk Roman Mykolaiovych\""
     },
@@ -83,7 +83,7 @@ export default function Footer() {
       address: "Адрес:",
       addressText: "Украина, Киев",
       followUs: "Следите за нами",
-      partners: "Наши партнеры и сертификации",
+      partners: "Сертифицированные партнеры",
       rights: "© 2025 PIKA LEADS. Все права защищены.",
       company: "ФОП \"Грибук Роман Николаевич\""
     }
@@ -109,28 +109,9 @@ export default function Footer() {
 
   return (
     <footer className="bg-gradient-to-b from-zinc-950 to-black border-t border-yellow-500/20 mt-auto">
-      <div className="container mx-auto px-4 py-16">
-        {/* Partners & Certifications Section */}
-        <div className="mb-16">
-          <h3 className="font-semibold text-xl text-center text-yellow-400 mb-8">{t.partners}</h3>
-          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
-            {partnerLogos.map((logo) => (
-              <div 
-                key={logo.name}
-                className="grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
-              >
-                <img 
-                  src={logo.src} 
-                  alt={logo.alt}
-                  className="h-16 md:h-20 w-auto object-contain"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-
+      <div className="container mx-auto px-4 py-12">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           {/* Column 1: About */}
           <div className="space-y-4">
             <div className="flex items-center gap-2 mb-4">
@@ -268,8 +249,31 @@ export default function Footer() {
           </div>
         </div>
 
+        {/* Partners & Certifications - Compact */}
+        <div className="border-t border-zinc-800 pt-6 pb-6">
+          <div className="text-center mb-4">
+            <h4 className="text-sm font-semibold text-zinc-400 uppercase tracking-wider">{t.partners}</h4>
+          </div>
+          <div className="flex flex-wrap justify-center items-center gap-6">
+            {partnerLogos.map((logo) => (
+              <div 
+                key={logo.name}
+                className="grayscale hover:grayscale-0 transition-all duration-300 opacity-60 hover:opacity-100"
+                title={logo.alt}
+              >
+                <img 
+                  src={logo.src} 
+                  alt={logo.alt}
+                  className="h-10 w-auto object-contain"
+                  loading="lazy"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Bottom Bar */}
-        <div className="border-t border-zinc-800 pt-8">
+        <div className="border-t border-zinc-800 pt-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-zinc-500">
             <div>{t.rights}</div>
             <div>{t.company}</div>

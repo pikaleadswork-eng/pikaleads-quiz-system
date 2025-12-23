@@ -4322,3 +4322,12 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Add 4 example case studies with seed script
 - [x] Add routes to App.tsx
 - [x] Integrate CaseStudiesSection into AgencyHome
+
+
+## Phase 152: Footer with Partner Certifications (COMPLETED)
+- [x] Update Footer component with compact partner logos section
+- [x] Reduce partner logo size to h-10 (from h-16)
+- [x] Improve footer layout with better spacing
+- [x] Add grayscale hover effect to partner logos
+- [x] Integrate Footer into AgencyHome page
+- [x] Verify footer displays correctly at bottom of page
