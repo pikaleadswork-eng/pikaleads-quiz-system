@@ -4221,3 +4221,5 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Save checkpoint
 
 - [x] Change lead magnet button text to "ОТРИМАТИ АУДИТ"
+
+- [x] Fix PERFORMANCE title overflow on MacBook 13-14" screens

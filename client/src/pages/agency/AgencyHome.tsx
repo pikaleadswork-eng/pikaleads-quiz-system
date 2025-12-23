@@ -250,7 +250,7 @@ export default function AgencyHome() {
                   </svg>
                 </div>
                 
-                <h3 className="text-base font-bold text-white mb-4 whitespace-nowrap" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
+                <h3 className="text-sm font-bold text-white mb-4" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
                   PERFORMANCE
                 </h3>
                 <p className="text-sm text-gray-400 leading-relaxed">
@@ -270,7 +270,7 @@ export default function AgencyHome() {
                   </svg>
                 </div>
                 
-                <h3 className="text-base font-bold text-white mb-4 whitespace-nowrap" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
+                <h3 className="text-sm font-bold text-white mb-4" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
                   AI-TECH
                 </h3>
                 <p className="text-sm text-gray-400 leading-relaxed">
@@ -290,7 +290,7 @@ export default function AgencyHome() {
                   </svg>
                 </div>
                 
-                <h3 className="text-base font-bold text-white mb-4 whitespace-nowrap" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
+                <h3 className="text-sm font-bold text-white mb-4" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
                   АНАЛІТИКА
                 </h3>
                 <p className="text-sm text-gray-400 leading-relaxed">
@@ -310,7 +310,7 @@ export default function AgencyHome() {
                   </svg>
                 </div>
                 
-                <h3 className="text-base font-bold text-white mb-4 whitespace-nowrap" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
+                <h3 className="text-sm font-bold text-white mb-4" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
                   ЕКСПЕРТИ
                 </h3>
                 <p className="text-sm text-gray-400 leading-relaxed">
