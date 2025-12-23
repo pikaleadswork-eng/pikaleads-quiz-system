@@ -12,6 +12,7 @@ import NichesSection from "@/components/agency/NichesSection";
 import ClientsCarousel from "@/components/agency/ClientsCarousel";
 import WorkProcessSection from "@/components/agency/WorkProcessSection";
 import BlogSection from "@/components/agency/BlogSection";
+import { AboutUsSection } from "@/components/agency/AboutUsSection";
 
 export default function AgencyHome() {
   const { t } = useTranslation();
@@ -731,6 +732,9 @@ export default function AgencyHome() {
       <GoogleReviews />
 
       {/* Niches Section */}
+      {/* About Us Section */}
+      <AboutUsSection />
+
       <NichesSection />
 
       {/* Clients Carousel Section */}
