@@ -61,10 +61,10 @@ export default function AgencyHome() {
         />
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             
             {/* Left - Text Content */}
-            <div className="space-y-8 text-center lg:text-left px-4 sm:px-0" style={{ animation: "fadeInUp 0.8s ease-out" }}>
+            <div className="space-y-6 sm:space-y-8 text-center lg:text-left" style={{ animation: "fadeInUp 0.8s ease-out" }}>
               {/* Status Badge */}
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#00F0FF]/30 bg-black/50 backdrop-blur-sm" style={{ animation: "fadeIn 0.6s ease-out" }}>
                 <div className="w-2 h-2 bg-[#00F0FF] rounded-full animate-pulse" />
@@ -75,7 +75,7 @@ export default function AgencyHome() {
 
               {/* Main Heading */}
                     <h1 
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-6 leading-tight"
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-black mb-4 sm:mb-6 leading-tight"
                 style={{
                   fontFamily: "'Eurostile Bold Extended', 'Nasalization', 'Rajdhani', sans-serif",
                   letterSpacing: "0.05em",
@@ -102,21 +102,21 @@ export default function AgencyHome() {
               </h1>
 
               {/* Description */}
-              <p className="text-base sm:text-lg md:text-xl text-gray-400 max-w-xl mx-auto lg:mx-0">
+              <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-400 max-w-xl mx-auto lg:mx-0">
                 <span className="text-[#FFD93D] font-semibold">PikaLeads</span> – твій партнер з performance-маркетингу. Коли кожен лід має значення.
               </p>
 
               {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 items-center lg:items-start justify-center lg:justify-start">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-stretch sm:items-center lg:items-start justify-center lg:justify-start">
                 <button 
                   onClick={() => setConsultationModalOpen(true)}
-                  className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-[#FFD93D] hover:bg-[#FFD93D]/90 text-black font-bold rounded-xl transition-all duration-300 shadow-lg shadow-[#FFD93D]/30"
+                  className="w-full sm:w-auto px-5 sm:px-6 md:px-8 py-3 sm:py-3.5 md:py-4 bg-[#FFD93D] hover:bg-[#FFD93D]/90 text-black font-bold rounded-xl transition-all duration-300 shadow-lg shadow-[#FFD93D]/30 text-sm sm:text-base"
                 >
                   Отримати консультацію
                 </button>
                 <button 
                   onClick={() => setStrategyModalOpen(true)}
-                  className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 border-2 border-[#FFD93D] text-[#FFD93D] hover:bg-[#FFD93D]/10 font-bold rounded-xl transition-all duration-300 flex items-center justify-center gap-2"
+                  className="w-full sm:w-auto px-5 sm:px-6 md:px-8 py-3 sm:py-3.5 md:py-4 border-2 border-[#FFD93D] text-[#FFD93D] hover:bg-[#FFD93D]/10 font-bold rounded-xl transition-all duration-300 flex items-center justify-center gap-2 text-sm sm:text-base"
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
@@ -128,7 +128,7 @@ export default function AgencyHome() {
             </div>
 
             {/* Right - Pikachu Hero Visual */}
-            <div className="relative h-[500px] md:h-[600px] lg:h-[800px] flex items-center justify-center">
+            <div className="relative h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px] xl:h-[800px] flex items-center justify-center">
               
               {/* Pikachu Character - Center */}
               <div className="relative z-0" style={{ animation: "fadeInScale 1s ease-out" }}>
@@ -136,7 +136,7 @@ export default function AgencyHome() {
                   src="/pikachu-transparent-user.png" 
                   alt="Pikachu Lead Generator"
                   loading="lazy"
-                  className="w-[400px] md:w-[500px] lg:w-[750px] xl:w-[850px] max-w-none"
+                  className="w-[300px] sm:w-[400px] md:w-[500px] lg:w-[600px] xl:w-[750px] max-w-none"
                   style={{
                     filter: "drop-shadow(0 0 60px rgba(168, 85, 247, 0.4)) drop-shadow(0 0 30px rgba(255, 217, 61, 0.3))",
                     animation: "floatPikachu 6s ease-in-out infinite"
@@ -145,54 +145,54 @@ export default function AgencyHome() {
               </div>
 
               {/* Floating Cards Around Pikachu */}
-              <div className="absolute inset-0 pointer-events-none z-20 hidden lg:block">
+              <div className="absolute inset-0 pointer-events-none z-20 hidden md:block">
                 
                 {/* Card 1: 300% - Top Left */}
                 <div 
-                  className="absolute top-[1%] left-[5%] bg-gradient-to-br from-black/90 to-black/70 backdrop-blur-xl border border-[#FFD93D]/20 rounded-2xl p-6 shadow-2xl"
+                  className="absolute top-[1%] left-[5%] bg-gradient-to-br from-black/90 to-black/70 backdrop-blur-xl border border-[#FFD93D]/20 rounded-xl md:rounded-2xl p-4 md:p-6 shadow-2xl"
                   style={{
                     boxShadow: "0 0 40px rgba(255, 217, 61, 0.15)",
                     animation: "floatCard 5s ease-in-out infinite"
                   }}
                 >
-                  <div className="text-5xl font-black text-[#FFD93D]" style={{ fontFamily: "Orbitron, sans-serif" }}>
+                  <div className="text-3xl md:text-4xl lg:text-5xl font-black text-[#FFD93D]" style={{ fontFamily: "Orbitron, sans-serif" }}>
                     300%
                   </div>
-                  <div className="text-sm text-gray-400 mt-2 font-mono uppercase tracking-wider">
+                  <div className="text-xs md:text-sm text-gray-400 mt-1 md:mt-2 font-mono uppercase tracking-wider">
                     Зростання продажів
                   </div>
                 </div>
 
                 {/* Card 2: 97% ROI - Top Right */}
                 <div 
-                  className="absolute top-[15%] right-[5%] bg-gradient-to-br from-black/90 to-black/70 backdrop-blur-xl border border-[#FFD93D]/20 rounded-2xl p-6 shadow-2xl"
+                  className="absolute top-[15%] right-[5%] bg-gradient-to-br from-black/90 to-black/70 backdrop-blur-xl border border-[#FFD93D]/20 rounded-xl md:rounded-2xl p-4 md:p-6 shadow-2xl"
                   style={{
                     boxShadow: "0 0 40px rgba(255, 217, 61, 0.15)",
                     animation: "floatCard 5.5s ease-in-out infinite",
                     animationDelay: "0.5s"
                   }}
                 >
-                  <div className="text-5xl font-black text-[#FFD93D]" style={{ fontFamily: "Orbitron, sans-serif" }}>
+                  <div className="text-3xl md:text-4xl lg:text-5xl font-black text-[#FFD93D]" style={{ fontFamily: "Orbitron, sans-serif" }}>
                     97%
                   </div>
-                  <div className="text-sm text-gray-400 mt-2 font-mono uppercase tracking-wider">
+                  <div className="text-xs md:text-sm text-gray-400 mt-1 md:mt-2 font-mono uppercase tracking-wider">
                     ROI
                   </div>
                 </div>
 
                 {/* Card 3: 500+ - Bottom Right */}
                 <div 
-                  className="absolute bottom-[10%] right-[8%] bg-gradient-to-br from-black/90 to-black/70 backdrop-blur-xl border border-[#FFD93D]/20 rounded-2xl p-6 shadow-2xl"
+                  className="absolute bottom-[10%] right-[8%] bg-gradient-to-br from-black/90 to-black/70 backdrop-blur-xl border border-[#FFD93D]/20 rounded-xl md:rounded-2xl p-4 md:p-6 shadow-2xl"
                   style={{
                     boxShadow: "0 0 40px rgba(255, 217, 61, 0.15)",
                     animation: "floatCard 6s ease-in-out infinite",
                     animationDelay: "1s"
                   }}
                 >
-                  <div className="text-5xl font-black text-[#FFD93D]" style={{ fontFamily: "Orbitron, sans-serif" }}>
+                  <div className="text-3xl md:text-4xl lg:text-5xl font-black text-[#FFD93D]" style={{ fontFamily: "Orbitron, sans-serif" }}>
                     500+
                   </div>
-                  <div className="text-sm text-gray-400 mt-2 font-mono uppercase tracking-wider">
+                  <div className="text-xs md:text-sm text-gray-400 mt-1 md:mt-2 font-mono uppercase tracking-wider">
                     Успішних кампаній
                   </div>
                 </div>
@@ -206,7 +206,7 @@ export default function AgencyHome() {
       </section>
 
       {/* Why Us Section - Cyberpunk Style */}
-      <section className="relative py-12 bg-black overflow-hidden">
+      <section className="relative py-8 sm:py-12 bg-black overflow-hidden">
         {/* Background Grid */}
         <div 
           className="absolute inset-0 opacity-10"
@@ -219,11 +219,11 @@ export default function AgencyHome() {
           }}
         />
 
-        <div className="container mx-auto px-6 relative z-10">
+        <div className="container mx-auto px-4 sm:px-6 relative z-10">
           {/* Section Header */}
-          <div className="text-center mb-8" style={{ animation: "fadeInUp 0.8s ease-out" }}>
+          <div className="text-center mb-6 sm:mb-8" style={{ animation: "fadeInUp 0.8s ease-out" }}>
             <h2 
-              className="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-3 sm:mb-4"
               style={{
                 fontFamily: "'Eurostile Bold Extended', 'Nasalization', sans-serif",
                 letterSpacing: "0.05em"
@@ -231,13 +231,13 @@ export default function AgencyHome() {
             >
               ЧОМУ МИ?
             </h2>
-            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl text-gray-400 max-w-3xl mx-auto px-4">
               Ми не просто генеруємо ліди. Ми створюємо систему, яка працює на ваш бізнес 24/7.
             </p>
           </div>
 
           {/* Features Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
             
             {/* Feature 1 - Performance Marketing */}
             <div className="group relative" style={{ animation: "fadeInUp 0.8s ease-out 0.2s both" }}>
@@ -324,7 +324,7 @@ export default function AgencyHome() {
       </section>
 
       {/* Services Section - Cyberpunk Style */}
-      <section className="relative py-12 bg-gradient-to-b from-black via-zinc-950 to-black overflow-hidden">
+      <section className="relative py-8 sm:py-12 bg-gradient-to-b from-black via-zinc-950 to-black overflow-hidden">
         {/* Background Effects */}
         <div className="absolute inset-0 opacity-10">
           <div 
@@ -341,9 +341,9 @@ export default function AgencyHome() {
 
         <div className="container mx-auto px-4 sm:px-6 relative z-10">
           {/* Section Header */}
-          <div className="text-center mb-16" style={{ animation: "fadeInUp 0.8s ease-out" }}>
+          <div className="text-center mb-8 sm:mb-12 md:mb-16" style={{ animation: "fadeInUp 0.8s ease-out" }}>
             <h2 
-              className="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4 sm:mb-6"
               style={{
                 fontFamily: "'Eurostile Bold Extended', 'Nasalization', sans-serif",
                 letterSpacing: "0.05em"
@@ -351,13 +351,13 @@ export default function AgencyHome() {
             >
               НАШІ ПОСЛУГИ
             </h2>
-            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl text-gray-400 max-w-3xl mx-auto px-4">
               Повний спектр digital-маркетингу та розробки для вашого бізнесу
             </p>
           </div>
 
           {/* Services Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
             
             {/* Service 1 - Meta Ads */}
             <div className="group relative" style={{ animation: "fadeInUp 0.8s ease-out 0.1s both" }}>
@@ -556,19 +556,19 @@ export default function AgencyHome() {
       </section>
 
       {/* Lead Magnet Section - Free Audit Offer */}
-      <section className="py-12 px-4 sm:px-6 lg:px-12">
+      <section className="py-8 sm:py-10 md:py-12 px-4 sm:px-6 lg:px-12">
         <div className="max-w-7xl mx-auto">
-          <div className="relative bg-gradient-to-br from-zinc-900/90 to-zinc-950/90 backdrop-blur-sm border border-yellow-400/20 rounded-2xl md:rounded-3xl p-6 md:p-12 lg:p-16 overflow-hidden">
+          <div className="relative bg-gradient-to-br from-zinc-900/90 to-zinc-950/90 backdrop-blur-sm border border-yellow-400/20 rounded-xl sm:rounded-2xl md:rounded-3xl p-6 sm:p-8 md:p-12 lg:p-16 overflow-hidden">
             {/* Background effects */}
             <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/5 via-transparent to-purple-500/5 rounded-3xl" />
             <div className="absolute top-0 right-0 w-96 h-96 bg-yellow-400/10 rounded-full blur-3xl" />
             
-            <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 lg:gap-16">
+            <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-12 lg:gap-16">
               {/* Left Side - Compelling Text */}
-              <div className="space-y-6 md:space-y-8">
+              <div className="space-y-4 sm:space-y-6 md:space-y-8">
                 {/* Main Headline */}
-                <div className="space-y-3 md:space-y-4">
-                  <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-tight">
+                <div className="space-y-2 sm:space-y-3 md:space-y-4">
+                  <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black leading-tight">
                     <span className="block text-white" style={{
                       fontFamily: "'Eurostile Bold Extended', 'Rajdhani', sans-serif",
                       letterSpacing: "-0.02em"
@@ -596,7 +596,7 @@ export default function AgencyHome() {
                     </span>
                   </h2>
                   
-                  <p className="text-lg sm:text-xl md:text-2xl text-gray-400 leading-relaxed" style={{
+                  <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-400 leading-relaxed" style={{
                     fontFamily: "'Inter', sans-serif"
                   }}>
                     Або не приносить <span className="text-white font-semibold">очікуваний результат?</span>
@@ -604,20 +604,20 @@ export default function AgencyHome() {
                 </div>
 
                 {/* Benefits */}
-                <div className="space-y-3 md:space-y-4">
-                  <p className="text-lg font-bold text-white" style={{
+                <div className="space-y-2 sm:space-y-3 md:space-y-4">
+                  <p className="text-base sm:text-lg font-bold text-white" style={{
                     fontFamily: "'Rajdhani', sans-serif"
                   }}>
                     Залишайте заявку та отримайте:
                   </p>
-                  <div className="space-y-3">
+                  <div className="space-y-2 sm:space-y-3">
                     <div className="flex items-start gap-3">
                       <div className="w-6 h-6 rounded-full bg-yellow-400/20 flex items-center justify-center flex-shrink-0 mt-1">
                         <svg className="w-4 h-4 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                         </svg>
                       </div>
-                      <span className="text-lg text-gray-300">Безкоштовний <span className="text-white font-semibold">аудит вашої реклами</span></span>
+                      <span className="text-sm sm:text-base md:text-lg text-gray-300">Безкоштовний <span className="text-white font-semibold">аудит вашої реклами</span></span>
                     </div>
                     <div className="flex items-start gap-3">
                       <div className="w-6 h-6 rounded-full bg-yellow-400/20 flex items-center justify-center flex-shrink-0 mt-1">
@@ -640,9 +640,9 @@ export default function AgencyHome() {
               </div>
 
               {/* Right Side - Form & Timer */}
-              <div className="space-y-4 md:space-y-6">
+              <div className="space-y-3 sm:space-y-4 md:space-y-6">
                 {/* Countdown Timer */}
-                <div className="space-y-3 md:space-y-4">
+                <div className="space-y-2 sm:space-y-3 md:space-y-4">
                   <p className="text-center text-xs sm:text-sm text-gray-400 uppercase tracking-widest" style={{
                     fontFamily: "'Rajdhani', sans-serif",
                     letterSpacing: '0.15em'
@@ -653,7 +653,7 @@ export default function AgencyHome() {
                 </div>
 
                 {/* Lead Form */}
-                <div className="bg-zinc-900/50 border border-yellow-400/30 rounded-2xl p-6">
+                <div className="bg-zinc-900/50 border border-yellow-400/30 rounded-xl sm:rounded-2xl p-4 sm:p-6">
                   <form 
                     className="space-y-4"
                     onSubmit={async (e) => {

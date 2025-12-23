@@ -99,7 +99,7 @@ const steps: ProcessStep[] = [
 
 export default function WorkProcessSection() {
   return (
-    <section className="relative py-12 md:py-20 bg-black overflow-hidden">
+    <section className="relative py-8 sm:py-12 md:py-16 lg:py-20 bg-black overflow-hidden">
       {/* Background Effects */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(91,46,144,0.08)_0%,transparent_70%)]"></div>
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,217,61,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,217,61,0.03)_1px,transparent_1px)] bg-[size:50px_50px]"></div>
@@ -118,16 +118,16 @@ export default function WorkProcessSection() {
         </svg>
       </div>
 
-      <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-12">
+      <div className="container relative z-10 mx-auto px-4 sm:px-6">
         {/* Section Header */}
-        <div className="text-center mb-12 md:mb-16 animate-fadeInUp">
+        <div className="text-center mb-8 sm:mb-10 md:mb-12 lg:mb-16 animate-fadeInUp">
           <div className="inline-block mb-4 px-4 py-1.5 bg-gradient-to-r from-purple-900/30 to-yellow-900/30 border border-yellow-400/20 rounded-full">
             <span className="text-yellow-400 text-xs md:text-sm font-semibold tracking-wider uppercase">
               ⚡ Перевірена методологія
             </span>
           </div>
           
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6" style={{ fontFamily: 'Eurostile, sans-serif' }}>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 sm:mb-4 md:mb-6" style={{ fontFamily: 'Eurostile, sans-serif' }}>
             <span className="text-white">ЯК МИ </span>
             <span className="text-yellow-400" style={{ textShadow: '0 0 30px rgba(255,217,61,0.5)' }}>ПРАЦЮЄМО</span>
           </h2>
@@ -139,23 +139,23 @@ export default function WorkProcessSection() {
         </div>
 
         {/* Process Steps Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10 mb-12 md:mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 lg:gap-10 mb-8 sm:mb-10 md:mb-12 lg:mb-16">
           {steps.map((step, index) => (
             <div
               key={step.id}
-              className="group relative bg-zinc-900/50 backdrop-blur-sm border border-zinc-800 rounded-2xl p-8 hover:border-yellow-400/40 hover:shadow-[0_0_30px_rgba(255,217,61,0.15)] transition-all duration-300 animate-fadeInUp"
+              className="group relative bg-zinc-900/50 backdrop-blur-sm border border-zinc-800 rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-8 hover:border-yellow-400/40 hover:shadow-[0_0_30px_rgba(255,217,61,0.15)] transition-all duration-300 animate-fadeInUp"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               {/* Step Number */}
-              <div className="absolute -top-4 -right-4 w-16 h-16 bg-black border-2 border-yellow-400/30 rounded-xl flex items-center justify-center">
-                <span className="text-2xl font-bold text-yellow-400" style={{ fontFamily: 'Eurostile, sans-serif' }}>
+              <div className="absolute -top-3 -right-3 sm:-top-4 sm:-right-4 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-black border-2 border-yellow-400/30 rounded-lg sm:rounded-xl flex items-center justify-center">
+                <span className="text-lg sm:text-xl md:text-2xl font-bold text-yellow-400" style={{ fontFamily: 'Eurostile, sans-serif' }}>
                   {step.number}
                 </span>
               </div>
 
               {/* Icon */}
               <div 
-                className="w-20 h-20 rounded-xl flex items-center justify-center mb-6 transition-all duration-300 group-hover:scale-110"
+                className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-lg sm:rounded-xl flex items-center justify-center mb-4 sm:mb-5 md:mb-6 transition-all duration-300 group-hover:scale-110"
                 style={{ 
                   backgroundColor: `${step.color}20`,
                   color: step.color,
@@ -167,7 +167,7 @@ export default function WorkProcessSection() {
 
               {/* Title */}
               <h3 
-                className="text-2xl font-bold mb-3"
+                className="text-lg sm:text-xl md:text-2xl font-bold mb-2 sm:mb-3"
                 style={{ 
                   fontFamily: 'Eurostile, sans-serif',
                   color: step.color
@@ -177,7 +177,7 @@ export default function WorkProcessSection() {
               </h3>
 
               {/* Description */}
-              <p className="text-gray-400 text-base mb-6">
+              <p className="text-gray-400 text-sm sm:text-base mb-4 sm:mb-5 md:mb-6">
                 {step.description}
               </p>
 

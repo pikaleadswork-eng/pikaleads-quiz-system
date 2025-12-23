@@ -94,21 +94,21 @@ const niches: Niche[] = [
 
 export default function NichesSection() {
   return (
-    <section className="relative py-12 md:py-20 bg-black overflow-hidden">
+    <section className="relative py-8 sm:py-12 md:py-16 lg:py-20 bg-black overflow-hidden">
       {/* Background Effects */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(91,46,144,0.08)_0%,transparent_70%)]"></div>
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,217,61,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,217,61,0.03)_1px,transparent_1px)] bg-[size:50px_50px]"></div>
 
-      <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-12">
+      <div className="container relative z-10 mx-auto px-4 sm:px-6">
         {/* Section Header */}
-        <div className="text-center mb-12 md:mb-16 animate-fadeInUp">
+        <div className="text-center mb-8 sm:mb-10 md:mb-12 lg:mb-16 animate-fadeInUp">
           <div className="inline-block mb-4 px-4 py-1.5 bg-gradient-to-r from-purple-900/30 to-yellow-900/30 border border-yellow-400/20 rounded-full">
             <span className="text-yellow-400 text-xs md:text-sm font-semibold tracking-wider uppercase">
               🎯 Наша експертиза
             </span>
           </div>
           
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6" style={{ fontFamily: 'Eurostile, sans-serif' }}>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 sm:mb-4 md:mb-6" style={{ fontFamily: 'Eurostile, sans-serif' }}>
             <span className="text-white">НІШІ З ЯКИМИ МИ </span>
             <span className="text-yellow-400" style={{ textShadow: '0 0 30px rgba(255,217,61,0.5)' }}>ПРАЦЮЄМО</span>
           </h2>
@@ -120,16 +120,16 @@ export default function NichesSection() {
         </div>
 
         {/* Niches Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 sm:gap-5 md:gap-6 lg:gap-8">
           {niches.map((niche, index) => (
             <div
               key={niche.id}
-              className="group relative bg-zinc-900/50 backdrop-blur-sm border border-zinc-800 rounded-2xl p-6 hover:border-yellow-400/40 hover:shadow-[0_0_30px_rgba(255,217,61,0.15)] transition-all duration-300 animate-fadeInUp"
+              className="group relative bg-zinc-900/50 backdrop-blur-sm border border-zinc-800 rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 hover:border-yellow-400/40 hover:shadow-[0_0_30px_rgba(255,217,61,0.15)] transition-all duration-300 animate-fadeInUp"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               {/* Icon */}
               <div 
-                className="w-16 h-16 rounded-xl flex items-center justify-center mb-4 transition-all duration-300 group-hover:scale-110"
+                className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-lg sm:rounded-xl flex items-center justify-center mb-3 sm:mb-4 transition-all duration-300 group-hover:scale-110"
                 style={{ 
                   backgroundColor: `${niche.color}20`,
                   color: niche.color,
@@ -141,7 +141,7 @@ export default function NichesSection() {
 
               {/* Title */}
               <h3 
-                className="text-xl font-bold mb-3 transition-colors duration-300"
+                className="text-base sm:text-lg md:text-xl font-bold mb-2 sm:mb-3 transition-colors duration-300"
                 style={{ 
                   fontFamily: 'Eurostile, sans-serif',
                   color: niche.color
@@ -151,7 +151,7 @@ export default function NichesSection() {
               </h3>
 
               {/* Description */}
-              <p className="text-gray-400 text-sm leading-relaxed mb-4">
+              <p className="text-gray-400 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4">
                 {niche.description}
               </p>
 

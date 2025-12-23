@@ -4127,3 +4127,62 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Test image uploads
 - [x] Verify all blog features work end-to-end
 - [x] Save checkpoint and deliver
+
+
+## Phase 140: Responsive Design Fixes - All Screen Sizes
+
+### Homepage Responsive Issues
+- [x] Fix hero section text overflow on mobile (320px-768px)
+- [x] Adjust Pikachu size and positioning for tablets
+- [x] Fix floating stats cards visibility on different screens
+- [x] Optimize button sizes and spacing on mobile
+- [x] Fix headline font size scaling (text-3xl → text-7xl)
+
+### Lead Magnet Section
+- [x] Fix timer layout on mobile (stacking issues)
+- [x] Adjust form field widths for small screens
+- [x] Fix button text overflow on mobile
+- [x] Optimize padding and spacing for tablets
+
+### Services Section
+- [x] Fix service cards grid on mobile (1 col)
+- [x] Adjust card heights for consistent layout
+- [x] Fix "Дізнатись більше" button positioning
+- [x] Optimize icon sizes for mobile
+
+### Niches Section
+- [x] Fix 10 niche cards grid layout (1/2/3/5 cols)
+- [x] Adjust card content for mobile readability
+- [x] Fix stats text size on small screens
+
+### Clients Carousel
+- [x] Fix carousel width on mobile
+- [x] Adjust logo sizes for different screens
+- [x] Fix stats section layout on tablets
+
+### How We Work Section
+- [x] Fix process cards stacking on mobile
+- [x] Adjust timeline visualization
+- [x] Fix checklist readability on small screens
+
+### Navigation & Footer
+- [x] Fix mobile menu hamburger functionality
+- [x] Adjust social media icons spacing
+- [x] Fix phone number display on mobile
+- [x] Optimize footer columns for mobile (1 col stacking)
+- [x] Fix contact form in footer on small screens
+
+### Quiz Pages
+- [x] Fix quiz landing page layout on mobile
+- [x] Adjust question cards for tablets
+- [x] Fix progress bar on small screens
+- [x] Optimize lead form fields on mobile
+
+### Testing
+- [x] Test on 320px (iPhone SE)
+- [x] Test on 375px (iPhone 12/13)
+- [x] Test on 768px (iPad)
+- [x] Test on 1024px (iPad Pro)
+- [x] Test on 1440px (Desktop)
+- [x] Test on 1920px (Large Desktop)
+- [x] Save checkpoint and deliver
