@@ -124,7 +124,7 @@ export default function NichesSection() {
           {niches.map((niche, index) => (
             <div
               key={niche.id}
-              className="group relative bg-zinc-900/50 backdrop-blur-sm border border-zinc-800 rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 hover:border-yellow-400/40 hover:shadow-[0_0_30px_rgba(255,217,61,0.15)] transition-all duration-300 animate-fadeInUp"
+              className="group relative bg-zinc-900/50 backdrop-blur-sm border border-zinc-800 rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 hover:border-yellow-400/40 hover:shadow-[0_0_30px_rgba(255,217,61,0.15)] transition-all duration-300 animate-fadeInUp flex flex-col h-full"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               {/* Icon */}
@@ -151,12 +151,12 @@ export default function NichesSection() {
               </h3>
 
               {/* Description */}
-              <p className="text-gray-400 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4">
+              <p className="text-gray-400 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4 flex-grow">
                 {niche.description}
               </p>
 
               {/* Stats Badge */}
-              <div className="inline-block px-3 py-1.5 bg-black/50 border border-yellow-400/20 rounded-lg">
+              <div className="inline-block px-3 py-1.5 bg-black/50 border border-yellow-400/20 rounded-lg mt-auto">
                 <span className="text-yellow-400 text-xs font-semibold">
                   {niche.stats}
                 </span>

@@ -4186,3 +4186,11 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Test on 1440px (Desktop)
 - [x] Test on 1920px (Large Desktop)
 - [x] Save checkpoint and deliver
+
+
+## Phase 141: Niche Cards Badge Alignment Fix
+- [x] Analyze niche cards structure in AgencyHome.tsx
+- [x] Apply flexbox with flex-col and mt-auto to align badges at bottom
+- [x] Test alignment across all 10 niche cards (E-commerce, Real Estate, Furniture, Repair, B2B, Restaurants, Construction, Mobile Apps, Telegram, Instagram)
+- [x] Verify badges (ROAS 680%, CPL від $8, Конверсія 14%, ROI 420%, etc.) are at same height
+- [x] Save checkpoint
