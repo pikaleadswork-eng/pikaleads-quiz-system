@@ -4040,3 +4040,15 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Verify all sections visible without excessive scrolling
 - [x] Change Google Reviews button text on mobile: "ЧИТАТИ БІЛЬШЕ ВІДГУКІВ" instead of "ЗАЛИШИТИ ВІДГУК НА GOOGLE"
 - [x] Keep Google icon visible on mobile
+
+## Phase 137: Agency Homepage - New Blocks (Niches, Clients, Process)
+- [x] Create Block 6 - Niches We Work With section
+- [x] Add 6-8 niche cards with icons and descriptions
+- [x] Create Block 7 - Client Logos Carousel
+- [x] Implement infinite auto-scroll animation
+- [x] Add placeholder logos (to be replaced later)
+- [x] Create Block 8 - How We Work (6 steps)
+- [x] Add step cards with icons: Audit, Strategy, Preparation, Test Launch, Optimization, Stable Work
+- [x] Add "Почати працювати" CTA button at the end
+- [x] Integrate all blocks into AgencyHome.tsx
+- [x] Test responsive design on mobile/tablet/desktop

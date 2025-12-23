@@ -8,6 +8,9 @@ import { servicesData } from "@/data/servicesData";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { toast } from "sonner";
 import GoogleReviews from "@/components/GoogleReviews";
+import NichesSection from "@/components/agency/NichesSection";
+import ClientsCarousel from "@/components/agency/ClientsCarousel";
+import WorkProcessSection from "@/components/agency/WorkProcessSection";
 
 export default function AgencyHome() {
   const { t } = useTranslation();
@@ -725,6 +728,15 @@ export default function AgencyHome() {
 
       {/* Google Reviews Section */}
       <GoogleReviews />
+
+      {/* Niches Section */}
+      <NichesSection />
+
+      {/* Clients Carousel Section */}
+      <ClientsCarousel />
+
+      {/* Work Process Section */}
+      <WorkProcessSection />
     </div>
 
       {/* Lead Form Modals */}
