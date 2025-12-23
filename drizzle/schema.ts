@@ -954,3 +954,59 @@ export const events_log = mysqlTable("events_log", {
   claritySessionId: varchar("clarity_session_id", { length: 255 }), // Clarity session ID for session recording
   clarityProjectId: varchar("clarity_project_id", { length: 255 }), // Clarity project ID
 });
+
+/**
+ * Blog Categories table
+ */
+export const blogCategories = mysqlTable("blog_categories", {
+  id: int("id").autoincrement().primaryKey(),
+  name: varchar("name", { length: 100 }).notNull(),
+  slug: varchar("slug", { length: 100 }).notNull().unique(),
+  description: text("description"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type BlogCategory = typeof blogCategories.$inferSelect;
+export type InsertBlogCategory = typeof blogCategories.$inferInsert;
+
+/**
+ * Blog Posts table
+ */
+export const blogPosts = mysqlTable("blog_posts", {
+  id: int("id").autoincrement().primaryKey(),
+  title: varchar("title", { length: 255 }).notNull(),
+  slug: varchar("slug", { length: 255 }).notNull().unique(),
+  excerpt: text("excerpt").notNull(), // Short description for cards
+  content: text("content").notNull(), // Full HTML content from TipTap
+  coverImage: varchar("coverImage", { length: 500 }), // S3 URL
+  authorId: int("authorId").notNull().references(() => users.id, { onDelete: "cascade" }),
+  categoryId: int("categoryId").references(() => blogCategories.id, { onDelete: "set null" }),
+  status: mysqlEnum("status", ["draft", "published", "archived"]).default("draft").notNull(),
+  views: int("views").default(0).notNull(),
+  publishedAt: timestamp("publishedAt"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type BlogPost = typeof blogPosts.$inferSelect;
+export type InsertBlogPost = typeof blogPosts.$inferInsert;
+
+/**
+ * Blog SEO Settings table
+ */
+export const blogSeo = mysqlTable("blog_seo", {
+  id: int("id").autoincrement().primaryKey(),
+  postId: int("postId").notNull().unique().references(() => blogPosts.id, { onDelete: "cascade" }),
+  metaTitle: varchar("metaTitle", { length: 255 }),
+  metaDescription: text("metaDescription"),
+  keywords: text("keywords"), // Comma-separated keywords
+  ogImage: varchar("ogImage", { length: 500 }), // Open Graph image URL
+  ogTitle: varchar("ogTitle", { length: 255 }),
+  ogDescription: text("ogDescription"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type BlogSeo = typeof blogSeo.$inferSelect;
+export type InsertBlogSeo = typeof blogSeo.$inferInsert;

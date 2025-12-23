@@ -49,6 +49,9 @@ import AdminSettings from "./pages/AdminSettings";
 import { SettingsRoles } from "./pages/SettingsRoles";
 import { SettingsLeadStatuses } from "./pages/SettingsLeadStatuses";
 import { SettingsIPTelephony } from "./pages/SettingsIPTelephony";
+import BlogManagement from "./pages/crm/BlogManagement";
+import BlogList from "./pages/BlogList";
+import BlogPost from "./pages/BlogPost";
 import ServicesManagement from "./pages/ServicesManagement";
 import { ServerMonitoring } from "./pages/ServerMonitoring";
 import LeadAssignment from "./pages/LeadAssignment";
@@ -75,6 +78,8 @@ function Router() {
     <Switch>
       {/* ========== AGENCY WEBSITE (Main Page) ========== */}
       <Route path={"/"} component={AgencyHome} />
+      <Route path="/blog" component={BlogList} />
+      <Route path="/blog/:slug" component={BlogPost} />
       
       {/* Legal Pages (accessible from main site) */}
       <Route path={"/privacy"} component={Privacy} />
@@ -127,6 +132,7 @@ function Router() {
       <Route path={"/admin/inbox"} component={MessagingInbox} />
       <Route path={"/admin/sales"} component={SalesStatistics} />
       <Route path={"/admin/scripts"} component={SalesScripts} />
+      <Route path={"/admin/blog"} component={BlogManagement} />
       <Route path={"/admin/services"} component={ServicesManagement} />
       <Route path={"/admin/settings"} component={AdminSettings} />
       <Route path={"/admin/settings/roles"} component={SettingsRoles} />

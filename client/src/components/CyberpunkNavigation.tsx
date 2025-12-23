@@ -36,6 +36,7 @@ export default function CyberpunkNavigation({ currentPath = "/" }: CyberpunkNavi
               <img 
                 src="/pikaleads-logo-dark.png" 
                 alt="PIKALEADS" 
+                loading="eager"
                 className="h-12 w-auto transition-all group-hover:drop-shadow-[0_0_15px_rgba(255,217,61,0.6)]"
               />
             </div>

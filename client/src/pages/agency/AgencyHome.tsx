@@ -11,6 +11,7 @@ import GoogleReviews from "@/components/GoogleReviews";
 import NichesSection from "@/components/agency/NichesSection";
 import ClientsCarousel from "@/components/agency/ClientsCarousel";
 import WorkProcessSection from "@/components/agency/WorkProcessSection";
+import BlogSection from "@/components/agency/BlogSection";
 
 export default function AgencyHome() {
   const { t } = useTranslation();
@@ -134,6 +135,7 @@ export default function AgencyHome() {
                 <img 
                   src="/pikachu-transparent-user.png" 
                   alt="Pikachu Lead Generator"
+                  loading="lazy"
                   className="w-[400px] md:w-[500px] lg:w-[750px] xl:w-[850px] max-w-none"
                   style={{
                     filter: "drop-shadow(0 0 60px rgba(168, 85, 247, 0.4)) drop-shadow(0 0 30px rgba(255, 217, 61, 0.3))",
@@ -737,6 +739,9 @@ export default function AgencyHome() {
 
       {/* Work Process Section */}
       <WorkProcessSection />
+
+      {/* Blog Section */}
+      <BlogSection />
     </div>
 
       {/* Lead Form Modals */}

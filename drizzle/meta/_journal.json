@@ -330,6 +330,13 @@
       "when": 1766012401383,
       "tag": "0046_lazy_abomination",
       "breakpoints": true
+    },
+    {
+      "idx": 47,
+      "version": "5",
+      "when": 1766509776537,
+      "tag": "0047_chubby_nehzno",
+      "breakpoints": true
     }
   ]
 }

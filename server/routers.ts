@@ -29,6 +29,7 @@ import { commentsRouter } from "./routers/comments";
 import { profileRouter } from "./routers/profile";
 import { calendarRouter } from "./routers/calendar";
 import { eventsLogRouter } from "./routers/eventsLog";
+import { blogRouter } from "./routers/blog";
 // import { abTestingRouter } from "./routers/abTesting"; // Disabled - conflicts with existing AB test implementation
 import * as schema from "../drizzle/schema";
 import { getDb } from "./db";
@@ -1479,6 +1480,7 @@ ${input.campaign ? `**Campaign:** ${input.campaign}\n` : ""}
   comments: commentsRouter,
   profile: profileRouter,
   calendar: calendarRouter,
+  blog: blogRouter,
   sales: salesRouter,
   salesScripts: salesScriptsRouter,
   integrations: integrationsRouter,
