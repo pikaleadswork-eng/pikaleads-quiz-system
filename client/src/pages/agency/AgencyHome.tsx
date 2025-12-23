@@ -5,6 +5,8 @@ import CyberpunkNavigation from "@/components/CyberpunkNavigation";
 import LeadFormModal from "@/components/LeadFormModal";
 import ServiceDetailModal, { ServiceDetail } from "@/components/ServiceDetailModal";
 import { servicesData } from "@/data/servicesData";
+import { CountdownTimer } from "@/components/CountdownTimer";
+import { toast } from "sonner";
 
 export default function AgencyHome() {
   const { t } = useTranslation();
@@ -12,6 +14,13 @@ export default function AgencyHome() {
   const [strategyModalOpen, setStrategyModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<ServiceDetail | null>(null);
   const [serviceModalOpen, setServiceModalOpen] = useState(false);
+  const [leadFormData, setLeadFormData] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    telegram: ""
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleServiceClick = (serviceId: string) => {
     const service = servicesData.find(s => s.id === serviceId);
@@ -536,6 +545,137 @@ export default function AgencyHome() {
               </div>
             </div>
 
+          </div>
+        </div>
+      </section>
+
+      {/* Lead Magnet Section - Free Audit Offer */}
+      <section className="py-20 px-4 sm:px-6 lg:px-12">
+        <div className="max-w-6xl mx-auto">
+          <div className="relative bg-zinc-900/50 backdrop-blur-sm border border-yellow-400/20 rounded-3xl p-8 md:p-12 overflow-hidden">
+            {/* Background glow */}
+            <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/5 to-transparent rounded-3xl" />
+            
+            <div className="relative z-10 grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+              {/* Left Side - Gift Image */}
+              <div className="flex justify-center">
+                <img 
+                  src="/gift-audit.png" 
+                  alt="Free Audit Gift" 
+                  className="w-64 h-64 md:w-80 md:h-80 object-contain"
+                  style={{ animation: "float 3s ease-in-out infinite" }}
+                />
+              </div>
+
+              {/* Right Side - Text & Form */}
+              <div className="space-y-6">
+                {/* Headline */}
+                <div className="space-y-3">
+                  <h3 className="text-2xl md:text-3xl font-black text-[#FFD93D]" style={{
+                    fontFamily: "'Eurostile Bold Extended', 'Rajdhani', sans-serif",
+                    textShadow: "0 0 20px rgba(255, 217, 61, 0.4)"
+                  }}>
+                    ВІДЧУВАЄТЕ ЩО ВАША РЕКЛАМА ПРАЦЮЄ СЛАБО?
+                  </h3>
+                  <p className="text-gray-300 text-lg">
+                    Або не приносить очікуваний результат?
+                  </p>
+                </div>
+
+                {/* Offer */}
+                <div className="bg-zinc-900/50 border border-yellow-400/20 rounded-lg p-6 space-y-3">
+                  <p className="text-white font-bold text-lg">
+                    Залишайте заявку та отримайте:
+                  </p>
+                  <ul className="space-y-2 text-gray-300">
+                    <li className="flex items-start gap-2">
+                      <span className="text-[#FFD93D] mt-1">✓</span>
+                      <span>Безкоштовний аудит вашої реклами</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-[#FFD93D] mt-1">✓</span>
+                      <span>Гарантований пошук проблеми</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-[#FFD93D] mt-1">✓</span>
+                      <span>Поради на її виправлення</span>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Countdown Timer */}
+                <div className="flex flex-col items-center gap-3 py-4">
+                  <p className="text-sm text-gray-400 uppercase tracking-wider">
+                    Пропозиція діє ще:
+                  </p>
+                  <CountdownTimer />
+                </div>
+
+                {/* Lead Form */}
+                <form 
+                  className="space-y-3"
+                  onSubmit={async (e) => {
+                    e.preventDefault();
+                    setIsSubmitting(true);
+                    
+                    try {
+                      // Here you would call your tRPC mutation to save the lead
+                      await new Promise(resolve => setTimeout(resolve, 1000));
+                      
+                      toast.success("Дякуємо! Ми зв'яжемося з вами найближчим часом.");
+                      setLeadFormData({ name: "", phone: "", email: "", telegram: "" });
+                    } catch (error) {
+                      toast.error("Помилка. Спробуйте ще раз.");
+                    } finally {
+                      setIsSubmitting(false);
+                    }
+                  }}
+                >
+                  <input
+                    type="text"
+                    placeholder="Ім'я"
+                    value={leadFormData.name}
+                    onChange={(e) => setLeadFormData({ ...leadFormData, name: e.target.value })}
+                    required
+                    className="w-full px-4 py-3 bg-zinc-900 border border-zinc-700 rounded-lg text-white placeholder-gray-500 focus:border-[#FFD93D] focus:outline-none transition-colors"
+                  />
+                  <input
+                    type="tel"
+                    placeholder="Телефон"
+                    value={leadFormData.phone}
+                    onChange={(e) => setLeadFormData({ ...leadFormData, phone: e.target.value })}
+                    required
+                    className="w-full px-4 py-3 bg-zinc-900 border border-zinc-700 rounded-lg text-white placeholder-gray-500 focus:border-[#FFD93D] focus:outline-none transition-colors"
+                  />
+                  <input
+                    type="email"
+                    placeholder="Пошта"
+                    value={leadFormData.email}
+                    onChange={(e) => setLeadFormData({ ...leadFormData, email: e.target.value })}
+                    required
+                    className="w-full px-4 py-3 bg-zinc-900 border border-zinc-700 rounded-lg text-white placeholder-gray-500 focus:border-[#FFD93D] focus:outline-none transition-colors"
+                  />
+                  <input
+                    type="text"
+                    placeholder="Телеграм"
+                    value={leadFormData.telegram}
+                    onChange={(e) => setLeadFormData({ ...leadFormData, telegram: e.target.value })}
+                    className="w-full px-4 py-3 bg-zinc-900 border border-zinc-700 rounded-lg text-white placeholder-gray-500 focus:border-[#FFD93D] focus:outline-none transition-colors"
+                  />
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full px-6 py-4 bg-[#FFD93D] text-black font-bold rounded-lg hover:bg-[#FFD93D]/90 transition-all disabled:opacity-50 disabled:cursor-not-allowed text-lg"
+                    style={{
+                      boxShadow: '0 0 30px rgba(255, 217, 61, 0.4)',
+                      fontFamily: "'Rajdhani', sans-serif"
+                    }}
+                  >
+                    {isSubmitting ? "ВІДПРАВКА..." : "ОТРИМАТИ АУДИТ"}
+                  </button>
+                </form>
+              </div>
+            </div>
           </div>
         </div>
       </section>

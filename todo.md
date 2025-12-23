@@ -3988,3 +3988,8 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Integrate form with CRM and Telegram notifications
 - [x] Add animations and cyberpunk styling
 - [x] Test timer functionality and form submission
+
+## Phase 133.1: Fix Lead Magnet Location
+- [x] Move lead magnet section from Home.tsx to AgencyHome.tsx (actual homepage)
+- [x] Verify lead magnet appears on main homepage (/)
+- [x] Test timer and form functionality on correct page
