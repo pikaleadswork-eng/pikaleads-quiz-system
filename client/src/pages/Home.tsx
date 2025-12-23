@@ -140,54 +140,158 @@ export default function Home() {
 
         {/* Content */}
         <div className="relative z-10">
-          {/* Hero Section */}
-          <section className="container mx-auto px-4 py-16 md:py-20">
-            <div className="text-center space-y-8">
-              {/* Main Title */}
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-black leading-tight">
-                <span className="block text-[#FFD93D] mb-2" style={{
-                  textShadow: '0 0 10px rgba(255,217,61,0.8), 0 0 20px rgba(255,217,61,0.6), 0 0 40px rgba(255,217,61,0.4)'
-                }}>
-                  PIKALEADS
-                </span>
-                <span className="block text-[#5B2E90] text-3xl md:text-4xl lg:text-5xl" style={{
-                  textShadow: '0 0 10px rgba(91,46,144,0.8), 0 0 20px rgba(91,46,144,0.6), 0 0 40px rgba(91,46,144,0.4)'
-                }}>
-                  {language === "uk" ? "КВІЗ СИСТЕМА" : language === "ru" ? "КВИЗ СИСТЕМА" : "QUIZ SYSTEM"}
-                </span>
-              </h1>
+          {/* Hero Section - 50/50 Layout */}
+          <section className="container mx-auto px-4 py-16 md:py-24 min-h-[90vh] flex items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center w-full">
+              {/* Left Side - Text Content */}
+              <div className="space-y-8">
+                {/* Badge */}
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#00FF00]/30 bg-[#00FF00]/5">
+                  <div className="w-2 h-2 rounded-full bg-[#00FF00] animate-pulse" />
+                  <span className="text-[#00FF00] text-sm font-bold uppercase tracking-wider">
+                    {language === "uk" ? "СИСТЕМА АКТИВНА" : language === "ru" ? "СИСТЕМА АКТИВНА" : "SYSTEM ACTIVE"}
+                  </span>
+                </div>
 
-              {/* Subtitle */}
-              <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-                {language === "uk" 
-                  ? "Футуристична система для збору лідів з Meta Ads та Google Ads"
-                  : language === "ru"
-                  ? "Футуристическая система для сбора лидов из Meta Ads и Google Ads"
-                  : "Futuristic lead generation system for Meta Ads and Google Ads"}
-              </p>
+                {/* Main Title */}
+                <h1 className="text-5xl md:text-6xl lg:text-7xl font-black leading-tight">
+                  <span className="block text-white mb-2">
+                    {language === "uk" ? "ОБИРАЙ НЕ" : language === "ru" ? "ВЫБИРАЙ НЕ" : "CHOOSE NOT"}
+                  </span>
+                  <span className="block text-white mb-2">
+                    {language === "uk" ? "АГЕНСТВО." : language === "ru" ? "АГЕНТСТВО." : "AGENCY."}
+                  </span>
+                  <span className="block text-[#FFD93D]" style={{
+                    textShadow: '0 0 20px rgba(255,217,61,0.6), 0 0 40px rgba(255,217,61,0.4)'
+                  }}>
+                    {language === "uk" ? "ОБИРАЙ РЕЗУЛЬТАТ." : language === "ru" ? "ВЫБИРАЙ РЕЗУЛЬТАТ." : "CHOOSE RESULTS."}
+                  </span>
+                </h1>
 
-              {/* Stats Section */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mt-12">
-                <CyberpunkCard variant="purple" glow={true} className="text-center">
-                  <div className="text-4xl font-black text-[#FFD93D] mb-2 neon-glow-green">10K+</div>
-                  <div className="text-sm text-gray-400 uppercase tracking-wider">
-                    {language === "uk" ? "Лідів згенеровано" : language === "ru" ? "Лидов сгенерировано" : "Leads Generated"}
-                  </div>
-                </CyberpunkCard>
-                
-                <CyberpunkCard variant="purple" glow={true} className="text-center">
-                  <div className="text-4xl font-black text-[#FFD93D] mb-2 neon-glow-green">300%</div>
-                  <div className="text-sm text-gray-400 uppercase tracking-wider">
-                    {language === "uk" ? "Зріст продажів" : language === "ru" ? "Рост продаж" : "Sales Growth"}
-                  </div>
-                </CyberpunkCard>
-                
-                <CyberpunkCard variant="purple" glow={true} className="text-center">
-                  <div className="text-4xl font-black text-[#FFD93D] mb-2 neon-glow-green">50+</div>
-                  <div className="text-sm text-gray-400 uppercase tracking-wider">
-                    {language === "uk" ? "Активних клієнтів" : language === "ru" ? "Активных клиентов" : "Active Clients"}
-                  </div>
-                </CyberpunkCard>
+                {/* Subtitle */}
+                <p className="text-xl text-gray-400 leading-relaxed max-w-xl">
+                  {language === "uk" 
+                    ? "PikaLeads – твій партнер з performance-маркетингу. Запускаємо Meta Ads та Google Ads з фокусом на реальний результат."
+                    : language === "ru"
+                    ? "PikaLeads – твой партнер по performance-маркетингу. Запускаем Meta Ads и Google Ads с фокусом на реальный результат."
+                    : "PikaLeads – your performance marketing partner. We launch Meta Ads and Google Ads focused on real results."}
+                </p>
+
+                {/* CTA Buttons */}
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <button
+                    className="px-8 py-4 bg-[#FFD93D] text-black font-bold rounded-lg hover:bg-[#FFD93D]/90 transition-all flex items-center justify-center gap-2 text-lg"
+                    style={{
+                      boxShadow: '0 0 30px rgba(255, 217, 61, 0.4)',
+                      fontFamily: 'Rajdhani, sans-serif'
+                    }}
+                    onClick={() => ClarityEvents.trackCTAClick('Get Started', 'hero_cta')}
+                  >
+                    <Zap className="w-5 h-5" />
+                    {language === "uk" ? "ПОЧАТИ ЗАРАЗ" : language === "ru" ? "НАЧАТЬ СЕЙЧАС" : "GET STARTED"}
+                  </button>
+                  
+                  <button
+                    className="px-8 py-4 border-2 border-[#5B2E90] text-[#5B2E90] font-bold rounded-lg hover:bg-[#5B2E90]/10 transition-all flex items-center justify-center gap-2 text-lg"
+                    style={{
+                      fontFamily: 'Rajdhani, sans-serif'
+                    }}
+                  >
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" />
+                    </svg>
+                    {language === "uk" ? "ДИВИТИСЬ ВІДЕО" : language === "ru" ? "СМОТРЕТЬ ВИДЕО" : "WATCH VIDEO"}
+                  </button>
+                </div>
+              </div>
+
+              {/* Right Side - Visual with Floating Cards */}
+              <div className="relative h-[600px] hidden lg:block">
+                {/* Placeholder for 3D Visual/Pikachu */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-80 h-80 rounded-full bg-gradient-to-br from-[#5B2E90]/20 to-[#FFD93D]/20 blur-3xl" />
+                </div>
+
+                {/* Floating Card 1 - Top Left */}
+                <div 
+                  className="absolute top-8 left-0 w-48 animate-float"
+                  style={{ animationDelay: '0s' }}
+                >
+                  <CyberpunkCard variant="purple" glow={true} className="p-4">
+                    <div className="text-3xl font-black text-[#FFD93D] mb-1">300%</div>
+                    <div className="text-xs text-gray-400 uppercase">
+                      {language === "uk" ? "Зростання продажів" : language === "ru" ? "Рост продаж" : "Sales Growth"}
+                    </div>
+                  </CyberpunkCard>
+                </div>
+
+                {/* Floating Card 2 - Top Right */}
+                <div 
+                  className="absolute top-16 right-0 w-52 animate-float"
+                  style={{ animationDelay: '1s' }}
+                >
+                  <CyberpunkCard variant="purple" glow={true} className="p-4">
+                    <div className="text-3xl font-black text-[#FFD93D] mb-1">500+</div>
+                    <div className="text-xs text-gray-400 uppercase">
+                      {language === "uk" ? "Успішних кампаній" : language === "ru" ? "Успешных кампаний" : "Successful Campaigns"}
+                    </div>
+                  </CyberpunkCard>
+                </div>
+
+                {/* Floating Card 3 - Middle Left */}
+                <div 
+                  className="absolute top-1/2 left-8 w-56 -translate-y-1/2 animate-float"
+                  style={{ animationDelay: '2s' }}
+                >
+                  <CyberpunkCard variant="purple" glow={true} className="p-4">
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="w-8 h-8 rounded-lg bg-[#FFD93D]/20 flex items-center justify-center">
+                        <Zap className="w-5 h-5 text-[#FFD93D]" />
+                      </div>
+                      <div className="text-sm font-bold text-white uppercase">
+                        {language === "uk" ? "Performance" : language === "ru" ? "Performance" : "Performance"}
+                      </div>
+                    </div>
+                    <div className="text-xs text-gray-400">
+                      {language === "uk" ? "AI-керована оптимізація" : language === "ru" ? "AI-управляемая оптимизация" : "AI-Driven Optimization"}
+                    </div>
+                  </CyberpunkCard>
+                </div>
+
+                {/* Floating Card 4 - Bottom Right */}
+                <div 
+                  className="absolute bottom-8 right-8 w-48 animate-float"
+                  style={{ animationDelay: '1.5s' }}
+                >
+                  <CyberpunkCard variant="purple" glow={true} className="p-4">
+                    <div className="text-3xl font-black text-[#FFD93D] mb-1">97%</div>
+                    <div className="text-xs text-gray-400 uppercase">
+                      {language === "uk" ? "Окупність реклами" : language === "ru" ? "Окупаемость рекламы" : "ROI"}
+                    </div>
+                  </CyberpunkCard>
+                </div>
+
+                {/* Floating Card 5 - Bottom Center */}
+                <div 
+                  className="absolute bottom-20 left-1/2 -translate-x-1/2 w-64 animate-float"
+                  style={{ animationDelay: '0.5s' }}
+                >
+                  <CyberpunkCard variant="purple" glow={true} className="p-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm text-gray-400">{language === "uk" ? "Зростання" : language === "ru" ? "Рост" : "Growth"}</span>
+                      <span className="text-[#00FF00] text-sm font-bold">+23% {language === "uk" ? "цього тижня" : language === "ru" ? "на этой неделе" : "this week"}</span>
+                    </div>
+                    <div className="h-16 flex items-end gap-1">
+                      {[40, 55, 45, 70, 60, 85, 75].map((height, i) => (
+                        <div 
+                          key={i} 
+                          className="flex-1 bg-gradient-to-t from-[#00FF00] to-[#00FF00]/50 rounded-t"
+                          style={{ height: `${height}%` }}
+                        />
+                      ))}
+                    </div>
+                  </CyberpunkCard>
+                </div>
               </div>
             </div>
           </section>

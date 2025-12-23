@@ -368,6 +368,38 @@
 - [ ] Add script duplication feature (TODO: future enhancement)
 
 
+## Phase 38 - Home Page Hero Section Redesign (AI Neural Network Style)
+
+### Hero Section Layout - MINIMAL
+- [x] Fix text - reduced to 2 lines
+- [x] Remove all network nodes and connecting lines
+- [x] Keep only central energy core
+- [x] Use ONLY logo colors (yellow #FFD93D + black)
+- [x] Add navigation header (logo, menu, socials, phone)
+- [x] Make navigation responsive (burger menu)
+- [x] Reduce to 3 floating cards only (300%, 500+, 97% ROI)
+- [x] Remove: Growth, Powerful, Insights cards
+- [x] Apply Bungee font to heading with glow effects
+- [x] Change to different stylish font (Orbitron)
+- [x] Reduce text size to prevent line breaks (4xl/5xl/6xl)
+- [x] Fix energy core gradient - remove visible lines, make smooth blur
+- [x] Fix description text - remove line breaks, make one line
+- [x] Change button texts to "Отримати консультацію" and "Отримати стратегію"
+
+### Pikachu Hero Background
+- [x] Generate 4-5 Pikachu variants in different styles (FAILED - wrong style)
+- [x] Regenerate using user's reference images as style guide
+- [ ] User selected variants 2 and 3 for refinement
+- [x] Refine variant 2 (thumbs up) for website integration - 2 versions generated
+- [x] Refine variant 3 (business pro) for website integration - 2 versions generated
+- [x] User makes final selection from 4 refined variants (variant 3 - business pro)
+- [x] Copy selected image to project public folder
+- [x] Integrate Pikachu background into AgencyHome hero section
+- [x] Position Pikachu on right, text on left
+- [ ] Adjust floating cards positioning around Pikachu
+- [ ] Test on different screen sizes
+- [ ] Create responsive backgrounds for mobile/tablet
+
 ## Phase 37 - Manager Assignment, Translations & Sales Filters
 
 ### AdminSettings - Links to New Settings Pages
@@ -3879,3 +3911,14 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Fix login logic if needed
 - [x] Test login functionality
 
+
+## Phase 131: Restore Improved Quiz Editor on VPS
+
+- [ ] Download ImprovedQuizDesignEditor.tsx from VPS
+- [ ] Download ImprovedQuizEditor.tsx from VPS  
+- [ ] Check QuizDesignPage.tsx to see which editor is imported
+- [ ] Replace old editor with improved editor in QuizDesignPage.tsx
+- [ ] Test the improved editor with live preview
+- [ ] Deploy changes to VPS
+- [x] Increase Pikachu image size to fill vertical space without gaps
+- [x] Change hero title font to cyberpunk style (Orbitron/Rajdhani/Exo 2)
