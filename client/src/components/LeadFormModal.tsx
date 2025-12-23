@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation } from "wouter";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
+import { getCurrentUTMParams, type UTMParams } from "@/lib/utm";
+import { trackLeadSubmission, trackFormStart } from "@/lib/analytics";
 
 interface LeadFormModalProps {
   isOpen: boolean;
@@ -13,6 +16,7 @@ interface LeadFormModalProps {
 }
 
 export default function LeadFormModal({ isOpen, onClose, formType }: LeadFormModalProps) {
+  const [, setLocation] = useLocation();
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -20,13 +24,30 @@ export default function LeadFormModal({ isOpen, onClose, formType }: LeadFormMod
     comment: ""
   });
 
+  const [utmParams, setUtmParams] = useState<UTMParams>({});
+
+  // Capture UTM parameters on mount
+  useEffect(() => {
+    const params = getCurrentUTMParams();
+    setUtmParams(params);
+  }, []);
+
   const createLead = trpc.leads.create.useMutation({
     onSuccess: () => {
-      toast.success("Заявка успішно відправлена!", {
-        description: "Наш менеджер зв'яжеться з вами найближчим часом."
+      // Track conversion in Google Analytics
+      trackLeadSubmission({
+        lead_type: formType === "consultation" ? "Консультація" : "Стратегія",
+        lead_value: formType === "consultation" ? 500 : 1000, // Estimated lead value
+        currency: "UAH",
+        utm_source: utmParams.utm_source,
+        utm_medium: utmParams.utm_medium,
+        utm_campaign: utmParams.utm_campaign,
       });
+
       setFormData({ name: "", phone: "", email: "", comment: "" });
       onClose();
+      // Redirect to thank-you page
+      setLocation("/thank-you");
     },
     onError: (error) => {
       toast.error("Помилка відправки заявки", {
@@ -37,6 +58,9 @@ export default function LeadFormModal({ isOpen, onClose, formType }: LeadFormMod
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Track form start
+    trackFormStart(formType);
     
     if (!formData.name || !formData.phone) {
       toast.error("Заповніть обов'язкові поля", {
@@ -48,7 +72,12 @@ export default function LeadFormModal({ isOpen, onClose, formType }: LeadFormMod
     createLead.mutate({
       ...formData,
       source: formType === "consultation" ? "Консультація" : "Стратегія",
-      status: "new"
+      status: "new",
+      utmSource: utmParams.utm_source,
+      utmMedium: utmParams.utm_medium,
+      utmCampaign: utmParams.utm_campaign,
+      utmTerm: utmParams.utm_term,
+      utmContent: utmParams.utm_content,
     });
   };
 

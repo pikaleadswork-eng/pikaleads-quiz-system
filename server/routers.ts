@@ -1736,6 +1736,11 @@ ${input.campaign ? `**Campaign:** ${input.campaign}\n` : ""}
         comment: z.string().optional(),
         source: z.string(),
         status: z.string(),
+        utmSource: z.string().optional(),
+        utmMedium: z.string().optional(),
+        utmCampaign: z.string().optional(),
+        utmTerm: z.string().optional(),
+        utmContent: z.string().optional(),
       }))
       .mutation(async ({ input }) => {
         const { createLead } = await import("./db");
@@ -1750,16 +1755,16 @@ ${input.campaign ? `**Campaign:** ${input.campaign}\n` : ""}
           email: input.email || null,
           telegram: null,
           language: null,
-          utmCampaign: null,
+          utmCampaign: input.utmCampaign || null,
           utmAdGroup: null,
           utmAd: null,
           utmPlacement: null,
           utmKeyword: null,
           utmSite: null,
-          utmSource: input.source,
-          utmMedium: null,
-          utmContent: null,
-          utmTerm: null,
+          utmSource: input.utmSource || input.source,
+          utmMedium: input.utmMedium || null,
+          utmContent: input.utmContent || null,
+          utmTerm: input.utmTerm || null,
           fbp: null,
           fbc: null,
           clientIp: null,
@@ -1770,12 +1775,18 @@ ${input.campaign ? `**Campaign:** ${input.campaign}\n` : ""}
         });
         
         // Send Telegram notification
+        const utmInfo = [];
+        if (input.utmSource) utmInfo.push(`Source: ${input.utmSource}`);
+        if (input.utmMedium) utmInfo.push(`Medium: ${input.utmMedium}`);
+        if (input.utmCampaign) utmInfo.push(`Campaign: ${input.utmCampaign}`);
+        
         const message = `🔥 Нова заявка з сайту!\n\n` +
           `📋 Тип: ${input.source}\n` +
           `👤 Ім'я: ${input.name}\n` +
           `📞 Телефон: ${input.phone}\n` +
           (input.email ? `📧 Email: ${input.email}\n` : '') +
           (input.comment ? `💬 Коментар: ${input.comment}\n` : '') +
+          (utmInfo.length > 0 ? `\n📊 UTM:\n${utmInfo.join('\n')}\n` : '') +
           `\n🆔 ID ліда: ${leadId}`;
         
         await sendTelegramMessage(message);

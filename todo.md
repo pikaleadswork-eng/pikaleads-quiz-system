@@ -3950,3 +3950,13 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Add form validation and error handling
 - [x] Test lead submission flow (DB + Telegram)
 - [x] Write vitest tests for lead creation procedure
+
+## Phase 129: Services Section & Tracking Features
+- [x] Create services section with 7 service cards (Meta, Google, TikTok, X, Telegram, Websites, Apps)
+- [x] Add icons and short descriptions for each service
+- [x] Style cards with cyberpunk theme and hover effects
+- [x] Verify responsive layout on mobile, tablet, desktop
+- [x] Add UTM parameter tracking to lead forms
+- [x] Create thank-you page component
+- [x] Implement Google Analytics event tracking
+- [x] Test all features on different screen sizes

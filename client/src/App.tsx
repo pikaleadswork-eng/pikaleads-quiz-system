@@ -10,10 +10,11 @@ import { LanguageProvider } from "./contexts/LanguageContext";
 
 // Agency Website Pages
 import AgencyHome from "./pages/agency/AgencyHome";
+import AgencyThankYou from "./pages/agency/ThankYou";
 
 // Quiz System Pages (moved to /quiz-service)
 import Home from "./pages/Home";
-import ThankYou from "./pages/ThankYou";
+import QuizThankYou from "./pages/ThankYou";
 import MetaFurniture from "./pages/MetaFurniture";
 import MetaRepair from "./pages/MetaRepair";
 import MetaEcom from "./pages/MetaEcom";
@@ -85,7 +86,8 @@ function Router() {
       {/* ========== QUIZ CATALOG ========== */}
       <Route path="/quizzes" component={Home} />
       <Route path={"/login"} component={Login} />
-      <Route path={"/thank-you"} component={ThankYou} />
+      <Route path={"/thank-you"} component={AgencyThankYou} />
+      <Route path={"/quiz-thank-you"} component={QuizThankYou} />
       
       {/* Dynamic Quiz Page - must be before static routes */}
       <Route path={"/quiz/:slug"} component={QuizPage} />
