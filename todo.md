@@ -3973,3 +3973,8 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Connect buttons to open modals with corresponding service details
 - [x] Style modals in cyberpunk theme
 - [x] Test all 8 service modals
+
+## Phase 132: Align Service Card Buttons
+- [x] Add flex-col to service card inner containers
+- [x] Add mt-auto to buttons to push them to bottom
+- [x] Verify all buttons align in straight line
