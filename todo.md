@@ -3940,3 +3940,13 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Verify mobile responsiveness for Hero section
 - [x] Verify mobile responsiveness for Why Us section
 - [x] Optimize card padding for mobile (p-8 → p-6 sm:p-8)
+
+## Phase 128: Popup Forms & CRM Integration
+- [x] Create LeadFormModal component with form fields (name, phone, email, comment)
+- [x] Add two modal states for "Consultation" and "Strategy" forms
+- [x] Create tRPC procedure to save leads to database
+- [x] Integrate Telegram bot notification on new lead
+- [x] Connect popups to hero section buttons
+- [x] Add form validation and error handling
+- [x] Test lead submission flow (DB + Telegram)
+- [x] Write vitest tests for lead creation procedure

@@ -1,9 +1,13 @@
 import { Link } from "wouter";
 import { useTranslation } from "react-i18next";
+import { useState } from "react";
 import CyberpunkNavigation from "@/components/CyberpunkNavigation";
+import LeadFormModal from "@/components/LeadFormModal";
 
 export default function AgencyHome() {
   const { t } = useTranslation();
+  const [consultationModalOpen, setConsultationModalOpen] = useState(false);
+  const [strategyModalOpen, setStrategyModalOpen] = useState(false);
 
   return (
     <>
@@ -29,7 +33,7 @@ export default function AgencyHome() {
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
             
             {/* Left - Text Content */}
-            <div className="space-y-8 text-center lg:text-left" style={{ animation: "fadeInUp 0.8s ease-out" }}>
+            <div className="space-y-8 text-center lg:text-left px-4 sm:px-0" style={{ animation: "fadeInUp 0.8s ease-out" }}>
               {/* Status Badge */}
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#00F0FF]/30 bg-black/50 backdrop-blur-sm" style={{ animation: "fadeIn 0.6s ease-out" }}>
                 <div className="w-2 h-2 bg-[#00F0FF] rounded-full animate-pulse" />
@@ -67,18 +71,22 @@ export default function AgencyHome() {
               </h1>
 
               {/* Description */}
-              <p className="text-base sm:text-lg md:text-xl text-gray-400 max-w-xl mx-auto lg:mx-0 px-4 lg:px-0">
+              <p className="text-base sm:text-lg md:text-xl text-gray-400 max-w-xl mx-auto lg:mx-0">
                 <span className="text-[#FFD93D] font-semibold">PikaLeads</span> – твій партнер з performance-маркетингу. Коли кожен лід має значення.
               </p>
 
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 items-center lg:items-start justify-center lg:justify-start">
-                <Link href="/quizzes" className="w-full sm:w-auto">
-                  <button className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-[#FFD93D] hover:bg-[#FFD93D]/90 text-black font-bold rounded-xl transition-all duration-300 shadow-lg shadow-[#FFD93D]/30">
-                    Отримати консультацію
-                  </button>
-                </Link>
-                <button className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 border-2 border-[#FFD93D] text-[#FFD93D] hover:bg-[#FFD93D]/10 font-bold rounded-xl transition-all duration-300 flex items-center justify-center gap-2">
+                <button 
+                  onClick={() => setConsultationModalOpen(true)}
+                  className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-[#FFD93D] hover:bg-[#FFD93D]/90 text-black font-bold rounded-xl transition-all duration-300 shadow-lg shadow-[#FFD93D]/30"
+                >
+                  Отримати консультацію
+                </button>
+                <button 
+                  onClick={() => setStrategyModalOpen(true)}
+                  className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 border-2 border-[#FFD93D] text-[#FFD93D] hover:bg-[#FFD93D]/10 font-bold rounded-xl transition-all duration-300 flex items-center justify-center gap-2"
+                >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
                     <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd" />
@@ -283,6 +291,18 @@ export default function AgencyHome() {
         </div>
       </section>
     </div>
+
+      {/* Lead Form Modals */}
+      <LeadFormModal 
+        isOpen={consultationModalOpen}
+        onClose={() => setConsultationModalOpen(false)}
+        formType="consultation"
+      />
+      <LeadFormModal 
+        isOpen={strategyModalOpen}
+        onClose={() => setStrategyModalOpen(false)}
+        formType="strategy"
+      />
     </>
   );
 }

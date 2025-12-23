@@ -1727,6 +1727,62 @@ ${input.campaign ? `**Campaign:** ${input.campaign}\n` : ""}
         return { success: true };
       }),
   }),
+  leads: router({
+    create: publicProcedure
+      .input(z.object({
+        name: z.string().min(1, "Name is required"),
+        phone: z.string().min(1, "Phone is required"),
+        email: z.string().optional(),
+        comment: z.string().optional(),
+        source: z.string(),
+        status: z.string(),
+      }))
+      .mutation(async ({ input }) => {
+        const { createLead } = await import("./db");
+        const { sendTelegramMessage } = await import("./telegram");
+        
+        // Save lead to database
+        const leadId = await createLead({
+          quizName: input.source,
+          answers: JSON.stringify([]),
+          name: input.name,
+          phone: input.phone,
+          email: input.email || null,
+          telegram: null,
+          language: null,
+          utmCampaign: null,
+          utmAdGroup: null,
+          utmAd: null,
+          utmPlacement: null,
+          utmKeyword: null,
+          utmSite: null,
+          utmSource: input.source,
+          utmMedium: null,
+          utmContent: null,
+          utmTerm: null,
+          fbp: null,
+          fbc: null,
+          clientIp: null,
+          userAgent: null,
+          ga4ClientId: null,
+          eventId: null,
+          leadScore: 50,
+        });
+        
+        // Send Telegram notification
+        const message = `🔥 Нова заявка з сайту!\n\n` +
+          `📋 Тип: ${input.source}\n` +
+          `👤 Ім'я: ${input.name}\n` +
+          `📞 Телефон: ${input.phone}\n` +
+          (input.email ? `📧 Email: ${input.email}\n` : '') +
+          (input.comment ? `💬 Коментар: ${input.comment}\n` : '') +
+          `\n🆔 ID ліда: ${leadId}`;
+        
+        await sendTelegramMessage(message);
+        
+        return { success: true, leadId };
+      }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;
