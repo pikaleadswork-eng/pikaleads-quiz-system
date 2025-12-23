@@ -3965,3 +3965,11 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Add 8th service card "Розробка дизайну"
 - [x] Style with appropriate icon and color (green/emerald theme)
 - [x] Verify 8-card grid layout on all screen sizes
+
+## Phase 131: Service Detail Buttons & Modals
+- [x] Create ServiceDetailModal component with detailed service information
+- [x] Add service data (what's included, pricing, timeline, examples)
+- [x] Add "Дізнатись більше" button to each service card
+- [x] Connect buttons to open modals with corresponding service details
+- [x] Style modals in cyberpunk theme
+- [x] Test all 8 service modals
