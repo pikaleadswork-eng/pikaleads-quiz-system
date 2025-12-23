@@ -14,7 +14,7 @@ import WorkProcessSection from "@/components/agency/WorkProcessSection";
 import BlogSection from "@/components/agency/BlogSection";
 import { AboutUsSection } from "@/components/agency/AboutUsSection";
 import GuaranteesSection from "@/components/agency/GuaranteesSection";
-import TeamSection from "@/components/agency/TeamSection";
+
 import CaseStudiesSection from "@/components/CaseStudiesSection";
 import FAQSection from "@/components/agency/FAQSection";
 import Footer from "@/components/Footer";
@@ -736,8 +736,7 @@ export default function AgencyHome() {
       {/* Google Reviews Section */}
       <GoogleReviews />
 
-      {/* Team Section - After Why Us */}
-      <TeamSection />
+
 
       {/* Niches Section */}
       <NichesSection />
