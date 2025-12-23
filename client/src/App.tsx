@@ -76,6 +76,9 @@ import TermsOfService from "./pages/TermsOfService";
 import ContactPage from "./pages/ContactPage";
 import AdminCaseStudies from "./pages/AdminCaseStudies";
 import CaseStudyPage from "./pages/CaseStudyPage";
+import AgencyPrivacyPolicy from "./pages/agency/PrivacyPolicy";
+import AgencyCookiePolicy from "./pages/agency/CookiePolicy";
+import AgencyTermsOfService from "./pages/agency/TermsOfService";
 
 function Router() {
   return (
@@ -87,7 +90,9 @@ function Router() {
       <Route path="/case-studies/:slug" component={CaseStudyPage} />
       
       {/* Legal Pages (accessible from main site) */}
-      <Route path={"/privacy"} component={Privacy} />
+      <Route path={"/privacy"} component={AgencyPrivacyPolicy} />
+      <Route path={"/cookies"} component={AgencyCookiePolicy} />
+      <Route path={"/terms"} component={AgencyTermsOfService} />
       <Route path={"/contact"} component={Contact} />
       <Route path={"/contacts"} component={ContactPage} />
       <Route path={"/privacy-policy"} component={PrivacyPolicy} />
