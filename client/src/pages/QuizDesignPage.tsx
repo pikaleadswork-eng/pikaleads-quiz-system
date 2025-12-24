@@ -345,7 +345,8 @@ export default function QuizDesignPage() {
                     style={{
                       backgroundImage: settings.backgroundImage 
                         ? `url(${settings.backgroundImage})` 
-                        : "url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22%3E%3Cpath fill=%22%23a0aec0%22 d=%22M0 0h200v200H0z%22/%3E%3Cpath fill=%22%23cbd5e0%22 d=%22M50 50l50 30 50-30v70l-50 30-50-30z%22/%3E%3C/svg%3E')",
+                        : "none",
+                      backgroundColor: settings.backgroundImage ? "transparent" : "#e5e7eb"
                     }}
                   />
 
