@@ -143,7 +143,7 @@ export default function Home() {
         <div className="relative z-10">
           {/* Hero Section - 50/50 Layout */}
           <section className="container mx-auto px-4 py-16 md:py-24 min-h-[90vh] flex items-center">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center w-full">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center w-full">
               {/* Left Side - Text Content */}
               <div className="space-y-8">
                 {/* Badge */}
@@ -157,18 +157,15 @@ export default function Home() {
                 {/* Main Title */}
                 <h1 className="text-3xl md:text-4xl lg:text-5xl font-black leading-tight" style={{ fontFamily: 'Bungee, sans-serif' }}>
                   <span className="block text-white mb-2">
-                    {language === "uk" ? "КВІЗ СИСТЕМИ" : language === "ru" ? "КВИЗ СИСТЕМЫ" : "QUIZ SYSTEMS"}
+                    {language === "uk" ? "КВІЗ" : language === "ru" ? "КВИЗ" : "QUIZ"}
                   </span>
                   <span className="block text-white mb-2">
-                    {language === "uk" ? "ДЛЯ ВАШОГО" : language === "ru" ? "ДЛЯ ВАШЕГО" : "FOR YOUR"}
-                  </span>
-                  <span className="block text-white mb-2">
-                    {language === "uk" ? "БІЗНЕСУ, ЩО" : language === "ru" ? "БИЗНЕСА, ЧТО" : "BUSINESS THAT"}
+                    {language === "uk" ? "МАРКЕТИНГ" : language === "ru" ? "МАРКЕТИНГ" : "MARKETING"}
                   </span>
                   <span className="block text-[#FFD93D]" style={{
                     textShadow: '0 0 20px rgba(255,217,61,0.6), 0 0 40px rgba(255,217,61,0.4)'
                   }}>
-                    {language === "uk" ? "ПРАЦЮЮТЬ НА РЕЗУЛЬТАТ" : language === "ru" ? "РАБОТАЮТ НА РЕЗУЛЬТАТ" : "WORK FOR RESULTS"}
+                    {language === "uk" ? "ДЛЯ ВАШОГО БІЗНЕСУ" : language === "ru" ? "ДЛЯ ВАШЕГО БИЗНЕСА" : "FOR YOUR BUSINESS"}
                   </span>
                 </h1>
 
@@ -207,7 +204,7 @@ export default function Home() {
                   <img 
                     src="/pikachu-quiz-hero.png" 
                     alt="PikaLeads Mascot" 
-                    className="w-[400px] md:w-[450px] lg:w-[500px] h-auto object-contain animate-float drop-shadow-2xl"
+                    className="w-[500px] md:w-[550px] lg:w-[600px] h-auto object-contain animate-float drop-shadow-2xl"
                     style={{
                       filter: 'drop-shadow(0 0 40px rgba(255, 217, 61, 0.4))'
                     }}

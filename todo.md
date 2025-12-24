@@ -4453,3 +4453,12 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Ensure Pikachu scales properly on different screen sizes
 
 - [x] Update /quizzes page to match homepage styling (reduce font size, add mobile Pikachu)
+
+
+## Phase 159: Fix /quizzes Page Layout and Font Issues
+
+- [x] Fix Pikachu overlapping with text (increase gap between columns)
+- [x] Apply Bungee font to heading (currently using wrong font)
+- [x] Change heading text to "КВІЗ МАРКЕТИНГ ДЛЯ ВАШОГО БІЗНЕСУ" (shorter version)
+- [x] Increase Pikachu size for better visibility
+- [x] Verify font matches homepage "ОБИРАЙ НЕ АГЕНСТВО" style
