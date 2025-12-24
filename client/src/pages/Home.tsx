@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
 import { ArrowRight, Zap } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/lib/translations";
@@ -10,11 +11,14 @@ import { ClarityEvents } from "@/lib/clarityEvents";
 import { CyberpunkCard, NeonButton, GlitchText } from "@/components/cyberpunk";
 import CyberpunkNavigation from "@/components/CyberpunkNavigation";
 import { toast } from "sonner";
+import LeadFormModal from "@/components/LeadFormModal";
+import Footer from "@/components/Footer";
 
 
 export default function Home() {
   const { language } = useLanguage();
   const t = translations[language];
+  const [isLeadFormOpen, setIsLeadFormOpen] = useState(false);
 
   // Structured data for homepage
   const structuredData = {
@@ -181,18 +185,22 @@ export default function Home() {
                 {/* CTA Buttons */}
                 <div className="flex flex-col sm:flex-row gap-4">
                   <button
-                    className="px-8 py-4 bg-[#FFD93D] text-black font-bold rounded-lg hover:bg-[#FFD93D]/90 transition-all flex items-center justify-center gap-2 text-lg"
+                    className="px-8 py-4 bg-[#FFD93D] text-black font-bold rounded-lg hover:bg-[#FFD93D]/90 transition-all text-lg"
                     style={{
                       boxShadow: '0 0 30px rgba(255, 217, 61, 0.4)',
-                      fontFamily: 'Rajdhani, sans-serif'
+                      fontFamily: 'Rajdhani, sans-serif',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '0.5rem'
                     }}
                     onClick={() => {
                       ClarityEvents.trackCTAClick('Get Started', 'hero_cta');
-                      toast.info(language === "uk" ? "Функція в розробці" : language === "ru" ? "Функция в разработке" : "Feature coming soon");
+                      setIsLeadFormOpen(true);
                     }}
                   >
                     <Zap className="w-5 h-5" />
-                    {language === "uk" ? "ПОЧАТИ ЗАРАЗ" : language === "ru" ? "НАЧАТЬ СЕЙЧАС" : "GET STARTED"}
+                    <span>{language === "uk" ? "ПОЧАТИ ЗАРАЗ" : language === "ru" ? "НАЧАТЬ СЕЙЧАС" : "GET STARTED"}</span>
                   </button>
                 </div>
               </div>
@@ -237,25 +245,7 @@ export default function Home() {
                   </CyberpunkCard>
                 </div>
 
-                {/* Floating Card 3 - Top Left (moved to avoid Pikachu face) */}
-                <div 
-                  className="absolute top-32 left-4 w-56 animate-float"
-                  style={{ animationDelay: '2s' }}
-                >
-                  <CyberpunkCard variant="purple" glow={true} className="p-4">
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="w-8 h-8 rounded-lg bg-[#FFD93D]/20 flex items-center justify-center">
-                        <Zap className="w-5 h-5 text-[#FFD93D]" />
-                      </div>
-                      <div className="text-sm font-bold text-white uppercase">
-                        {language === "uk" ? "Performance" : language === "ru" ? "Performance" : "Performance"}
-                      </div>
-                    </div>
-                    <div className="text-xs text-gray-400">
-                      {language === "uk" ? "AI-керована оптимізація" : language === "ru" ? "AI-управляемая оптимизация" : "AI-Driven Optimization"}
-                    </div>
-                  </CyberpunkCard>
-                </div>
+
 
                 {/* Floating Card 4 - Bottom Right */}
                 <div 
@@ -340,33 +330,19 @@ export default function Home() {
           </section>
 
 
-          {/* CTA Section */}
-          <section className="container mx-auto px-4 py-16 text-center">
-            <CyberpunkCard variant="purple" glow={true} className="max-w-3xl mx-auto p-12">
-              <h3 className="text-3xl md:text-4xl font-black mb-6 text-[#FFD93D] neon-glow-green">
-                {language === "uk" ? "ГОТОВІ ЗБІЛЬШИТИ ПРОДАЖІ?" : language === "ru" ? "ГОТОВЫ УВЕЛИЧИТЬ ПРОДАЖИ?" : "READY TO INCREASE SALES?"}
-              </h3>
-              <p className="text-gray-300 text-lg mb-8">
-                {language === "uk" 
-                  ? "Пройдіть квіз та отримайте персональну стратегію для вашого бізнесу"
-                  : language === "ru"
-                  ? "Пройдите квиз и получите персональную стратегию для вашего бизнеса"
-                  : "Take the quiz and get a personalized strategy for your business"}
-              </p>
-              <NeonButton 
-                variant="green" 
-                size="lg"
-                className="bg-[#FFD93D] text-black border-[#FFD93D] hover:bg-[#FFD93D]/90 text-xl px-12 py-6 whitespace-nowrap"
-              >
-                <span className="inline-flex items-center gap-3">
-                  <Zap className="w-6 h-6" />
-                  {language === "uk" ? "ПОЧАТИ ЗАРАЗ" : language === "ru" ? "НАЧАТЬ СЕЙЧАС" : "START NOW"}
-                </span>
-              </NeonButton>
-            </CyberpunkCard>
-          </section>
+
         </div>
       </div>
+
+      {/* Footer */}
+      <Footer />
+
+      {/* Lead Form Modal */}
+      <LeadFormModal 
+        isOpen={isLeadFormOpen}
+        onClose={() => setIsLeadFormOpen(false)}
+        formType="consultation"
+      />
     </>
   );
 }

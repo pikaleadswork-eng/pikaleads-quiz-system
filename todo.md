@@ -4470,3 +4470,13 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Move PERFORMANCE card away from Pikachu's face (currently overlapping)
 - [x] Investigate why same Home.tsx component renders different fonts on / vs /quizzes
 - [x] Ensure "КВІЗ МАРКЕТИНГ" uses exact same font as "ОБИРАЙ НЕ АГЕНСТВО"
+
+
+## Phase 161: Fix /quizzes Page Issues (COMPLETED)
+
+- [x] Remove PERFORMANCE floating card completely
+- [x] Remove neon "Готові збільшити продажі" card (too much)
+- [x] Add LeadFormModal popup to "ПОЧАТИ ЗАРАЗ" button
+- [x] Fix button text alignment (center the text properly)
+- [x] Add Footer component to /quizzes page
+- [x] Verify footer displays correctly with all links
