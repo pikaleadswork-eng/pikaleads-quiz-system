@@ -4480,3 +4480,12 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Fix button text alignment (center the text properly)
 - [x] Add Footer component to /quizzes page
 - [x] Verify footer displays correctly with all links
+
+
+
+## Phase 162: CRITICAL FIXES - Footer Logo & Button Popup (COMPLETED)
+
+- [x] Remove duplicate "PIKA LEADS" text from Footer component (keep only logo image)
+- [x] Add LeadFormModal popup to "ПОЧАТИ ЗАРАЗ" button on /quizzes page
+- [x] Test popup opens correctly when clicking button
+- [x] Verify footer logo displays without text duplication
