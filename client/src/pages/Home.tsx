@@ -60,7 +60,7 @@ export default function Home() {
             className="h-full flex flex-col cursor-pointer group"
           >
             <div className="flex-grow mb-6">
-              <h3 className="text-2xl font-bold mb-3 text-[#FFD93D] group-hover:neon-glow-green transition-all uppercase">
+              <h3 className="text-2xl font-bold mb-3 text-[#FFD93D] group-hover:neon-glow-green transition-all uppercase" style={{ fontFamily: 'Bungee, sans-serif' }}>
                 {quiz.name}
               </h3>
               <p className="text-muted-foreground font-normal leading-relaxed">
@@ -202,9 +202,16 @@ export default function Home() {
 
               {/* Right Side - Visual with Floating Cards */}
               <div className="relative h-[600px] hidden lg:block">
-                {/* Placeholder for 3D Visual/Pikachu */}
+                {/* Pikachu Hero Image */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-80 h-80 rounded-full bg-gradient-to-br from-[#5B2E90]/20 to-[#FFD93D]/20 blur-3xl" />
+                  <img 
+                    src="/pikachu-quiz-hero.png" 
+                    alt="PikaLeads Mascot" 
+                    className="w-[500px] h-auto object-contain animate-float drop-shadow-2xl"
+                    style={{
+                      filter: 'drop-shadow(0 0 40px rgba(255, 217, 61, 0.4))'
+                    }}
+                  />
                 </div>
 
                 {/* Floating Card 1 - Top Left */}
