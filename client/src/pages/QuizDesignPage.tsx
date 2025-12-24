@@ -179,13 +179,13 @@ export default function QuizDesignPage() {
       {/* Main Content */}
       <div className="flex-1 flex overflow-hidden">
         {/* Preview Panel (Left - 70%) - Fixed, no scroll */}
-        <div className={`flex-1 p-6 flex items-center justify-center bg-zinc-900/50 ${isMobilePreview ? '' : 'overflow-hidden'}`}>
+        <div className="flex-1 p-6 flex items-center justify-center bg-zinc-900/50 overflow-hidden">
           {/* Mobile Preview Wrapper */}
           <div 
             className={`transition-all duration-300 ${
               isMobilePreview 
-                ? "w-[375px] h-[667px] max-h-[667px] rounded-[40px] border-8 border-zinc-700 shadow-2xl overflow-hidden bg-white flex-shrink-0" 
-                : "w-full h-full"
+                ? "w-[375px] h-[667px] max-h-[667px] rounded-[40px] border-8 border-zinc-700 shadow-2xl overflow-y-auto bg-white flex-shrink-0" 
+                : "w-full h-full max-h-full overflow-hidden"
             }`}
           >
           {activeTab === "start" && (
@@ -279,17 +279,16 @@ export default function QuizDesignPage() {
 
               {/* STANDARD LAYOUT - 50/50 split */}
               {settings.layoutType === "standard" && (
-                <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 flex">
+                <div className="w-full h-full bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 flex">
                   {/* Swap order based on alignment: right = image first, left/center = text first */}
                   {settings.alignment === "right" && (
                     <>
-                      {/* Image on LEFT when alignment is RIGHT */}
-                      <div className="hidden lg:flex flex-1 items-center justify-center p-8 relative overflow-hidden">
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent to-gray-900/50 z-10" />
+                      {/* Image on LEFT when alignment is RIGHT - fills entire left half */}
+                      <div className="hidden lg:flex flex-1 relative overflow-hidden">
                         <img 
                           src={settings.backgroundImage || "url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22%3E%3Cpath fill=%22%23a0aec0%22 d=%22M0 0h200v200H0z%22/%3E%3Cpath fill=%22%23cbd5e0%22 d=%22M50 50l50 30 50-30v70l-50 30-50-30z%22/%3E%3C/svg%3E')"}
                           alt="Quiz illustration"
-                          className="w-full h-full object-cover rounded-3xl shadow-2xl"
+                          className="w-full h-full object-cover"
                         />
                       </div>
                       {/* Text on RIGHT */}
@@ -432,13 +431,12 @@ export default function QuizDesignPage() {
                         </div>
                       </div>
                       
-                      {/* Image on RIGHT */}
-                      <div className="hidden lg:flex flex-1 items-center justify-center p-8 relative overflow-hidden">
-                        <div className="absolute inset-0 bg-gradient-to-l from-transparent to-gray-900/50 z-10" />
+                      {/* Image on RIGHT - fills entire right half */}
+                      <div className="hidden lg:flex flex-1 relative overflow-hidden">
                         <img 
                           src={settings.backgroundImage}
                           alt="Quiz illustration"
-                          className="w-full h-full object-cover rounded-3xl shadow-2xl"
+                          className="w-full h-full object-cover"
                         />
                       </div>
                     </>
