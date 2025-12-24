@@ -616,3 +616,15 @@ Copy exact CSS classes and styles from QuizPage.tsx to QuizDesignPage.tsx previe
 - [x] Synchronize quiz name and description fields with quizzes table
 - [x] Add quiz info section at top of settings panel
 - [x] Test changes across all 16 quiz templates
+
+## Phase 172: URGENT - Mobile Preview Adaptation & Fixes
+- [x] Remove rounded corners from mobile preview image (currently has border-radius)
+- [x] Add TRUE mobile adaptation - vertical stack layout for mobile preview
+- [x] Mobile layout: image on top (full width), text below (not 50/50)
+- [x] Reduce font sizes for mobile (title, subtitle, button)
+- [x] Make text fully visible on mobile (no overflow)
+- [ ] Add font size sliders for title in editor (titleFontSize)
+- [ ] Add font size sliders for subtitle in editor (subtitleFontSize)
+- [ ] Update schema to store titleFontSize and subtitleFontSize
+- [x] Apply responsive breakpoints to both preview and published quiz
+- [x] Test mobile preview in editor (works correctly with vertical stack)

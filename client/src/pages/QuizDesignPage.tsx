@@ -219,7 +219,7 @@ export default function QuizDesignPage() {
               {/* BACKGROUND LAYOUT - Fullscreen image with text overlay */}
               {settings.layoutType === "background" && (
                 <div 
-                  className="relative w-full h-full rounded-lg overflow-hidden"
+                  className="relative w-full h-full overflow-hidden"
                   style={{
                     backgroundImage: settings.backgroundImage 
                       ? `url(${settings.backgroundImage})` 
@@ -303,25 +303,25 @@ export default function QuizDesignPage() {
                 </div>
               )}
 
-              {/* STANDARD LAYOUT - 50/50 split */}
+              {/* STANDARD LAYOUT - 50/50 split on desktop, vertical stack on mobile */}
               {settings.layoutType === "standard" && (
-                <div className="w-full h-full bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 flex">
+                <div className="w-full h-full bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 flex flex-col lg:flex-row">
                   {/* Swap order based on alignment: right = image first, left/center = text first */}
                   {settings.alignment === "right" && (
                     <>
-                      {/* Image on LEFT when alignment is RIGHT - fills entire left half */}
-                      <div className="hidden lg:flex flex-1 relative overflow-hidden">
+                      {/* Image on TOP for mobile, LEFT for desktop when alignment is RIGHT */}
+                      <div className="flex flex-1 relative overflow-hidden order-1 lg:order-1 h-64 lg:h-auto">
                         <img 
                           src={settings.backgroundImage || "url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22%3E%3Cpath fill=%22%23a0aec0%22 d=%22M0 0h200v200H0z%22/%3E%3Cpath fill=%22%23cbd5e0%22 d=%22M50 50l50 30 50-30v70l-50 30-50-30z%22/%3E%3C/svg%3E')"}
                           alt="Quiz illustration"
                           className="w-full h-full object-cover"
                         />
                       </div>
-                      {/* Text on RIGHT */}
-                      <div className="flex-1 flex items-center justify-end p-8 lg:p-16">
-                        <div className="max-w-xl text-right">
+                      {/* Text on BOTTOM for mobile, RIGHT for desktop */}
+                      <div className="flex-1 flex items-center justify-center lg:justify-end p-6 lg:p-16 order-2 lg:order-2">
+                        <div className="max-w-xl text-center lg:text-right">
                       <h1 
-                        className="text-4xl md:text-5xl lg:text-6xl mb-6 leading-tight"
+                        className="text-2xl md:text-4xl lg:text-6xl mb-4 lg:mb-6 leading-tight"
                         style={{ 
                           fontFamily: settings.fontFamily || 'Inter',
                           color: settings.titleColor || '#FFFFFF',
@@ -335,7 +335,7 @@ export default function QuizDesignPage() {
                         {getTextForLanguage(settings.title, language as SupportedLanguage || "uk")}
                       </h1>
                       <p 
-                        className="text-xl md:text-2xl mb-10 leading-relaxed"
+                        className="text-base md:text-xl lg:text-2xl mb-6 lg:mb-10 leading-relaxed"
                         style={{ 
                           fontFamily: settings.fontFamily || 'Inter',
                           color: settings.subtitleColor || '#FFFFFF',
@@ -351,7 +351,7 @@ export default function QuizDesignPage() {
 
                       {/* Bonus */}
                       {settings.bonusEnabled && settings.bonusText && (
-                        <div className="flex items-center justify-end gap-3 bg-gradient-to-r from-yellow-400 to-orange-400 px-5 py-3 rounded-xl mb-6 shadow-md">
+                        <div className="flex items-center justify-center lg:justify-end gap-3 bg-gradient-to-r from-yellow-400 to-orange-400 px-4 lg:px-5 py-2 lg:py-3 rounded-xl mb-4 lg:mb-6 shadow-md">
                           <span className="text-xl">🎁</span>
                           <p className="text-white font-bold">{settings.bonusText}</p>
                         </div>
@@ -370,7 +370,7 @@ export default function QuizDesignPage() {
                       )}
 
                       <button 
-                        className="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-black font-bold px-12 py-6 text-xl shadow-lg shadow-yellow-500/30 transform hover:scale-105 transition-all duration-300"
+                        className="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-black font-bold px-8 lg:px-12 py-4 lg:py-6 text-base lg:text-xl shadow-lg shadow-yellow-500/30 transform hover:scale-105 transition-all duration-300"
                         style={{
                           borderRadius: `${settings.buttonRadiusPx || 25}px`
                         }}
@@ -385,15 +385,15 @@ export default function QuizDesignPage() {
                   {/* Normal order for left/center alignment */}
                   {(settings.alignment === "left" || settings.alignment === "center") && (
                     <>
-                      {/* Text on LEFT */}
-                      <div className={`flex-1 flex items-center p-8 lg:p-16 ${
+                      {/* Text on TOP for mobile, LEFT for desktop */}
+                      <div className={`flex-1 flex items-center p-6 lg:p-16 order-2 lg:order-1 ${
                         settings.alignment === "left" ? "justify-start" : "justify-center"
                       }`}>
                         <div className={`max-w-xl ${
                           settings.alignment === "left" ? "text-left" : "text-center"
                         }`}>
                           <h1 
-                            className="text-4xl md:text-5xl lg:text-6xl mb-6 leading-tight"
+                            className="text-2xl md:text-4xl lg:text-6xl mb-4 lg:mb-6 leading-tight"
                             style={{ 
                               fontFamily: settings.fontFamily || 'Inter',
                               color: settings.titleColor || '#FFFFFF',
@@ -407,7 +407,7 @@ export default function QuizDesignPage() {
                             {getTextForLanguage(settings.title, language as SupportedLanguage || "uk")}
                           </h1>
                           <p 
-                            className="text-xl md:text-2xl mb-10 leading-relaxed"
+                            className="text-base md:text-xl lg:text-2xl mb-6 lg:mb-10 leading-relaxed"
                             style={{ 
                               fontFamily: settings.fontFamily || 'Inter',
                               color: settings.subtitleColor || '#FFFFFF',
@@ -447,7 +447,7 @@ export default function QuizDesignPage() {
                           )}
 
                           <button 
-                            className="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-black font-bold px-12 py-6 text-xl shadow-lg shadow-yellow-500/30 transform hover:scale-105 transition-all duration-300"
+                            className="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-black font-bold px-8 lg:px-12 py-4 lg:py-6 text-base lg:text-xl shadow-lg shadow-yellow-500/30 transform hover:scale-105 transition-all duration-300"
                             style={{
                               borderRadius: `${settings.buttonRadiusPx || 25}px`
                             }}
@@ -457,8 +457,8 @@ export default function QuizDesignPage() {
                         </div>
                       </div>
                       
-                      {/* Image on RIGHT - fills entire right half */}
-                      <div className="hidden lg:flex flex-1 relative overflow-hidden">
+                      {/* Image on TOP for mobile, RIGHT for desktop - fills entire right half */}
+                      <div className="flex flex-1 relative overflow-hidden order-1 lg:order-2 h-64 lg:h-auto">
                         <img 
                           src={settings.backgroundImage}
                           alt="Quiz illustration"
