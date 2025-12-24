@@ -207,7 +207,9 @@ export default function QuizPage() {
     const titleColor = designSettings?.titleColor || "#FFFFFF";
     const subtitleColor = designSettings?.subtitleColor || "#FFFFFF";
     const titleWeight = designSettings?.titleWeight || "bold";
+    const titleFontSize = designSettings?.titleFontSize || 48;
     const subtitleWeight = designSettings?.subtitleWeight || "normal";
+    const subtitleFontSize = designSettings?.subtitleFontSize || 20;
     const buttonRadiusPx = designSettings?.buttonRadiusPx || 25;
     const bonusEnabled = designSettings?.bonusEnabled;
     const bonusText = designSettings?.bonusText;
@@ -242,13 +244,13 @@ export default function QuizPage() {
               <div className="max-w-xl text-right">
                 <h1 
                   className="text-3xl md:text-4xl lg:text-5xl mb-6 leading-tight"
-                  style={{ fontFamily, color: titleColor, fontWeight: getFontWeight(titleWeight), textTransform: 'none' }}
+                  style={{ fontFamily, color: titleColor, fontSize: `${titleFontSize}px`, fontWeight: getFontWeight(titleWeight), textTransform: 'none' }}
                 >
                   {title}
                 </h1>
                 <p 
                   className="text-lg md:text-xl mb-10 leading-relaxed"
-                  style={{ fontFamily, color: subtitleColor, fontWeight: getFontWeight(subtitleWeight) }}
+                  style={{ fontFamily, color: subtitleColor, fontSize: `${subtitleFontSize}px`, fontWeight: getFontWeight(subtitleWeight) }}
                 >
                   {subtitle}
                 </p>
@@ -298,13 +300,13 @@ export default function QuizPage() {
               }`}>
                 <h1 
                   className="text-3xl md:text-4xl lg:text-5xl mb-6 leading-tight"
-                  style={{ fontFamily, color: titleColor, fontWeight: getFontWeight(titleWeight), textTransform: 'none' }}
+                  style={{ fontFamily, color: titleColor, fontSize: `${titleFontSize}px`, fontWeight: getFontWeight(titleWeight), textTransform: 'none' }}
                 >
                   {title}
                 </h1>
                 <p 
                   className="text-lg md:text-xl mb-10 leading-relaxed"
-                  style={{ fontFamily, color: subtitleColor, fontWeight: getFontWeight(subtitleWeight) }}
+                  style={{ fontFamily, color: subtitleColor, fontSize: `${subtitleFontSize}px`, fontWeight: getFontWeight(subtitleWeight) }}
                 >
                   {subtitle}
                 </p>

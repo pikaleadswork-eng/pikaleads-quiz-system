@@ -32,6 +32,27 @@
 - [x] Editor preview showing incorrect rendering compared to published quiz - FIXED: Preview now matches published layout
 - [x] Font selector in editor doesn't change actual font in preview or published quiz - FIXED: All fonts now work
 
+## Phase 171: CRITICAL - Font Synchronization & Font Size Sliders
+
+**USER REQUIREMENTS:**
+- [ ] Fix font synchronization - published quiz shows different font than editor
+- [ ] Add titleFontSize slider (16-96px) to editor
+- [ ] Add subtitleFontSize slider (12-48px) to editor
+- [ ] Add breakpoint preview buttons (Mobile 375px / Tablet 768px / Desktop)
+- [ ] Test on real mobile device after publishing
+
+**TECHNICAL FIXES:**
+- [x] Check if fontFamily from quiz_design_settings is being applied to QuizPage.tsx
+- [x] Verify Google Fonts loading on published page
+- [x] Add titleFontSize field to quiz_design_settings schema (default: 48)
+- [x] Add subtitleFontSize field to quiz_design_settings schema (default: 20)
+- [x] Add font size sliders to QuizSettingsPanel
+- [x] Update quizDesign.save tRPC procedure to save font sizes
+- [x] Apply font sizes to QuizDesignPage preview
+- [x] Apply font sizes to QuizPage.tsx published quiz
+- [x] Add preview mode selector with device frames
+- [x] Update preview container width based on selected breakpoint
+
 ## Phase 169: CRITICAL - Button Color Not Reactive & Right Side Needs Black Background
 
 **USER REQUIREMENTS:**

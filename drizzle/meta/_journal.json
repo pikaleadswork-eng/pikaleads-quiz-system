@@ -365,6 +365,13 @@
       "when": 1766596500537,
       "tag": "0051_outstanding_captain_midlands",
       "breakpoints": true
+    },
+    {
+      "idx": 52,
+      "version": "5",
+      "when": 1766614794902,
+      "tag": "0052_brainy_sentry",
+      "breakpoints": true
     }
   ]
 }

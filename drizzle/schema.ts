@@ -785,9 +785,11 @@ export const quizDesignSettings = mysqlTable("quiz_design_settings", {
   titleText: text("titleText"),
   titleColor: varchar("titleColor", { length: 7 }).default("#FFFFFF"),
   titleWeight: varchar("titleWeight", { length: 20 }).default("bold"),
+  titleFontSize: int("titleFontSize").default(48), // Font size in pixels (16-96)
   subtitleText: text("subtitleText"),
   subtitleColor: varchar("subtitleColor", { length: 7 }).default("#FFFFFF"),
   subtitleWeight: varchar("subtitleWeight", { length: 20 }).default("normal"),
+  subtitleFontSize: int("subtitleFontSize").default(20), // Font size in pixels (12-48)
   buttonText: varchar("buttonText", { length: 100 }),
   buttonRadiusPx: int("buttonRadiusPx").default(25),
   bullets: text("bullets"), // JSON array of bullet points

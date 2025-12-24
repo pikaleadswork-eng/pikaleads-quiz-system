@@ -98,7 +98,9 @@ export default function QuizDesignPage() {
     titleColor: "#FFFFFF",
     subtitleColor: "#FFFFFF",
     titleWeight: "bold" as "normal" | "medium" | "semibold" | "bold" | "extrabold",
+    titleFontSize: 48,
     subtitleWeight: "normal" as "normal" | "medium" | "semibold" | "bold" | "extrabold",
+    subtitleFontSize: 20,
     // Contact form settings
     contactFormTitle: '{"uk":"Залиште свої контакти","ru":"Оставьте свои контакты","en":"Leave your contacts","pl":"Zostaw swoje kontakty","de":"Hinterlassen Sie Ihre Kontakte"}',
     contactFormSubtitle: '{"uk":"Ми зв\'яжемося з вами найближчим часом","ru":"Мы свяжемся с вами в ближайшее время","en":"We will contact you shortly","pl":"Skontaktujemy się z Tobą wkrótce","de":"Wir werden uns in Kürze bei Ihnen melden"}',
@@ -135,7 +137,9 @@ export default function QuizDesignPage() {
         titleColor: savedSettings.titleColor || "#FFFFFF",
         subtitleColor: savedSettings.subtitleColor || "#FFFFFF",
         titleWeight: (savedSettings.titleWeight as "normal" | "medium" | "semibold" | "bold" | "extrabold") || "bold",
+        titleFontSize: savedSettings.titleFontSize || 48,
         subtitleWeight: (savedSettings.subtitleWeight as "normal" | "medium" | "semibold" | "bold" | "extrabold") || "normal",
+        subtitleFontSize: savedSettings.subtitleFontSize || 20,
         // Contact form settings
         contactFormTitle: savedSettings.contactFormTitle || settings.contactFormTitle,
         contactFormSubtitle: savedSettings.contactFormSubtitle || settings.contactFormSubtitle,
@@ -179,18 +183,33 @@ export default function QuizDesignPage() {
           </button>
         ))}
         
-        {/* Mobile Preview Toggle */}
-        <button
-          onClick={() => setIsMobilePreview(!isMobilePreview)}
-          className={`ml-auto px-4 py-2 rounded-lg flex items-center gap-2 transition-colors ${
-            isMobilePreview 
-              ? "bg-purple-600 text-white" 
-              : "bg-zinc-700 text-white hover:bg-zinc-600"
-          }`}
-        >
-          <span>📱</span>
-          Мобільний
-        </button>
+        {/* Breakpoint Preview Selector */}
+        <div className="ml-auto flex items-center gap-2 bg-zinc-800 rounded-lg p-1">
+          <button
+            onClick={() => setIsMobilePreview(false)}
+            className={`px-3 py-1.5 rounded flex items-center gap-1.5 text-sm transition-colors ${
+              !isMobilePreview 
+                ? "bg-purple-600 text-white" 
+                : "text-zinc-400 hover:text-white"
+            }`}
+            title="Desktop (1920px)"
+          >
+            <span>🖥️</span>
+            Desktop
+          </button>
+          <button
+            onClick={() => setIsMobilePreview(true)}
+            className={`px-3 py-1.5 rounded flex items-center gap-1.5 text-sm transition-colors ${
+              isMobilePreview 
+                ? "bg-purple-600 text-white" 
+                : "text-zinc-400 hover:text-white"
+            }`}
+            title="Mobile (375px)"
+          >
+            <span>📱</span>
+            Mobile
+          </button>
+        </div>
         
         {/* Settings Toggle Button */}
         <button
@@ -325,6 +344,7 @@ export default function QuizDesignPage() {
                         style={{ 
                           fontFamily: settings.fontFamily || 'Inter',
                           color: settings.titleColor || '#FFFFFF',
+                          fontSize: `${settings.titleFontSize || 48}px`,
                           fontWeight: settings.titleWeight === 'normal' ? 400 :
                                      settings.titleWeight === 'medium' ? 500 :
                                      settings.titleWeight === 'semibold' ? 600 :
@@ -339,6 +359,7 @@ export default function QuizDesignPage() {
                         style={{ 
                           fontFamily: settings.fontFamily || 'Inter',
                           color: settings.subtitleColor || '#FFFFFF',
+                          fontSize: `${settings.subtitleFontSize || 20}px`,
                           fontWeight: settings.subtitleWeight === 'normal' ? 400 :
                                      settings.subtitleWeight === 'medium' ? 500 :
                                      settings.subtitleWeight === 'semibold' ? 600 :
@@ -397,6 +418,7 @@ export default function QuizDesignPage() {
                             style={{ 
                               fontFamily: settings.fontFamily || 'Inter',
                               color: settings.titleColor || '#FFFFFF',
+                              fontSize: `${settings.titleFontSize || 48}px`,
                               fontWeight: settings.titleWeight === 'normal' ? 400 :
                                          settings.titleWeight === 'medium' ? 500 :
                                          settings.titleWeight === 'semibold' ? 600 :
@@ -411,6 +433,7 @@ export default function QuizDesignPage() {
                             style={{ 
                               fontFamily: settings.fontFamily || 'Inter',
                               color: settings.subtitleColor || '#FFFFFF',
+                              fontSize: `${settings.subtitleFontSize || 20}px`,
                               fontWeight: settings.subtitleWeight === 'normal' ? 400 :
                                          settings.subtitleWeight === 'medium' ? 500 :
                                          settings.subtitleWeight === 'semibold' ? 600 :

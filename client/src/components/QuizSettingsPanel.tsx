@@ -77,7 +77,9 @@ interface QuizSettingsPanelProps {
     titleColor?: string;
     subtitleColor?: string;
     titleWeight?: "normal" | "medium" | "semibold" | "bold" | "extrabold";
+    titleFontSize?: number;
     subtitleWeight?: "normal" | "medium" | "semibold" | "bold" | "extrabold";
+    subtitleFontSize?: number;
   };
   onSettingsChange: (key: string, value: any) => void;
   quizId: number;
@@ -530,6 +532,18 @@ export default function QuizSettingsPanel({
                 </SelectContent>
               </Select>
             </div>
+            <div className="flex items-center gap-2">
+              <Label className="text-sm text-zinc-300 min-w-[100px]">Розмір</Label>
+              <input
+                type="range"
+                min="16"
+                max="96"
+                value={settings.titleFontSize || 48}
+                onChange={(e) => onSettingsChange("titleFontSize", parseInt(e.target.value))}
+                className="flex-1"
+              />
+              <span className="text-sm text-zinc-400 min-w-[50px]">{settings.titleFontSize || 48}px</span>
+            </div>
           </div>
 
           {/* Subtitle Styling */}
@@ -556,6 +570,18 @@ export default function QuizSettingsPanel({
                   ))}
                 </SelectContent>
               </Select>
+            </div>
+            <div className="flex items-center gap-2">
+              <Label className="text-sm text-zinc-300 min-w-[100px]">Розмір</Label>
+              <input
+                type="range"
+                min="12"
+                max="48"
+                value={settings.subtitleFontSize || 20}
+                onChange={(e) => onSettingsChange("subtitleFontSize", parseInt(e.target.value))}
+                className="flex-1"
+              />
+              <span className="text-sm text-zinc-400 min-w-[50px]">{settings.subtitleFontSize || 20}px</span>
             </div>
           </div>
         </div>
@@ -902,9 +928,11 @@ function SaveSettingsButton({ quizId, quizName, quizDescription, settings }: { q
       titleText: settings.title,
       titleColor: settings.titleColor,
       titleWeight: settings.titleWeight,
+      titleFontSize: settings.titleFontSize,
       subtitleText: settings.subtitle,
       subtitleColor: settings.subtitleColor,
       subtitleWeight: settings.subtitleWeight,
+      subtitleFontSize: settings.subtitleFontSize,
       buttonText: settings.buttonText,
       bonusEnabled: settings.bonusEnabled,
       bonusText: settings.bonusText,
