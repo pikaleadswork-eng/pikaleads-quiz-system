@@ -507,6 +507,49 @@ export default function QuizSettingsPanel({
             </Select>
           </div>
 
+          {/* Font Size Presets */}
+          <div className="space-y-2">
+            <Label className="text-zinc-400 text-xs">Швидкі пресети розміру</Label>
+            <div className="grid grid-cols-4 gap-2">
+              <button
+                onClick={() => {
+                  onSettingsChange("titleFontSize", 32);
+                  onSettingsChange("subtitleFontSize", 16);
+                }}
+                className="px-3 py-2 bg-zinc-700 hover:bg-zinc-600 text-white rounded text-xs transition-colors"
+              >
+                Small<br/><span className="text-zinc-400">32/16</span>
+              </button>
+              <button
+                onClick={() => {
+                  onSettingsChange("titleFontSize", 48);
+                  onSettingsChange("subtitleFontSize", 20);
+                }}
+                className="px-3 py-2 bg-zinc-700 hover:bg-zinc-600 text-white rounded text-xs transition-colors"
+              >
+                Medium<br/><span className="text-zinc-400">48/20</span>
+              </button>
+              <button
+                onClick={() => {
+                  onSettingsChange("titleFontSize", 64);
+                  onSettingsChange("subtitleFontSize", 28);
+                }}
+                className="px-3 py-2 bg-zinc-700 hover:bg-zinc-600 text-white rounded text-xs transition-colors"
+              >
+                Large<br/><span className="text-zinc-400">64/28</span>
+              </button>
+              <button
+                onClick={() => {
+                  onSettingsChange("titleFontSize", 80);
+                  onSettingsChange("subtitleFontSize", 36);
+                }}
+                className="px-3 py-2 bg-zinc-700 hover:bg-zinc-600 text-white rounded text-xs transition-colors"
+              >
+                XL<br/><span className="text-zinc-400">80/36</span>
+              </button>
+            </div>
+          </div>
+
           {/* Title Styling */}
           <div className="space-y-2">
             <Label className="text-zinc-400 text-xs">Заголовок</Label>
@@ -534,14 +577,23 @@ export default function QuizSettingsPanel({
             </div>
             <div className="flex items-center gap-2">
               <Label className="text-sm text-zinc-300 min-w-[100px]">Розмір</Label>
-              <input
-                type="range"
-                min="16"
-                max="96"
-                value={settings.titleFontSize || 48}
-                onChange={(e) => onSettingsChange("titleFontSize", parseInt(e.target.value))}
-                className="flex-1"
-              />
+              <div className="flex items-center gap-2 flex-1">
+                <span 
+                  className="text-zinc-300 font-bold transition-all"
+                  style={{ fontSize: `${Math.max(12, (settings.titleFontSize || 48) / 3)}px` }}
+                  title="Попередній перегляд розміру"
+                >
+                  Aa
+                </span>
+                <input
+                  type="range"
+                  min="16"
+                  max="96"
+                  value={settings.titleFontSize || 48}
+                  onChange={(e) => onSettingsChange("titleFontSize", parseInt(e.target.value))}
+                  className="flex-1"
+                />
+              </div>
               <span className="text-sm text-zinc-400 min-w-[50px]">{settings.titleFontSize || 48}px</span>
             </div>
           </div>
@@ -573,14 +625,23 @@ export default function QuizSettingsPanel({
             </div>
             <div className="flex items-center gap-2">
               <Label className="text-sm text-zinc-300 min-w-[100px]">Розмір</Label>
-              <input
-                type="range"
-                min="12"
-                max="48"
-                value={settings.subtitleFontSize || 20}
-                onChange={(e) => onSettingsChange("subtitleFontSize", parseInt(e.target.value))}
-                className="flex-1"
-              />
+              <div className="flex items-center gap-2 flex-1">
+                <span 
+                  className="text-zinc-300 transition-all"
+                  style={{ fontSize: `${Math.max(10, (settings.subtitleFontSize || 20) / 1.5)}px` }}
+                  title="Попередній перегляд розміру"
+                >
+                  Aa
+                </span>
+                <input
+                  type="range"
+                  min="12"
+                  max="48"
+                  value={settings.subtitleFontSize || 20}
+                  onChange={(e) => onSettingsChange("subtitleFontSize", parseInt(e.target.value))}
+                  className="flex-1"
+                />
+              </div>
               <span className="text-sm text-zinc-400 min-w-[50px]">{settings.subtitleFontSize || 20}px</span>
             </div>
           </div>

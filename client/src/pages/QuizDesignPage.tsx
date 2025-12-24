@@ -16,7 +16,7 @@ export default function QuizDesignPage() {
 
   const [showSettings, setShowSettings] = useState(true);
   const [activeTab, setActiveTab] = useState<"start" | "questions" | "contacts" | "results" | "thanks">("start");
-  const [isMobilePreview, setIsMobilePreview] = useState(false);
+  const [previewMode, setPreviewMode] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
   const [questions, setQuestions] = useState<QuizQuestion[]>([]);
   const [quizName, setQuizName] = useState("");
   const [quizDescription, setQuizDescription] = useState("");
@@ -186,9 +186,9 @@ export default function QuizDesignPage() {
         {/* Breakpoint Preview Selector */}
         <div className="ml-auto flex items-center gap-2 bg-zinc-800 rounded-lg p-1">
           <button
-            onClick={() => setIsMobilePreview(false)}
+            onClick={() => setPreviewMode('desktop')}
             className={`px-3 py-1.5 rounded flex items-center gap-1.5 text-sm transition-colors ${
-              !isMobilePreview 
+              previewMode === 'desktop'
                 ? "bg-purple-600 text-white" 
                 : "text-zinc-400 hover:text-white"
             }`}
@@ -198,9 +198,21 @@ export default function QuizDesignPage() {
             Desktop
           </button>
           <button
-            onClick={() => setIsMobilePreview(true)}
+            onClick={() => setPreviewMode('tablet')}
             className={`px-3 py-1.5 rounded flex items-center gap-1.5 text-sm transition-colors ${
-              isMobilePreview 
+              previewMode === 'tablet'
+                ? "bg-purple-600 text-white" 
+                : "text-zinc-400 hover:text-white"
+            }`}
+            title="Tablet (768px)"
+          >
+            <span>📱</span>
+            Tablet
+          </button>
+          <button
+            onClick={() => setPreviewMode('mobile')}
+            className={`px-3 py-1.5 rounded flex items-center gap-1.5 text-sm transition-colors ${
+              previewMode === 'mobile'
                 ? "bg-purple-600 text-white" 
                 : "text-zinc-400 hover:text-white"
             }`}
@@ -225,12 +237,14 @@ export default function QuizDesignPage() {
       <div className="flex-1 flex overflow-hidden">
         {/* Preview Panel (Left - 70%) - Fixed, no scroll */}
         <div className="flex-1 p-6 flex items-center justify-center bg-zinc-900/50 overflow-hidden">
-          {/* Mobile Preview Wrapper */}
+          {/* Preview Wrapper with Device Frames */}
           <div 
             className={`transition-all duration-300 ${
-              isMobilePreview 
+              previewMode === 'mobile'
                 ? "w-[375px] h-[667px] max-h-[667px] rounded-[40px] border-8 border-zinc-700 shadow-2xl overflow-y-auto bg-white flex-shrink-0" 
-                : "w-full h-full max-h-full overflow-hidden"
+                : previewMode === 'tablet'
+                  ? "w-[768px] h-[1024px] max-h-[90vh] rounded-[20px] border-4 border-zinc-700 shadow-2xl overflow-y-auto bg-white flex-shrink-0"
+                  : "w-full h-full max-h-full overflow-hidden"
             }`}
           >
           {activeTab === "start" && (

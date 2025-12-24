@@ -32,13 +32,25 @@
 - [x] Editor preview showing incorrect rendering compared to published quiz - FIXED: Preview now matches published layout
 - [x] Font selector in editor doesn't change actual font in preview or published quiz - FIXED: All fonts now work
 
-## Phase 171: CRITICAL - Font Synchronization & Font Size Sliders
+## Phase 172: URGENT - Fix Editor Preview & Add Enhancements (COMPLETED)
+
+**CRITICAL ISSUES:**
+- [x] Fix editor preview - should show DESKTOP layout (50/50 split) by default, not mobile
+- [x] Change default previewMode from 'mobile' to 'desktop' in QuizDesignPage.tsx
+
+**NEW FEATURES:**
+- [x] Add three breakpoint buttons: Desktop (1920px) / Tablet (768px) / Mobile (375px)
+- [x] Add visual "Aa" preview on font size sliders showing current size
+- [x] Add preset buttons: Small (32/16), Medium (48/20), Large (64/28), XL (80/36)
+- [x] Apply preset to both title and subtitle simultaneously
+
+## Phase 171: CRITICAL - Font Synchronization & Font Size Sliders (COMPLETED)
 
 **USER REQUIREMENTS:**
-- [ ] Fix font synchronization - published quiz shows different font than editor
-- [ ] Add titleFontSize slider (16-96px) to editor
-- [ ] Add subtitleFontSize slider (12-48px) to editor
-- [ ] Add breakpoint preview buttons (Mobile 375px / Tablet 768px / Desktop)
+- [x] Fix font synchronization - published quiz shows different font than editor
+- [x] Add titleFontSize slider (16-96px) to editor
+- [x] Add subtitleFontSize slider (12-48px) to editor
+- [x] Add breakpoint preview buttons (Mobile 375px / Tablet 768px / Desktop)
 - [ ] Test on real mobile device after publishing
 
 **TECHNICAL FIXES:**
