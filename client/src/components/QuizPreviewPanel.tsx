@@ -62,37 +62,50 @@ export function QuizPreviewPanel({ settings }: QuizPreviewPanelProps) {
           ${device === "desktop" ? "aspect-video" : "aspect-[9/16] max-w-sm mx-auto"}
         `}
       >
-        {/* Standard Layout - Centered content on colored background */}
+        {/* Standard Layout - 50/50 split: purple gradient left, image right */}
         {settings.layoutType === "standard" && (
-          <div
-            className="relative w-full h-full flex flex-col justify-center p-8"
-            style={{
-              fontFamily: settings.fontFamily,
-              backgroundColor: settings.primaryColor || "#18181b",
-            }}
-          >
-            <div className={`flex flex-col gap-4 ${alignmentClasses[alignment]} z-10`}>
-              {settings.logoImage && (
-                <img src={settings.logoImage} alt="Logo" className="h-12 w-auto object-contain" />
-              )}
-              {settings.titleText && (
-                <h1 className="text-3xl font-bold" style={{ color: "white" }}>
-                  {settings.titleText}
-                </h1>
-              )}
-              {settings.subtitleText && (
-                <p className="text-lg opacity-90" style={{ color: "white" }}>
-                  {settings.subtitleText}
-                </p>
-              )}
-              <Button
-                size="lg"
-                className="mt-4"
-                style={{ backgroundColor: settings.accentColor, color: "white" }}
-              >
-                {settings.buttonText || "Почати"}
-              </Button>
+          <div className="relative w-full h-full flex bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900">
+            {/* Left: Content Area (50%) with purple gradient */}
+            <div
+              className={`flex-1 flex items-center p-4 ${device === "mobile" ? "w-full" : ""}`}
+              style={{
+                fontFamily: settings.fontFamily,
+              }}
+            >
+              <div className={`flex flex-col gap-3 ${alignmentClasses[alignment]}`}>
+                {settings.logoImage && (
+                  <img src={settings.logoImage} alt="Logo" className="h-8 w-auto object-contain" />
+                )}
+                {settings.titleText && (
+                  <h1 className="text-2xl font-bold" style={{ color: "white", textTransform: 'none' }}>
+                    {settings.titleText}
+                  </h1>
+                )}
+                {settings.subtitleText && (
+                  <p className="text-sm opacity-90" style={{ color: "white" }}>
+                    {settings.subtitleText}
+                  </p>
+                )}
+                <Button
+                  size="sm"
+                  className="mt-2"
+                  style={{ backgroundColor: settings.accentColor, color: "black" }}
+                >
+                  {settings.buttonText || "Почати"}
+                </Button>
+              </div>
             </div>
+
+            {/* Right: Background Image (50%) - No padding, fills entire space */}
+            {device === "desktop" && settings.backgroundImage && (
+              <div className="flex-1 relative overflow-hidden">
+                <img 
+                  src={settings.backgroundImage} 
+                  alt="Quiz illustration"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+              </div>
+            )}
           </div>
         )}
 

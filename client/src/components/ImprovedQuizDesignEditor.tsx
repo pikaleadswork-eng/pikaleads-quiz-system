@@ -217,12 +217,29 @@ export default function ImprovedQuizDesignEditor({ quizId, initialSettings, onSa
                     <SelectTrigger className="bg-zinc-800 border-zinc-700 text-white">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-zinc-800 border-zinc-700">
-                      <SelectItem value="Inter" className="text-white">Inter</SelectItem>
-                      <SelectItem value="Roboto" className="text-white">Roboto</SelectItem>
-                      <SelectItem value="Montserrat" className="text-white">Montserrat</SelectItem>
-                      <SelectItem value="Poppins" className="text-white">Poppins</SelectItem>
-                      <SelectItem value="Open Sans" className="text-white">Open Sans</SelectItem>
+                    <SelectContent className="bg-zinc-800 border-zinc-700 max-h-80 overflow-y-auto">
+                      <SelectItem value="Inter" className="text-white" style={{fontFamily: 'Inter'}}>Inter</SelectItem>
+                      <SelectItem value="Montserrat" className="text-white" style={{fontFamily: 'Montserrat'}}>Montserrat</SelectItem>
+                      <SelectItem value="Roboto" className="text-white" style={{fontFamily: 'Roboto'}}>Roboto</SelectItem>
+                      <SelectItem value="Open Sans" className="text-white" style={{fontFamily: 'Open Sans'}}>Open Sans</SelectItem>
+                      <SelectItem value="Poppins" className="text-white" style={{fontFamily: 'Poppins'}}>Poppins</SelectItem>
+                      <SelectItem value="Raleway" className="text-white" style={{fontFamily: 'Raleway'}}>Raleway</SelectItem>
+                      <SelectItem value="Playfair Display" className="text-white" style={{fontFamily: 'Playfair Display'}}>Playfair Display</SelectItem>
+                      <SelectItem value="Oswald" className="text-white" style={{fontFamily: 'Oswald'}}>Oswald</SelectItem>
+                      <SelectItem value="Nunito" className="text-white" style={{fontFamily: 'Nunito'}}>Nunito</SelectItem>
+                      <SelectItem value="Lato" className="text-white" style={{fontFamily: 'Lato'}}>Lato</SelectItem>
+                      <SelectItem value="Ubuntu" className="text-white" style={{fontFamily: 'Ubuntu'}}>Ubuntu</SelectItem>
+                      <SelectItem value="Rubik" className="text-white" style={{fontFamily: 'Rubik'}}>Rubik</SelectItem>
+                      <SelectItem value="Work Sans" className="text-white" style={{fontFamily: 'Work Sans'}}>Work Sans</SelectItem>
+                      <SelectItem value="Fira Sans" className="text-white" style={{fontFamily: 'Fira Sans'}}>Fira Sans</SelectItem>
+                      <SelectItem value="Manrope" className="text-white" style={{fontFamily: 'Manrope'}}>Manrope</SelectItem>
+                      <SelectItem value="Space Grotesk" className="text-white" style={{fontFamily: 'Space Grotesk'}}>Space Grotesk</SelectItem>
+                      <SelectItem value="DM Sans" className="text-white" style={{fontFamily: 'DM Sans'}}>DM Sans</SelectItem>
+                      <SelectItem value="Outfit" className="text-white" style={{fontFamily: 'Outfit'}}>Outfit</SelectItem>
+                      <SelectItem value="Orbitron" className="text-white" style={{fontFamily: 'Orbitron'}}>Orbitron</SelectItem>
+                      <SelectItem value="Rajdhani" className="text-white" style={{fontFamily: 'Rajdhani'}}>Rajdhani</SelectItem>
+                      <SelectItem value="Space Mono" className="text-white" style={{fontFamily: 'Space Mono'}}>Space Mono</SelectItem>
+                      <SelectItem value="Bungee" className="text-white" style={{fontFamily: 'Bungee'}}>Bungee</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>

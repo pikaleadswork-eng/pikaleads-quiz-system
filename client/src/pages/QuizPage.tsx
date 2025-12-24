@@ -202,45 +202,158 @@ export default function QuizPage() {
 
   // Quiz start screen with split layout
   if (!quizStarted) {
-    const bgGradient = designSettings?.backgroundGradient || 'linear-gradient(135deg, #1f1f3a 0%, #4a1d6f 50%, #1f1f3a 100%)';
-    const btnColor = designSettings?.accentColor || '#FFD93D';
-    
+    const alignment = designSettings?.alignment || "center";
+    const fontFamily = designSettings?.fontFamily || "Inter";
+    const titleColor = designSettings?.titleColor || "#FFFFFF";
+    const subtitleColor = designSettings?.subtitleColor || "#FFFFFF";
+    const titleWeight = designSettings?.titleWeight || "bold";
+    const subtitleWeight = designSettings?.subtitleWeight || "normal";
+    const buttonRadiusPx = designSettings?.buttonRadiusPx || 25;
+    const bonusEnabled = designSettings?.bonusEnabled;
+    const bonusText = designSettings?.bonusText;
+    const bullets = designSettings?.bullets ? (typeof designSettings.bullets === 'string' ? JSON.parse(designSettings.bullets) : designSettings.bullets) : [];
+
+    const getFontWeight = (weight: string) => {
+      switch(weight) {
+        case 'normal': return 400;
+        case 'medium': return 500;
+        case 'semibold': return 600;
+        case 'bold': return 700;
+        case 'extrabold': return 800;
+        default: return 400;
+      }
+    };
+
     return (
-      <div className="min-h-screen flex">
-        {/* Left side - Content */}
-        <div 
-          className="flex-1 flex items-center justify-center p-8 lg:p-16"
-          style={{ background: bgGradient }}
-        >
-          <div className="max-w-xl">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6 leading-tight">
-              {title}
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-300 mb-10 leading-relaxed">
-              {subtitle}
-            </p>
-            <button 
-              onClick={() => setQuizStarted(true)}
-              className="px-12 py-4 text-black font-bold text-xl shadow-lg transform hover:scale-105 transition-all duration-300 flex items-center gap-2"
-              style={{
-                backgroundColor: btnColor,
-                borderRadius: '9999px'
-              }}
-            >
-              {buttonText} <ArrowRight className="h-6 w-6" />
-            </button>
-          </div>
-        </div>
-        
-        {/* Right side - Image */}
-        <div className="hidden lg:flex flex-1 items-center justify-center p-8 relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-l from-transparent to-gray-900/50 z-10" />
-          <img 
-            src={backgroundImage} 
-            alt="Quiz illustration"
-            className="w-full h-full object-cover rounded-3xl shadow-2xl"
-          />
-        </div>
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 flex">
+        {/* Swap order based on alignment: right = image first */}
+        {alignment === "right" && (
+          <>
+            {/* Image on LEFT when alignment is RIGHT */}
+            <div className="hidden lg:flex flex-1 relative overflow-hidden">
+              <img 
+                src={backgroundImage} 
+                alt="Quiz illustration"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            {/* Text on RIGHT */}
+            <div className="flex-1 flex items-center justify-end p-8 lg:p-16">
+              <div className="max-w-xl text-right">
+                <h1 
+                  className="text-3xl md:text-4xl lg:text-5xl mb-6 leading-tight"
+                  style={{ fontFamily, color: titleColor, fontWeight: getFontWeight(titleWeight), textTransform: 'none' }}
+                >
+                  {title}
+                </h1>
+                <p 
+                  className="text-lg md:text-xl mb-10 leading-relaxed"
+                  style={{ fontFamily, color: subtitleColor, fontWeight: getFontWeight(subtitleWeight) }}
+                >
+                  {subtitle}
+                </p>
+
+                {/* Bonus */}
+                {bonusEnabled && bonusText && (
+                  <div className="flex items-center justify-end gap-3 bg-gradient-to-r from-yellow-400 to-orange-400 px-5 py-3 rounded-xl mb-6 shadow-md">
+                    <span className="text-xl">🎁</span>
+                    <p className="text-white font-bold">{bonusText}</p>
+                  </div>
+                )}
+
+                {/* Bullets */}
+                {bullets && bullets.length > 0 && (
+                  <div className="flex flex-col gap-2 mb-6 items-end">
+                    {bullets.map((bullet: any) => (
+                      <div key={bullet.id} className="flex items-center gap-3 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg">
+                        <span className="text-lg">{bullet.icon || '✓'}</span>
+                        <span className="text-white font-medium">{bullet.text}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                <Button 
+                  onClick={() => setQuizStarted(true)}
+                  size="lg"
+                  className="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-black font-bold px-12 py-6 text-xl shadow-lg shadow-yellow-500/30 transform hover:scale-105 transition-all duration-300"
+                  style={{ borderRadius: `${buttonRadiusPx}px` }}
+                >
+                  {buttonText} <ArrowRight className="ml-2 h-6 w-6" />
+                </Button>
+              </div>
+            </div>
+          </>
+        )}
+
+        {/* Normal order for left/center alignment */}
+        {(alignment === "left" || alignment === "center") && (
+          <>
+            {/* Text on LEFT */}
+            <div className={`flex-1 flex items-center p-8 lg:p-16 ${
+              alignment === "left" ? "justify-start" : "justify-center"
+            }`}>
+              <div className={`max-w-xl ${
+                alignment === "left" ? "text-left" : "text-center"
+              }`}>
+                <h1 
+                  className="text-3xl md:text-4xl lg:text-5xl mb-6 leading-tight"
+                  style={{ fontFamily, color: titleColor, fontWeight: getFontWeight(titleWeight), textTransform: 'none' }}
+                >
+                  {title}
+                </h1>
+                <p 
+                  className="text-lg md:text-xl mb-10 leading-relaxed"
+                  style={{ fontFamily, color: subtitleColor, fontWeight: getFontWeight(subtitleWeight) }}
+                >
+                  {subtitle}
+                </p>
+
+                {/* Bonus */}
+                {bonusEnabled && bonusText && (
+                  <div className={`flex items-center gap-3 bg-gradient-to-r from-yellow-400 to-orange-400 px-5 py-3 rounded-xl mb-6 shadow-md ${
+                    alignment === "center" ? "justify-center" : ""
+                  }`}>
+                    <span className="text-xl">🎁</span>
+                    <p className="text-white font-bold">{bonusText}</p>
+                  </div>
+                )}
+
+                {/* Bullets */}
+                {bullets && bullets.length > 0 && (
+                  <div className={`flex flex-col gap-2 mb-6 ${
+                    alignment === "center" ? "items-center" : "items-start"
+                  }`}>
+                    {bullets.map((bullet: any) => (
+                      <div key={bullet.id} className="flex items-center gap-3 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg">
+                        <span className="text-lg">{bullet.icon || '✓'}</span>
+                        <span className="text-white font-medium">{bullet.text}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                <Button 
+                  onClick={() => setQuizStarted(true)}
+                  size="lg"
+                  className="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-black font-bold px-12 py-6 text-xl shadow-lg shadow-yellow-500/30 transform hover:scale-105 transition-all duration-300"
+                  style={{ borderRadius: `${buttonRadiusPx}px` }}
+                >
+                  {buttonText} <ArrowRight className="ml-2 h-6 w-6" />
+                </Button>
+              </div>
+            </div>
+            
+            {/* Image on RIGHT */}
+            <div className="hidden lg:flex flex-1 relative overflow-hidden">
+              <img 
+                src={backgroundImage} 
+                alt="Quiz illustration"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </>
+        )}
       </div>
     );
   }

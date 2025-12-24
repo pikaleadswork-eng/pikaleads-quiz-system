@@ -783,8 +783,14 @@ export const quizDesignSettings = mysqlTable("quiz_design_settings", {
   accentColor: varchar("accentColor", { length: 7 }).default("#A855F7"), // Purple
   fontFamily: varchar("fontFamily", { length: 100 }).default("Inter"),
   titleText: text("titleText"),
+  titleColor: varchar("titleColor", { length: 7 }).default("#FFFFFF"),
+  titleWeight: varchar("titleWeight", { length: 20 }).default("bold"),
   subtitleText: text("subtitleText"),
+  subtitleColor: varchar("subtitleColor", { length: 7 }).default("#FFFFFF"),
+  subtitleWeight: varchar("subtitleWeight", { length: 20 }).default("normal"),
   buttonText: varchar("buttonText", { length: 100 }),
+  buttonRadiusPx: int("buttonRadiusPx").default(25),
+  bullets: text("bullets"), // JSON array of bullet points
   bonusEnabled: boolean("bonusEnabled").default(false).notNull(),
   bonusText: text("bonusText"),
   companyName: varchar("companyName", { length: 255 }),

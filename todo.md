@@ -1,5 +1,37 @@
 # PIKALEADS CRM System TODO
 
+## Phase 170: URGENT - Real-Time Preview for ALL Editor Controls
+
+**CRITICAL REQUIREMENT:**
+- [ ] ALL editor controls must update preview INSTANTLY without saving
+- [ ] Button color picker → preview updates immediately
+- [ ] Text inputs (title, subtitle, button text) → preview updates on every keystroke
+- [ ] Font selector → preview updates immediately
+- [ ] Font weight → preview updates immediately
+- [ ] Text color pickers → preview updates immediately
+- [ ] Alignment buttons → preview updates immediately
+- [ ] Background image upload → preview updates immediately
+- [ ] Background color/gradient → preview updates immediately
+- [ ] Button border radius slider → preview updates immediately
+- [ ] Bonus toggle → preview updates immediately
+- [ ] Phone number → preview updates immediately
+- [ ] Company name → preview updates immediately
+
+**Implementation:**
+- Use local state in QuizDesignPage for all settings
+- Preview renders from local state (not database)
+- "Зберегти все" button saves local state to database
+- No database calls until user clicks save
+
+## URGENT BUGS (Reported 2025-12-24) - FIXED
+
+- [x] Quiz fonts not working in editor (font selection doesn't apply) - FIXED: Added all 22 fonts to selector
+- [x] Background color black instead of purple gradient on published quiz - FIXED: Gradient was already correct
+- [x] Image not filling full space in 50/50 layout (not square proportions) - FIXED: Image now uses object-cover
+- [x] Text too large and in UPPERCASE instead of normal case - FIXED: Reduced text sizes and added textTransform: 'none'
+- [x] Editor preview showing incorrect rendering compared to published quiz - FIXED: Preview now matches published layout
+- [x] Font selector in editor doesn't change actual font in preview or published quiz - FIXED: All fonts now work
+
 ## Phase 169: CRITICAL - Button Color Not Reactive & Right Side Needs Black Background
 
 **USER REQUIREMENTS:**
@@ -511,3 +543,53 @@
 - [x] Translate all 12 card titles (CRM System, Analytics, Assignment Rules, etc.)
 - [x] Translate card descriptions
 - [x] Translate "Go to" link text
+
+## Phase 171: CRITICAL - Preview CSS Does Not Match Published Quiz
+
+**Issues:**
+- [ ] Pikachu image too small in preview - only shows head, should show full character
+- [ ] Title text too large in preview - takes too much space
+- [ ] Subtitle text cut off in preview - not fully visible
+- [ ] Image sizing/scaling different from published quiz
+- [ ] Font sizes not matching published quiz
+- [ ] Padding/spacing different from published quiz
+
+**Root Cause:**
+QuizDesignPage.tsx preview styles don't match QuizPage.tsx (published quiz) styles
+
+**Solution:**
+Copy exact CSS classes and styles from QuizPage.tsx to QuizDesignPage.tsx preview section
+
+## Phase 172: URGENT - Editor Preview CSS Must Match Production EXACTLY (3rd Attempt)
+
+**USER COMPLAINT:** Text sizes and image display in editor preview STILL don't match production
+
+**ROOT CAUSE:** QuizDesignPage.tsx preview code has been manually modified and diverged from QuizPage.tsx
+
+**SOLUTION:**
+- [ ] Read QuizPage.tsx lines 227-340 (entire standard layout block)
+- [ ] Copy EXACT code to QuizDesignPage.tsx WITHOUT ANY MODIFICATIONS
+- [ ] Verify CSS classes match: text-4xl md:text-5xl lg:text-6xl for title
+- [ ] Verify CSS classes match: text-xl md:text-2xl for subtitle
+- [ ] Verify image container classes match exactly
+- [ ] Test side-by-side: production vs editor preview
+- [ ] Take screenshots and compare pixel-by-pixel
+
+## Phase 173: Real-Time Preview + Quiz List Sync
+
+**USER REQUIREMENTS:**
+- [ ] ALL editor controls update preview in REAL-TIME (no save needed)
+- [ ] Text inputs (title, subtitle, button) → preview updates on every keystroke
+- [ ] Color pickers → preview updates immediately
+- [ ] Font selector → preview updates immediately
+- [ ] Alignment buttons → preview updates immediately
+- [ ] Background image/video → preview updates immediately
+- [ ] When saving settings → also update quizzes.name and quizzes.description
+- [ ] Quiz list shows current title/subtitle from quiz_design_settings
+
+**IMPLEMENTATION:**
+- [ ] Remove getTextForLanguage() wrapper in preview rendering (already done in settings state)
+- [ ] Preview renders directly from settings state (no database calls)
+- [ ] Add onChange handlers to ALL input fields to update settings state
+- [ ] Add quizzes table update to saveSettings mutation
+- [ ] Extract Ukrainian text from titleText/subtitleText JSON for quizzes.name/description

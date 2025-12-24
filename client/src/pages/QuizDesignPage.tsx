@@ -42,23 +42,8 @@ export default function QuizDesignPage() {
     },
   });
 
-  // Load quiz to get slug
-  const { data: quiz } = trpc.quizzes.getById.useQuery(
-    { id: quizId || 0 },
-    { enabled: !!quizId }
-  );
-
-  // Check for active A/B tests FIRST
-  const { data: abTestVariants } = trpc.abTest.getVariants.useQuery(
-    { quizId: quiz?.slug || "" },
-    { enabled: !!quiz?.slug }
-  );
-
-  // Get active A/B variant (first one with traffic > 0)
-  const activeVariant = abTestVariants?.find(v => v.isActive && v.trafficPercentage > 0);
-
-  // Always load base design settings (for layout, colors, etc.)
-  const { data: savedSettings, isLoading: settingsLoading, error: settingsError } = trpc.quizDesign.getByQuizId.useQuery(
+  // Load design settings from database
+  const { data: savedSettings } = trpc.quizDesign.getByQuizId.useQuery(
     { quizId: quizId || 0 },
     { enabled: !!quizId }
   );
@@ -76,9 +61,9 @@ export default function QuizDesignPage() {
     backgroundVideo: "",
     layoutType: "background" as "background" | "standard",
     alignment: "left" as "left" | "center" | "right",
-    backgroundColor: "#8B5CF6",
-    backgroundGradient: "linear-gradient(135deg, #1f1f3a 0%, #4a1d6f 50%, #1f1f3a 100%)",
-    primaryColor: "#8B5CF6",
+    backgroundColor: "#FFD93D",
+    backgroundGradient: "",
+    primaryColor: "#FFD93D",
     accentColor: "#A855F7",
     buttonRadius: "full" as "none" | "sm" | "md" | "lg" | "full",
     buttonRadiusPx: 25,
@@ -99,48 +84,9 @@ export default function QuizDesignPage() {
     thankYouButtonUrl: '/',
   });
 
-  // Load saved settings when available - prioritize A/B variant if active
+  // Load saved settings when available
   useEffect(() => {
-    // If there's an active A/B variant, use its data
-    if (activeVariant) {
-      setSettings(prev => ({
-        ...prev,
-        // Use A/B variant title if available, otherwise use base settings
-        title: activeVariant.title || savedSettings?.titleText || "Введіть заголовок сторінки",
-        subtitle: activeVariant.subtitle || savedSettings?.subtitleText || "Додатковий текст-опис",
-        bonusText: activeVariant.bonus || savedSettings?.bonusText || "",
-        // Load base design settings from quiz_design_settings
-        logoUrl: savedSettings?.logoImage || "",
-        companyName: savedSettings?.companyName || "PikaLeads",
-        buttonText: savedSettings?.buttonText || "Почати",
-        bonusEnabled: savedSettings?.bonusEnabled || false,
-        phoneNumber: savedSettings?.phoneNumber || "+380992377117",
-        backgroundImage: savedSettings?.backgroundImage || "",
-        backgroundVideo: savedSettings?.backgroundVideo || "",
-        layoutType: (savedSettings?.layoutType as "background" | "standard") || "standard",
-        alignment: (savedSettings?.alignment as "left" | "center" | "right") || "left",
-        backgroundColor: savedSettings?.primaryColor || "#8B5CF6",
-        backgroundGradient: savedSettings?.backgroundGradient || "",
-        primaryColor: savedSettings?.primaryColor || "#FFD93D",
-        accentColor: savedSettings?.accentColor || "#A855F7",
-        fontFamily: savedSettings?.fontFamily || "Inter",
-        titleColor: "#FFFFFF",
-        subtitleColor: "#FFFFFF",
-        titleWeight: "bold" as "normal" | "medium" | "semibold" | "bold" | "extrabold",
-        subtitleWeight: "normal" as "normal" | "medium" | "semibold" | "bold" | "extrabold",
-        buttonRadius: "full" as "none" | "sm" | "md" | "lg" | "full",
-        buttonRadiusPx: 25,
-        bullets: [] as Array<{ id: string; text: string; icon: string }>,
-        contactFormTitle: savedSettings?.contactFormTitle || settings.contactFormTitle,
-        contactFormSubtitle: savedSettings?.contactFormSubtitle || settings.contactFormSubtitle,
-        contactFormFields: savedSettings?.contactFormFields || settings.contactFormFields,
-        thankYouTitle: savedSettings?.thankYouTitle || settings.thankYouTitle,
-        thankYouSubtitle: savedSettings?.thankYouSubtitle || settings.thankYouSubtitle,
-        thankYouButtonText: savedSettings?.thankYouButtonText || settings.thankYouButtonText,
-        thankYouButtonUrl: savedSettings?.thankYouButtonUrl || settings.thankYouButtonUrl,
-      }));
-    } else if (savedSettings) {
-      // No A/B test, use base settings
+    if (savedSettings) {
       setSettings(prev => ({
         ...prev,
         logoUrl: savedSettings.logoImage || "",
@@ -153,10 +99,10 @@ export default function QuizDesignPage() {
         phoneNumber: savedSettings.phoneNumber || "+380992377117",
         backgroundImage: savedSettings.backgroundImage || "",
         backgroundVideo: savedSettings.backgroundVideo || "",
-        layoutType: (savedSettings.layoutType as "background" | "standard") || "standard",
+        layoutType: (savedSettings.layoutType as "background" | "standard") || "background",
         alignment: (savedSettings.alignment as "left" | "center" | "right") || "left",
-        backgroundColor: savedSettings.primaryColor || "#8B5CF6",
-        backgroundGradient: savedSettings.backgroundGradient || "",
+        backgroundColor: savedSettings.primaryColor || "#FFD93D",
+        backgroundGradient: "",
         primaryColor: savedSettings.primaryColor || "#FFD93D",
         accentColor: savedSettings.accentColor || "#A855F7",
         fontFamily: savedSettings.fontFamily || "Inter",
@@ -164,19 +110,18 @@ export default function QuizDesignPage() {
         subtitleColor: "#FFFFFF",
         titleWeight: "bold" as "normal" | "medium" | "semibold" | "bold" | "extrabold",
         subtitleWeight: "normal" as "normal" | "medium" | "semibold" | "bold" | "extrabold",
-        buttonRadius: "full" as "none" | "sm" | "md" | "lg" | "full",
-        buttonRadiusPx: 25,
-        bullets: [] as Array<{ id: string; text: string; icon: string }>,
+        // Contact form settings
         contactFormTitle: savedSettings.contactFormTitle || settings.contactFormTitle,
         contactFormSubtitle: savedSettings.contactFormSubtitle || settings.contactFormSubtitle,
         contactFormFields: savedSettings.contactFormFields || settings.contactFormFields,
+        // Thank you page settings
         thankYouTitle: savedSettings.thankYouTitle || settings.thankYouTitle,
         thankYouSubtitle: savedSettings.thankYouSubtitle || settings.thankYouSubtitle,
         thankYouButtonText: savedSettings.thankYouButtonText || settings.thankYouButtonText,
         thankYouButtonUrl: savedSettings.thankYouButtonUrl || settings.thankYouButtonUrl,
       }));
     }
-  }, [savedSettings, activeVariant]);
+  }, [savedSettings]);
 
   const handleSettingsChange = (key: string, value: any) => {
     setSettings(prev => ({ ...prev, [key]: value }));
@@ -334,112 +279,177 @@ export default function QuizDesignPage() {
 
               {/* STANDARD LAYOUT - 50/50 split */}
               {settings.layoutType === "standard" && (
-                <div className={`flex h-full rounded-lg overflow-hidden ${
-                  isMobilePreview ? "flex-col" : ""
-                } ${
-                  settings.alignment === "right" && !isMobilePreview ? "flex-row-reverse" : ""
-                }`}>
-                  {/* Image Side (50%) - Same as published quiz */}
-                  <div 
-                    className={`bg-cover bg-center relative overflow-hidden ${isMobilePreview ? "h-1/2 w-full" : "w-1/2"}`}
-                    style={{
-                      backgroundImage: settings.backgroundImage 
-                        ? `url(${settings.backgroundImage})` 
-                        : "none"
-                    }}
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-l from-transparent to-gray-900/50 z-10" />
-                    <img 
-                      src={settings.backgroundImage} 
-                      alt="Quiz illustration"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-
-                  {/* Text Side (50%) */}
-                  <div 
-                    className={`flex flex-col justify-center ${isMobilePreview ? "h-1/2 w-full px-6 py-4" : "w-1/2 px-12"}`}
-                    style={{ 
-                      background: settings.backgroundGradient || settings.backgroundColor || settings.primaryColor || '#ffffff'
-                    }}
-                  >
-                    {/* Logo */}
-                    {settings.logoUrl && (
-                      <img src={settings.logoUrl} alt="Logo" className="h-10 w-auto mb-6" />
-                    )}
-
-                    <h1 
-                      className="text-4xl mb-4"
-                      style={{ 
-                        color: settings.titleColor || '#1f2937',
-                        fontFamily: settings.fontFamily || 'Inter',
-                        fontWeight: settings.titleWeight === 'normal' ? 400 : 
-                                   settings.titleWeight === 'medium' ? 500 :
-                                   settings.titleWeight === 'semibold' ? 600 :
-                                   settings.titleWeight === 'extrabold' ? 800 : 700
-                      }}
-                    >
-                      {getTextForLanguage(settings.title, language as SupportedLanguage || "uk")}
-                    </h1>
-                    <p 
-                      className="text-lg mb-6"
-                      style={{ 
-                        color: settings.subtitleColor || '#4b5563',
-                        fontFamily: settings.fontFamily || 'Inter',
-                        fontWeight: settings.subtitleWeight === 'medium' ? 500 :
-                                   settings.subtitleWeight === 'semibold' ? 600 :
-                                   settings.subtitleWeight === 'bold' ? 700 :
-                                   settings.subtitleWeight === 'extrabold' ? 800 : 400
-                      }}
-                    >
-                      {getTextForLanguage(settings.subtitle, language as SupportedLanguage || "uk")}
-                    </p>
-
-                    {/* Bonus - styled */}
-                    {settings.bonusEnabled && settings.bonusText && (
-                      <div className="flex items-center gap-3 bg-gradient-to-r from-yellow-400 to-orange-400 px-5 py-3 rounded-xl mb-6 shadow-md">
-                        <span className="text-xl">🎁</span>
-                        <p className="text-white font-bold">{settings.bonusText}</p>
+                <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 flex">
+                  {/* Swap order based on alignment: right = image first, left/center = text first */}
+                  {settings.alignment === "right" && (
+                    <>
+                      {/* Image on LEFT when alignment is RIGHT */}
+                      <div className="hidden lg:flex flex-1 items-center justify-center p-8 relative overflow-hidden">
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent to-gray-900/50 z-10" />
+                        <img 
+                          src={settings.backgroundImage || "url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22%3E%3Cpath fill=%22%23a0aec0%22 d=%22M0 0h200v200H0z%22/%3E%3Cpath fill=%22%23cbd5e0%22 d=%22M50 50l50 30 50-30v70l-50 30-50-30z%22/%3E%3C/svg%3E')"}
+                          alt="Quiz illustration"
+                          className="w-full h-full object-cover rounded-3xl shadow-2xl"
+                        />
                       </div>
-                    )}
+                      {/* Text on RIGHT */}
+                      <div className="flex-1 flex items-center justify-end p-8 lg:p-16">
+                        <div className="max-w-xl text-right">
+                      <h1 
+                        className="text-4xl md:text-5xl lg:text-6xl mb-6 leading-tight"
+                        style={{ 
+                          fontFamily: settings.fontFamily || 'Inter',
+                          color: settings.titleColor || '#FFFFFF',
+                          fontWeight: settings.titleWeight === 'normal' ? 400 :
+                                     settings.titleWeight === 'medium' ? 500 :
+                                     settings.titleWeight === 'semibold' ? 600 :
+                                     settings.titleWeight === 'bold' ? 700 :
+                                     settings.titleWeight === 'extrabold' ? 800 : 700
+                        }}
+                      >
+                        {getTextForLanguage(settings.title, language as SupportedLanguage || "uk")}
+                      </h1>
+                      <p 
+                        className="text-xl md:text-2xl mb-10 leading-relaxed"
+                        style={{ 
+                          fontFamily: settings.fontFamily || 'Inter',
+                          color: settings.subtitleColor || '#FFFFFF',
+                          fontWeight: settings.subtitleWeight === 'normal' ? 400 :
+                                     settings.subtitleWeight === 'medium' ? 500 :
+                                     settings.subtitleWeight === 'semibold' ? 600 :
+                                     settings.subtitleWeight === 'bold' ? 700 :
+                                     settings.subtitleWeight === 'extrabold' ? 800 : 400
+                        }}
+                      >
+                        {getTextForLanguage(settings.subtitle, language as SupportedLanguage || "uk")}
+                      </p>
 
-                    {/* Bullets/Features */}
-                    {settings.bullets && settings.bullets.length > 0 && (
-                      <div className="flex flex-col gap-2 mb-6">
-                        {settings.bullets.map((bullet) => (
-                          <div key={bullet.id} className="flex items-center gap-3 bg-zinc-100 px-4 py-2 rounded-lg">
-                            <span className="text-lg">{bullet.icon || '✓'}</span>
-                            <span className="text-zinc-700 font-medium">{bullet.text}</span>
-                          </div>
-                        ))}
-                      </div>
-                    )}
+                      {/* Bonus */}
+                      {settings.bonusEnabled && settings.bonusText && (
+                        <div className="flex items-center justify-end gap-3 bg-gradient-to-r from-yellow-400 to-orange-400 px-5 py-3 rounded-xl mb-6 shadow-md">
+                          <span className="text-xl">🎁</span>
+                          <p className="text-white font-bold">{settings.bonusText}</p>
+                        </div>
+                      )}
 
-                    {/* Button with customizable radius */}
-                    <button 
-                      className="px-10 py-3 font-semibold shadow-lg transition-transform hover:scale-105 self-start"
-                      style={{ 
-                        borderRadius: `${settings.buttonRadiusPx || 25}px`,
-                        backgroundColor: settings.accentColor, 
-                        color: "white" 
-                      }}
-                    >
-                      {settings.buttonText}
-                    </button>
+                      {/* Bullets */}
+                      {settings.bullets && settings.bullets.length > 0 && (
+                        <div className="flex flex-col gap-2 mb-6 items-end">
+                          {settings.bullets.map((bullet) => (
+                            <div key={bullet.id} className="flex items-center gap-3 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg">
+                              <span className="text-lg">{bullet.icon || '✓'}</span>
+                              <span className="text-white font-medium">{bullet.text}</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
 
-                    {/* Footer */}
-                    <div className="mt-8 pt-6 border-t border-zinc-200">
-                      <p className="text-sm text-zinc-500">{settings.phoneNumber}</p>
-                      <p className="text-sm text-zinc-400 uppercase font-semibold">{settings.companyName}</p>
+                      <button 
+                        className="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-black font-bold px-12 py-6 text-xl shadow-lg shadow-yellow-500/30 transform hover:scale-105 transition-all duration-300"
+                        style={{
+                          borderRadius: `${settings.buttonRadiusPx || 25}px`
+                        }}
+                      >
+                        {settings.buttonText}
+                      </button>
                     </div>
                   </div>
+                    </>
+                  )}
+                  
+                  {/* Normal order for left/center alignment */}
+                  {(settings.alignment === "left" || settings.alignment === "center") && (
+                    <>
+                      {/* Text on LEFT */}
+                      <div className={`flex-1 flex items-center p-8 lg:p-16 ${
+                        settings.alignment === "left" ? "justify-start" : "justify-center"
+                      }`}>
+                        <div className={`max-w-xl ${
+                          settings.alignment === "left" ? "text-left" : "text-center"
+                        }`}>
+                          <h1 
+                            className="text-4xl md:text-5xl lg:text-6xl mb-6 leading-tight"
+                            style={{ 
+                              fontFamily: settings.fontFamily || 'Inter',
+                              color: settings.titleColor || '#FFFFFF',
+                              fontWeight: settings.titleWeight === 'normal' ? 400 :
+                                         settings.titleWeight === 'medium' ? 500 :
+                                         settings.titleWeight === 'semibold' ? 600 :
+                                         settings.titleWeight === 'bold' ? 700 :
+                                         settings.titleWeight === 'extrabold' ? 800 : 700
+                            }}
+                          >
+                            {getTextForLanguage(settings.title, language as SupportedLanguage || "uk")}
+                          </h1>
+                          <p 
+                            className="text-xl md:text-2xl mb-10 leading-relaxed"
+                            style={{ 
+                              fontFamily: settings.fontFamily || 'Inter',
+                              color: settings.subtitleColor || '#FFFFFF',
+                              fontWeight: settings.subtitleWeight === 'normal' ? 400 :
+                                         settings.subtitleWeight === 'medium' ? 500 :
+                                         settings.subtitleWeight === 'semibold' ? 600 :
+                                         settings.subtitleWeight === 'bold' ? 700 :
+                                         settings.subtitleWeight === 'extrabold' ? 800 : 400
+                            }}
+                          >
+                            {getTextForLanguage(settings.subtitle, language as SupportedLanguage || "uk")}
+                          </p>
+
+                          {/* Bonus */}
+                          {settings.bonusEnabled && settings.bonusText && (
+                            <div className={`flex items-center gap-3 bg-gradient-to-r from-yellow-400 to-orange-400 px-5 py-3 rounded-xl mb-6 shadow-md ${
+                              settings.alignment === "center" ? "justify-center" : ""
+                            }`}>
+                              <span className="text-xl">🎁</span>
+                              <p className="text-white font-bold">{settings.bonusText}</p>
+                            </div>
+                          )}
+
+                          {/* Bullets */}
+                          {settings.bullets && settings.bullets.length > 0 && (
+                            <div className={`flex flex-col gap-2 mb-6 ${
+                              settings.alignment === "center" ? "items-center" :
+                              settings.alignment === "left" ? "items-start" : "items-start"
+                            }`}>
+                              {settings.bullets.map((bullet) => (
+                                <div key={bullet.id} className="flex items-center gap-3 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg">
+                                  <span className="text-lg">{bullet.icon || '✓'}</span>
+                                  <span className="text-white font-medium">{bullet.text}</span>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+
+                          <button 
+                            className="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-black font-bold px-12 py-6 text-xl shadow-lg shadow-yellow-500/30 transform hover:scale-105 transition-all duration-300"
+                            style={{
+                              borderRadius: `${settings.buttonRadiusPx || 25}px`
+                            }}
+                          >
+                            {settings.buttonText}
+                          </button>
+                        </div>
+                      </div>
+                      
+                      {/* Image on RIGHT */}
+                      <div className="hidden lg:flex flex-1 items-center justify-center p-8 relative overflow-hidden">
+                        <div className="absolute inset-0 bg-gradient-to-l from-transparent to-gray-900/50 z-10" />
+                        <img 
+                          src={settings.backgroundImage}
+                          alt="Quiz illustration"
+                          className="w-full h-full object-cover rounded-3xl shadow-2xl"
+                        />
+                      </div>
+                    </>
+                  )}
                 </div>
               )}
             </div>
           )}
 
           {activeTab === "questions" && (
-            <div className="bg-zinc-800 rounded-lg p-6">
+            <div className="bg-zinc-800 rounded-lg p-6 overflow-y-auto max-h-full">
               <DraggableQuestionEditor
                 quizId={String(quizId)}
                 initialQuestions={questions}
