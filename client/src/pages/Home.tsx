@@ -79,10 +79,9 @@ export default function Home() {
               className="w-full flex-shrink-0 px-6 py-3 bg-[#FFD93D] text-black font-bold rounded-lg border-2 border-[#FFD93D] hover:bg-[#FFD93D]/90 transition-all whitespace-nowrap"
               style={{
                 boxShadow: '0 0 20px rgba(255, 217, 61, 0.3)',
-                fontFamily: 'Rajdhani, sans-serif'
+                fontFamily: 'Bungee, sans-serif'
               }}
-              onClick={(e) => {
-                e.preventDefault();
+              onClick={() => {
                 ClarityEvents.trackCTAClick(t.learnMore, `home_quiz_${quiz.slug}`);
               }}
             >
@@ -164,17 +163,20 @@ export default function Home() {
                 </div>
 
                 {/* Main Title */}
-                <h1 className="text-5xl md:text-6xl lg:text-7xl font-black leading-tight">
+                <h1 className="text-5xl md:text-6xl lg:text-7xl font-black leading-tight" style={{ fontFamily: 'Bungee, sans-serif' }}>
                   <span className="block text-white mb-2">
-                    {language === "uk" ? "ОБИРАЙ НЕ" : language === "ru" ? "ВЫБИРАЙ НЕ" : "CHOOSE NOT"}
+                    {language === "uk" ? "КВІЗ СИСТЕМИ" : language === "ru" ? "КВИЗ СИСТЕМЫ" : "QUIZ SYSTEMS"}
                   </span>
                   <span className="block text-white mb-2">
-                    {language === "uk" ? "АГЕНСТВО." : language === "ru" ? "АГЕНТСТВО." : "AGENCY."}
+                    {language === "uk" ? "ДЛЯ ВАШОГО" : language === "ru" ? "ДЛЯ ВАШЕГО" : "FOR YOUR"}
+                  </span>
+                  <span className="block text-white mb-2">
+                    {language === "uk" ? "БІЗНЕСУ, ЩО" : language === "ru" ? "БИЗНЕСА, ЧТО" : "BUSINESS THAT"}
                   </span>
                   <span className="block text-[#FFD93D]" style={{
                     textShadow: '0 0 20px rgba(255,217,61,0.6), 0 0 40px rgba(255,217,61,0.4)'
                   }}>
-                    {language === "uk" ? "ОБИРАЙ РЕЗУЛЬТАТ." : language === "ru" ? "ВЫБИРАЙ РЕЗУЛЬТАТ." : "CHOOSE RESULTS."}
+                    {language === "uk" ? "ПРАЦЮЮТЬ НА РЕЗУЛЬТАТ" : language === "ru" ? "РАБОТАЮТ НА РЕЗУЛЬТАТ" : "WORK FOR RESULTS"}
                   </span>
                 </h1>
 
@@ -195,22 +197,13 @@ export default function Home() {
                       boxShadow: '0 0 30px rgba(255, 217, 61, 0.4)',
                       fontFamily: 'Rajdhani, sans-serif'
                     }}
-                    onClick={() => ClarityEvents.trackCTAClick('Get Started', 'hero_cta')}
+                    onClick={() => {
+                      ClarityEvents.trackCTAClick('Get Started', 'hero_cta');
+                      toast.info(language === "uk" ? "Функція в розробці" : language === "ru" ? "Функция в разработке" : "Feature coming soon");
+                    }}
                   >
                     <Zap className="w-5 h-5" />
                     {language === "uk" ? "ПОЧАТИ ЗАРАЗ" : language === "ru" ? "НАЧАТЬ СЕЙЧАС" : "GET STARTED"}
-                  </button>
-                  
-                  <button
-                    className="px-8 py-4 border-2 border-[#5B2E90] text-[#5B2E90] font-bold rounded-lg hover:bg-[#5B2E90]/10 transition-all flex items-center justify-center gap-2 text-lg"
-                    style={{
-                      fontFamily: 'Rajdhani, sans-serif'
-                    }}
-                  >
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" />
-                    </svg>
-                    {language === "uk" ? "ДИВИТИСЬ ВІДЕО" : language === "ru" ? "СМОТРЕТЬ ВИДЕО" : "WATCH VIDEO"}
                   </button>
                 </div>
               </div>
