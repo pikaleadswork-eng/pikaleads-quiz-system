@@ -76,9 +76,9 @@ export default function QuizDesignPage() {
     backgroundVideo: "",
     layoutType: "background" as "background" | "standard",
     alignment: "left" as "left" | "center" | "right",
-    backgroundColor: "#FFD93D",
-    backgroundGradient: "",
-    primaryColor: "#FFD93D",
+    backgroundColor: "#8B5CF6",
+    backgroundGradient: "linear-gradient(135deg, #1f1f3a 0%, #4a1d6f 50%, #1f1f3a 100%)",
+    primaryColor: "#8B5CF6",
     accentColor: "#A855F7",
     buttonRadius: "full" as "none" | "sm" | "md" | "lg" | "full",
     buttonRadiusPx: 25,
@@ -119,8 +119,8 @@ export default function QuizDesignPage() {
         backgroundVideo: savedSettings?.backgroundVideo || "",
         layoutType: (savedSettings?.layoutType as "background" | "standard") || "standard",
         alignment: (savedSettings?.alignment as "left" | "center" | "right") || "left",
-        backgroundColor: savedSettings?.primaryColor || "#FFD93D",
-        backgroundGradient: "",
+        backgroundColor: savedSettings?.primaryColor || "#8B5CF6",
+        backgroundGradient: savedSettings?.backgroundGradient || "",
         primaryColor: savedSettings?.primaryColor || "#FFD93D",
         accentColor: savedSettings?.accentColor || "#A855F7",
         fontFamily: savedSettings?.fontFamily || "Inter",
@@ -155,8 +155,8 @@ export default function QuizDesignPage() {
         backgroundVideo: savedSettings.backgroundVideo || "",
         layoutType: (savedSettings.layoutType as "background" | "standard") || "standard",
         alignment: (savedSettings.alignment as "left" | "center" | "right") || "left",
-        backgroundColor: savedSettings.primaryColor || "#FFD93D",
-        backgroundGradient: "",
+        backgroundColor: savedSettings.primaryColor || "#8B5CF6",
+        backgroundGradient: savedSettings.backgroundGradient || "",
         primaryColor: savedSettings.primaryColor || "#FFD93D",
         accentColor: savedSettings.accentColor || "#A855F7",
         fontFamily: savedSettings.fontFamily || "Inter",
@@ -353,8 +353,7 @@ export default function QuizDesignPage() {
                   <div 
                     className={`flex flex-col justify-center ${isMobilePreview ? "h-1/2 w-full px-6 py-4" : "w-1/2 px-12"}`}
                     style={{ 
-                      backgroundColor: settings.backgroundColor || '#ffffff',
-                      background: settings.backgroundGradient || settings.backgroundColor || '#ffffff'
+                      background: settings.backgroundGradient || settings.backgroundColor || settings.primaryColor || '#ffffff'
                     }}
                   >
                     {/* Logo */}

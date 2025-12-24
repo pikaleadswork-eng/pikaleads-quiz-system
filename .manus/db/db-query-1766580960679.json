@@ -1,0 +1,70 @@
+{
+  "query": "SELECT quizId, layoutType, titleText, buttonText FROM quiz_design_settings LIMIT 10;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user b5yJbKNBA74GJz4.0729dd994af9 --database EcCrELAaL5JgQGs8z45yv6 --execute SELECT quizId, layoutType, titleText, buttonText FROM quiz_design_settings LIMIT 10;",
+  "rows": [
+    {
+      "quizId": "11",
+      "layoutType": "background",
+      "titleText": "{\"uk\":\"Інтернет-магазин без продажів — це зламаний таргет\",\"ru\":\"Интернет-магазин без продаж - это сломанный таргет\",\"en\":\"An online store without sales is a broken target\",\"pl\":\"Sklep internetowy bez sprzedaży to zepsuty cel\",\"de\":\"Ein Online-Shop ohne Verkäufe ist ein kaputtes Ziel\"}",
+      "buttonText": "Отримати консультацію"
+    },
+    {
+      "quizId": "12",
+      "layoutType": "background",
+      "titleText": "Ремонт без заявок — значить реклама налаштована криво",
+      "buttonText": "Отримати консультацію"
+    },
+    {
+      "quizId": "13",
+      "layoutType": "background",
+      "titleText": "Меблева реклама без заявок — проблема не в ринку",
+      "buttonText": "Отримати консультацію"
+    },
+    {
+      "quizId": "14",
+      "layoutType": "background",
+      "titleText": "{\"uk\":\"Google Ads для ремонту квартир — заявки з пошуку\",\"ru\":\"Google Ads для ремонта квартир - заявки из поиска\",\"en\":\"Google Ads for apartment renovation - search requests\",\"pl\":\"Reklamy Google dotyczące remontu mieszkania - zapytania wyszukiwania\",\"de\":\"Google Ads für Wohnungsrenovierung - Suchanfragen\"}",
+      "buttonText": "Отримати консультацію"
+    },
+    {
+      "quizId": "15",
+      "layoutType": "background",
+      "titleText": "{\"uk\":\"Меблева реклама без заявок — проблема не в ринку\",\"ru\":\"Мебельная реклама без заявок - проблема не в рынке\",\"en\":\"Furniture advertising without applications is not a problem in the market\",\"pl\":\"Reklama mebli bez aplikacji nie jest problemem na rynku\",\"de\":\"Möbelwerbung ohne Bewerbungen ist kein Problem auf dem Markt\"}",
+      "buttonText": "Отримати консультацію"
+    },
+    {
+      "quizId": "16",
+      "layoutType": "background",
+      "titleText": "{\"uk\":\"Google Ads для меблів — клієнти з пошуку\",\"ru\":\"Google Ads для мебели - клиенты из поиска\",\"en\":\"Google Ads for furniture - customers from search\",\"pl\":\"Reklamy Google dla mebli - klienci z wyszukiwania\",\"de\":\"Google Ads für Möbel - Kunden aus der Suche\"}",
+      "buttonText": "Отримати консультацію"
+    },
+    {
+      "quizId": "17",
+      "layoutType": "standard",
+      "titleText": "{\"uk\":\"Telegram без результату — реклама ллється не туди\",\"ru\":\"Telegram без результата - реклама льется не туда\",\"en\":\"Telegram without result - ads are pouring in the wrong direction\",\"pl\":\"Telegram bez rezultatu - reklamy płyną w złym kierunku\",\"de\":\"Telegramm ohne Ergebnis - Werbung fließt in die falsche Richtung\"}",
+      "buttonText": "Отримати консультацію"
+    },
+    {
+      "quizId": "18",
+      "layoutType": "standard",
+      "titleText": "{\"uk\":\"Google Ads для Telegram — трафік з наміром\",\"ru\":\"Google Ads для Telegram - трафик с намерением\",\"en\":\"Google Ads for Telegram - traffic with intent\",\"pl\":\"Google Ads dla Telegram - ruch z intencją\",\"de\":\"Google Ads für Telegram - Traffic mit Absicht\"}",
+      "buttonText": "Отримати консультацію"
+    },
+    {
+      "quizId": "19",
+      "layoutType": "standard",
+      "titleText": "{\"uk\":\"Будівництво без заявок — реклама працює на конкурентів\",\"ru\":\"Строительство без заявок - реклама работает на конкурентов\",\"en\":\"Construction without applications - advertising works for competitors\",\"pl\":\"Budowa bez aplikacji - reklama działa na korzyść konkurencji\",\"de\":\"Bauen ohne Bewerbung - Werbung arbeitet für Wettbewerber\"}",
+      "buttonText": "Отримати консультацію"
+    },
+    {
+      "quizId": "20",
+      "layoutType": "standard",
+      "titleText": "{\"uk\":\"Google Ads для будівництва — клієнти з пошуку\",\"ru\":\"Google Ads для строительства - клиенты из поиска\",\"en\":\"Google Ads for construction - clients from search\",\"pl\":\"Reklamy Google dla branży budowlanej - klienci z wyszukiwania\",\"de\":\"Google Ads für das Baugewerbe - Kunden aus der Suche\"}",
+      "buttonText": "Отримати консультацію"
+    }
+  ],
+  "messages": [],
+  "stdout": "quizId\tlayoutType\ttitleText\tbuttonText\n11\tbackground\t{\"uk\":\"Інтернет-магазин без продажів — це зламаний таргет\",\"ru\":\"Интернет-магазин без продаж - это сломанный таргет\",\"en\":\"An online store without sales is a broken target\",\"pl\":\"Sklep internetowy bez sprzedaży to zepsuty cel\",\"de\":\"Ein Online-Shop ohne Verkäufe ist ein kaputtes Ziel\"}\tОтримати консультацію\n12\tbackground\tРемонт без заявок — значить реклама налаштована криво\tОтримати консультацію\n13\tbackground\tМеблева реклама без заявок — проблема не в ринку\tОтримати консультацію\n14\tbackground\t{\"uk\":\"Google Ads для ремонту квартир — заявки з пошуку\",\"ru\":\"Google Ads для ремонта квартир - заявки из поиска\",\"en\":\"Google Ads for apartment renovation - search requests\",\"pl\":\"Reklamy Google dotyczące remontu mieszkania - zapytania wyszukiwania\",\"de\":\"Google Ads für Wohnungsrenovierung - Suchanfragen\"}\tОтримати консультацію\n15\tbackground\t{\"uk\":\"Меблева реклама без заявок — проблема не в ринку\",\"ru\":\"Мебельная реклама без заявок - проблема не в рынке\",\"en\":\"Furniture advertising without applications is not a problem in the market\",\"pl\":\"Reklama mebli bez aplikacji nie jest problemem na rynku\",\"de\":\"Möbelwerbung ohne Bewerbungen ist kein Problem auf dem Markt\"}\tОтримати консультацію\n16\tbackground\t{\"uk\":\"Google Ads для меблів — клієнти з пошуку\",\"ru\":\"Google Ads для мебели - клиенты из поиска\",\"en\":\"Google Ads for furniture - customers from search\",\"pl\":\"Reklamy Google dla mebli - klienci z wyszukiwania\",\"de\":\"Google Ads für Möbel - Kunden aus der Suche\"}\tОтримати консультацію\n17\tstandard\t{\"uk\":\"Telegram без результату — реклама ллється не туди\",\"ru\":\"Telegram без результата - реклама льется не туда\",\"en\":\"Telegram without result - ads are pouring in the wrong direction\",\"pl\":\"Telegram bez rezultatu - reklamy płyną w złym kierunku\",\"de\":\"Telegramm ohne Ergebnis - Werbung fließt in die falsche Richtung\"}\tОтримати консультацію\n18\tstandard\t{\"uk\":\"Google Ads для Telegram — трафік з наміром\",\"ru\":\"Google Ads для Telegram - трафик с намерением\",\"en\":\"Google Ads for Telegram - traffic with intent\",\"pl\":\"Google Ads dla Telegram - ruch z intencją\",\"de\":\"Google Ads für Telegram - Traffic mit Absicht\"}\tОтримати консультацію\n19\tstandard\t{\"uk\":\"Будівництво без заявок — реклама працює на конкурентів\",\"ru\":\"Строительство без заявок - реклама работает на конкурентов\",\"en\":\"Construction without applications - advertising works for competitors\",\"pl\":\"Budowa bez aplikacji - reklama działa na korzyść konkurencji\",\"de\":\"Bauen ohne Bewerbung - Werbung arbeitet für Wettbewerber\"}\tОтримати консультацію\n20\tstandard\t{\"uk\":\"Google Ads для будівництва — клієнти з пошуку\",\"ru\":\"Google Ads для строительства - клиенты из поиска\",\"en\":\"Google Ads for construction - clients from search\",\"pl\":\"Reklamy Google dla branży budowlanej - klienci z wyszukiwania\",\"de\":\"Google Ads für das Baugewerbe - Kunden aus der Suche\"}\tОтримати консультацію\n",
+  "stderr": "",
+  "execution_time_ms": 52
+}

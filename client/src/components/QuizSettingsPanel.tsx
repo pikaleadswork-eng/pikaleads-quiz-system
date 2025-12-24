@@ -839,6 +839,7 @@ function SaveSettingsButton({ quizId, settings }: { quizId: number; settings: an
       layoutType: settings.layoutType || "background",
       backgroundImage: settings.backgroundImage,
       backgroundVideo: settings.backgroundVideo,
+      backgroundGradient: settings.backgroundGradient,
       alignment: settings.alignment || "left",
       logoImage: settings.logoUrl,
       primaryColor: settings.backgroundColor || settings.primaryColor,

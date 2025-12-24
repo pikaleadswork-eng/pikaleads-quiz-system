@@ -1,0 +1,9 @@
+{
+  "query": "INSERT INTO quiz_design_settings (quizId, layoutType, backgroundImage, titleText, subtitleText, buttonText, primaryColor, accentColor, alignment) VALUES (1, 'standard', 'https://storage.googleapis.com/msgsndr/tYKdp0C36uaD4KULxUMu/media/67697c6ce9b8a3e9e0e7e0e4.png', '{\"uk\":\"ІНТЕРНЕТ-МАГАЗИН БЕЗ ПРОДАЖІВ — ЦЕ ЗЛАМАНИЙ ТАРГЕТ\",\"ru\":\"ИНТЕРНЕТ-МАГАЗИН БЕЗ ПРОДАЖ — ЭТО СЛОМАННЫЙ ТАРГЕТ\",\"en\":\"ONLINE STORE WITHOUT SALES — BROKEN TARGETING\"}', '{\"uk\":\"Запускаємо Meta рекламу для e-commerce з фокусом на продажі та окупність, а не охоплення\",\"ru\":\"Запускаем Meta рекламу для e-commerce с фокусом на продажи и окупаемость, а не охват\",\"en\":\"We launch Meta ads for e-commerce focused on sales and ROI, not reach\"}', 'Отримати консультацію', '#8B5CF6', '#FFD93D', 'left');",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user b5yJbKNBA74GJz4.0729dd994af9 --database EcCrELAaL5JgQGs8z45yv6 --execute INSERT INTO quiz_design_settings (quizId, layoutType, backgroundImage, titleText, subtitleText, buttonText, primaryColor, accentColor, alignment) VALUES (1, 'standard', 'https://storage.googleapis.com/msgsndr/tYKdp0C36uaD4KULxUMu/media/67697c6ce9b8a3e9e0e7e0e4.png', '{\"uk\":\"ІНТЕРНЕТ-МАГАЗИН БЕЗ ПРОДАЖІВ — ЦЕ ЗЛАМАНИЙ ТАРГЕТ\",\"ru\":\"ИНТЕРНЕТ-МАГАЗИН БЕЗ ПРОДАЖ — ЭТО СЛОМАННЫЙ ТАРГЕТ\",\"en\":\"ONLINE STORE WITHOUT SALES — BROKEN TARGETING\"}', '{\"uk\":\"Запускаємо Meta рекламу для e-commerce з фокусом на продажі та окупність, а не охоплення\",\"ru\":\"Запускаем Meta рекламу для e-commerce с фокусом на продажи и окупаемость, а не охват\",\"en\":\"We launch Meta ads for e-commerce focused on sales and ROI, not reach\"}', 'Отримати консультацію', '#8B5CF6', '#FFD93D', 'left');",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 60
+}

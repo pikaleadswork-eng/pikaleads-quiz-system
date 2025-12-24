@@ -776,6 +776,7 @@ export const quizDesignSettings = mysqlTable("quiz_design_settings", {
   layoutType: varchar("layoutType", { length: 20 }).default("standard").notNull(), // standard, background
   backgroundImage: text("backgroundImage"), // S3 URL
   backgroundVideo: text("backgroundVideo"), // S3 URL for video background
+  backgroundGradient: text("backgroundGradient"), // CSS gradient for background
   alignment: varchar("alignment", { length: 20 }).default("center"), // left, center, right
   logoImage: text("logoImage"), // S3 URL
   primaryColor: varchar("primaryColor", { length: 7 }).default("#FACC15"), // Yellow

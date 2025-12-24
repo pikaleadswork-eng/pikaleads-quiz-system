@@ -202,10 +202,16 @@ export default function QuizPage() {
 
   // Quiz start screen with split layout
   if (!quizStarted) {
+    const bgGradient = designSettings?.backgroundGradient || 'linear-gradient(135deg, #1f1f3a 0%, #4a1d6f 50%, #1f1f3a 100%)';
+    const btnColor = designSettings?.accentColor || '#FFD93D';
+    
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 flex">
+      <div className="min-h-screen flex">
         {/* Left side - Content */}
-        <div className="flex-1 flex items-center justify-center p-8 lg:p-16">
+        <div 
+          className="flex-1 flex items-center justify-center p-8 lg:p-16"
+          style={{ background: bgGradient }}
+        >
           <div className="max-w-xl">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6 leading-tight">
               {title}
@@ -213,13 +219,16 @@ export default function QuizPage() {
             <p className="text-xl md:text-2xl text-gray-300 mb-10 leading-relaxed">
               {subtitle}
             </p>
-            <Button 
+            <button 
               onClick={() => setQuizStarted(true)}
-              size="lg"
-              className="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-black font-bold px-12 py-6 text-xl rounded-full shadow-lg shadow-yellow-500/30 transform hover:scale-105 transition-all duration-300"
+              className="px-12 py-4 text-black font-bold text-xl shadow-lg transform hover:scale-105 transition-all duration-300 flex items-center gap-2"
+              style={{
+                backgroundColor: btnColor,
+                borderRadius: '9999px'
+              }}
             >
-              {buttonText} <ArrowRight className="ml-2 h-6 w-6" />
-            </Button>
+              {buttonText} <ArrowRight className="h-6 w-6" />
+            </button>
           </div>
         </div>
         

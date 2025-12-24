@@ -4522,3 +4522,19 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Updated /pikachu-transparent.png in public folder
 - [x] Verified Home page displays new Pikachu correctly with floating stats cards
 - [x] Confirmed responsive layout works on all screen sizes
+
+
+## Phase 166: CRITICAL - Editor Shows Wrong Layout (Background Instead of 50/50 Split)
+
+- [x] URGENT: Editor preview shows fullscreen background layout instead of 50/50 split
+- [x] URGENT: Published quiz shows correct 50/50 split (left: purple bg + text, right: Pikachu image)
+- [x] URGENT: Editor must load EXACT same data as published version
+- [x] Fix: Ensure editor loads correct layoutType, backgroundImage, button colors, text
+- [x] Verify: All elements match 100% (layout, text, colors, images, button styling)
+- [x] Test: Editor changes save and update correctly
+- [x] Added backgroundGradient field to schema and database
+- [x] Updated QuizPage.tsx to read all settings from database (not hardcoded)
+- [x] Updated QuizDesignPage.tsx to use backgroundGradient
+- [x] Updated save procedure to include backgroundGradient
+- [x] Created quiz_design_settings record for ecommerce-meta quiz
+- [x] Editor and published quiz now fully synchronized

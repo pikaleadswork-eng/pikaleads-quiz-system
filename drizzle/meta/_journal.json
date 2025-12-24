@@ -351,6 +351,13 @@
       "when": 1766528602055,
       "tag": "0049_stiff_felicia_hardy",
       "breakpoints": true
+    },
+    {
+      "idx": 50,
+      "version": "5",
+      "when": 1766581077081,
+      "tag": "0050_cheerful_nebula",
+      "breakpoints": true
     }
   ]
 }
