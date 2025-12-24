@@ -1,0 +1,17 @@
+{
+  "query": "SELECT quizId, titleText, subtitleText, layoutType, backgroundImage FROM quiz_design_settings WHERE quizId = 11",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user b5yJbKNBA74GJz4.0729dd994af9 --database EcCrELAaL5JgQGs8z45yv6 --execute SELECT quizId, titleText, subtitleText, layoutType, backgroundImage FROM quiz_design_settings WHERE quizId = 11",
+  "rows": [
+    {
+      "quizId": "11",
+      "titleText": "{\"uk\":\"Інтернет-магазин без продажів — це зламаний таргет\",\"ru\":\"Интернет-магазин без продаж - это сломанный таргет\",\"en\":\"An online store without sales is a broken target\",\"pl\":\"Sklep internetowy bez sprzedaży to zepsuty cel\",\"de\":\"Ein Online-Shop ohne Verkäufe ist ein kaputtes Ziel\"}",
+      "subtitleText": "{\"uk\":\"Запускаємо Meta рекламу для e-commerce з фокусом на продажі та окупність, а не охоплення\",\"ru\":\"Запускаем Meta рекламу для e-commerce с фокусом на продажи и окупаемость, а не охват\",\"en\":\"Launching Meta advertising for e-commerce with a focus on sales and ROI, not reach\",\"pl\":\"Uruchomienie reklamy Meta dla e-commerce z naciskiem na sprzedaż i ROI, a nie zasięg\",\"de\":\"Einführung von Meta-Werbung für den elektronischen Handel mit Schwerpunkt auf Umsatz und ROI, nicht auf Reichweite\"}",
+      "layoutType": "background",
+      "backgroundImage": "https://pika-leads.com/quiz-images/general-bg.png"
+    }
+  ],
+  "messages": [],
+  "stdout": "quizId\ttitleText\tsubtitleText\tlayoutType\tbackgroundImage\n11\t{\"uk\":\"Інтернет-магазин без продажів — це зламаний таргет\",\"ru\":\"Интернет-магазин без продаж - это сломанный таргет\",\"en\":\"An online store without sales is a broken target\",\"pl\":\"Sklep internetowy bez sprzedaży to zepsuty cel\",\"de\":\"Ein Online-Shop ohne Verkäufe ist ein kaputtes Ziel\"}\t{\"uk\":\"Запускаємо Meta рекламу для e-commerce з фокусом на продажі та окупність, а не охоплення\",\"ru\":\"Запускаем Meta рекламу для e-commerce с фокусом на продажи и окупаемость, а не охват\",\"en\":\"Launching Meta advertising for e-commerce with a focus on sales and ROI, not reach\",\"pl\":\"Uruchomienie reklamy Meta dla e-commerce z naciskiem na sprzedaż i ROI, a nie zasięg\",\"de\":\"Einführung von Meta-Werbung für den elektronischen Handel mit Schwerpunkt auf Umsatz und ROI, nicht auf Reichweite\"}\tbackground\thttps://pika-leads.com/quiz-images/general-bg.png\n",
+  "stderr": "",
+  "execution_time_ms": 54
+}

@@ -42,22 +42,25 @@ export default function QuizDesignPage() {
     },
   });
 
-  // Load design settings from database
-  const { data: savedSettings, isLoading: settingsLoading, error: settingsError } = trpc.quizDesign.getByQuizId.useQuery(
-    { quizId: quizId || 0 },
-    { enabled: !!quizId }
-  );
-
-  // Load quiz to get slug for A/B test check
+  // Load quiz to get slug
   const { data: quiz } = trpc.quizzes.getById.useQuery(
     { id: quizId || 0 },
     { enabled: !!quizId }
   );
 
-  // Check for active A/B tests
+  // Check for active A/B tests FIRST
   const { data: abTestVariants } = trpc.abTest.getVariants.useQuery(
     { quizId: quiz?.slug || "" },
     { enabled: !!quiz?.slug }
+  );
+
+  // Get active A/B variant (first one with traffic > 0)
+  const activeVariant = abTestVariants?.find(v => v.isActive && v.trafficPercentage > 0);
+
+  // Always load base design settings (for layout, colors, etc.)
+  const { data: savedSettings, isLoading: settingsLoading, error: settingsError } = trpc.quizDesign.getByQuizId.useQuery(
+    { quizId: quizId || 0 },
+    { enabled: !!quizId }
   );
 
   const [settings, setSettings] = useState({
@@ -96,9 +99,48 @@ export default function QuizDesignPage() {
     thankYouButtonUrl: '/',
   });
 
-  // Load saved settings when available
+  // Load saved settings when available - prioritize A/B variant if active
   useEffect(() => {
-    if (savedSettings) {
+    // If there's an active A/B variant, use its data
+    if (activeVariant) {
+      setSettings(prev => ({
+        ...prev,
+        // Use A/B variant title if available, otherwise use base settings
+        title: activeVariant.title || savedSettings?.titleText || "Введіть заголовок сторінки",
+        subtitle: activeVariant.subtitle || savedSettings?.subtitleText || "Додатковий текст-опис",
+        bonusText: activeVariant.bonus || savedSettings?.bonusText || "",
+        // Load base design settings from quiz_design_settings
+        logoUrl: savedSettings?.logoImage || "",
+        companyName: savedSettings?.companyName || "PikaLeads",
+        buttonText: savedSettings?.buttonText || "Почати",
+        bonusEnabled: savedSettings?.bonusEnabled || false,
+        phoneNumber: savedSettings?.phoneNumber || "+380992377117",
+        backgroundImage: savedSettings?.backgroundImage || "",
+        backgroundVideo: savedSettings?.backgroundVideo || "",
+        layoutType: (savedSettings?.layoutType as "background" | "standard") || "standard",
+        alignment: (savedSettings?.alignment as "left" | "center" | "right") || "left",
+        backgroundColor: savedSettings?.primaryColor || "#FFD93D",
+        backgroundGradient: "",
+        primaryColor: savedSettings?.primaryColor || "#FFD93D",
+        accentColor: savedSettings?.accentColor || "#A855F7",
+        fontFamily: savedSettings?.fontFamily || "Inter",
+        titleColor: "#FFFFFF",
+        subtitleColor: "#FFFFFF",
+        titleWeight: "bold" as "normal" | "medium" | "semibold" | "bold" | "extrabold",
+        subtitleWeight: "normal" as "normal" | "medium" | "semibold" | "bold" | "extrabold",
+        buttonRadius: "full" as "none" | "sm" | "md" | "lg" | "full",
+        buttonRadiusPx: 25,
+        bullets: [] as Array<{ id: string; text: string; icon: string }>,
+        contactFormTitle: savedSettings?.contactFormTitle || settings.contactFormTitle,
+        contactFormSubtitle: savedSettings?.contactFormSubtitle || settings.contactFormSubtitle,
+        contactFormFields: savedSettings?.contactFormFields || settings.contactFormFields,
+        thankYouTitle: savedSettings?.thankYouTitle || settings.thankYouTitle,
+        thankYouSubtitle: savedSettings?.thankYouSubtitle || settings.thankYouSubtitle,
+        thankYouButtonText: savedSettings?.thankYouButtonText || settings.thankYouButtonText,
+        thankYouButtonUrl: savedSettings?.thankYouButtonUrl || settings.thankYouButtonUrl,
+      }));
+    } else if (savedSettings) {
+      // No A/B test, use base settings
       setSettings(prev => ({
         ...prev,
         logoUrl: savedSettings.logoImage || "",
@@ -125,18 +167,16 @@ export default function QuizDesignPage() {
         buttonRadius: "full" as "none" | "sm" | "md" | "lg" | "full",
         buttonRadiusPx: 25,
         bullets: [] as Array<{ id: string; text: string; icon: string }>,
-        // Contact form settings
         contactFormTitle: savedSettings.contactFormTitle || settings.contactFormTitle,
         contactFormSubtitle: savedSettings.contactFormSubtitle || settings.contactFormSubtitle,
         contactFormFields: savedSettings.contactFormFields || settings.contactFormFields,
-        // Thank you page settings
         thankYouTitle: savedSettings.thankYouTitle || settings.thankYouTitle,
         thankYouSubtitle: savedSettings.thankYouSubtitle || settings.thankYouSubtitle,
         thankYouButtonText: savedSettings.thankYouButtonText || settings.thankYouButtonText,
         thankYouButtonUrl: savedSettings.thankYouButtonUrl || settings.thankYouButtonUrl,
       }));
     }
-  }, [savedSettings]);
+  }, [savedSettings, activeVariant]);
 
   const handleSettingsChange = (key: string, value: any) => {
     setSettings(prev => ({ ...prev, [key]: value }));
@@ -149,26 +189,8 @@ export default function QuizDesignPage() {
     { id: "thanks" as const, label: "Спасибо", icon: "🎉" },
   ];
 
-  const hasActiveABTests = abTestVariants && abTestVariants.length > 0;
-
   return (
     <div className="h-screen bg-zinc-900 flex flex-col overflow-hidden">
-      {/* A/B Test Warning Banner */}
-      {hasActiveABTests && (
-        <div className="bg-yellow-500/10 border-b border-yellow-500/30 px-6 py-3">
-          <div className="flex items-center gap-3 text-yellow-400">
-            <span className="text-xl">⚠️</span>
-            <div className="flex-1">
-              <p className="font-semibold">Активний A/B тест!</p>
-              <p className="text-sm text-yellow-300">
-                Зараз відвідувачі бачать варіант: <strong>"{abTestVariants[0]?.variantName}"</strong> з заголовком "{abTestVariants[0]?.title}". 
-                Ви редагуєте базову версію (контрольну групу).
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
-      
       {/* Top Tabs */}
       <div className="bg-zinc-800 border-b border-zinc-700 px-6 py-3 flex items-center gap-4">
         {tabs.map(tab => (

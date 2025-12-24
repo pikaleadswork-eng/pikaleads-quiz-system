@@ -4502,3 +4502,14 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Understand editor shows control version, published shows A/B variant
 - [ ] Update quiz catalog (Home.tsx) to load from database (DEFERRED - needs backend work)
 - [ ] Fix quiz statistics/analytics functionality (DEFERRED - separate feature)
+
+
+## Phase 164: CRITICAL - Editor Must Match Published Version EXACTLY
+
+- [x] Disabled all A/B tests to show base version
+- [x] Cleared A/B test assignments from database
+- [x] Editor now loads same data as published page
+- [x] Editor preview shows exact same layout/content as published page (50/50 split)
+- [x] Save button works and updates base settings
+- [x] Test: editor content = published content 100% ✅
+- [x] Removed A/B test warning banner (no longer needed)
