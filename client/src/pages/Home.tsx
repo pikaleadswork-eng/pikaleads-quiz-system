@@ -155,7 +155,7 @@ export default function Home() {
                 </div>
 
                 {/* Main Title */}
-                <h1 className="text-3xl md:text-4xl lg:text-5xl font-black leading-tight" style={{ fontFamily: 'Bungee, sans-serif' }}>
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-black leading-tight" style={{ fontFamily: "'Eurostile Bold Extended', 'Nasalization', 'Rajdhani', sans-serif", letterSpacing: '0.05em' }}>
                   <span className="block text-white mb-2">
                     {language === "uk" ? "КВІЗ" : language === "ru" ? "КВИЗ" : "QUIZ"}
                   </span>
@@ -237,9 +237,9 @@ export default function Home() {
                   </CyberpunkCard>
                 </div>
 
-                {/* Floating Card 3 - Middle Left */}
+                {/* Floating Card 3 - Top Left (moved to avoid Pikachu face) */}
                 <div 
-                  className="absolute top-1/2 left-8 w-56 -translate-y-1/2 animate-float"
+                  className="absolute top-32 left-4 w-56 animate-float"
                   style={{ animationDelay: '2s' }}
                 >
                   <CyberpunkCard variant="purple" glow={true} className="p-4">

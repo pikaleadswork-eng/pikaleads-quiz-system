@@ -4462,3 +4462,11 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Change heading text to "КВІЗ МАРКЕТИНГ ДЛЯ ВАШОГО БІЗНЕСУ" (shorter version)
 - [x] Increase Pikachu size for better visibility
 - [x] Verify font matches homepage "ОБИРАЙ НЕ АГЕНСТВО" style
+
+
+## Phase 160: CRITICAL - Fix Font and Layout on /quizzes
+
+- [x] Fix font on /quizzes - currently showing narrow font instead of wide Bungee like homepage
+- [x] Move PERFORMANCE card away from Pikachu's face (currently overlapping)
+- [x] Investigate why same Home.tsx component renders different fonts on / vs /quizzes
+- [x] Ensure "КВІЗ МАРКЕТИНГ" uses exact same font as "ОБИРАЙ НЕ АГЕНСТВО"
