@@ -1,4 +1,6 @@
-import { ShoppingCart, Home, Sofa, Hammer, Briefcase, Utensils, Building2, Smartphone, Send, Instagram } from 'lucide-react';
+import { ShoppingCart, Home, Sofa, Hammer, Briefcase, UtensilsCrossed, Building2, Smartphone, Send, Instagram } from "lucide-react";
+import { useState } from "react";
+import LeadFormModal from "@/components/LeadFormModal";
 
 interface Niche {
   id: number;
@@ -52,7 +54,7 @@ const niches: Niche[] = [
   },
   {
     id: 6,
-    icon: <Utensils className="w-8 h-8" />,
+    icon: <UtensilsCrossed className="w-8 h-8" />,
     title: "РЕСТОРАНИ",
     description: "Кафе, ресторани, доставка їжі. Instagram Ads, TikTok креативи, геотаргетинг. Збільшення замовлень на 280%.",
     stats: "+280% замовлень",
@@ -93,6 +95,7 @@ const niches: Niche[] = [
 ];
 
 export default function NichesSection() {
+  const [consultationModalOpen, setConsultationModalOpen] = useState(false);
   return (
     <section className="relative py-8 sm:py-12 md:py-16 lg:py-20 bg-black overflow-hidden">
       {/* Background Effects */}
@@ -179,11 +182,19 @@ export default function NichesSection() {
             Не знайшли свою нішу? Ми працюємо з будь-якими бізнесами, де потрібен результат.
           </p>
           <button
+            onClick={() => setConsultationModalOpen(true)}
             className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black font-bold rounded-xl hover:shadow-[0_0_30px_rgba(255,217,61,0.5)] transition-all duration-300 hover:scale-105"
             style={{ fontFamily: 'Eurostile, sans-serif' }}
           >
             ОБГОВОРИТИ ПРОЕКТ
           </button>
+
+      {/* Lead Form Modal */}
+      <LeadFormModal
+        isOpen={consultationModalOpen}
+        onClose={() => setConsultationModalOpen(false)}
+        formType="consultation"
+      />
         </div>
       </div>
     </section>

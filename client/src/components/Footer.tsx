@@ -120,7 +120,6 @@ export default function Footer() {
                 alt="PIKA LEADS" 
                 className="h-8 w-auto"
               />
-              <span className="font-bold text-xl text-yellow-400">PIKA LEADS</span>
             </div>
             <p className="text-zinc-400 text-sm leading-relaxed">
               {t.aboutText}

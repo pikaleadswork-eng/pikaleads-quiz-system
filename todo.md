@@ -4361,3 +4361,11 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Add grayscale hover effect to partner logos
 - [x] Integrate Footer into AgencyHome page
 - [x] Verify footer displays correctly at bottom of page
+
+
+## Phase 153: Bug Fixes - Logo Duplication & Modal Integration (COMPLETED)
+- [x] Fix duplicate PIKA LEADS logo in Footer (showing both image and text)
+- [x] Fix TypeScript error in NichesSection (UtensilsCrossed import)
+- [x] Connect LeadFormModal to "ОБГОВОРИТИ ПРОЕКТ" button in NichesSection
+- [x] Connect LeadFormModal to "Отримати зразок договору" button in GuaranteesSection
+- [x] Connect LeadFormModal to "ПОЧАТИ ПРАЦЮВАТИ" button in WorkProcessSection

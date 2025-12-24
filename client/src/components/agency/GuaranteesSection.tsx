@@ -1,6 +1,9 @@
 import { Shield, FileText, TrendingUp, Clock } from "lucide-react";
+import { useState } from "react";
+import LeadFormModal from "@/components/LeadFormModal";
 
 export default function GuaranteesSection() {
+  const [contractModalOpen, setContractModalOpen] = useState(false);
   const guarantees = [
     {
       icon: Shield,
@@ -121,15 +124,22 @@ export default function GuaranteesSection() {
           <p className="text-gray-400 mb-4">
             Хочете побачити приклад договору з KPI?
           </p>
-          <a 
-            href="#contact" 
+          <button 
+            onClick={() => setContractModalOpen(true)}
             className="inline-flex items-center gap-2 px-6 py-3 bg-[#FFD93D] hover:bg-[#FFD93D]/90 text-black font-bold rounded-xl transition-all duration-300 shadow-lg shadow-[#FFD93D]/30"
           >
             <FileText className="w-5 h-5" />
             Отримати зразок договору
-          </a>
+          </button>
         </div>
       </div>
+
+      {/* Lead Form Modal */}
+      <LeadFormModal
+        isOpen={contractModalOpen}
+        onClose={() => setContractModalOpen(false)}
+        formType="consultation"
+      />
 
       {/* Animations */}
       <style>{`

@@ -1,5 +1,6 @@
-import { Search, Map, Palette, FlaskConical, TrendingUp, CheckCircle2, ArrowRight } from 'lucide-react';
-
+import { Search, Map, Palette, FlaskConical, TrendingUp, Target, CheckCircle2, ArrowRight } from "lucide-react";
+import { useState } from "react";
+import LeadFormModal from "@/components/LeadFormModal";
 interface ProcessStep {
   id: number;
   number: string;
@@ -98,6 +99,7 @@ const steps: ProcessStep[] = [
 ];
 
 export default function WorkProcessSection() {
+  const [consultationModalOpen, setConsultationModalOpen] = useState(false);
   return (
     <section className="relative py-8 sm:py-12 md:py-16 lg:py-20 bg-black overflow-hidden">
       {/* Background Effects */}
@@ -229,6 +231,7 @@ export default function WorkProcessSection() {
               Залиште заявку і отримайте безкоштовний аудит вашого проекту протягом 24 годин
             </p>
             <button
+              onClick={() => setConsultationModalOpen(true)}
               className="inline-flex items-center gap-2 px-10 py-5 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black font-bold text-lg rounded-xl hover:shadow-[0_0_40px_rgba(255,217,61,0.6)] transition-all duration-300 hover:scale-105 whitespace-nowrap"
               style={{ fontFamily: 'Eurostile, sans-serif' }}
             >
@@ -238,6 +241,13 @@ export default function WorkProcessSection() {
           </div>
         </div>
       </div>
+
+      {/* Lead Form Modal */}
+      <LeadFormModal
+        isOpen={consultationModalOpen}
+        onClose={() => setConsultationModalOpen(false)}
+        formType="consultation"
+      />
     </section>
   );
 }
