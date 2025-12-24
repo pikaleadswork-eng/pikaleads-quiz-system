@@ -18,6 +18,8 @@ export default function QuizDesignPage() {
   const [activeTab, setActiveTab] = useState<"start" | "questions" | "contacts" | "results" | "thanks">("start");
   const [isMobilePreview, setIsMobilePreview] = useState(false);
   const [questions, setQuestions] = useState<QuizQuestion[]>([]);
+  const [quizName, setQuizName] = useState("");
+  const [quizDescription, setQuizDescription] = useState("");
 
   // Load questions from database
   const { data: loadedQuestions } = trpc.quizDesign.getQuestions.useQuery(
@@ -41,6 +43,30 @@ export default function QuizDesignPage() {
       toast.error(`Помилка: ${error.message}`);
     },
   });
+
+  // Update quiz mutation
+  const updateQuizMutation = trpc.quizzes.update.useMutation({
+    onSuccess: () => {
+      toast.success("Дані квізу оновлено!");
+    },
+    onError: (error) => {
+      toast.error(`Помилка: ${error.message}`);
+    },
+  });
+
+  // Load quiz data (name, description)
+  const { data: quizData } = trpc.quizzes.getById.useQuery(
+    { id: quizId || 0 },
+    { enabled: !!quizId }
+  );
+
+  // Update quiz name and description when loaded
+  useEffect(() => {
+    if (quizData) {
+      setQuizName(quizData.name || "");
+      setQuizDescription(quizData.description || "");
+    }
+  }, [quizData]);
 
   // Load design settings from database
   const { data: savedSettings } = trpc.quizDesign.getByQuizId.useQuery(
@@ -106,10 +132,10 @@ export default function QuizDesignPage() {
         primaryColor: savedSettings.primaryColor || "#FFD93D",
         accentColor: savedSettings.accentColor || "#A855F7",
         fontFamily: savedSettings.fontFamily || "Inter",
-        titleColor: "#FFFFFF",
-        subtitleColor: "#FFFFFF",
-        titleWeight: "bold" as "normal" | "medium" | "semibold" | "bold" | "extrabold",
-        subtitleWeight: "normal" as "normal" | "medium" | "semibold" | "bold" | "extrabold",
+        titleColor: savedSettings.titleColor || "#FFFFFF",
+        subtitleColor: savedSettings.subtitleColor || "#FFFFFF",
+        titleWeight: (savedSettings.titleWeight as "normal" | "medium" | "semibold" | "bold" | "extrabold") || "bold",
+        subtitleWeight: (savedSettings.subtitleWeight as "normal" | "medium" | "semibold" | "bold" | "extrabold") || "normal",
         // Contact form settings
         contactFormTitle: savedSettings.contactFormTitle || settings.contactFormTitle,
         contactFormSubtitle: savedSettings.contactFormSubtitle || settings.contactFormSubtitle,
@@ -800,6 +826,10 @@ export default function QuizDesignPage() {
         {showSettings && (
           <div className="w-[30%] border-l border-zinc-700 overflow-y-auto h-full">
             <QuizSettingsPanel
+              quizName={quizName}
+              quizDescription={quizDescription}
+              onQuizNameChange={setQuizName}
+              onQuizDescriptionChange={setQuizDescription}
               settings={settings}
               onSettingsChange={handleSettingsChange}
               quizId={quizId || 0}

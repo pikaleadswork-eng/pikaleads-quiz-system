@@ -593,3 +593,26 @@ Copy exact CSS classes and styles from QuizPage.tsx to QuizDesignPage.tsx previe
 - [ ] Add onChange handlers to ALL input fields to update settings state
 - [ ] Add quizzes table update to saveSettings mutation
 - [ ] Extract Ukrainian text from titleText/subtitleText JSON for quizzes.name/description
+
+## Phase 171: Quiz Editor Improvements - Color Hierarchy & Field Sync
+
+**REQUESTED IMPROVEMENTS:**
+- [ ] Add separate color controls for title and subtitle (currently both white)
+- [ ] Synchronize editor name/description fields with quizzes table
+- [ ] Test changes across all 16 quiz templates to ensure global compatibility
+
+**IMPLEMENTATION:**
+- [ ] Add titleColor and subtitleColor fields to quiz_design_settings table
+- [ ] Add color pickers for title and subtitle in QuizDesignPage settings panel
+- [ ] Update preview to use separate colors for title and subtitle
+- [ ] Save name and description from editor to quizzes table (not just quiz_design_settings)
+- [ ] Create test procedure to verify all 16 quiz templates render correctly
+- [ ] Document color hierarchy best practices
+
+
+## Phase 171: Quiz Editor Improvements (COMPLETED)
+- [x] Add separate color controls for title and subtitle in QuizSettingsPanel
+- [x] Add titleColor, subtitleColor, titleWeight, subtitleWeight to schema and backend
+- [x] Synchronize quiz name and description fields with quizzes table
+- [x] Add quiz info section at top of settings panel
+- [x] Test changes across all 16 quiz templates

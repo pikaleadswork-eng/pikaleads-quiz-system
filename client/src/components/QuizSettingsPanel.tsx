@@ -50,6 +50,10 @@ interface Bullet {
 }
 
 interface QuizSettingsPanelProps {
+  quizName: string;
+  quizDescription: string;
+  onQuizNameChange: (name: string) => void;
+  onQuizDescriptionChange: (description: string) => void;
   settings: {
     logoUrl: string;
     companyName: string;
@@ -156,6 +160,10 @@ const GRADIENT_PRESETS = [
 ];
 
 export default function QuizSettingsPanel({
+  quizName,
+  quizDescription,
+  onQuizNameChange,
+  onQuizDescriptionChange,
   settings,
   onSettingsChange,
   quizId,
@@ -274,6 +282,34 @@ export default function QuizSettingsPanel({
         {/* Header */}
         <div>
           <h2 className="text-lg font-semibold text-white">Налаштування</h2>
+        </div>
+
+        {/* ===== QUIZ INFO SECTION ===== */}
+        <div className="p-4 bg-zinc-700/30 rounded-lg border border-zinc-600 space-y-4">
+          <h3 className="text-sm font-semibold text-zinc-300 uppercase tracking-wide">Інформація про квіз</h3>
+          
+          {/* Quiz Name */}
+          <div>
+            <Label className="text-zinc-400 text-xs mb-2 block">Назва квізу</Label>
+            <Input
+              value={quizName}
+              onChange={(e) => onQuizNameChange(e.target.value)}
+              placeholder="Введіть назву квізу"
+              className="bg-zinc-700 border-zinc-600 text-white"
+            />
+          </div>
+
+          {/* Quiz Description */}
+          <div>
+            <Label className="text-zinc-400 text-xs mb-2 block">Опис квізу</Label>
+            <Textarea
+              value={quizDescription}
+              onChange={(e) => onQuizDescriptionChange(e.target.value)}
+              placeholder="Введіть опис квізу"
+              className="bg-zinc-700 border-zinc-600 text-white"
+              rows={3}
+            />
+          </div>
         </div>
 
         {/* ===== DESIGN SECTION ===== */}
@@ -731,7 +767,7 @@ export default function QuizSettingsPanel({
         </div>
 
         {/* Save Button */}
-        <SaveSettingsButton quizId={quizId} settings={settings} />
+        <SaveSettingsButton quizId={quizId} quizName={quizName} quizDescription={quizDescription} settings={settings} />
       </div>
 
       {/* Background Uploader Modal */}
@@ -774,13 +810,22 @@ export default function QuizSettingsPanel({
   );
 }
 
-function SaveSettingsButton({ quizId, settings }: { quizId: number; settings: any }) {
+function SaveSettingsButton({ quizId, quizName, quizDescription, settings }: { quizId: number; quizName: string; quizDescription: string; settings: any }) {
   const saveMutation = trpc.quizDesign.save.useMutation({
     onSuccess: () => {
       toast.success("Налаштування збережено!");
     },
     onError: (error) => {
       toast.error(`Помилка: ${error.message}`);
+    },
+  });
+
+  const updateQuizMutation = trpc.quizzes.update.useMutation({
+    onSuccess: () => {
+      // Success handled by design save
+    },
+    onError: (error) => {
+      toast.error(`Помилка оновлення квізу: ${error.message}`);
     },
   });
 
@@ -834,6 +879,16 @@ function SaveSettingsButton({ quizId, settings }: { quizId: number; settings: an
       if (!proceed) return;
     }
     
+    // Update quiz name and description first
+    if (quizName || quizDescription) {
+      updateQuizMutation.mutate({
+        id: quizId,
+        name: quizName,
+        description: quizDescription,
+      });
+    }
+
+    // Then save design settings
     saveMutation.mutate({
       quizId,
       layoutType: settings.layoutType || "background",
@@ -845,7 +900,11 @@ function SaveSettingsButton({ quizId, settings }: { quizId: number; settings: an
       accentColor: settings.accentColor,
       fontFamily: settings.fontFamily,
       titleText: settings.title,
+      titleColor: settings.titleColor,
+      titleWeight: settings.titleWeight,
       subtitleText: settings.subtitle,
+      subtitleColor: settings.subtitleColor,
+      subtitleWeight: settings.subtitleWeight,
       buttonText: settings.buttonText,
       bonusEnabled: settings.bonusEnabled,
       bonusText: settings.bonusText,
