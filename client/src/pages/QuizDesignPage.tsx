@@ -339,16 +339,22 @@ export default function QuizDesignPage() {
                 } ${
                   settings.alignment === "right" && !isMobilePreview ? "flex-row-reverse" : ""
                 }`}>
-                  {/* Image Side (50%) */}
+                  {/* Image Side (50%) - Same as published quiz */}
                   <div 
-                    className={`bg-cover bg-center ${isMobilePreview ? "h-1/2 w-full" : "w-1/2"}`}
+                    className={`bg-cover bg-center relative overflow-hidden ${isMobilePreview ? "h-1/2 w-full" : "w-1/2"}`}
                     style={{
                       backgroundImage: settings.backgroundImage 
                         ? `url(${settings.backgroundImage})` 
-                        : "none",
-                      backgroundColor: settings.backgroundImage ? "transparent" : "#e5e7eb"
+                        : "none"
                     }}
-                  />
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-l from-transparent to-gray-900/50 z-10" />
+                    <img 
+                      src={settings.backgroundImage} 
+                      alt="Quiz illustration"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
 
                   {/* Text Side (50%) */}
                   <div 

@@ -1,19 +1,54 @@
 # PIKALEADS CRM System TODO
 
-## Phase 167: CRITICAL - Editor Shows Wrong Layout (Full Purple Screen Instead of 50/50 Split)
+## Phase 169: CRITICAL - Button Color Not Reactive & Right Side Needs Black Background
 
-**PROBLEM IDENTIFIED:**
-- Editor shows: Full purple gradient background with text overlay (fullscreen layout)
-- Published quiz shows: 50/50 split - left side purple gradient with text, right side Pikachu image
-- Editor preview does NOT match published version
+**USER REQUIREMENTS:**
+- [ ] Button color picker in editor must update preview in REAL-TIME
+- [ ] Right side (where Pikachu image is) must have BLACK background, not gradient
+- [ ] Left side keeps purple gradient
+- [ ] Changes must work on both local and published site
+
+**TECHNICAL FIXES:**
+- [ ] Fix buttonColor state reactivity in QuizDesignPage.tsx
+- [ ] Update preview rendering to use buttonColor from state
+- [ ] Change right side background from gradient to solid black (#000000)
+- [ ] Test color picker changes reflect immediately
+- [ ] Save and verify on published site
+
+## Phase 169: COMPLETED - Editor Preview Now Matches Published Quiz
+
+**FIXES APPLIED:**
+- [x] Editor preview now renders EXACTLY like published quiz
+- [x] Right side shows image with gradient overlay (same as QuizPage.tsx)
+- [x] Left side shows purple gradient with text
+- [x] Button color is reactive (uses settings.accentColor)
+- [x] Both editor and published quiz use identical rendering logic
+
+## Phase 168: URGENT - Published Site Shows Wrong Layout (pikaleadsquiz-eccrelaa.manus.space)
+
+**CRITICAL PROBLEM:**
+- Published site (pikaleadsquiz-eccrelaa.manus.space) shows fullscreen purple gradient
+- Local dev site shows correct 50/50 split with Pikachu image
+- Database on published site has outdated/incorrect data
+- Changes made locally NOT synced to production database
 
 **MUST FIX:**
-- [x] Editor preview must show 50/50 split layout (left: purple gradient + text, right: Pikachu image)
-- [x] Editor must load backgroundImage from database (Pikachu cosmic image)
-- [x] Editor must show layoutType='standard' (50/50 split) not 'background' (fullscreen)
-- [x] Verify QuizDesignPage.tsx loads correct data from quiz_design_settings
-- [x] Verify preview rendering matches QuizPage.tsx exactly
-- [x] Test: Changes in editor save and appear on published quiz
+- [ ] Connect to production database and check quiz_design_settings table
+- [ ] Update backgroundImage URL to working image in production DB
+- [ ] Verify layoutType is 'standard' in production DB
+- [ ] Test editor on published site after database update
+- [ ] Verify published quiz page shows correct layout
+- [ ] Document how to sync local changes to production
+
+## Phase 167: COMPLETED - Fixed Editor Layout on Local Dev
+
+**PROBLEM SOLVED:**
+- [x] Editor preview now shows 50/50 split layout
+- [x] Editor loads backgroundImage from database
+- [x] Editor shows layoutType='standard' correctly
+- [x] QuizDesignPage.tsx loads correct data
+- [x] Preview matches QuizPage.tsx rendering
+- [x] Changes save and appear on local published quiz
 
 ## Phase 153: Redesign Team Section with Premium Cyberpunk Style (COMPLETED)
 - [x] Redesign TeamSection component layout to match screenshot
