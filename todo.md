@@ -4513,3 +4513,12 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Save button works and updates base settings
 - [x] Test: editor content = published content 100% ✅
 - [x] Removed A/B test warning banner (no longer needed)
+
+
+## Phase 165: Fix Quiz Editor Preview & Replace Pikachu Image
+
+- [x] Fixed quiz editor preview - changed layoutType from "background" to "standard" (50/50 split)
+- [x] Replaced Pikachu image with transparent background version provided by user
+- [x] Updated /pikachu-transparent.png in public folder
+- [x] Verified Home page displays new Pikachu correctly with floating stats cards
+- [x] Confirmed responsive layout works on all screen sizes
