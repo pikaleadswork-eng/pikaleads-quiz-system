@@ -4369,3 +4369,35 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Connect LeadFormModal to "ОБГОВОРИТИ ПРОЕКТ" button in NichesSection
 - [x] Connect LeadFormModal to "Отримати зразок договору" button in GuaranteesSection
 - [x] Connect LeadFormModal to "ПОЧАТИ ПРАЦЮВАТИ" button in WorkProcessSection
+
+
+## Phase 154: Налаштування різних типів форм для CTA кнопок (CURRENT)
+- [ ] Оновити LeadFormModal для підтримки 4 типів форм: consultation, contract, discuss_project, start_work
+- [ ] Додати унікальні заголовки та описи для кожного типу форми
+- [ ] Оновити кнопку "Отримати консультацію" (Hero) → тип "consultation"
+- [ ] Оновити кнопку "Отримати стратегію" (Hero) → тип "strategy"
+- [ ] Оновити кнопку "ОБГОВОРИТИ ПРОЕКТ" (Niches) → тип "discuss_project"
+- [ ] Оновити кнопку "Отримати зразок договору" (Guarantees) → тип "contract"
+- [ ] Оновити кнопку "ПОЧАТИ ПРАЦЮВАТИ" (WorkProcess) → тип "start_work"
+- [ ] Оновити backend (leads.create) для збереження типу звернення
+- [ ] Оновити Telegram повідомлення з типом звернення
+- [ ] Протестувати всі форми та створити чекпоінт
+
+
+## Phase 154 Progress Update:
+- [x] Оновити LeadFormModal для підтримки 5 типів форм
+- [x] Додати унікальні заголовки та описи для кожного типу
+- [x] Оновити кнопку "ОБГОВОРИТИ ПРОЕКТ" (Niches) → discuss_project
+- [x] Оновити кнопку "Отримати зразок договору" (Guarantees) → contract
+- [x] Оновити кнопку "ПОЧАТИ ПРАЦЮВАТИ" (WorkProcess) → start_work
+
+## Phase 154: Налаштування різних типів форм для різних кнопок (COMPLETED)
+- [x] Оновити компонент LeadFormModal для підтримки 5 типів форм
+- [x] Налаштувати унікальні заголовки та описи для кожного типу
+- [x] Оновити кнопку "Отримати консультацію" з типом consultation
+- [x] Оновити кнопку "Отримати стратегію" з типом strategy
+- [x] Оновити кнопку "ОБГОВОРИТИ ПРОЕКТ" з типом discuss_project
+- [x] Оновити кнопку "Отримати зразок договору" з типом contract
+- [x] Оновити кнопку "ПОЧАТИ ПРАЦЮВАТИ" з типом start_work
+- [x] Оновити backend для збереження formType в таблиці leads
+- [x] Протестувати всі 5 типів форм у браузері

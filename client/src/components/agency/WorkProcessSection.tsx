@@ -246,7 +246,7 @@ export default function WorkProcessSection() {
       <LeadFormModal
         isOpen={consultationModalOpen}
         onClose={() => setConsultationModalOpen(false)}
-        formType="consultation"
+        formType="start_work"
       />
     </section>
   );

@@ -12,8 +12,47 @@ import { trackLeadSubmission, trackFormStart } from "@/lib/analytics";
 interface LeadFormModalProps {
   isOpen: boolean;
   onClose: () => void;
-  formType: "consultation" | "strategy";
+  formType: "consultation" | "strategy" | "discuss_project" | "contract" | "start_work";
 }
+
+// Configuration for each form type
+const formConfig = {
+  consultation: {
+    title: "Отримати консультацію",
+    description: "Залиште свої контакти, і ми зв'яжемося з вами протягом 15 хвилин",
+    source: "Консультація",
+    value: 500,
+    buttonText: "Відправити заявку"
+  },
+  strategy: {
+    title: "Отримати стратегію",
+    description: "Отримайте персональну стратегію для вашого бізнесу",
+    source: "Стратегія",
+    value: 1000,
+    buttonText: "Отримати стратегію"
+  },
+  discuss_project: {
+    title: "Обговорити проєкт",
+    description: "Розкажіть про ваш проєкт, і ми підберемо оптимальне рішення",
+    source: "Обговорення проєкту",
+    value: 800,
+    buttonText: "Обговорити проєкт"
+  },
+  contract: {
+    title: "Отримати зразок договору",
+    description: "Завантажте зразок договору з прозорими умовами співпраці та KPI",
+    source: "Запит договору",
+    value: 600,
+    buttonText: "Отримати договір"
+  },
+  start_work: {
+    title: "Почати працювати",
+    description: "Готові розпочати? Залиште заявку, і ми запустимо ваш проєкт",
+    source: "Старт роботи",
+    value: 1500,
+    buttonText: "Почати роботу"
+  }
+};
 
 export default function LeadFormModal({ isOpen, onClose, formType }: LeadFormModalProps) {
   const [, setLocation] = useLocation();
@@ -34,10 +73,12 @@ export default function LeadFormModal({ isOpen, onClose, formType }: LeadFormMod
 
   const createLead = trpc.leads.create.useMutation({
     onSuccess: () => {
+      const config = formConfig[formType];
+      
       // Track conversion in Google Analytics
       trackLeadSubmission({
-        lead_type: formType === "consultation" ? "Консультація" : "Стратегія",
-        lead_value: formType === "consultation" ? 500 : 1000, // Estimated lead value
+        lead_type: config.source,
+        lead_value: config.value,
         currency: "UAH",
         utm_source: utmParams.utm_source,
         utm_medium: utmParams.utm_medium,
@@ -69,9 +110,11 @@ export default function LeadFormModal({ isOpen, onClose, formType }: LeadFormMod
       return;
     }
 
+    const config = formConfig[formType];
+
     createLead.mutate({
       ...formData,
-      source: formType === "consultation" ? "Консультація" : "Стратегія",
+      source: config.source,
       status: "new",
       utmSource: utmParams.utm_source,
       utmMedium: utmParams.utm_medium,
@@ -81,22 +124,16 @@ export default function LeadFormModal({ isOpen, onClose, formType }: LeadFormMod
     });
   };
 
-  const title = formType === "consultation" 
-    ? "Отримати консультацію" 
-    : "Отримати стратегію";
-
-  const description = formType === "consultation"
-    ? "Залиште свої контакти, і ми зв'яжемося з вами протягом 15 хвилин"
-    : "Отримайте персональну стратегію для вашого бізнесу";
+  const config = formConfig[formType];
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[500px] bg-zinc-900 border-[#FFD93D]/20">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-white" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
-            {title}
+            {config.title}
           </DialogTitle>
-          <p className="text-gray-400 text-sm mt-2">{description}</p>
+          <p className="text-gray-400 text-sm mt-2">{config.description}</p>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4 mt-4">
@@ -164,7 +201,7 @@ export default function LeadFormModal({ isOpen, onClose, formType }: LeadFormMod
               disabled={createLead.isPending}
               className="w-full bg-[#FFD93D] hover:bg-[#FFD93D]/90 text-black font-bold"
             >
-              {createLead.isPending ? "Відправка..." : "Відправити заявку"}
+              {createLead.isPending ? "Відправка..." : config.buttonText}
             </Button>
           </div>
         </form>

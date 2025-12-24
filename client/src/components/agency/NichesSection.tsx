@@ -193,7 +193,7 @@ export default function NichesSection() {
       <LeadFormModal
         isOpen={consultationModalOpen}
         onClose={() => setConsultationModalOpen(false)}
-        formType="consultation"
+        formType="discuss_project"
       />
         </div>
       </div>

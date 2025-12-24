@@ -138,7 +138,7 @@ export default function GuaranteesSection() {
       <LeadFormModal
         isOpen={contractModalOpen}
         onClose={() => setContractModalOpen(false)}
-        formType="consultation"
+        formType="contract"
       />
 
       {/* Animations */}
