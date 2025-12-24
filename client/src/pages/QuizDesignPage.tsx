@@ -48,6 +48,18 @@ export default function QuizDesignPage() {
     { enabled: !!quizId }
   );
 
+  // Load quiz to get slug for A/B test check
+  const { data: quiz } = trpc.quizzes.getById.useQuery(
+    { id: quizId || 0 },
+    { enabled: !!quizId }
+  );
+
+  // Check for active A/B tests
+  const { data: abTestVariants } = trpc.abTest.getVariants.useQuery(
+    { quizId: quiz?.slug || "" },
+    { enabled: !!quiz?.slug }
+  );
+
   const [settings, setSettings] = useState({
     logoUrl: "",
     companyName: "PikaLeads",
@@ -99,7 +111,7 @@ export default function QuizDesignPage() {
         phoneNumber: savedSettings.phoneNumber || "+380992377117",
         backgroundImage: savedSettings.backgroundImage || "",
         backgroundVideo: savedSettings.backgroundVideo || "",
-        layoutType: (savedSettings.layoutType as "background" | "standard") || "background",
+        layoutType: (savedSettings.layoutType as "background" | "standard") || "standard",
         alignment: (savedSettings.alignment as "left" | "center" | "right") || "left",
         backgroundColor: savedSettings.primaryColor || "#FFD93D",
         backgroundGradient: "",
@@ -110,6 +122,9 @@ export default function QuizDesignPage() {
         subtitleColor: "#FFFFFF",
         titleWeight: "bold" as "normal" | "medium" | "semibold" | "bold" | "extrabold",
         subtitleWeight: "normal" as "normal" | "medium" | "semibold" | "bold" | "extrabold",
+        buttonRadius: "full" as "none" | "sm" | "md" | "lg" | "full",
+        buttonRadiusPx: 25,
+        bullets: [] as Array<{ id: string; text: string; icon: string }>,
         // Contact form settings
         contactFormTitle: savedSettings.contactFormTitle || settings.contactFormTitle,
         contactFormSubtitle: savedSettings.contactFormSubtitle || settings.contactFormSubtitle,
@@ -134,8 +149,26 @@ export default function QuizDesignPage() {
     { id: "thanks" as const, label: "Спасибо", icon: "🎉" },
   ];
 
+  const hasActiveABTests = abTestVariants && abTestVariants.length > 0;
+
   return (
     <div className="h-screen bg-zinc-900 flex flex-col overflow-hidden">
+      {/* A/B Test Warning Banner */}
+      {hasActiveABTests && (
+        <div className="bg-yellow-500/10 border-b border-yellow-500/30 px-6 py-3">
+          <div className="flex items-center gap-3 text-yellow-400">
+            <span className="text-xl">⚠️</span>
+            <div className="flex-1">
+              <p className="font-semibold">Активний A/B тест!</p>
+              <p className="text-sm text-yellow-300">
+                Зараз відвідувачі бачать варіант: <strong>"{abTestVariants[0]?.variantName}"</strong> з заголовком "{abTestVariants[0]?.title}". 
+                Ви редагуєте базову версію (контрольну групу).
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+      
       {/* Top Tabs */}
       <div className="bg-zinc-800 border-b border-zinc-700 px-6 py-3 flex items-center gap-4">
         {tabs.map(tab => (

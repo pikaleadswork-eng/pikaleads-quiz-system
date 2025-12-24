@@ -4489,3 +4489,16 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Add LeadFormModal popup to "ПОЧАТИ ЗАРАЗ" button on /quizzes page
 - [x] Test popup opens correctly when clicking button
 - [x] Verify footer logo displays without text duplication
+
+
+## Phase 163: CRITICAL - Quiz Editor & Published Version Sync
+
+- [x] Fix quiz editor to show exact same layout as published version (50/50 split)
+- [x] Add gradient background to quiz editor preview
+- [x] Ensure all quiz design settings load correctly from database
+- [x] Fix save button to work for all 16 quizzes (Already working via trpc.quizDesign.save)
+- [x] Add A/B test warning banner in editor to explain differences
+- [x] Replace Pikachu image on /quizzes page (remove white background version)
+- [x] Understand editor shows control version, published shows A/B variant
+- [ ] Update quiz catalog (Home.tsx) to load from database (DEFERRED - needs backend work)
+- [ ] Fix quiz statistics/analytics functionality (DEFERRED - separate feature)

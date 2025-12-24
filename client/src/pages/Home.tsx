@@ -210,7 +210,7 @@ export default function Home() {
                 {/* Pikachu Hero Image */}
                 <div className="absolute inset-0 flex items-center justify-center">
                   <img 
-                    src="/pikachu-quiz-hero.png" 
+                    src="/pikachu-transparent.png" 
                     alt="PikaLeads Mascot" 
                     className="w-[500px] md:w-[550px] lg:w-[600px] h-auto object-contain animate-float drop-shadow-2xl"
                     style={{
