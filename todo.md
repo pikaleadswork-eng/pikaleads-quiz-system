@@ -4436,3 +4436,20 @@ Note: Login works via tRPC API, but React form submission needs debugging. Auth 
 - [x] Додати Пікачу на сторінку квізів (Home.tsx) з анімацією float та неоновим свіченням
 - [x] Змінити шрифт назв квізів на Bungee (як на головній сторінці)
 - [x] Перевірити візуально - Пікачу відображається, шрифт Bungee застосовано
+
+
+## Phase 154 - Fix Homepage Font & Pikachu Display Issues
+
+### Font Issues
+- [x] Investigate why Bungee font not displaying on main heading "КВІЗ СИСТЕМИ ДЛЯ ВАШОГО БІЗНЕСУ, ЩО ПРАЦЮЮТЬ НА РЕЗУЛЬТАТ"
+- [x] Verify Bungee font is properly loaded from Google Fonts
+- [x] Check browser console for font loading errors
+- [x] Test font display across different browsers
+
+### Pikachu Image Issues
+- [x] Replace pikachu-quiz-hero.png with correct image (безфона-2.png)
+- [x] Add mobile responsive version of Pikachu (currently hidden on screens < lg)
+- [x] Test Pikachu display on tablet screens (md breakpoint)
+- [x] Ensure Pikachu scales properly on different screen sizes
+
+- [x] Update /quizzes page to match homepage styling (reduce font size, add mobile Pikachu)

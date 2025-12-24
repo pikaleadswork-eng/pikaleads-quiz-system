@@ -155,7 +155,7 @@ export default function Home() {
                 </div>
 
                 {/* Main Title */}
-                <h1 className="text-5xl md:text-6xl lg:text-7xl font-black leading-tight" style={{ fontFamily: 'Bungee, sans-serif' }}>
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-black leading-tight" style={{ fontFamily: 'Bungee, sans-serif' }}>
                   <span className="block text-white mb-2">
                     {language === "uk" ? "КВІЗ СИСТЕМИ" : language === "ru" ? "КВИЗ СИСТЕМЫ" : "QUIZ SYSTEMS"}
                   </span>
@@ -201,13 +201,13 @@ export default function Home() {
               </div>
 
               {/* Right Side - Visual with Floating Cards */}
-              <div className="relative h-[600px] hidden lg:block">
+              <div className="relative h-[600px] hidden md:block">
                 {/* Pikachu Hero Image */}
                 <div className="absolute inset-0 flex items-center justify-center">
                   <img 
                     src="/pikachu-quiz-hero.png" 
                     alt="PikaLeads Mascot" 
-                    className="w-[500px] h-auto object-contain animate-float drop-shadow-2xl"
+                    className="w-[400px] md:w-[450px] lg:w-[500px] h-auto object-contain animate-float drop-shadow-2xl"
                     style={{
                       filter: 'drop-shadow(0 0 40px rgba(255, 217, 61, 0.4))'
                     }}
