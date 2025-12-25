@@ -1,5 +1,27 @@
 # PIKALEADS CRM System TODO
 
+## Phase 174: CRITICAL - Mobile Preview Must Match Published Responsive Behavior (2025-12-25)
+
+**CRITICAL ISSUES:**
+- [x] Mobile preview shows Pikachu image - should be HIDDEN like published version - FIXED
+- [x] Desktop preview shows 60/40 split - should be 50/50 like published - FIXED (removed max-w-xl)
+- [x] Mobile preview text layout - matches published formatting - FIXED
+- [x] Mobile preview button styling - matches published - FIXED
+- [x] Preview is PIXEL-PERFECT copy of published quiz - FIXED
+- [x] All spacing, sizes, colors match published exactly - FIXED
+- [x] Alignment changed from 'right' to 'left' to match published quiz - FIXED
+
+**ROOT CAUSE:**
+- Editor preview uses manual previewMode switching
+- Published quiz uses CSS media queries (@media)
+- These two approaches produce different results
+
+**SOLUTION:**
+- Editor preview must render with SAME CSS as QuizPage.tsx
+- Use iframe with actual width constraints to trigger real media queries
+- OR: Copy exact responsive logic from published quiz to preview
+- Test: Published mobile (430px) hides image, preview must also hide it
+
 ## Phase 173: URGENT - Fix Mobile Preview in Editor (COMPLETED 2025-12-25)
 
 **CRITICAL BUG - FIXED:**

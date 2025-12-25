@@ -344,21 +344,19 @@ export default function QuizDesignPage() {
                   {/* Swap order based on alignment: right = image first, left/center = text first */}
                   {settings.alignment === "right" && (
                     <>
-                      {/* Image on TOP for mobile, LEFT for desktop when alignment is RIGHT */}
-                      <div className={`flex flex-1 relative overflow-hidden ${
-                        previewMode === 'mobile' ? 'order-1 h-64' : 'order-1 lg:order-1 h-64 lg:h-auto'
-                      }`}>
+                      {/* Image on LEFT when alignment is RIGHT - HIDDEN on mobile like published quiz */}
+                      {previewMode !== 'mobile' && (
+                      <div className="hidden lg:flex flex-1 relative overflow-hidden">
                         <img 
                           src={settings.backgroundImage || "url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22%3E%3Cpath fill=%22%23a0aec0%22 d=%22M0 0h200v200H0z%22/%3E%3Cpath fill=%22%23cbd5e0%22 d=%22M50 50l50 30 50-30v70l-50 30-50-30z%22/%3E%3C/svg%3E')"}
                           alt="Quiz illustration"
                           className="w-full h-full object-cover"
                         />
                       </div>
-                      {/* Text on BOTTOM for mobile, RIGHT for desktop */}
-                      <div className={`flex-1 flex items-center p-6 lg:p-16 ${
-                        previewMode === 'mobile' ? 'order-2 justify-center' : 'order-2 lg:order-2 justify-center lg:justify-end'
-                      }`}>
-                        <div className="max-w-xl text-center lg:text-right">
+                      )}
+                      {/* Text on RIGHT */}
+                      <div className="flex-1 flex items-center justify-end p-8 lg:p-16">
+                        <div className="w-full text-right">
                       <h1 
                         className="text-2xl md:text-4xl lg:text-6xl mb-4 lg:mb-6 leading-tight"
                         style={{ 
@@ -426,13 +424,11 @@ export default function QuizDesignPage() {
                   {/* Normal order for left/center alignment */}
                   {(settings.alignment === "left" || settings.alignment === "center") && (
                     <>
-                      {/* Text on TOP for mobile, LEFT for desktop */}
-                      <div className={`flex-1 flex items-center p-6 lg:p-16 ${
-                        previewMode === 'mobile' ? 'order-2' : 'order-2 lg:order-1'
-                      } ${
+                      {/* Text on LEFT */}
+                      <div className={`flex-1 flex items-center p-8 lg:p-16 ${
                         settings.alignment === "left" ? "justify-start" : "justify-center"
                       }`}>
-                        <div className={`max-w-xl ${
+                        <div className={`w-full ${
                           settings.alignment === "left" ? "text-left" : "text-center"
                         }`}>
                           <h1 
@@ -502,16 +498,16 @@ export default function QuizDesignPage() {
                         </div>
                       </div>
                       
-                      {/* Image on TOP for mobile, RIGHT for desktop - fills entire right half */}
-                      <div className={`flex flex-1 relative overflow-hidden ${
-                        previewMode === 'mobile' ? 'order-1 h-64' : 'order-1 lg:order-2 h-64 lg:h-auto'
-                      }`}>
+                      {/* Image on RIGHT - HIDDEN on mobile like published quiz */}
+                      {previewMode !== 'mobile' && (
+                      <div className="hidden lg:flex flex-1 relative overflow-hidden">
                         <img 
                           src={settings.backgroundImage}
                           alt="Quiz illustration"
                           className="w-full h-full object-cover"
                         />
                       </div>
+                      )}
                     </>
                   )}
                 </div>
