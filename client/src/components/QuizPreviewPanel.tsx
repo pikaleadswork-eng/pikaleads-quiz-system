@@ -64,15 +64,30 @@ export function QuizPreviewPanel({ settings }: QuizPreviewPanelProps) {
       >
         {/* Standard Layout - 50/50 split: purple gradient left, image right */}
         {settings.layoutType === "standard" && (
-          <div className="relative w-full h-full flex bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900">
-            {/* Left: Content Area (50%) with purple gradient */}
+          <div className={`relative w-full h-full bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 ${
+            device === "mobile" ? "flex flex-col" : "flex"
+          }`}>
+            {/* Reverse order for right alignment */}
+            {alignment === "right" && device === "desktop" && settings.backgroundImage && (
+              <div className="flex-1 relative overflow-hidden">
+                <img 
+                  src={settings.backgroundImage} 
+                  alt="Quiz illustration"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+              </div>
+            )}
+
+            {/* Content Area */}
             <div
-              className={`flex-1 flex items-center p-4 ${device === "mobile" ? "w-full" : ""}`}
+              className={`flex-1 flex items-center p-4 ${
+                device === "mobile" ? "w-full min-h-[60%]" : ""
+              }`}
               style={{
                 fontFamily: settings.fontFamily,
               }}
             >
-              <div className={`flex flex-col gap-3 ${alignmentClasses[alignment]}`}>
+              <div className={`flex flex-col gap-3 w-full ${alignmentClasses[alignment]}`}>
                 {settings.logoImage && (
                   <img src={settings.logoImage} alt="Logo" className="h-8 w-auto object-contain" />
                 )}
@@ -96,25 +111,42 @@ export function QuizPreviewPanel({ settings }: QuizPreviewPanelProps) {
               </div>
             </div>
 
-            {/* Right: Background Image (50%) - No padding, fills entire space */}
-            {device === "desktop" && settings.backgroundImage && (
-              <div className="flex-1 relative overflow-hidden">
-                <img 
-                  src={settings.backgroundImage} 
-                  alt="Quiz illustration"
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
-              </div>
+            {/* Background Image - show on mobile at bottom, on desktop at right (unless alignment is right) */}
+            {settings.backgroundImage && (
+              <>
+                {device === "mobile" && (
+                  <div className="flex-1 relative overflow-hidden min-h-[40%]">
+                    <img 
+                      src={settings.backgroundImage} 
+                      alt="Quiz illustration"
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                  </div>
+                )}
+                {device === "desktop" && alignment !== "right" && (
+                  <div className="flex-1 relative overflow-hidden">
+                    <img 
+                      src={settings.backgroundImage} 
+                      alt="Quiz illustration"
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                  </div>
+                )}
+              </>
             )}
           </div>
         )}
 
         {/* Background Layout - Split screen: content left, background right */}
         {settings.layoutType === "background" && (
-          <div className="relative w-full h-full flex">
-            {/* Left: Content Area (50%) */}
+          <div className={`relative w-full h-full ${
+            device === "mobile" ? "flex flex-col" : "flex"
+          }`}>
+            {/* Content Area */}
             <div
-              className={`w-1/2 flex flex-col justify-center p-8 ${device === "mobile" ? "w-full" : ""}`}
+              className={`flex flex-col justify-center p-8 ${
+                device === "mobile" ? "w-full min-h-[60%]" : "w-1/2"
+              }`}
               style={{
                 fontFamily: settings.fontFamily,
                 backgroundColor: "#ffffff",
@@ -144,30 +176,30 @@ export function QuizPreviewPanel({ settings }: QuizPreviewPanelProps) {
               </div>
             </div>
 
-            {/* Right: Background Image (50%) */}
-            {device === "desktop" && (
-              <div
-                className="w-1/2 relative"
-                style={{
-                  backgroundImage: settings.backgroundImage
-                    ? `url(${settings.backgroundImage})`
-                    : undefined,
-                  backgroundColor: settings.backgroundImage ? undefined : "#27272a",
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }}
-              >
-                {settings.backgroundVideo && (
-                  <video
-                    src={settings.backgroundVideo}
-                    autoPlay
-                    loop
-                    muted
-                    className="absolute inset-0 w-full h-full object-cover"
-                  />
-                )}
-              </div>
-            )}
+            {/* Background Image */}
+            <div
+              className={`relative ${
+                device === "mobile" ? "w-full min-h-[40%]" : "w-1/2"
+              }`}
+              style={{
+                backgroundImage: settings.backgroundImage
+                  ? `url(${settings.backgroundImage})`
+                  : undefined,
+                backgroundColor: settings.backgroundImage ? undefined : "#27272a",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            >
+              {settings.backgroundVideo && (
+                <video
+                  src={settings.backgroundVideo}
+                  autoPlay
+                  loop
+                  muted
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+              )}
+            </div>
           </div>
         )}
       </div>
