@@ -338,12 +338,16 @@ export default function QuizDesignPage() {
 
               {/* STANDARD LAYOUT - 50/50 split on desktop, vertical stack on mobile */}
               {settings.layoutType === "standard" && (
-                <div className="w-full h-full bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 flex flex-col lg:flex-row">
+                <div className={`w-full h-full bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 flex ${
+                  previewMode === 'mobile' ? 'flex-col' : 'flex-col lg:flex-row'
+                }`}>
                   {/* Swap order based on alignment: right = image first, left/center = text first */}
                   {settings.alignment === "right" && (
                     <>
                       {/* Image on TOP for mobile, LEFT for desktop when alignment is RIGHT */}
-                      <div className="flex flex-1 relative overflow-hidden order-1 lg:order-1 h-64 lg:h-auto">
+                      <div className={`flex flex-1 relative overflow-hidden ${
+                        previewMode === 'mobile' ? 'order-1 h-64' : 'order-1 lg:order-1 h-64 lg:h-auto'
+                      }`}>
                         <img 
                           src={settings.backgroundImage || "url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22%3E%3Cpath fill=%22%23a0aec0%22 d=%22M0 0h200v200H0z%22/%3E%3Cpath fill=%22%23cbd5e0%22 d=%22M50 50l50 30 50-30v70l-50 30-50-30z%22/%3E%3C/svg%3E')"}
                           alt="Quiz illustration"
@@ -351,7 +355,9 @@ export default function QuizDesignPage() {
                         />
                       </div>
                       {/* Text on BOTTOM for mobile, RIGHT for desktop */}
-                      <div className="flex-1 flex items-center justify-center lg:justify-end p-6 lg:p-16 order-2 lg:order-2">
+                      <div className={`flex-1 flex items-center p-6 lg:p-16 ${
+                        previewMode === 'mobile' ? 'order-2 justify-center' : 'order-2 lg:order-2 justify-center lg:justify-end'
+                      }`}>
                         <div className="max-w-xl text-center lg:text-right">
                       <h1 
                         className="text-2xl md:text-4xl lg:text-6xl mb-4 lg:mb-6 leading-tight"
@@ -421,7 +427,9 @@ export default function QuizDesignPage() {
                   {(settings.alignment === "left" || settings.alignment === "center") && (
                     <>
                       {/* Text on TOP for mobile, LEFT for desktop */}
-                      <div className={`flex-1 flex items-center p-6 lg:p-16 order-2 lg:order-1 ${
+                      <div className={`flex-1 flex items-center p-6 lg:p-16 ${
+                        previewMode === 'mobile' ? 'order-2' : 'order-2 lg:order-1'
+                      } ${
                         settings.alignment === "left" ? "justify-start" : "justify-center"
                       }`}>
                         <div className={`max-w-xl ${
@@ -495,7 +503,9 @@ export default function QuizDesignPage() {
                       </div>
                       
                       {/* Image on TOP for mobile, RIGHT for desktop - fills entire right half */}
-                      <div className="flex flex-1 relative overflow-hidden order-1 lg:order-2 h-64 lg:h-auto">
+                      <div className={`flex flex-1 relative overflow-hidden ${
+                        previewMode === 'mobile' ? 'order-1 h-64' : 'order-1 lg:order-2 h-64 lg:h-auto'
+                      }`}>
                         <img 
                           src={settings.backgroundImage}
                           alt="Quiz illustration"

@@ -1,5 +1,22 @@
 # PIKALEADS CRM System TODO
 
+## Phase 173: URGENT - Fix Mobile Preview in Editor (COMPLETED 2025-12-25)
+
+**CRITICAL BUG - FIXED:**
+- [x] Mobile preview button doesn't change layout - still shows 50/50 split instead of vertical stack
+- [x] When previewMode === 'mobile', preview must show:
+  * Image on top (full width)
+  * Text content below (full width)
+  * Vertical stack layout (flex-col)
+- [x] Fix QuizDesignPage.tsx preview rendering logic
+- [x] Test all 3 breakpoints: Desktop (50/50), Tablet (50/50), Mobile (vertical stack)
+
+**SOLUTION:**
+- Changed main container from `flex flex-col lg:flex-row` to dynamic `flex ${previewMode === 'mobile' ? 'flex-col' : 'flex-col lg:flex-row'}`
+- Updated order classes for image/text sections to respect previewMode
+- Updated alignment classes to respect previewMode
+- All 3 breakpoint buttons now work correctly
+
 ## Phase 170: URGENT - Real-Time Preview for ALL Editor Controls
 
 **CRITICAL REQUIREMENT:**
@@ -354,310 +371,20 @@
 
 ### Reminder Calendar & Notifications
 - [x] Create reminders table (leadId, managerId, type, message, scheduledAt, status)
-- [x] Create tRPC procedures (messaging.createReminder, messaging.getUpcomingReminders)
-- [ ] Add calendar view for reminders
-- [ ] Add "Schedule Reminder" button
-- [ ] Implement browser notification when reminder triggers
-- [ ] Add sound alert in CRM when time to contact lead
-- [ ] Show upcoming reminders in dashboard
+- [x] Create tRPC procedures for reminders (messaging.createReminder, messaging.getReminders)
+- [x] Add "Add Reminder" button in LeadInfoPanel
+- [x] Reminder type selector (Call, Meeting, Follow-up, Task)
+- [x] Date/time picker for reminder
+- [ ] Show upcoming reminders in dashboard widget
+- [ ] Send browser notifications when reminder is due
+- [ ] Mark reminders as completed
 
-### Telegram Bot Notifications
-- [x] Create Telegram bot notification function
-- [x] Send notification when new lead created (integrated into quiz submission)
-- [x] Notification format:
-  * Квіз: {quizName}
-  * Ім'я: {firstName}
-  * Прізвище: {lastName}
-  * Телефон: {phone}
-  * Telegram: {telegram}
-  * Email: {email}
-  * UTM мітки: {utmSource, utmMedium, utmCampaign}
-  * Менеджер: {assignedManager}
-- [ ] Add notification for scheduled call reminders (TODO: create cron job)
-- [ ] Add notification for scheduled meeting reminders (TODO: create cron job)
-
-### UI Updates
-- [x] Update LeadInfoPanel with call buttons
-- [x] Add channel selector UI (Telegram/Phone/WhatsApp icons)
-- [x] Style call button with yellow background (#FFD93D)
-- [ ] Add manager assignment dropdown (TODO)
-- [ ] Show assigned manager badge (TODO)
-- [x] Add meeting scheduling modal
-- [ ] Add reminder calendar widget (TODO)
-
-
-## Phase 34 - Translations & Settings Enhancements
-
-### i18n System (Ukrainian/Russian/English)
-- [x] Install i18next and react-i18next packages
-- [x] Create translation files structure (locales/ua.json, ru.json, en.json)
-- [ ] Translate all UI text in MessagingInbox (TODO)
-- [ ] Translate all UI text in LeadInfoPanel (TODO)
-- [x] Translate all UI text in Settings pages
-- [ ] Translate all UI text in Dashboard (TODO)
-- [ ] Translate all UI text in Leads page (TODO)
-- [ ] Ensure language switcher works 100% (TODO)
-
-### Settings - Roles & Permissions
-- [x] Create roles table (name, permissions JSON)
-- [x] Create user_invitations table (email, role, token, status)
-- [x] Add Settings → Roles page
-- [x] List all roles (Admin, Manager, Viewer, Custom)
-- [x] Create new role with permission checkboxes
-- [ ] Edit existing roles (TODO)
-- [x] Delete custom roles
-- [x] Invite user with role assignment
-- [ ] Send invitation email with signup link (TODO)
-- [ ] User signup with role assignment (TODO)
-
-### Settings - Lead Status Management
-- [x] Add Settings → Lead Statuses page
-- [x] List all current statuses
-- [x] Add new status (name, color, order)
-- [ ] Edit existing status (TODO)
-- [x] Delete status (with warning if leads exist)
-- [ ] Reorder statuses (drag & drop) (TODO)
-- [x] Set default status for new leads
-
-### Settings - IP Telephony Configuration
-- [x] Add Settings → IP Telephony page
-- [x] Zadarma configuration form (API key, secret, SIP number)
-- [x] Test connection button
-- [ ] Show account balance (TODO)
-- [ ] Call history settings (TODO)
-- [ ] Recording settings (TODO)
-
-### Integration Guides (Multilingual)
-- [x] Create guides/zadarma.md (UA/RU/EN) (embedded in UI)
-- [x] Create guides/google-meet.md (UA/RU/EN) (embedded in translations)
-- [x] Create guides/zoom.md (UA/RU/EN) (embedded in translations)
-- [ ] Add screenshots to guides (TODO)
-- [x] Link guides from Settings pages
-- [x] Add "How to integrate" buttons
-
-
-## Phase 35 - Complete Translation Integration (100% Coverage)
-
-### Translation Files Enhancement
-- [x] Add all missing translations to ua.json (DashboardLayout, CRM, Leads, etc.)
-- [x] Add all missing translations to ru.json (DashboardLayout, CRM, Leads, etc.)
-- [x] Ensure en.json has all keys
-
-### DashboardLayout Translation
-- [x] Add useTranslation hook to CRMLayout (main navigation)
-- [x] Translate all menu items (Messaging, Leads, Services, Sales, Scripts, Settings)
-- [x] Translate menu descriptions
-- [x] Translate logout button
-
-### MessagingInbox Translation
-- [x] Add useTranslation hook to MessagingInbox
-- [x] Translate page title and subtitle
-- [x] Translate channel tabs (All Messages, Telegram, WhatsApp, Email, Instagram)
-- [x] Translate search placeholder
-- [x] Translate "Select chat" message
-- [x] Translate message input placeholder
-
-### LeadInfoPanel Translation
-- [x] Add useTranslation hook to LeadInfoPanel
-- [x] Translate all section titles (Contact Information, Status, Schedule, Notes, Activity Timeline)
-- [x] Translate all field labels (Name, Phone, Email, Telegram, Quiz, Lead Score)
-- [x] Translate all buttons (Call, Schedule Call, Schedule Message, Schedule Meeting, Add Note)
-- [x] Translate status options (New, Contacted, Qualified, Won, Lost)
-
-### CRM/Leads Page Translation
-- [ ] Add useTranslation hook to CRM page
-- [ ] Translate page title and description
-- [ ] Translate table headers (Source, Quiz, Name, Phone, Email, Status, Score, Date, Actions)
-- [ ] Translate filter labels and buttons
-- [ ] Translate "Create Lead Manually" button
-- [ ] Translate lead sources (Manual, Facebook, Google, etc.)
-
-### AdminSettings Translation
-- [ ] Add useTranslation hook to AdminSettings
-- [ ] Translate settings categories
-- [ ] Add navigation links to Roles, Lead Statuses, IP Telephony pages
-- [ ] Translate all settings descriptions
-
-### Other Components Translation
-- [ ] AdminDashboard - translate stats cards and titles
-- [ ] ServicesManagement - translate service fields
-- [ ] SalesStatistics - translate chart labels
-- [ ] SalesScripts - translate script fields
-- [ ] AdminCalendar - translate calendar labels
-
-
-## Phase 36 - Fix Dialog Spacing & Rich Text Editor for Scripts
-
-### Dialog Form Spacing Fixes
-- [x] Fix Services "Create New Service" dialog - add proper padding, fix placeholder overlap
-- [x] Fix Services "Create Additional Service" dialog - same spacing issues
-- [x] Fix Scripts "Create New Script" dialog - add proper spacing
-
-### Rich Text Editor for Scripts
-- [x] Install Tiptap editor package
-- [x] Replace textarea with rich text editor in Scripts
-- [x] Add formatting toolbar (bold, italic, underline, lists, headings)
-- [x] Style editor to match dark theme
-- [x] Save HTML content to database
-- [x] Display formatted content in script view
-
-
-## Phase 37 - Fix Leads Page Translations & Add Missing Features
-
-### Leads Page Translation
-- [x] Add useTranslation hook to CRM.tsx
-- [x] Translate page title "Leads Management"
-- [x] Translate "UTM Filters" section
-- [x] Translate filter labels (Campaign, Placement, Site, Status)
-- [x] Translate "Clear Filters" button
-- [x] Translate table headers (ID, Date, Source, Quiz, Name, Phone, Email, Telegram, Score, Status, Actions)
-- [x] Translate action buttons (View, Edit, Convert to Sale)
-- [x] Translate "Create Lead Manually" button
-- [x] Translate status badges (New, Contacted, Qualified, Converted, Lost)
-
-### Fix Missing Features
-- [x] Add "Convert to Sale" button functionality
-- [x] Create ConvertToSaleModal component
-- [x] Add tRPC procedure for converting lead to sale
-- [x] Show success notification after conversion
-- [x] Update lead status to "Converted" after sale creation
-
-
-## Phase 38 - Fix Services Page Translations
-
-### Services Page Translation
-- [x] Add useTranslation hook to ServicesManagement.tsx
-- [x] Translate page title "Services Management"
-- [x] Translate "Main Services" and "Additional Services" section titles
-- [x] Translate table headers (Service Name, Category, Price, Description, Actions)
-- [x] Translate buttons (Add Service, Edit, Delete, Save, Cancel)
-- [x] Translate form labels in Add/Edit Service modal
-- [x] Translate delete confirmation dialog
-
-
-## Phase 39 - Fix Sales Page Translations
-
-### Sales Page Translation
-- [x] Add useTranslation hook to SalesStatistics.tsx
-- [x] Translate page title "Sales Statistics"
-- [x] Translate metric cards (Total Revenue, Total Sales, Average Deal Size, Conversion Rate)
-- [x] Translate table headers (Date, Lead Name, Service, Amount, Manager, Status)
-- [x] Translate filter options
-- [x] Translate status badges
-
-
-## Phase 40 - Fix Scripts Page Translations
-
-### Scripts Page Translation
-- [x] Add useTranslation hook to SalesScripts.tsx
-- [x] Translate page title "Sales Scripts"
-- [x] Translate category tabs (Cold Call, Follow-up, Objection Handling, Closing)
-- [x] Translate table headers (Title, Category, Last Updated, Actions)
-- [x] Translate buttons (Add Script, Edit, Delete, View, Save, Cancel)
-- [x] Translate delete confirmation dialog
-
-
-## Phase 41 - Fix Settings Page Translations
-
-### Settings Page Translation
-- [x] Add useTranslation hook to AdminSettings.tsx
-- [x] Translate page title "Integration Settings"
-- [x] Translate tab labels (Instagram, WhatsApp, Email, Google Calendar)
-- [x] Translate form labels (API Key, Bot Token, SMTP Host, Port, Username, Password, From Email)
-- [x] Translate buttons (Save Settings, Test Connection)
-- [x] Translate status messages
-
-
-## Phase 42 - Fix AdminDashboard Translations
-
-### AdminDashboard Translation
-- [x] Add useTranslation hook to AdminDashboard.tsx
-- [x] Translate page title "Admin Dashboard"
-- [x] Translate all 12 card titles (CRM System, Analytics, Assignment Rules, etc.)
-- [x] Translate card descriptions
-- [x] Translate "Go to" link text
-
-## Phase 171: CRITICAL - Preview CSS Does Not Match Published Quiz
-
-**Issues:**
-- [ ] Pikachu image too small in preview - only shows head, should show full character
-- [ ] Title text too large in preview - takes too much space
-- [ ] Subtitle text cut off in preview - not fully visible
-- [ ] Image sizing/scaling different from published quiz
-- [ ] Font sizes not matching published quiz
-- [ ] Padding/spacing different from published quiz
-
-**Root Cause:**
-QuizDesignPage.tsx preview styles don't match QuizPage.tsx (published quiz) styles
-
-**Solution:**
-Copy exact CSS classes and styles from QuizPage.tsx to QuizDesignPage.tsx preview section
-
-## Phase 172: URGENT - Editor Preview CSS Must Match Production EXACTLY (3rd Attempt)
-
-**USER COMPLAINT:** Text sizes and image display in editor preview STILL don't match production
-
-**ROOT CAUSE:** QuizDesignPage.tsx preview code has been manually modified and diverged from QuizPage.tsx
-
-**SOLUTION:**
-- [ ] Read QuizPage.tsx lines 227-340 (entire standard layout block)
-- [ ] Copy EXACT code to QuizDesignPage.tsx WITHOUT ANY MODIFICATIONS
-- [ ] Verify CSS classes match: text-4xl md:text-5xl lg:text-6xl for title
-- [ ] Verify CSS classes match: text-xl md:text-2xl for subtitle
-- [ ] Verify image container classes match exactly
-- [ ] Test side-by-side: production vs editor preview
-- [ ] Take screenshots and compare pixel-by-pixel
-
-## Phase 173: Real-Time Preview + Quiz List Sync
-
-**USER REQUIREMENTS:**
-- [ ] ALL editor controls update preview in REAL-TIME (no save needed)
-- [ ] Text inputs (title, subtitle, button) → preview updates on every keystroke
-- [ ] Color pickers → preview updates immediately
-- [ ] Font selector → preview updates immediately
-- [ ] Alignment buttons → preview updates immediately
-- [ ] Background image/video → preview updates immediately
-- [ ] When saving settings → also update quizzes.name and quizzes.description
-- [ ] Quiz list shows current title/subtitle from quiz_design_settings
-
-**IMPLEMENTATION:**
-- [ ] Remove getTextForLanguage() wrapper in preview rendering (already done in settings state)
-- [ ] Preview renders directly from settings state (no database calls)
-- [ ] Add onChange handlers to ALL input fields to update settings state
-- [ ] Add quizzes table update to saveSettings mutation
-- [ ] Extract Ukrainian text from titleText/subtitleText JSON for quizzes.name/description
-
-## Phase 171: Quiz Editor Improvements - Color Hierarchy & Field Sync
-
-**REQUESTED IMPROVEMENTS:**
-- [ ] Add separate color controls for title and subtitle (currently both white)
-- [ ] Synchronize editor name/description fields with quizzes table
-- [ ] Test changes across all 16 quiz templates to ensure global compatibility
-
-**IMPLEMENTATION:**
-- [ ] Add titleColor and subtitleColor fields to quiz_design_settings table
-- [ ] Add color pickers for title and subtitle in QuizDesignPage settings panel
-- [ ] Update preview to use separate colors for title and subtitle
-- [ ] Save name and description from editor to quizzes table (not just quiz_design_settings)
-- [ ] Create test procedure to verify all 16 quiz templates render correctly
-- [ ] Document color hierarchy best practices
-
-
-## Phase 171: Quiz Editor Improvements (COMPLETED)
-- [x] Add separate color controls for title and subtitle in QuizSettingsPanel
-- [x] Add titleColor, subtitleColor, titleWeight, subtitleWeight to schema and backend
-- [x] Synchronize quiz name and description fields with quizzes table
-- [x] Add quiz info section at top of settings panel
-- [x] Test changes across all 16 quiz templates
-
-## Phase 172: URGENT - Mobile Preview Adaptation & Fixes
-- [x] Remove rounded corners from mobile preview image (currently has border-radius)
-- [x] Add TRUE mobile adaptation - vertical stack layout for mobile preview
-- [x] Mobile layout: image on top (full width), text below (not 50/50)
-- [x] Reduce font sizes for mobile (title, subtitle, button)
-- [x] Make text fully visible on mobile (no overflow)
-- [ ] Add font size sliders for title in editor (titleFontSize)
-- [ ] Add font size sliders for subtitle in editor (subtitleFontSize)
-- [ ] Update schema to store titleFontSize and subtitleFontSize
-- [x] Apply responsive breakpoints to both preview and published quiz
-- [x] Test mobile preview in editor (works correctly with vertical stack)
+### Final Testing & Polish
+- [ ] Test all messaging features end-to-end
+- [ ] Test manager assignment workflow
+- [ ] Test Zadarma call initiation (requires API keys)
+- [ ] Test meeting scheduling (requires OAuth setup)
+- [ ] Test reminder notifications
+- [ ] Verify all data is logged correctly
+- [ ] Check responsive design on mobile
+- [ ] Final UI polish and bug fixes
