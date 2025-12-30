@@ -387,8 +387,8 @@ export default function MetaAdsLanding() {
           </div>
         </section>
 
-        {/* Client Logos Section */}
-        <section className="py-12 lg:py-20">
+        {/* Client Logos Section - Auto-Rotating Carousel */}
+        <section className="py-12 lg:py-20 overflow-hidden">
           <div className="container px-4">
             <div className="text-center mb-12">
               <h2 className="text-4xl md:text-5xl font-bold mb-4">
@@ -396,27 +396,72 @@ export default function MetaAdsLanding() {
               </h2>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 lg:gap-8 items-center">
-              {[
-                { name: "Maria Caruso", logo: "/clients/carusoshoes.jpeg" },
-                { name: "Ovita", logo: "/clients/logo_opt_master_color_422x150_result.webp" },
-                { name: "ParkSide", logo: "/clients/images.png" },
-                { name: "Nasledniki", logo: "/clients/logo_1(1).png" },
-                { name: "EMMI", logo: "/clients/15090.png.webp" },
-                { name: "Client", logo: "/clients/unnamed.png.webp" }
-              ].map((client, index) => (
-                <div key={index} className="flex items-center justify-center p-4 bg-white/5 rounded-lg hover:bg-white/10 transition-all">
-                  <img 
-                    src={client.logo} 
-                    alt={client.name}
-                    className="max-w-full h-16 object-contain filter grayscale hover:grayscale-0 transition-all"
-                    onError={(e) => {
-                      e.currentTarget.style.display = 'none';
-                      e.currentTarget.parentElement!.innerHTML = `<div class="text-gray-400 text-sm">${client.name}</div>`;
+            {/* Infinite Carousel */}
+            <div className="relative">
+              {/* Gradient overlays for seamless loop effect */}
+              <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-black to-transparent z-10" />
+              <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-black to-transparent z-10" />
+              
+              {/* Scrolling container */}
+              <div className="flex gap-8 animate-scroll hover:pause">
+                {/* First set of logos */}
+                {[
+                  { name: "Maria Caruso", logo: "/clients/carusoshoes.jpeg", color: "cyan" },
+                  { name: "Ovita", logo: "/clients/logo_opt_master_color_422x150_result.webp", color: "blue" },
+                  { name: "ParkSide", logo: "/clients/images.png", color: "purple" },
+                  { name: "Nasledniki", logo: "/clients/logo_1(1).png", color: "pink" },
+                  { name: "EMMI", logo: "/clients/15090.png.webp", color: "yellow" },
+                  { name: "Client", logo: "/clients/unnamed.png.webp", color: "green" }
+                ].map((client, index) => (
+                  <div 
+                    key={`first-${index}`} 
+                    className="flex-shrink-0 w-48 h-32 flex items-center justify-center p-6 bg-gradient-to-br from-zinc-900 to-zinc-800 rounded-xl border border-zinc-700 hover:border-${client.color}-500/50 transition-all duration-500 hover:scale-110 hover:rotate-3 animate-float"
+                    style={{
+                      animationDelay: `${index * 0.2}s`,
+                      boxShadow: `0 0 30px rgba(${client.color === 'cyan' ? '6, 182, 212' : client.color === 'blue' ? '59, 130, 246' : client.color === 'purple' ? '168, 85, 247' : client.color === 'pink' ? '236, 72, 153' : client.color === 'yellow' ? '234, 179, 8' : '34, 197, 94'}, 0.3)`
                     }}
-                  />
-                </div>
-              ))}
+                  >
+                    <img 
+                      src={client.logo} 
+                      alt={client.name}
+                      className="max-w-full max-h-full object-contain filter brightness-150 contrast-125"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                        e.currentTarget.parentElement!.innerHTML = `<div class="text-${client.color}-400 text-sm font-bold">${client.name}</div>`;
+                      }}
+                    />
+                  </div>
+                ))}
+                
+                {/* Duplicate set for seamless loop */}
+                {[
+                  { name: "Maria Caruso", logo: "/clients/carusoshoes.jpeg", color: "cyan" },
+                  { name: "Ovita", logo: "/clients/logo_opt_master_color_422x150_result.webp", color: "blue" },
+                  { name: "ParkSide", logo: "/clients/images.png", color: "purple" },
+                  { name: "Nasledniki", logo: "/clients/logo_1(1).png", color: "pink" },
+                  { name: "EMMI", logo: "/clients/15090.png.webp", color: "yellow" },
+                  { name: "Client", logo: "/clients/unnamed.png.webp", color: "green" }
+                ].map((client, index) => (
+                  <div 
+                    key={`second-${index}`} 
+                    className="flex-shrink-0 w-48 h-32 flex items-center justify-center p-6 bg-gradient-to-br from-zinc-900 to-zinc-800 rounded-xl border border-zinc-700 hover:border-${client.color}-500/50 transition-all duration-500 hover:scale-110 hover:rotate-3 animate-float"
+                    style={{
+                      animationDelay: `${index * 0.2}s`,
+                      boxShadow: `0 0 30px rgba(${client.color === 'cyan' ? '6, 182, 212' : client.color === 'blue' ? '59, 130, 246' : client.color === 'purple' ? '168, 85, 247' : client.color === 'pink' ? '236, 72, 153' : client.color === 'yellow' ? '234, 179, 8' : '34, 197, 94'}, 0.3)`
+                    }}
+                  >
+                    <img 
+                      src={client.logo} 
+                      alt={client.name}
+                      className="max-w-full max-h-full object-contain filter brightness-150 contrast-125"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                        e.currentTarget.parentElement!.innerHTML = `<div class="text-${client.color}-400 text-sm font-bold">${client.name}</div>`;
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
