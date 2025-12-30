@@ -1,22 +1,19 @@
 export default function ClientsCarousel() {
-  // Placeholder logos - will be replaced with real client logos later
-  const placeholderLogos = [
-    { id: 1, name: "Client 1" },
-    { id: 2, name: "Client 2" },
-    { id: 3, name: "Client 3" },
-    { id: 4, name: "Client 4" },
-    { id: 5, name: "Client 5" },
-    { id: 6, name: "Client 6" },
-    { id: 7, name: "Client 7" },
-    { id: 8, name: "Client 8" },
-    { id: 9, name: "Client 9" },
-    { id: 10, name: "Client 10" },
-    { id: 11, name: "Client 11" },
-    { id: 12, name: "Client 12" }
+  // Real client logos
+  const clientLogos = [
+    { id: 1, name: "Caruso Shoes", image: "/clients/carusoshoes-enhanced.png" },
+    { id: 2, name: "Coral Travel", image: "/clients/coraltravel-enhanced.png" },
+    { id: 3, name: "Emmi", image: "/clients/emmi-enhanced.png" },
+    { id: 4, name: "Flower Shop", image: "/clients/flower-enhanced.png" },
+    { id: 5, name: "Karpachoff", image: "/clients/karpachoff-enhanced.png" },
+    { id: 6, name: "Nasledniki", image: "/clients/nasledniki-enhanced.png" },
+    { id: 7, name: "OptMaster", image: "/clients/optmaster-enhanced.png" },
+    { id: 8, name: "Parkside", image: "/clients/parkside-enhanced.png" },
+    { id: 9, name: "Client 6", image: "/clients/client6-enhanced.png" }
   ];
 
   // Duplicate logos for seamless infinite scroll
-  const allLogos = [...placeholderLogos, ...placeholderLogos];
+  const allLogos = [...clientLogos, ...clientLogos];
 
   return (
     <section className="relative py-8 sm:py-12 md:py-16 lg:py-20 bg-black overflow-hidden">
@@ -51,21 +48,19 @@ export default function ClientsCarousel() {
 
           {/* Scrolling Container */}
           <div className="overflow-hidden">
-            <div className="flex animate-scroll">
+            <div className="flex animate-scroll gap-4 sm:gap-6 md:gap-8">
               {allLogos.map((logo, index) => (
                 <div
                   key={`${logo.id}-${index}`}
-                  className="flex-shrink-0 w-36 sm:w-40 md:w-48 h-24 sm:h-28 md:h-32 mx-2 sm:mx-3 md:mx-4 bg-zinc-900/50 backdrop-blur-sm border border-zinc-800 rounded-lg sm:rounded-xl flex items-center justify-center hover:border-yellow-400/40 transition-all duration-300 group"
+                  className="flex-shrink-0 w-32 sm:w-36 md:w-40 lg:w-44 h-20 sm:h-24 md:h-28 flex items-center justify-center group"
                 >
-                  {/* Placeholder Logo */}
-                  <div className="text-center">
-                    <div className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 mx-auto mb-1 sm:mb-2 bg-gradient-to-br from-purple-500/20 to-yellow-500/20 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                      <span className="text-xl sm:text-2xl md:text-3xl font-bold text-yellow-400" style={{ fontFamily: 'Eurostile, sans-serif' }}>
-                        {logo.id}
-                      </span>
-                    </div>
-                    <p className="text-gray-500 text-xs">{logo.name}</p>
-                  </div>
+                  {/* Logo Image - NO BACKGROUND */}
+                  <img 
+                    src={logo.image} 
+                    alt={logo.name}
+                    className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
+                    loading="lazy"
+                  />
                 </div>
               ))}
             </div>

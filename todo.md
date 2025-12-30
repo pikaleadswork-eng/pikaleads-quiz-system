@@ -392,3 +392,21 @@
 - [x] Update Meta Ads page carousel with all 9 logos
 - [x] Update Agency Home page carousel with all 9 logos
 - [x] Test both carousels display all logos cleanly
+
+## Phase 182: Fix Client Logos Display on Homepage (2025-12-30)
+- [ ] Investigate why logos show as numbered placeholders "Client 1", "Client 2"
+- [ ] Check image paths and file locations in public/clients/
+- [ ] Fix logo rendering in AgencyHome component
+- [ ] Verify all 9 logos display with actual images
+- [ ] Test on both desktop and mobile
+
+
+## Phase 183: Fix Logos Background, Case Studies Editor & Meta Ads Display (2025-12-30)
+- [x] Remove ALL background styling from client logos (bg-zinc-900/50, border, backdrop-blur)
+- [x] Logos must display with TRANSPARENT background only
+- [x] Test responsive design on mobile, tablet, desktop
+- [x] Create full-featured case studies admin page with rich text editor
+- [x] Add page visibility selector to case studies admin (home, meta-ads, services pages)
+- [x] Display case studies on Meta Ads page in proper article format
+- [ ] Test all case studies CRUD operations
+- [ ] Verify case studies display correctly on all pages

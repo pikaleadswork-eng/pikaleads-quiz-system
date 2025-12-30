@@ -9,6 +9,8 @@ import { trpc } from "@/lib/trpc";
 import CyberpunkNavigation from "@/components/CyberpunkNavigation";
 import Footer from "@/components/Footer";
 import LeadFormModal from "@/components/LeadFormModal";
+import { Link } from "wouter";
+import MetaCaseStudiesSection from "@/components/MetaCaseStudiesSection";
 
 export default function MetaAdsLanding() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -371,49 +373,8 @@ export default function MetaAdsLanding() {
           </div>
         </section>
 
-        {/* Case Studies Preview Section */}
-        <section id="cases" className="py-12 lg:py-20 bg-gradient-to-b from-gray-900 to-black">
-          <div className="container px-4">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold mb-4">
-                Наші <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-500">кейси</span>
-              </h2>
-              <p className="text-xl text-gray-400">Реальні результати наших клієнтів</p>
-            </div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-              {[
-                {
-                  title: "E-commerce: Світильники",
-                  result: "4.8 ROAS",
-                  budget: "250,000 грн",
-                  description: "Збільшення продажів люстр та світильників через META ADS"
-                },
-                {
-                  title: "Інфобізнес: Марафон",
-                  result: "1500 лідів/день",
-                  budget: "від 100 до 1500",
-                  description: "Масштабування з 100 до 1500 заявок на день"
-                },
-                {
-                  title: "B2B: Запчастини",
-                  result: "1.8M$ бюджет",
-                  budget: "Американський ринок",
-                  description: "Carbon запчастини для суперкарів та гіперкарів"
-                }
-              ].map((caseStudy, index) => (
-                <Card key={index} className="bg-gradient-to-br from-orange-900/20 to-red-900/10 border-orange-500/30 p-6 hover:border-orange-400 transition-all">
-                  <h3 className="text-xl font-bold mb-3">{caseStudy.title}</h3>
-                  <div className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-400 mb-2">
-                    {caseStudy.result}
-                  </div>
-                  <div className="text-sm text-gray-400 mb-4">{caseStudy.budget}</div>
-                  <p className="text-gray-400 text-sm">{caseStudy.description}</p>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
+        {/* Case Studies Section - Dynamic from Database */}
+        <MetaCaseStudiesSection />
 
         {/* Client Logos Section - Auto-Rotating Carousel */}
         <section className="py-12 lg:py-20 overflow-hidden">

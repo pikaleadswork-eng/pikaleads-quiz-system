@@ -37,6 +37,40 @@ export const caseStudiesRouter = router({
     }),
 
   /**
+   * Get case studies by page visibility (public)
+   */
+  getByPage: publicProcedure
+    .input(z.object({ pageSlug: z.string() }))
+    .query(async ({ input }) => {
+      const db = await getDb();
+      if (!db) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Database not available",
+        });
+      }
+
+      const caseStudies = await db
+        .select()
+        .from(schema.caseStudies)
+        .where(eq(schema.caseStudies.isPublished, true))
+        .orderBy(desc(schema.caseStudies.orderIndex), desc(schema.caseStudies.publishedAt));
+
+      // Filter by page visibility
+      const filtered = caseStudies.filter((cs) => {
+        if (!cs.pageVisibility) return false;
+        try {
+          const pages = JSON.parse(cs.pageVisibility);
+          return pages.includes(input.pageSlug);
+        } catch {
+          return false;
+        }
+      });
+
+      return filtered;
+    }),
+
+  /**
    * Get single case study by slug (public)
    */
   getBySlug: publicProcedure
