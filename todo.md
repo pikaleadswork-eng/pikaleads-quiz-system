@@ -367,3 +367,11 @@
 - [x] Tabs for filtering by channel
 - [x] Search functionality
 - [x] Message bubbles with timestamps
+
+
+## Phase 179: Remove All Card Styling from Logo Carousel (2025-12-30) - COMPLETED
+- [x] Remove border from logo cards
+- [x] Remove background/backdrop from logo cards  
+- [x] Remove padding from logo cards (removed p-4 from both carousel sets)
+- [x] Keep only img element without wrapper styling
+- [x] Logos now display cleanly without visible squares/borders

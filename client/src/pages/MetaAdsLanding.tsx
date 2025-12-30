@@ -443,7 +443,7 @@ export default function MetaAdsLanding() {
                 ].map((client, index) => (
                   <div 
                     key={`first-${index}`} 
-                    className="flex-shrink-0 w-48 h-32 flex items-center justify-center p-4"
+                    className="flex-shrink-0 w-48 h-32 flex items-center justify-center"
                   >
                     <img 
                       src={client.logo} 
@@ -468,7 +468,7 @@ export default function MetaAdsLanding() {
                 ].map((client, index) => (
                   <div 
                     key={`second-${index}`} 
-                    className="flex-shrink-0 w-48 h-32 flex items-center justify-center p-4"
+                    className="flex-shrink-0 w-48 h-32 flex items-center justify-center"
                   >
                     <img 
                       src={client.logo} 
