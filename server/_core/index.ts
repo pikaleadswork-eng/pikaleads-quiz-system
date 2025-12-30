@@ -3,12 +3,10 @@ import express from "express";
 import { createServer } from "http";
 import net from "net";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
-// import { registerOAuthRoutes } from "./oauth"; // OAuth disabled
+import { registerOAuthRoutes } from "./oauth";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
-import authRouter from "../auth";
-import cookieParser from "cookie-parser";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -35,21 +33,8 @@ async function startServer() {
   // Configure body parser with larger size limit for file uploads
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
-  app.use(cookieParser());
-  // Auth routes (email/password login)
-  app.use(authRouter);
-  
   // OAuth callback under /api/oauth/callback
-  // registerOAuthRoutes(app); // OAuth disabled - using email/password
-  
-  // Webhook endpoints
-  const { handleTelegramWebhook, handleInstagramWebhookPost, handleInstagramWebhookVerification, handleWhatsAppWebhookPost, handleWhatsAppWebhookVerification } = await import("../webhooks");
-  app.post("/api/webhooks/telegram", handleTelegramWebhook);
-  app.post("/api/webhooks/instagram", handleInstagramWebhookPost);
-  app.get("/api/webhooks/instagram", handleInstagramWebhookVerification);
-  app.post("/api/webhooks/whatsapp", handleWhatsAppWebhookPost);
-  app.get("/api/webhooks/whatsapp", handleWhatsAppWebhookVerification);
-  
+  registerOAuthRoutes(app);
   // tRPC API
   app.use(
     "/api/trpc",
@@ -74,11 +59,6 @@ async function startServer() {
 
   server.listen(port, () => {
     console.log(`Server running on http://localhost:${port}/`);
-    
-    // Start event notifications cron job
-    import("../jobs/eventNotifications").then(({ startEventNotificationsCron }) => {
-      startEventNotificationsCron();
-    }).catch(console.error);
   });
 }
 

@@ -1,1 +1,0 @@
-ALTER TABLE `analytics_settings` ADD `apiSecret` varchar(255);

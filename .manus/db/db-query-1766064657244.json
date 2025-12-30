@@ -1,9 +1,0 @@
-{
-  "query": "INSERT INTO quiz_design_settings (quizId, layoutType, backgroundImage, alignment, primaryColor, accentColor, fontFamily, titleText, subtitleText, buttonText, companyName, phoneNumber, bonusEnabled) VALUES (13, 'background', 'https://pika-leads.com/quiz-images/furniture-meta.png', 'left', '#FFD93D', '#A855F7', 'Inter', 'Меблева реклама без заявок — проблема не в ринку', 'Запускаємо Meta Ads для меблевих компаній з фокусом на заявки', 'Розпочати квіз', 'PikaLeads', '+380992377117', false) ON DUPLICATE KEY UPDATE backgroundImage = VALUES(backgroundImage), titleText = VALUES(titleText), subtitleText = VALUES(subtitleText);",
-  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user b5yJbKNBA74GJz4.0729dd994af9 --database EcCrELAaL5JgQGs8z45yv6 --execute INSERT INTO quiz_design_settings (quizId, layoutType, backgroundImage, alignment, primaryColor, accentColor, fontFamily, titleText, subtitleText, buttonText, companyName, phoneNumber, bonusEnabled) VALUES (13, 'background', 'https://pika-leads.com/quiz-images/furniture-meta.png', 'left', '#FFD93D', '#A855F7', 'Inter', 'Меблева реклама без заявок — проблема не в ринку', 'Запускаємо Meta Ads для меблевих компаній з фокусом на заявки', 'Розпочати квіз', 'PikaLeads', '+380992377117', false) ON DUPLICATE KEY UPDATE backgroundImage = VALUES(backgroundImage), titleText = VALUES(titleText), subtitleText = VALUES(subtitleText);",
-  "rows": [],
-  "messages": [],
-  "stdout": "",
-  "stderr": "",
-  "execution_time_ms": 58
-}
