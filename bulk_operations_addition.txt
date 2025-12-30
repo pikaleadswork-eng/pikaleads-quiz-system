@@ -1,0 +1,39 @@
+    // Bulk operations
+    bulkAssignLeads: adminProcedure
+      .input(z.object({
+        leadIds: z.array(z.number()),
+        managerId: z.number(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const { assignLeadToManager } = await import("./db");
+        for (const leadId of input.leadIds) {
+          await assignLeadToManager(leadId, input.managerId, ctx.user.id);
+        }
+        return { success: true, count: input.leadIds.length };
+      }),
+    
+    bulkUpdateStatus: protectedProcedure
+      .input(z.object({
+        leadIds: z.array(z.number()),
+        statusId: z.number(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const { updateLeadStatusById } = await import("./db");
+        for (const leadId of input.leadIds) {
+          await updateLeadStatusById(leadId, input.statusId, ctx.user.id);
+        }
+        return { success: true, count: input.leadIds.length };
+      }),
+    
+    bulkDeleteLeads: adminProcedure
+      .input(z.object({
+        leadIds: z.array(z.number()),
+      }))
+      .mutation(async ({ input }) => {
+        const db = await import("./db").then(m => m.getDb());
+        if (!db) throw new Error("Database not available");
+        const { leads } = await import("../drizzle/schema");
+        const { inArray } = await import("drizzle-orm");
+        await db.delete(leads).where(inArray(leads.id, input.leadIds));
+        return { success: true, count: input.leadIds.length };
+      }),

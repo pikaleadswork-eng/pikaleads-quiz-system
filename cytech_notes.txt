@@ -1,0 +1,31 @@
+Cytech Template Analysis - Key Observations:
+
+From screenshots:
+- Title: "Cytech - Cyberpunk Tech Website"
+- Green accent color (neon green) on black background
+- Multiple cyberpunk robot/AI character illustrations (blue/teal tones)
+- "Architects of the Digital Dystopia" headline
+- "GET IN TOUCH" CTA with green button
+- "99M" statistics display
+- Clean, organized grid layout
+- Multiple page sections shown
+
+Key Features:
+- Neon green accent color (#00FF00 style)
+- Dark black background
+- Cyberpunk AI/robot characters (blue/teal/green)
+- Statistics display (99M)
+- "Digital Dystopia" messaging theme
+- Professional grid-based layout
+- Green CTA buttons
+- 4 landing page files included
+
+Color Palette:
+- Black background
+- Neon green accents
+- Blue/teal for characters
+- White text
+
+Tags: Cyber, Cyberpunk, AI, Website, UIUX, Digital, Technologies, Privacy, System, Network, Robot, Artificial Intelligence, Futuristic
+
+Files: Figma, PSD, Sketch, XD

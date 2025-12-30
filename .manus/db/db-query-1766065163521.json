@@ -1,0 +1,9 @@
+{
+  "query": "INSERT INTO quiz_design_settings (quizId, layoutType, backgroundImage, alignment, primaryColor, accentColor, fontFamily, titleText, subtitleText, buttonText, companyName, phoneNumber, bonusEnabled) VALUES (16, 'background', 'https://pika-leads.com/quiz-images/general-bg.png', 'left', '#FFD93D', '#A855F7', 'Inter', 'Доставка їжі без замовлень — проблема в рекламі', 'Запускаємо Meta рекламу для доставки їжі з фокусом на замовлення', 'Розпочати квіз', 'PikaLeads', '+380992377117', false) ON DUPLICATE KEY UPDATE layoutType = VALUES(layoutType), backgroundImage = VALUES(backgroundImage);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user b5yJbKNBA74GJz4.0729dd994af9 --database EcCrELAaL5JgQGs8z45yv6 --execute INSERT INTO quiz_design_settings (quizId, layoutType, backgroundImage, alignment, primaryColor, accentColor, fontFamily, titleText, subtitleText, buttonText, companyName, phoneNumber, bonusEnabled) VALUES (16, 'background', 'https://pika-leads.com/quiz-images/general-bg.png', 'left', '#FFD93D', '#A855F7', 'Inter', 'Доставка їжі без замовлень — проблема в рекламі', 'Запускаємо Meta рекламу для доставки їжі з фокусом на замовлення', 'Розпочати квіз', 'PikaLeads', '+380992377117', false) ON DUPLICATE KEY UPDATE layoutType = VALUES(layoutType), backgroundImage = VALUES(backgroundImage);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 57
+}

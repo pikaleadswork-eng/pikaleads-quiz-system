@@ -1,0 +1,70 @@
+{
+  "query": "SELECT id, name, email, phone, assignedTo, statusId, leadScore, createdAt FROM leads ORDER BY createdAt DESC LIMIT 6",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user b5yJbKNBA74GJz4.0729dd994af9 --database EcCrELAaL5JgQGs8z45yv6 --execute SELECT id, name, email, phone, assignedTo, statusId, leadScore, createdAt FROM leads ORDER BY createdAt DESC LIMIT 6",
+  "rows": [
+    {
+      "id": "60036",
+      "name": "Test User",
+      "email": "NULL",
+      "phone": "+1234567890",
+      "assignedTo": "NULL",
+      "statusId": "1",
+      "leadScore": "30",
+      "createdAt": "2025-12-15 22:25:49"
+    },
+    {
+      "id": "60035",
+      "name": "Test User",
+      "email": "test@example.com",
+      "phone": "+1234567890",
+      "assignedTo": "NULL",
+      "statusId": "1",
+      "leadScore": "73",
+      "createdAt": "2025-12-15 22:25:48"
+    },
+    {
+      "id": "60034",
+      "name": "Test User",
+      "email": "NULL",
+      "phone": "+1234567890",
+      "assignedTo": "NULL",
+      "statusId": "1",
+      "leadScore": "30",
+      "createdAt": "2025-12-15 21:51:14"
+    },
+    {
+      "id": "60033",
+      "name": "Test User",
+      "email": "test@example.com",
+      "phone": "+1234567890",
+      "assignedTo": "NULL",
+      "statusId": "1",
+      "leadScore": "73",
+      "createdAt": "2025-12-15 21:51:13"
+    },
+    {
+      "id": "60032",
+      "name": "Test User",
+      "email": "NULL",
+      "phone": "+1234567890",
+      "assignedTo": "NULL",
+      "statusId": "1",
+      "leadScore": "30",
+      "createdAt": "2025-12-15 21:44:46"
+    },
+    {
+      "id": "60031",
+      "name": "Test User",
+      "email": "test@example.com",
+      "phone": "+1234567890",
+      "assignedTo": "NULL",
+      "statusId": "1",
+      "leadScore": "73",
+      "createdAt": "2025-12-15 21:44:46"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tname\temail\tphone\tassignedTo\tstatusId\tleadScore\tcreatedAt\n60036\tTest User\tNULL\t+1234567890\tNULL\t1\t30\t2025-12-15 22:25:49\n60035\tTest User\ttest@example.com\t+1234567890\tNULL\t1\t73\t2025-12-15 22:25:48\n60034\tTest User\tNULL\t+1234567890\tNULL\t1\t30\t2025-12-15 21:51:14\n60033\tTest User\ttest@example.com\t+1234567890\tNULL\t1\t73\t2025-12-15 21:51:13\n60032\tTest User\tNULL\t+1234567890\tNULL\t1\t30\t2025-12-15 21:44:46\n60031\tTest User\ttest@example.com\t+1234567890\tNULL\t1\t73\t2025-12-15 21:44:46\n",
+  "stderr": "",
+  "execution_time_ms": 97
+}

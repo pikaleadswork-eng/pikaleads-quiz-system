@@ -1,0 +1,9 @@
+{
+  "query": "INSERT INTO analytics_settings (provider, trackingId, isActive, createdAt, updatedAt) VALUES \n('meta_pixel', '720023837850036', 1, NOW(), NOW()),\n('ga4', 'G-BS1VTVTWVC', 1, NOW(), NOW()),\n('gtm', 'GTM-KJR4RP5K', 1, NOW(), NOW())\nON DUPLICATE KEY UPDATE \ntrackingId = VALUES(trackingId),\nisActive = VALUES(isActive),\nupdatedAt = NOW();",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user b5yJbKNBA74GJz4.0729dd994af9 --database EcCrELAaL5JgQGs8z45yv6 --execute INSERT INTO analytics_settings (provider, trackingId, isActive, createdAt, updatedAt) VALUES \n('meta_pixel', '720023837850036', 1, NOW(), NOW()),\n('ga4', 'G-BS1VTVTWVC', 1, NOW(), NOW()),\n('gtm', 'GTM-KJR4RP5K', 1, NOW(), NOW())\nON DUPLICATE KEY UPDATE \ntrackingId = VALUES(trackingId),\nisActive = VALUES(isActive),\nupdatedAt = NOW();",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 103
+}

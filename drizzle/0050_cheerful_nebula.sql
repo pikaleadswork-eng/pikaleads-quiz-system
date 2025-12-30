@@ -1,0 +1,1 @@
+ALTER TABLE `quiz_design_settings` ADD `backgroundGradient` text;

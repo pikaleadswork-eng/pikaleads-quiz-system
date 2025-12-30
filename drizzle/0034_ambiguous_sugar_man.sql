@@ -1,0 +1,1 @@
+ALTER TABLE `quizzes` ADD `niche` enum('furniture','renovation','ecommerce','services','realestate','other') DEFAULT 'other' NOT NULL;

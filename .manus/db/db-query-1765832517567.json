@@ -1,0 +1,22 @@
+{
+  "query": "SELECT id, quizId, questionText, answerOptions FROM quiz_questions WHERE quizId = 11 LIMIT 2",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user b5yJbKNBA74GJz4.0729dd994af9 --database EcCrELAaL5JgQGs8z45yv6 --execute SELECT id, quizId, questionText, answerOptions FROM quiz_questions WHERE quizId = 11 LIMIT 2",
+  "rows": [
+    {
+      "id": "11",
+      "quizId": "11",
+      "questionText": "{\"uk\":\"Що зараз не працює в рекламі?\",\"ru\":\"Что сейчас не работает в рекламе?\",\"en\":\"What doesn't work in advertising now?\",\"pl\":\"Co teraz nie działa w reklamie?\",\"de\":\"Was funktioniert in der Werbung nicht mehr?\"}",
+      "answerOptions": "[{\"uk\":\"Продажів мало\",\"ru\":\"Продаж мало.\",\"en\":\"There are few sales\",\"pl\":\"Sprzedaż jest niewielka\",\"de\":\"Es gibt nur wenige Verkäufe\"},{\"uk\":\"Продажі нестабільні\",\"ru\":\"Продажи нестабильны\",\"en\":\"Sales are unstable\",\"pl\":\"Sprzedaż jest niestabilna\",\"de\":\"Die Verkäufe sind unbeständig\"},{\"uk\":\"Бюджет зливається\",\"ru\":\"Бюджет сливается\",\"en\":\"The budget is merging\",\"pl\":\"Budżet się łączy\",\"de\":\"Der Haushalt wird zusammengelegt\"},{\"uk\":\"Результату немає\",\"ru\":\"Никакого результата.\",\"en\":\"No result\",\"pl\":\"Brak wyniku\",\"de\":\"Kein Ergebnis\"}]"
+    },
+    {
+      "id": "12",
+      "quizId": "11",
+      "questionText": "{\"uk\":\"Чи була реклама в Meta?\",\"ru\":\"Была ли реклама в Meta?\",\"en\":\"Was there any advertising in Meta?\",\"pl\":\"Czy w Meta były jakieś reklamy?\",\"de\":\"Gab es Werbung in Meta?\"}",
+      "answerOptions": "[{\"uk\":\"Так\",\"ru\":\"Да.\",\"en\":\"Yes.\",\"pl\":\"Tak\",\"de\":\"Ja\"},{\"uk\":\"Ні\",\"ru\":\"Нет.\",\"en\":\"No.\",\"pl\":\"Nie.\",\"de\":\"Nein.\"}]"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tquizId\tquestionText\tanswerOptions\n11\t11\t{\"uk\":\"Що зараз не працює в рекламі?\",\"ru\":\"Что сейчас не работает в рекламе?\",\"en\":\"What doesn't work in advertising now?\",\"pl\":\"Co teraz nie działa w reklamie?\",\"de\":\"Was funktioniert in der Werbung nicht mehr?\"}\t[{\"uk\":\"Продажів мало\",\"ru\":\"Продаж мало.\",\"en\":\"There are few sales\",\"pl\":\"Sprzedaż jest niewielka\",\"de\":\"Es gibt nur wenige Verkäufe\"},{\"uk\":\"Продажі нестабільні\",\"ru\":\"Продажи нестабильны\",\"en\":\"Sales are unstable\",\"pl\":\"Sprzedaż jest niestabilna\",\"de\":\"Die Verkäufe sind unbeständig\"},{\"uk\":\"Бюджет зливається\",\"ru\":\"Бюджет сливается\",\"en\":\"The budget is merging\",\"pl\":\"Budżet się łączy\",\"de\":\"Der Haushalt wird zusammengelegt\"},{\"uk\":\"Результату немає\",\"ru\":\"Никакого результата.\",\"en\":\"No result\",\"pl\":\"Brak wyniku\",\"de\":\"Kein Ergebnis\"}]\n12\t11\t{\"uk\":\"Чи була реклама в Meta?\",\"ru\":\"Была ли реклама в Meta?\",\"en\":\"Was there any advertising in Meta?\",\"pl\":\"Czy w Meta były jakieś reklamy?\",\"de\":\"Gab es Werbung in Meta?\"}\t[{\"uk\":\"Так\",\"ru\":\"Да.\",\"en\":\"Yes.\",\"pl\":\"Tak\",\"de\":\"Ja\"},{\"uk\":\"Ні\",\"ru\":\"Нет.\",\"en\":\"No.\",\"pl\":\"Nie.\",\"de\":\"Nein.\"}]\n",
+  "stderr": "",
+  "execution_time_ms": 60
+}

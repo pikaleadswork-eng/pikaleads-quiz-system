@@ -1,0 +1,1 @@
+ALTER TABLE `quiz_question_events` ADD `quizId` int NOT NULL;

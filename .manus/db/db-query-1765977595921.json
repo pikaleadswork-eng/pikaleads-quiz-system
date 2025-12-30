@@ -1,0 +1,20 @@
+{
+  "query": "SELECT id, name, email FROM users WHERE role = 'manager' ORDER BY id",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user b5yJbKNBA74GJz4.0729dd994af9 --database EcCrELAaL5JgQGs8z45yv6 --execute SELECT id, name, email FROM users WHERE role = 'manager' ORDER BY id",
+  "rows": [
+    {
+      "id": "4",
+      "name": "Олександр",
+      "email": "manager1@pikaleads.com"
+    },
+    {
+      "id": "5",
+      "name": "Артур",
+      "email": "manager2@pikaleads.com"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tname\temail\n4\tОлександр\tmanager1@pikaleads.com\n5\tАртур\tmanager2@pikaleads.com\n",
+  "stderr": "",
+  "execution_time_ms": 52
+}
