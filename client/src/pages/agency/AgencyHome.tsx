@@ -1,6 +1,7 @@
 import { Link } from "wouter";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
+import { useLocation } from "wouter";
 import CyberpunkNavigation from "@/components/CyberpunkNavigation";
 import LeadFormModal from "@/components/LeadFormModal";
 import ServiceDetailModal, { ServiceDetail } from "@/components/ServiceDetailModal";
@@ -21,6 +22,7 @@ import Footer from "@/components/Footer";
 
 export default function AgencyHome() {
   const { t } = useTranslation();
+  const [, setLocation] = useLocation();
   const [consultationModalOpen, setConsultationModalOpen] = useState(false);
   const [strategyModalOpen, setStrategyModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<ServiceDetail | null>(null);
@@ -381,7 +383,7 @@ export default function AgencyHome() {
                   Facebook та Instagram реклама з точним таргетингом. Охоплення 2+ млрд користувачів.
                 </p>
                 <button
-                  onClick={() => handleServiceClick('meta-ads')}
+                  onClick={() => setLocation('/services/meta-ads')}
                   className="w-full mt-auto px-4 py-2.5 bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 hover:border-blue-500/50 text-blue-400 font-bold rounded-lg transition-all duration-300 text-sm"
                 >
                   Дізнатись більше →

@@ -11,6 +11,7 @@ import { LanguageProvider } from "./contexts/LanguageContext";
 // Agency Website Pages
 import AgencyHome from "./pages/agency/AgencyHome";
 import AgencyThankYou from "./pages/agency/ThankYou";
+import MetaAdsLanding from "./pages/MetaAdsLanding";
 
 // Quiz System Pages (moved to /quiz-service)
 import Home from "./pages/Home";
@@ -86,6 +87,7 @@ function Router() {
     <Switch>
       {/* ========== AGENCY WEBSITE (Main Page) ========== */}
       <Route path={"/"} component={AgencyHome} />
+      <Route path="/services/meta-ads" component={MetaAdsLanding} />
       <Route path="/blog" component={BlogList} />
       <Route path="/blog/:slug" component={BlogPost} />
       <Route path="/case-studies/:slug" component={CaseStudyPage} />
