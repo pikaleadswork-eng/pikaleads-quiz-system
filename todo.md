@@ -383,3 +383,12 @@
 - [x] Replace logos with transparent background versions (removed 3M+ dark pixels from each)
 - [x] Remove any background/backdrop styling from logo containers
 - [x] Test that NO logo shows any visible background
+
+
+## Phase 181: Add All 9 Client Logos to Both Pages (2025-12-30)
+- [x] Process coraltravel-logo.png - removed 4M dark pixels
+- [x] Process flower-logo.png - removed 3.9M dark pixels
+- [x] Process karpachoff-logo.png - removed 3.4M dark pixels
+- [x] Update Meta Ads page carousel with all 9 logos
+- [x] Update Agency Home page carousel with all 9 logos
+- [x] Test both carousels display all logos cleanly

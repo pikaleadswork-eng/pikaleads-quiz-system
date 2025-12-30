@@ -435,7 +435,10 @@ export default function MetaAdsLanding() {
                   { name: "ParkSide", logo: "/clients/parkside-enhanced.png", color: "purple" },
                   { name: "Nasledniki", logo: "/clients/nasledniki-enhanced.png", color: "pink" },
                   { name: "EMMI", logo: "/clients/emmi-enhanced.png", color: "yellow" },
-                  { name: "Client", logo: "/clients/client6-enhanced.png", color: "green" }
+                  { name: "Client", logo: "/clients/client6-enhanced.png", color: "green" },
+                  { name: "Coral Travel", logo: "/clients/coraltravel-enhanced.png", color: "orange" },
+                  { name: "Flower Shop", logo: "/clients/flower-enhanced.png", color: "rose" },
+                  { name: "Karpachoff", logo: "/clients/karpachoff-enhanced.png", color: "indigo" }
                 ].map((client, index) => (
                   <div 
                     key={`first-${index}`} 
@@ -460,7 +463,10 @@ export default function MetaAdsLanding() {
                   { name: "ParkSide", logo: "/clients/parkside-enhanced.png", color: "purple" },
                   { name: "Nasledniki", logo: "/clients/nasledniki-enhanced.png", color: "pink" },
                   { name: "EMMI", logo: "/clients/emmi-enhanced.png", color: "yellow" },
-                  { name: "Client", logo: "/clients/client6-enhanced.png", color: "green" }
+                  { name: "Client", logo: "/clients/client6-enhanced.png", color: "green" },
+                  { name: "Coral Travel", logo: "/clients/coraltravel-enhanced.png", color: "orange" },
+                  { name: "Flower Shop", logo: "/clients/flower-enhanced.png", color: "rose" },
+                  { name: "Karpachoff", logo: "/clients/karpachoff-enhanced.png", color: "indigo" }
                 ].map((client, index) => (
                   <div 
                     key={`second-${index}`} 

@@ -348,7 +348,10 @@ export default function Home() {
                   { name: "ParkSide", logo: "/clients/parkside-enhanced.png" },
                   { name: "Nasledniki", logo: "/clients/nasledniki-enhanced.png" },
                   { name: "EMMI", logo: "/clients/emmi-enhanced.png" },
-                  { name: "Vertera", logo: "/clients/client6-enhanced.png" }
+                  { name: "Vertera", logo: "/clients/client6-enhanced.png" },
+                  { name: "Coral Travel", logo: "/clients/coraltravel-enhanced.png" },
+                  { name: "Flower Shop", logo: "/clients/flower-enhanced.png" },
+                  { name: "Karpachoff", logo: "/clients/karpachoff-enhanced.png" }
                 ].map((client, index) => (
                   <CyberpunkCard 
                     key={index} 
