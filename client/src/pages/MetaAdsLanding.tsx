@@ -431,7 +431,7 @@ export default function MetaAdsLanding() {
               <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-black to-transparent z-10" />
               
               {/* Scrolling container */}
-              <div className="flex gap-8 animate-scroll hover:pause">
+              <div className="flex gap-3 lg:gap-4 animate-scroll hover:pause">
                 {/* First set of logos */}
                 {[
                   { name: "Maria Caruso", logo: "/clients/carusoshoes-enhanced.png", color: "cyan" },
@@ -444,9 +444,6 @@ export default function MetaAdsLanding() {
                   <div 
                     key={`first-${index}`} 
                     className="flex-shrink-0 w-48 h-32 flex items-center justify-center p-4"
-                    style={{
-                      filter: `drop-shadow(0 0 20px rgba(${client.color === 'cyan' ? '6, 182, 212' : client.color === 'blue' ? '59, 130, 246' : client.color === 'purple' ? '168, 85, 247' : client.color === 'pink' ? '236, 72, 153' : client.color === 'yellow' ? '234, 179, 8' : '34, 197, 94'}, 0.6))`
-                    }}
                   >
                     <img 
                       src={client.logo} 
@@ -472,9 +469,6 @@ export default function MetaAdsLanding() {
                   <div 
                     key={`second-${index}`} 
                     className="flex-shrink-0 w-48 h-32 flex items-center justify-center p-4"
-                    style={{
-                      filter: `drop-shadow(0 0 20px rgba(${client.color === 'cyan' ? '6, 182, 212' : client.color === 'blue' ? '59, 130, 246' : client.color === 'purple' ? '168, 85, 247' : client.color === 'pink' ? '236, 72, 153' : client.color === 'yellow' ? '234, 179, 8' : '34, 197, 94'}, 0.6))`
-                    }}
                   >
                     <img 
                       src={client.logo} 
