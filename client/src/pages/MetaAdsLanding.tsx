@@ -58,7 +58,7 @@ export default function MetaAdsLanding() {
           <div className="container relative z-10 px-4 py-12 lg:py-20">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-[70vh] lg:min-h-[80vh]">
               {/* LEFT SIDE - Text Content */}
-              <div className="space-y-4 lg:space-y-8 order-2 lg:order-1">
+              <div className="space-y-4 lg:space-y-8 order-1 lg:order-1">
                 {/* Badge */}
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/30 backdrop-blur-sm">
                   <Zap className="w-4 h-4 text-cyan-400" />
@@ -113,7 +113,7 @@ export default function MetaAdsLanding() {
               </div>
 
               {/* RIGHT SIDE - Pikachu Image */}
-              <div className="relative h-[400px] lg:h-[800px] order-1 lg:order-2">
+              <div className="relative h-[400px] lg:h-[800px] order-2 lg:order-2">
                 {/* Glow Effect */}
                 <div className="absolute inset-0 bg-gradient-to-l from-pink-500/20 via-purple-500/20 to-transparent blur-3xl" />
                 

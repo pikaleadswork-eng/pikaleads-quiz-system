@@ -607,3 +607,11 @@
 - [x] Add logo to footer (hardcoded path like navigation)
 - [x] Keep only CTA button in the contact section
 - [x] Test footer logo displays correctly
+
+## Phase 180: Fix Meta Ads Hero Section Layout (2025-12-30) - COMPLETED
+
+**URGENT FIX:**
+- [x] Move Pikachu image BELOW buttons on Meta Ads page
+- [x] Match homepage layout order: text → buttons → Pikachu image
+- [x] Fixed order classes: text order-1, Pikachu order-2
+- [x] Test mobile layout after fix
