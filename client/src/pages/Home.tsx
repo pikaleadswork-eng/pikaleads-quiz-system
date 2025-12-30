@@ -329,7 +329,41 @@ export default function Home() {
             )}
           </section>
 
+          {/* Client Logos Section */}
+          <section className="py-12 lg:py-20">
+            <div className="container px-4">
+              <div className="text-center mb-12">
+                <h2 className="text-4xl md:text-5xl font-bold mb-4">
+                  <GlitchText variant="cyan">
+                    {language === "uk" ? "Наші клієнти" : language === "ru" ? "Наши клиенты" : "Our Clients"}
+                  </GlitchText>
+                </h2>
+              </div>
 
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 lg:gap-8 items-center">
+                {[
+                  { name: "Maria Caruso", logo: "/clients/carusoshoes.jpeg" },
+                  { name: "Ovita", logo: "/clients/logo_opt_master_color_422x150_result.webp" },
+                  { name: "ParkSide", logo: "/clients/images.png" },
+                  { name: "Nasledniki", logo: "/clients/logo_1(1).png" },
+                  { name: "EMMI", logo: "/clients/15090.png.webp" },
+                  { name: "Client", logo: "/clients/unnamed.png.webp" }
+                ].map((client, index) => (
+                  <CyberpunkCard key={index} variant="cyan" className="flex items-center justify-center p-4 hover:scale-105 transition-transform">
+                    <img 
+                      src={client.logo} 
+                      alt={client.name}
+                      className="max-w-full h-16 object-contain filter grayscale hover:grayscale-0 transition-all"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                        e.currentTarget.parentElement!.innerHTML = `<div class="text-gray-400 text-sm">${client.name}</div>`;
+                      }}
+                    />
+                  </CyberpunkCard>
+                ))}
+              </div>
+            </div>
+          </section>
 
         </div>
       </div>

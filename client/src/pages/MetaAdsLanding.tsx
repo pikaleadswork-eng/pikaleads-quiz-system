@@ -51,14 +51,14 @@ export default function MetaAdsLanding() {
       
       <div className="min-h-screen bg-black text-white">
         {/* Hero Section - 50/50 Split */}
-        <section className="relative min-h-screen flex items-center overflow-hidden pt-20 lg:pt-0">
+        <section className="relative min-h-screen flex items-center overflow-hidden pt-16 pb-8 lg:pt-0 lg:pb-0">
           {/* Background */}
           <div className="absolute inset-0 bg-black" />
           
           <div className="container relative z-10 px-4 py-12 lg:py-20">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-[70vh] lg:min-h-[80vh]">
               {/* LEFT SIDE - Text Content */}
-              <div className="space-y-6 lg:space-y-8 order-2 lg:order-1">
+              <div className="space-y-4 lg:space-y-8 order-2 lg:order-1">
                 {/* Badge */}
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/30 backdrop-blur-sm">
                   <Zap className="w-4 h-4 text-cyan-400" />
@@ -113,7 +113,7 @@ export default function MetaAdsLanding() {
               </div>
 
               {/* RIGHT SIDE - Pikachu Image */}
-              <div className="relative h-[500px] sm:h-[600px] lg:h-[800px] order-1 lg:order-2">
+              <div className="relative h-[400px] lg:h-[800px] order-1 lg:order-2">
                 {/* Glow Effect */}
                 <div className="absolute inset-0 bg-gradient-to-l from-pink-500/20 via-purple-500/20 to-transparent blur-3xl" />
                 
@@ -154,7 +154,7 @@ export default function MetaAdsLanding() {
             </div>
 
             {/* Stats Bar Below Hero */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 lg:gap-6 mt-8 lg:mt-16">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 lg:gap-6 mt-6 lg:mt-16">
               <Card className="bg-gradient-to-br from-pink-900/40 to-red-900/20 border-pink-500/30 backdrop-blur-sm p-6 text-center">
                 <div className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-red-400">
                   8.45M$
@@ -169,7 +169,7 @@ export default function MetaAdsLanding() {
               </Card>
               <Card className="bg-gradient-to-br from-orange-900/40 to-red-900/20 border-orange-500/30 backdrop-blur-sm p-6 text-center">
                 <div className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-400">
-                  8 років
+                  9 років
                 </div>
                 <div className="text-gray-300 mt-2">Досвіду в трафіку</div>
               </Card>
@@ -177,57 +177,12 @@ export default function MetaAdsLanding() {
           </div>
         </section>
 
-        {/* Client Pain Points Section */}
-        <section className="py-20 relative">
+        <section className="py-12 lg:py-20 bg-gradient-to-b from-black to-gray-900">
           <div className="container px-4">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold mb-4">
-                Вирішуємо відразу <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-red-500">декілька проблем</span>
+                Вирішуйте відразу <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">декілька проблем</span> одночасно:
               </h2>
-              <p className="text-xl text-gray-400">Типові болі клієнтів, які ми усуваємо</p>
-            </div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {[
-                {
-                  icon: Target,
-                  title: "Трата бюджету",
-                  description: "Таргет дозволяє відсіяти непідходящу аудиторію, а залишити лише цільову, з якою можна швидко здійснити продаж"
-                },
-                {
-                  icon: Users,
-                  title: "Низька якість лідів",
-                  description: "Отримували багато заявок, які не купували? Завдяки стратегії та правильній комунікації, ми вирішуємо цю проблему на 90%"
-                },
-                {
-                  icon: Shield,
-                  title: "Хибні очікування",
-                  description: "Не розповідаємо, як все буде класно. Наша робота полягає в тому, щоб дати результат на діях, не вводячи вас в оману"
-                },
-                {
-                  icon: Clock,
-                  title: "Затягнутий результат",
-                  description: "Перші результати з реклами ви отримуєте через 24 години та ще протягом 72 годин покращення за рахунок швидких дій"
-                }
-              ].map((pain, index) => (
-                <Card key={index} className="bg-gradient-to-br from-gray-900/80 to-black border-gray-800 p-6 hover:border-pink-500/50 transition-all">
-                  <pain.icon className="w-12 h-12 text-pink-500 mb-4" />
-                  <h3 className="text-xl font-bold mb-3">{pain.title}</h3>
-                  <p className="text-gray-400">{pain.description}</p>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Our Solutions Section */}
-        <section className="py-20 bg-gradient-to-b from-black to-gray-900">
-          <div className="container px-4">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold mb-4">
-                Наші <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">рішення</span>
-              </h2>
-              <p className="text-xl text-gray-400">Як ми досягаємо результатів</p>
             </div>
 
             <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
@@ -268,58 +223,128 @@ export default function MetaAdsLanding() {
           </div>
         </section>
 
-        {/* Target Audiences Section */}
-        <section className="py-20">
+        {/* Client Pain Points Section - "А також, ми розуміємо, що можливо, ви стикались" */}
+        <section className="py-12 lg:py-20 relative">
           <div className="container px-4">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold mb-4">
-                Для кого <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-500">підходить</span>
+                А також, Ми розуміємо, що, можливо, <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-red-500">Ви стикались:</span>
               </h2>
-              <p className="text-xl text-gray-400">META ADS ефективні для різних бізнесів</p>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {[
                 {
-                  title: "E-commerce та Роздріб",
-                  age: "25-40 років",
-                  description: "Активні молоді сім'ї, які шукають якісні товари онлайн. Цінують зручність, швидку доставку та натуральність продуктів.",
-                  interests: ["Здоровий спосіб життя", "Онлайн-шопінг", "Екологічність"]
+                  icon: Target,
+                  title: "Трата бюджету",
+                  description: "Таргет дозволяє відсіяти непідходящу аудиторію, а залишити лише цільову, з якою можна швидко здійснити продаж"
                 },
                 {
-                  title: "Послуги та B2B",
-                  age: "25-40 років",
-                  description: "Професіонали, які шукають спеціалізовані рішення для бізнесу або особистих потреб. Орієнтовані на якість та експертність.",
-                  interests: ["Професійний розвиток", "Ефективність", "Якісний сервіс"]
+                  icon: Users,
+                  title: "Низька якість лідів",
+                  description: "Отримували багато заявок, які не купували? Завдяки стратегії та правильній комунікації, ми вирішуємо цю проблему на 90%"
                 },
                 {
-                  title: "Преміум сегмент",
-                  age: "30-50 років",
-                  description: "Заможна аудиторія з високими вимогами. Готові платити за ексклюзивність, статус та найвищу якість продуктів чи послуг.",
-                  interests: ["Преміум якість", "Статус", "Ексклюзивність"]
+                  icon: Shield,
+                  title: "Хибні очікування",
+                  description: "Не розповідаємо, як все буде класно. Наша робота полягає в тому, щоб дати результат на діях, не вводячи вас в оману"
+                },
+                {
+                  icon: Clock,
+                  title: "Затягнутий результат",
+                  description: "Перші результати з реклами ви отримуєте через 24 години та ще протягом 72 годин покращення за рахунок швидких дій"
                 }
-              ].map((audience, index) => (
-                <Card key={index} className="bg-gradient-to-br from-purple-900/20 to-pink-900/10 border-purple-500/30 p-8 hover:border-purple-400 transition-all">
-                  <h3 className="text-2xl font-bold mb-3">{audience.title}</h3>
-                  <div className="text-pink-400 font-semibold mb-4">{audience.age}</div>
-                  <p className="text-gray-400 mb-6">{audience.description}</p>
-                  <div className="space-y-2">
-                    <div className="text-sm font-semibold text-gray-300 mb-2">Інтереси:</div>
-                    {audience.interests.map((interest, i) => (
-                      <div key={i} className="flex items-center gap-2">
-                        <div className="w-1.5 h-1.5 bg-pink-500 rounded-full" />
-                        <span className="text-gray-400 text-sm">{interest}</span>
-                      </div>
-                    ))}
-                  </div>
+              ].map((pain, index) => (
+                <Card key={index} className="bg-gradient-to-br from-gray-900/80 to-black border-gray-800 p-6 hover:border-pink-500/50 transition-all">
+                  <pain.icon className="w-12 h-12 text-pink-500 mb-4" />
+                  <h3 className="text-xl font-bold mb-3">{pain.title}</h3>
+                  <p className="text-gray-400">{pain.description}</p>
                 </Card>
               ))}
             </div>
           </div>
         </section>
 
+        {/* Testimonials Section */}
+        <section className="py-12 lg:py-20 bg-gradient-to-b from-black to-gray-900">
+          <div className="container px-4">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold mb-4">
+                Відгуки від <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500">наших клієнтів</span>
+              </h2>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+              {[
+                {
+                  name: "Tagran",
+                  rating: 5,
+                  time: "2 тижні тому",
+                  text: "Роботаємо вже більше року, настроїв таргета на очень високому рівні. Робить завжди все на якість, результати дуже хороші. KPI перевищив 700%!!!",
+                  tags: ["Якість", "Професіоналізм", "Ціна/Якість"]
+                },
+                {
+                  name: "Артем Біночур",
+                  rating: 5,
+                  time: "2 тижні тому",
+                  text: "Роботаємо з хлопцями по рекламі доставки води, скажу так... Було 20 замовлень, стало 150, зростання сильне! Подобається підхід, терміни, і зустрічі які тільки по справі.",
+                  tags: ["Якість", "Відношення до клієнтів", "Професіоналізм"]
+                },
+                {
+                  name: "Інна Морозова",
+                  rating: 5,
+                  time: "тиждень тому",
+                  text: "Роботаємо більше 3 років! Чітко розуміє, що потрібно, хорошо розуміє сенси. Глибоко розбирається в таргетингу і трафіку. Рекомендую і планую працювати разом далі!",
+                  tags: ["Якість", "Професіоналізм", "Експертність"]
+                }
+              ].map((testimonial, index) => (
+                <Card key={index} className="bg-gradient-to-br from-purple-900/20 to-pink-900/10 border-purple-500/30 p-6 hover:border-purple-400 transition-all">
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold text-xl">
+                      {testimonial.name.charAt(0)}
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-bold text-lg">{testimonial.name}</h3>
+                      <div className="flex items-center gap-2 mt-1">
+                        <div className="flex gap-0.5">
+                          {[...Array(testimonial.rating)].map((_, i) => (
+                            <span key={i} className="text-yellow-400">★</span>
+                          ))}
+                        </div>
+                        <span className="text-sm text-gray-400">{testimonial.time}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <p className="text-gray-300 mb-4 text-sm leading-relaxed">{testimonial.text}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {testimonial.tags.map((tag, i) => (
+                      <span key={i} className="text-xs px-2 py-1 rounded-full bg-purple-500/20 text-purple-300">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </Card>
+              ))}
+            </div>
+
+            <div className="text-center">
+              <a 
+                href="https://g.page/r/CRxqX5vZ0ZOXEAI/review"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-purple-400 hover:text-purple-300 transition-colors"
+              >
+                <span>Більше відгуків в Google</span>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </section>
+
         {/* Case Studies Preview Section */}
-        <section id="cases" className="py-20 bg-gradient-to-b from-gray-900 to-black">
+        <section id="cases" className="py-12 lg:py-20 bg-gradient-to-b from-gray-900 to-black">
           <div className="container px-4">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold mb-4">
@@ -362,8 +387,90 @@ export default function MetaAdsLanding() {
           </div>
         </section>
 
+        {/* Client Logos Section */}
+        <section className="py-12 lg:py-20">
+          <div className="container px-4">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl md:text-5xl font-bold mb-4">
+                Наші <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">клієнти</span>
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 lg:gap-8 items-center">
+              {[
+                { name: "Maria Caruso", logo: "/clients/carusoshoes.jpeg" },
+                { name: "Ovita", logo: "/clients/logo_opt_master_color_422x150_result.webp" },
+                { name: "ParkSide", logo: "/clients/images.png" },
+                { name: "Nasledniki", logo: "/clients/logo_1(1).png" },
+                { name: "EMMI", logo: "/clients/15090.png.webp" },
+                { name: "Client", logo: "/clients/unnamed.png.webp" }
+              ].map((client, index) => (
+                <div key={index} className="flex items-center justify-center p-4 bg-white/5 rounded-lg hover:bg-white/10 transition-all">
+                  <img 
+                    src={client.logo} 
+                    alt={client.name}
+                    className="max-w-full h-16 object-contain filter grayscale hover:grayscale-0 transition-all"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                      e.currentTarget.parentElement!.innerHTML = `<div class="text-gray-400 text-sm">${client.name}</div>`;
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Video Cases Section */}
+        <section className="py-12 lg:py-20 bg-gradient-to-b from-black to-gray-900">
+          <div className="container px-4">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl md:text-5xl font-bold mb-4">
+                Відео<span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-pink-500">кейси</span>
+              </h2>
+              <p className="text-xl text-gray-400">Кейси, які інколи виходять за рамки пристойності</p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              {[
+                {
+                  title: "Як набирати від 500 підписників в день на тематичний паблік",
+                  videoId: "huMHPOGE21Y"
+                },
+                {
+                  title: "E-com в Україні в ніші 'Продаж люстр та світильників'",
+                  videoId: "huMHPOGE21Y"
+                },
+                {
+                  title: "Як салону краси отримувати від 100 звернень на день?",
+                  videoId: "huMHPOGE21Y"
+                },
+                {
+                  title: "Налаштування реклами у ніші меблі",
+                  videoId: "huMHPOGE21Y"
+                }
+              ].map((video, index) => (
+                <Card key={index} className="bg-gradient-to-br from-red-900/20 to-pink-900/10 border-red-500/30 overflow-hidden hover:border-red-400 transition-all">
+                  <div className="aspect-video relative">
+                    <iframe
+                      src={`https://www.youtube.com/embed/${video.videoId}`}
+                      title={video.title}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      className="w-full h-full"
+                    />
+                  </div>
+                  <div className="p-4">
+                    <h3 className="font-bold text-lg">{video.title}</h3>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* Contact Form Section */}
-        <section id="contact-form" className="py-20">
+        <section id="contact-form" className="py-12 lg:py-20">
           <div className="container px-4">
             <div className="max-w-2xl mx-auto">
               <div className="text-center mb-12">
