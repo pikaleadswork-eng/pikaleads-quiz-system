@@ -425,11 +425,7 @@ export default function MetaAdsLanding() {
             </div>
 
             {/* Infinite Carousel */}
-            <div className="relative">
-              {/* Gradient overlays for seamless loop effect */}
-              <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-black to-transparent z-10" />
-              <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-black to-transparent z-10" />
-              
+            <div className="relative overflow-hidden">
               {/* Scrolling container */}
               <div className="flex gap-3 lg:gap-4 animate-scroll hover:pause">
                 {/* First set of logos */}

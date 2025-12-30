@@ -375,3 +375,11 @@
 - [x] Remove padding from logo cards (removed p-4 from both carousel sets)
 - [x] Keep only img element without wrapper styling
 - [x] Logos now display cleanly without visible squares/borders
+
+
+## Phase 180: Fix ALL Logo Backgrounds & Remove Gradients (2025-12-30)
+- [x] Remove gradient overlay divs completely (causing gap at edges)
+- [x] Check ALL 6 logo files for dark backgrounds
+- [x] Replace logos with transparent background versions (removed 3M+ dark pixels from each)
+- [x] Remove any background/backdrop styling from logo containers
+- [x] Test that NO logo shows any visible background
