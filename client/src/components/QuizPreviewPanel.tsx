@@ -73,6 +73,7 @@ export function QuizPreviewPanel({ settings }: QuizPreviewPanelProps) {
                 <img 
                   src={settings.backgroundImage} 
                   alt="Quiz illustration"
+                  loading="lazy"
                   className="absolute inset-0 w-full h-full object-cover"
                 />
               </div>
@@ -89,7 +90,7 @@ export function QuizPreviewPanel({ settings }: QuizPreviewPanelProps) {
             >
               <div className={`flex flex-col gap-3 w-full ${alignmentClasses[alignment]}`}>
                 {settings.logoImage && (
-                  <img src={settings.logoImage} alt="Logo" className="h-8 w-auto object-contain" />
+                  <img src={settings.logoImage} alt="Logo" loading="lazy" className="h-8 w-auto object-contain" />
                 )}
                 {settings.titleText && (
                   <h1 className="text-2xl font-bold" style={{ color: "white", textTransform: 'none' }}>

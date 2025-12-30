@@ -115,6 +115,7 @@ export default function QuizTemplateLibrary({ onSelectTemplate }: QuizTemplateLi
                     <img
                       src={template.previewImage || "/placeholder-quiz.png"}
                       alt={template.name}
+                      loading="lazy"
                       className="w-full h-full object-cover"
                     />
                     <div className="absolute top-2 right-2">

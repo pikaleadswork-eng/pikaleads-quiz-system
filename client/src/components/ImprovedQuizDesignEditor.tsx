@@ -350,6 +350,7 @@ export default function ImprovedQuizDesignEditor({ quizId, initialSettings, onSa
                     <img
                       src={settings.backgroundImage}
                       alt="Background preview"
+                      loading="lazy"
                       className="mt-2 w-full h-32 object-cover rounded-lg border border-zinc-700"
                     />
                   )}
@@ -388,12 +389,12 @@ export default function ImprovedQuizDesignEditor({ quizId, initialSettings, onSa
                         <Upload className="w-4 h-4" />
                       )}
                     </Button>
-                  </div>
-                  {settings.logoImage && (
+                  </di                  {settings.logoImage && (
                     <img
                       src={settings.logoImage}
                       alt="Logo preview"
-                      className="mt-2 h-16 object-contain rounded-lg border border-zinc-700 bg-white p-2"
+                      loading="lazy"
+                      className="mt-2 h-16 object-contain rounded-lg border border-zinc-700 bg-zinc-800 p-2"
                     />
                   )}
                 </div>

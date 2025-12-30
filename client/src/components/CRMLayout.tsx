@@ -103,6 +103,12 @@ export default function CRMLayout({ children }: CRMLayoutProps) {
       description: "Управління командою на сайті",
     },
     {
+      title: "Кейси",
+      icon: FileText,
+      href: "/admin/case-studies",
+      description: "Управління кейс-стадіз",
+    },
+    {
       title: t("nav.calendar") || "Calendar",
       icon: Calendar,
       href: "/admin/calendar",

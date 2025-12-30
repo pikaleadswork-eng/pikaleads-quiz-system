@@ -411,7 +411,7 @@ export default function QuizSettingsPanel({
           {/* Current Background Preview */}
           {settings.backgroundImage && (
             <div className="relative">
-              <img src={settings.backgroundImage} alt="Background" className="w-full h-20 object-cover rounded-lg" />
+              <img src={settings.backgroundImage} alt="Background" loading="lazy" className="w-full h-20 object-cover rounded-lg" />
               <Button
                 variant="destructive"
                 size="icon"
