@@ -406,25 +406,24 @@ export default function MetaAdsLanding() {
               <div className="flex gap-8 animate-scroll hover:pause">
                 {/* First set of logos */}
                 {[
-                  { name: "Maria Caruso", logo: "/clients/carusoshoes.jpeg", color: "cyan" },
-                  { name: "Ovita", logo: "/clients/logo_opt_master_color_422x150_result.webp", color: "blue" },
-                  { name: "ParkSide", logo: "/clients/images.png", color: "purple" },
-                  { name: "Nasledniki", logo: "/clients/logo_1(1).png", color: "pink" },
-                  { name: "EMMI", logo: "/clients/15090.png.webp", color: "yellow" },
-                  { name: "Client", logo: "/clients/unnamed.png.webp", color: "green" }
+                  { name: "Maria Caruso", logo: "/clients/carusoshoes-enhanced.png", color: "cyan" },
+                  { name: "Ovita", logo: "/clients/optmaster-enhanced.png", color: "blue" },
+                  { name: "ParkSide", logo: "/clients/parkside-enhanced.png", color: "purple" },
+                  { name: "Nasledniki", logo: "/clients/nasledniki-enhanced.png", color: "pink" },
+                  { name: "EMMI", logo: "/clients/emmi-enhanced.png", color: "yellow" },
+                  { name: "Client", logo: "/clients/client6-enhanced.png", color: "green" }
                 ].map((client, index) => (
                   <div 
                     key={`first-${index}`} 
-                    className="flex-shrink-0 w-48 h-32 flex items-center justify-center p-6 bg-gradient-to-br from-zinc-900 to-zinc-800 rounded-xl border border-zinc-700 hover:border-${client.color}-500/50 transition-all duration-500 hover:scale-110 hover:rotate-3 animate-float"
+                    className="flex-shrink-0 w-48 h-32 flex items-center justify-center p-4"
                     style={{
-                      animationDelay: `${index * 0.2}s`,
-                      boxShadow: `0 0 30px rgba(${client.color === 'cyan' ? '6, 182, 212' : client.color === 'blue' ? '59, 130, 246' : client.color === 'purple' ? '168, 85, 247' : client.color === 'pink' ? '236, 72, 153' : client.color === 'yellow' ? '234, 179, 8' : '34, 197, 94'}, 0.3)`
+                      filter: `drop-shadow(0 0 20px rgba(${client.color === 'cyan' ? '6, 182, 212' : client.color === 'blue' ? '59, 130, 246' : client.color === 'purple' ? '168, 85, 247' : client.color === 'pink' ? '236, 72, 153' : client.color === 'yellow' ? '234, 179, 8' : '34, 197, 94'}, 0.6))`
                     }}
                   >
                     <img 
                       src={client.logo} 
                       alt={client.name}
-                      className="max-w-full max-h-full object-contain filter brightness-150 contrast-125"
+                      className="max-w-full max-h-full object-contain"
                       onError={(e) => {
                         e.currentTarget.style.display = 'none';
                         e.currentTarget.parentElement!.innerHTML = `<div class="text-${client.color}-400 text-sm font-bold">${client.name}</div>`;
@@ -435,25 +434,24 @@ export default function MetaAdsLanding() {
                 
                 {/* Duplicate set for seamless loop */}
                 {[
-                  { name: "Maria Caruso", logo: "/clients/carusoshoes.jpeg", color: "cyan" },
-                  { name: "Ovita", logo: "/clients/logo_opt_master_color_422x150_result.webp", color: "blue" },
-                  { name: "ParkSide", logo: "/clients/images.png", color: "purple" },
-                  { name: "Nasledniki", logo: "/clients/logo_1(1).png", color: "pink" },
-                  { name: "EMMI", logo: "/clients/15090.png.webp", color: "yellow" },
-                  { name: "Client", logo: "/clients/unnamed.png.webp", color: "green" }
+                  { name: "Maria Caruso", logo: "/clients/carusoshoes-enhanced.png", color: "cyan" },
+                  { name: "Ovita", logo: "/clients/optmaster-enhanced.png", color: "blue" },
+                  { name: "ParkSide", logo: "/clients/parkside-enhanced.png", color: "purple" },
+                  { name: "Nasledniki", logo: "/clients/nasledniki-enhanced.png", color: "pink" },
+                  { name: "EMMI", logo: "/clients/emmi-enhanced.png", color: "yellow" },
+                  { name: "Client", logo: "/clients/client6-enhanced.png", color: "green" }
                 ].map((client, index) => (
                   <div 
                     key={`second-${index}`} 
-                    className="flex-shrink-0 w-48 h-32 flex items-center justify-center p-6 bg-gradient-to-br from-zinc-900 to-zinc-800 rounded-xl border border-zinc-700 hover:border-${client.color}-500/50 transition-all duration-500 hover:scale-110 hover:rotate-3 animate-float"
+                    className="flex-shrink-0 w-48 h-32 flex items-center justify-center p-4"
                     style={{
-                      animationDelay: `${index * 0.2}s`,
-                      boxShadow: `0 0 30px rgba(${client.color === 'cyan' ? '6, 182, 212' : client.color === 'blue' ? '59, 130, 246' : client.color === 'purple' ? '168, 85, 247' : client.color === 'pink' ? '236, 72, 153' : client.color === 'yellow' ? '234, 179, 8' : '34, 197, 94'}, 0.3)`
+                      filter: `drop-shadow(0 0 20px rgba(${client.color === 'cyan' ? '6, 182, 212' : client.color === 'blue' ? '59, 130, 246' : client.color === 'purple' ? '168, 85, 247' : client.color === 'pink' ? '236, 72, 153' : client.color === 'yellow' ? '234, 179, 8' : '34, 197, 94'}, 0.6))`
                     }}
                   >
                     <img 
                       src={client.logo} 
                       alt={client.name}
-                      className="max-w-full max-h-full object-contain filter brightness-150 contrast-125"
+                      className="max-w-full max-h-full object-contain"
                       onError={(e) => {
                         e.currentTarget.style.display = 'none';
                         e.currentTarget.parentElement!.innerHTML = `<div class="text-${client.color}-400 text-sm font-bold">${client.name}</div>`;
@@ -575,20 +573,7 @@ export default function MetaAdsLanding() {
                   </Button>
                 </form>
 
-                <div className="mt-8 pt-8 border-t border-gray-800 text-center space-y-2">
-                  <div className="flex items-center justify-center gap-2 text-gray-400">
-                    <Phone className="w-4 h-4" />
-                    <a href="tel:+380992377117" className="hover:text-pink-400 transition-colors">
-                      +380 99 23 77 117
-                    </a>
-                  </div>
-                  <div className="flex items-center justify-center gap-2 text-gray-400">
-                    <Mail className="w-4 h-4" />
-                    <a href="mailto:info@pikaleads.com" className="hover:text-pink-400 transition-colors">
-                      info@pikaleads.com
-                    </a>
-                  </div>
-                </div>
+
               </Card>
             </div>
           </div>

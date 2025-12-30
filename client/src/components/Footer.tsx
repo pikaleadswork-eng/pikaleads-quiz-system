@@ -116,9 +116,9 @@ export default function Footer() {
           <div className="space-y-4">
             <div className="flex items-center gap-2 mb-4">
               <img 
-                src="/pika-logo.svg" 
+                src="/pikaleads-logo-dark.png" 
                 alt="PIKA LEADS" 
-                className="h-8 w-auto"
+                className="h-12 w-auto object-contain"
               />
             </div>
             <p className="text-zinc-400 text-sm leading-relaxed">
