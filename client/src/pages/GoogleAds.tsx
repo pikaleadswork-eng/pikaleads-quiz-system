@@ -1,137 +1,570 @@
-import { ServicePage } from "@/components/ServicePage";
-import { TrendingDown, DollarSign, Target, Users, Zap, Award, Clock, CheckCircle2, BarChart3, Shield } from "lucide-react";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import CyberpunkNavigation from "@/components/CyberpunkNavigation";
+import Footer from "@/components/Footer";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { ArrowRight, CheckCircle2, AlertCircle } from "lucide-react";
+import { toast } from "sonner";
+import { trpc } from "@/lib/trpc";
 
 export default function GoogleAdsPage() {
+  const { t } = useTranslation();
+  const [formData, setFormData] = useState({
+    name: "",
+    contact: "",
+    website: ""
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const submitLeadMutation = trpc.leads.submitLead.useMutation({
+    onSuccess: () => {
+      toast.success("Заявку відправлено! Ми зв'яжемось з вами найближчим часом.");
+      setFormData({ name: "", contact: "", website: "" });
+      setIsSubmitting(false);
+    },
+    onError: (error) => {
+      toast.error("Помилка відправки. Спробуйте ще раз.");
+      setIsSubmitting(false);
+    }
+  });
+
+  const handleSubmit = async (e: React.FormEvent, formType: "audit" | "plan") => {
+    e.preventDefault();
+    if (!formData.name || !formData.contact) {
+      toast.error("Будь ласка, заповніть всі обов'язкові поля");
+      return;
+    }
+
+    setIsSubmitting(true);
+    submitLeadMutation.mutate({
+      name: formData.name,
+      phone: formData.contact,
+      email: "",
+      telegram: "",
+      source: formType === "audit" ? "Google Ads - Безкоштовний аудит" : "Google Ads - План запуску",
+      notes: formData.website ? `Сайт/ніша: ${formData.website}` : ""
+    });
+  };
+
   return (
-    <ServicePage
-      heroImage="/google-ads-hero.png"
-      title="Google Ads"
-      subtitle="Контекстна реклама"
-      description="Залучайте цільових клієнтів з Google пошуку та партнерської мережі. Платите тільки за результат."
-      pageVisibility="google-ads"
-      problems={[
-        {
-          icon: <TrendingDown className="w-6 h-6" />,
-          title: "Високі витрати без результату",
-          description: "Бюджет витрачається, але замовлень немає. Реклама не окупається."
-        },
-        {
-          icon: <DollarSign className="w-6 h-6" />,
-          title: "Дорогий клік",
-          description: "Ціна за клік занадто висока через неправильні налаштування та конкуренцію."
-        },
-        {
-          icon: <Target className="w-6 h-6" />,
-          title: "Нецільовий трафік",
-          description: "На сайт приходять не ті користувачі, які не готові купувати."
-        }
-      ]}
-      solution={{
-        title: "Наша система запуску Google Ads",
-        subtitle: "4 кроки до прибуткової реклами",
-        steps: [
-          {
-            number: "1",
-            title: "Аналіз",
-            description: "Вивчаємо ваш бізнес, конкурентів та цільову аудиторію"
-          },
-          {
-            number: "2",
-            title: "Стратегія",
-            description: "Розробляємо рекламну стратегію та підбираємо ключові слова"
-          },
-          {
-            number: "3",
-            title: "Запуск",
-            description: "Створюємо кампанії, оголошення та налаштовуємо таргетинг"
-          },
-          {
-            number: "4",
-            title: "Оптимізація",
-            description: "Постійно покращуємо результати та знижуємо вартість ліда"
-          }
-        ]
-      }}
-      benefits={[
-        {
-          icon: <Users className="w-6 h-6" />,
-          title: "Цільова аудиторія",
-          description: "Показуємо рекламу тільки тим, хто шукає ваш продукт прямо зараз"
-        },
-        {
-          icon: <Zap className="w-6 h-6" />,
-          title: "Швидкий результат",
-          description: "Перші заявки вже через 24 години після запуску кампанії"
-        },
-        {
-          icon: <Award className="w-6 h-6" />,
-          title: "Сертифіковані спеціалісти",
-          description: "Команда з офіційними сертифікатами Google Ads"
-        },
-        {
-          icon: <BarChart3 className="w-6 h-6" />,
-          title: "Прозора аналітика",
-          description: "Детальні звіти про витрати, кліки, конверсії та ROI"
-        },
-        {
-          icon: <Clock className="w-6 h-6" />,
-          title: "Економія часу",
-          description: "Ми беремо на себе всю роботу з налаштування та оптимізації"
-        },
-        {
-          icon: <Shield className="w-6 h-6" />,
-          title: "Захист бюджету",
-          description: "Контроль витрат та захист від кліків конкурентів"
-        }
-      ]}
-      process={[
-        {
-          step: "1",
-          title: "Брифінг",
-          description: "Обговорюємо ваші цілі, бюджет та очікування від реклами"
-        },
-        {
-          step: "2",
-          title: "Аудит",
-          description: "Аналізуємо сайт, конкурентів та семантичне ядро"
-        },
-        {
-          step: "3",
-          title: "Запуск",
-          description: "Створюємо та запускаємо рекламні кампанії"
-        },
-        {
-          step: "4",
-          title: "Супровід",
-          description: "Оптимізуємо кампанії та надаємо щотижневі звіти"
-        }
-      ]}
-      faq={[
-        {
-          question: "Який мінімальний бюджет для Google Ads?",
-          answer: "Рекомендуємо стартувати від $500/міс для тестування. Оптимальний бюджет залежить від ніші та конкуренції."
-        },
-        {
-          question: "Коли будуть перші результати?",
-          answer: "Перші кліки та заявки з'являються вже через 24-48 годин після запуску. Стабільні результати - через 2-4 тижні оптимізації."
-        },
-        {
-          question: "Чи гарантуєте ви результат?",
-          answer: "Ми гарантуємо професійне налаштування та оптимізацію. Кінцевий результат залежить від якості продукту, сайту та конкурентності ніші."
-        },
-        {
-          question: "Що входить у вартість послуги?",
-          answer: "Повний цикл: аналіз, стратегія, створення кампаній, налаштування, оптимізація, A/B тести, щотижневі звіти та консультації."
-        },
-        {
-          question: "Чи потрібен доступ до мого акаунту?",
-          answer: "Ми можемо працювати з вашим існуючим акаунтом або створити новий. Ви завжди маєте повний контроль та доступ."
-        }
-      ]}
-      cta={{
-        title: "Готові залучати клієнтів з Google?",
-        description: "Отримайте безкоштовний аудит вашої реклами та персональну стратегію запуску"
-      }}
-    />
+    <>
+      <CyberpunkNavigation currentPath="/services/google-ads" />
+      
+      <div className="min-h-screen bg-black text-white">
+        {/* БЛОК 1. HERO */}
+        <section className="relative min-h-screen flex items-center overflow-hidden pt-20">
+          <div 
+            className="absolute inset-0 opacity-20"
+            style={{
+              backgroundImage: `
+                linear-gradient(rgba(255, 217, 61, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 217, 61, 0.1) 1px, transparent 1px)
+              `,
+              backgroundSize: "50px 50px"
+            }}
+          />
+
+          <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div className="space-y-8">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight">
+                  <span className="text-white">Заявки за зрозумілою ціною — </span>
+                  <span className="text-[#FFD93D]">без хаосу і зливу бюджету</span>
+                </h1>
+                
+                <p className="text-xl text-zinc-300 leading-relaxed">
+                  Ми беремо на себе всю рекламу в Google, щоб ви стабільно отримували заявки і могли масштабуватися.
+                </p>
+
+                <p className="text-lg text-zinc-400">
+                  Запуск, ведення та оптимізація реклами — під ключ, без вашої участі в процесі.
+                </p>
+
+                <div className="flex flex-wrap gap-4">
+                  <Button 
+                    size="lg" 
+                    className="bg-[#00F0FF] text-black hover:bg-[#00F0FF]/90 font-bold"
+                    onClick={() => document.getElementById('audit-form')?.scrollIntoView({ behavior: 'smooth' })}
+                  >
+                    Отримати безкоштовний аудит <ArrowRight className="ml-2 w-5 h-5" />
+                  </Button>
+                  <Button 
+                    size="lg" 
+                    variant="outline" 
+                    className="border-[#FFD93D] text-[#FFD93D] hover:bg-[#FFD93D]/10"
+                    onClick={() => document.getElementById('final-form')?.scrollIntoView({ behavior: 'smooth' })}
+                  >
+                    Залишити заявку
+                  </Button>
+                </div>
+
+                <p className="text-sm text-zinc-500">
+                  Без зобов'язань. Скажемо чесно, чи має сенс запуск у вашій ніші.
+                </p>
+              </div>
+
+              <div className="relative flex items-center justify-center">
+                <div className="absolute inset-0 bg-gradient-to-tr from-[#FFD93D]/20 to-[#00F0FF]/20 blur-3xl" />
+                <div className="relative z-10 w-full aspect-square max-w-md mx-auto">
+                  <img src="/google-ads-hero.png" alt="Google Ads" className="w-full h-full object-contain drop-shadow-2xl" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* БЛОК 2. ВАМ ЦЕ ЗНАЙОМО? */}
+        <section className="py-20 bg-zinc-900/50">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-12">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-black text-white mb-6">Вам це знайомо?</h2>
+              <p className="text-xl text-zinc-400 max-w-3xl mx-auto">
+                Реклама в Google ніби працює, але не як стабільний бізнес-інструмент.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto mb-12">
+              <Card className="bg-zinc-800/50 border-zinc-700 hover:border-red-500/50 transition-all">
+                <CardContent className="p-6 space-y-4">
+                  <div className="w-12 h-12 bg-red-500/10 rounded-lg flex items-center justify-center text-red-400">
+                    <AlertCircle className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-xl font-bold text-white">заявки з'являються нерівномірно</h3>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-zinc-800/50 border-zinc-700 hover:border-red-500/50 transition-all">
+                <CardContent className="p-6 space-y-4">
+                  <div className="w-12 h-12 bg-red-500/10 rounded-lg flex items-center justify-center text-red-400">
+                    <AlertCircle className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-xl font-bold text-white">бюджет витрачається, але складно зрозуміти, що саме дає результат</h3>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-zinc-800/50 border-zinc-700 hover:border-red-500/50 transition-all">
+                <CardContent className="p-6 space-y-4">
+                  <div className="w-12 h-12 bg-red-500/10 rounded-lg flex items-center justify-center text-red-400">
+                    <AlertCircle className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-xl font-bold text-white">кожна зміна в рекламі виглядає як новий експеримент</h3>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-zinc-800/50 border-zinc-700 hover:border-red-500/50 transition-all">
+                <CardContent className="p-6 space-y-4">
+                  <div className="w-12 h-12 bg-red-500/10 rounded-lg flex items-center justify-center text-red-400">
+                    <AlertCircle className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-xl font-bold text-white">важко планувати зростання, бо немає передбачуваності</h3>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div className="text-center space-y-4">
+              <p className="text-xl text-zinc-300">
+                У результаті реклама починає забирати увагу, замість того щоб приносити заявки і спокій.
+              </p>
+              <p className="text-2xl font-bold text-[#FFD93D]">
+                Це не проблема реклами. Це відсутність системи.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* БЛОК 3. РІШЕННЯ — СИСТЕМА 1–2–3–4 */}
+        <section className="py-20 bg-black">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-12">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-black text-white mb-6">
+                Як ми будуємо систему, яка приносить заявки
+              </h2>
+              <p className="text-xl text-zinc-400 max-w-3xl mx-auto">
+                Ми забираємо всі незрозумілі рекламні задачі на себе і вибудовуємо послідовний процес, який працює в довгу.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+              <Card className="bg-gradient-to-br from-zinc-800/80 to-zinc-900/80 border-[#FFD93D]/30 hover:border-[#FFD93D] transition-all">
+                <CardContent className="p-6 space-y-4">
+                  <div className="w-16 h-16 bg-[#FFD93D]/20 rounded-full flex items-center justify-center">
+                    <span className="text-3xl font-black text-[#FFD93D]">1</span>
+                  </div>
+                  <h3 className="text-2xl font-bold text-white">Аналіз і основа</h3>
+                  <p className="text-zinc-400">
+                    Починаємо з розуміння бізнесу: що продаємо, кому і за якою логікою люди залишають заявки.
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-gradient-to-br from-zinc-800/80 to-zinc-900/80 border-[#00F0FF]/30 hover:border-[#00F0FF] transition-all">
+                <CardContent className="p-6 space-y-4">
+                  <div className="w-16 h-16 bg-[#00F0FF]/20 rounded-full flex items-center justify-center">
+                    <span className="text-3xl font-black text-[#00F0FF]">2</span>
+                  </div>
+                  <h3 className="text-2xl font-bold text-white">Структура реклами</h3>
+                  <p className="text-zinc-400">
+                    Будуємо логічну структуру кампаній, де кожен елемент виконує конкретну задачу.
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-gradient-to-br from-zinc-800/80 to-zinc-900/80 border-purple-500/30 hover:border-purple-500 transition-all">
+                <CardContent className="p-6 space-y-4">
+                  <div className="w-16 h-16 bg-purple-500/20 rounded-full flex items-center justify-center">
+                    <span className="text-3xl font-black text-purple-400">3</span>
+                  </div>
+                  <h3 className="text-2xl font-bold text-white">Оптимізація під результат</h3>
+                  <p className="text-zinc-400">
+                    Регулярно працюємо з витратами і якістю заявок, прибираючи все зайве і підсилюючи те, що працює.
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-gradient-to-br from-zinc-800/80 to-zinc-900/80 border-green-500/30 hover:border-green-500 transition-all">
+                <CardContent className="p-6 space-y-4">
+                  <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center">
+                    <span className="text-3xl font-black text-green-400">4</span>
+                  </div>
+                  <h3 className="text-2xl font-bold text-white">Масштабування</h3>
+                  <p className="text-zinc-400">
+                    Коли система стабільна — бюджет можна збільшувати без різких просідань.
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div className="text-center">
+              <p className="text-2xl font-bold text-[#00F0FF]">
+                Результат: стабільні заявки, зрозумілий процес і мінімальна участь з вашого боку.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* БЛОК 4. ЛІДГЕН З ОБМЕЖЕННЯМ */}
+        <section id="audit-form" className="py-20 bg-gradient-to-br from-zinc-900 to-black">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-12">
+            <div className="max-w-4xl mx-auto">
+              <div className="text-center mb-12">
+                <h2 className="text-4xl md:text-5xl font-black text-white mb-6">
+                  Безкоштовний аудит реклами в Google
+                </h2>
+                <p className="text-xl text-zinc-300 mb-4">
+                  Ми подивимось вашу ситуацію і дамо чітке розуміння:
+                </p>
+              </div>
+
+              <div className="grid md:grid-cols-3 gap-6 mb-12">
+                <Card className="bg-zinc-800/50 border-[#FFD93D]/30">
+                  <CardContent className="p-6 text-center">
+                    <CheckCircle2 className="w-8 h-8 text-[#FFD93D] mx-auto mb-4" />
+                    <p className="text-white">чи можна зробити заявки стабільними</p>
+                  </CardContent>
+                </Card>
+
+                <Card className="bg-zinc-800/50 border-[#00F0FF]/30">
+                  <CardContent className="p-6 text-center">
+                    <CheckCircle2 className="w-8 h-8 text-[#00F0FF] mx-auto mb-4" />
+                    <p className="text-white">де саме втрачається ефективність</p>
+                  </CardContent>
+                </Card>
+
+                <Card className="bg-zinc-800/50 border-purple-500/30">
+                  <CardContent className="p-6 text-center">
+                    <CheckCircle2 className="w-8 h-8 text-purple-400 mx-auto mb-4" />
+                    <p className="text-white">який формат роботи підійде саме вам</p>
+                  </CardContent>
+                </Card>
+              </div>
+
+              <Card className="bg-zinc-800/80 border-[#FFD93D]/50">
+                <CardContent className="p-8">
+                  <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4 mb-8">
+                    <p className="text-red-400 font-bold text-center">
+                      ❗ Обмеження: Ми беремо обмежену кількість аудитів на тиждень, щоб опрацьовувати кожен проєкт якісно.
+                    </p>
+                  </div>
+
+                  <form onSubmit={(e) => handleSubmit(e, "audit")} className="space-y-6">
+                    <div>
+                      <label className="block text-white font-semibold mb-2">Ім'я *</label>
+                      <Input
+                        type="text"
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        placeholder="Ваше ім'я"
+                        className="bg-zinc-900 border-zinc-700 text-white"
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-white font-semibold mb-2">Телефон / месенджер *</label>
+                      <Input
+                        type="text"
+                        value={formData.contact}
+                        onChange={(e) => setFormData({ ...formData, contact: e.target.value })}
+                        placeholder="+380..."
+                        className="bg-zinc-900 border-zinc-700 text-white"
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-white font-semibold mb-2">Сайт або ніша</label>
+                      <Input
+                        type="text"
+                        value={formData.website}
+                        onChange={(e) => setFormData({ ...formData, website: e.target.value })}
+                        placeholder="example.com або опишіть вашу нішу"
+                        className="bg-zinc-900 border-zinc-700 text-white"
+                      />
+                    </div>
+
+                    <Button 
+                      type="submit" 
+                      size="lg" 
+                      className="w-full bg-[#00F0FF] text-black hover:bg-[#00F0FF]/90 font-bold text-lg"
+                      disabled={isSubmitting}
+                    >
+                      {isSubmitting ? "Відправка..." : "Отримати безкоштовний аудит"}
+                    </Button>
+                  </form>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
+
+        {/* БЛОК 5. ЯК МИ ПРАЦЮЄМО */}
+        <section className="py-20 bg-black">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-12">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-black text-white mb-6">
+                Як виглядає робота з нами
+              </h2>
+              <p className="text-xl text-zinc-400 max-w-3xl mx-auto">
+                Ми беремо рекламу в Google під ключ і відповідаємо за результат у своїй зоні відповідальності.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+              <Card className="bg-zinc-800/50 border-zinc-700 hover:border-[#FFD93D]/50 transition-all">
+                <CardContent className="p-6 text-center space-y-4">
+                  <CheckCircle2 className="w-12 h-12 text-[#FFD93D] mx-auto" />
+                  <p className="text-white font-semibold">усі налаштування і ведення — на нашій стороні</p>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-zinc-800/50 border-zinc-700 hover:border-[#00F0FF]/50 transition-all">
+                <CardContent className="p-6 text-center space-y-4">
+                  <CheckCircle2 className="w-12 h-12 text-[#00F0FF] mx-auto" />
+                  <p className="text-white font-semibold">регулярна робота з ефективністю витрат</p>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-zinc-800/50 border-zinc-700 hover:border-purple-500/50 transition-all">
+                <CardContent className="p-6 text-center space-y-4">
+                  <CheckCircle2 className="w-12 h-12 text-purple-400 mx-auto" />
+                  <p className="text-white font-semibold">фокус на заявках, а не процесі</p>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-zinc-800/50 border-zinc-700 hover:border-green-500/50 transition-all">
+                <CardContent className="p-6 text-center space-y-4">
+                  <CheckCircle2 className="w-12 h-12 text-green-400 mx-auto" />
+                  <p className="text-white font-semibold">зрозумілий результат у цифрах</p>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div className="text-center">
+              <p className="text-2xl font-bold text-[#FFD93D]">
+                Ви не занурюєтесь у деталі — ви просто бачите, як реклама працює для бізнесу.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* БЛОК 6. КЕЙСИ / РЕЗУЛЬТАТИ */}
+        <section className="py-20 bg-zinc-900/50">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-12">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-black text-white mb-6">
+                До яких результатів ми приходимо з клієнтами
+              </h2>
+              <p className="text-xl text-zinc-400 max-w-3xl mx-auto mb-8">
+                Ми не обіцяємо однакові цифри для всіх. Ми будуємо систему, яка дає стабільність і можливість росту.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+              <Card className="bg-zinc-800/50 border-zinc-700">
+                <CardContent className="p-6 text-center space-y-4">
+                  <div className="text-4xl font-black text-[#FFD93D]">📈</div>
+                  <p className="text-white font-semibold">вирівнювання потоку заявок</p>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-zinc-800/50 border-zinc-700">
+                <CardContent className="p-6 text-center space-y-4">
+                  <div className="text-4xl font-black text-[#00F0FF]">💰</div>
+                  <p className="text-white font-semibold">зменшення хаотичних витрат</p>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-zinc-800/50 border-zinc-700">
+                <CardContent className="p-6 text-center space-y-4">
+                  <div className="text-4xl font-black text-purple-400">🎯</div>
+                  <p className="text-white font-semibold">розуміння, що саме масштабувати</p>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-zinc-800/50 border-zinc-700">
+                <CardContent className="p-6 text-center space-y-4">
+                  <div className="text-4xl font-black text-green-400">✅</div>
+                  <p className="text-white font-semibold">передбачуваність у рекламі</p>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div className="text-center">
+              <p className="text-xl text-zinc-300">
+                Кожен проєкт починається з оцінки потенціалу і чесного розуміння можливого результату.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* БЛОК 7. FAQ */}
+        <section className="py-20 bg-black">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-12">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-black text-white mb-6">
+                Питання та відповіді
+              </h2>
+            </div>
+
+            <div className="max-w-4xl mx-auto space-y-6">
+              <Card className="bg-zinc-800/50 border-zinc-700">
+                <CardContent className="p-8">
+                  <h3 className="text-2xl font-bold text-[#FFD93D] mb-4">
+                    Коли з'являються перші заявки?
+                  </h3>
+                  <p className="text-zinc-300 text-lg">
+                    Після запуску реклама починає працювати одразу. Далі ми доводимо її до стабільності.
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-zinc-800/50 border-zinc-700">
+                <CardContent className="p-8">
+                  <h3 className="text-2xl font-bold text-[#00F0FF] mb-4">
+                    Чи потрібно мені бути залученим у процес?
+                  </h3>
+                  <p className="text-zinc-300 text-lg">
+                    Ні. Ми беремо рекламні задачі на себе, вам достатньо обробляти заявки.
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-zinc-800/50 border-zinc-700">
+                <CardContent className="p-8">
+                  <h3 className="text-2xl font-bold text-purple-400 mb-4">
+                    Чи працюєте ви з будь-якою нішею?
+                  </h3>
+                  <p className="text-zinc-300 text-lg">
+                    Перед стартом ми оцінюємо нішу і чесно кажемо, чи є сенс запуску.
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-zinc-800/50 border-zinc-700">
+                <CardContent className="p-8">
+                  <h3 className="text-2xl font-bold text-green-400 mb-4">
+                    Чи можна масштабувати рекламу?
+                  </h3>
+                  <p className="text-zinc-300 text-lg">
+                    Так. Саме для цього ми і будуємо систему, а не разові кампанії.
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
+
+        {/* БЛОК 8. ФІНАЛЬНИЙ ЛІДГЕН */}
+        <section id="final-form" className="py-20 bg-gradient-to-br from-zinc-900 via-black to-zinc-900">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-12">
+            <div className="max-w-4xl mx-auto">
+              <div className="text-center mb-12">
+                <h2 className="text-4xl md:text-5xl font-black text-white mb-6">
+                  Готові отримувати заявки без хаосу в рекламі?
+                </h2>
+                <p className="text-xl text-zinc-300">
+                  Залиште заявку — ми подивимось ваш бізнес і запропонуємо зрозумілий план дій.
+                </p>
+              </div>
+
+              <Card className="bg-zinc-800/80 border-[#00F0FF]/50 shadow-2xl">
+                <CardContent className="p-8">
+                  <form onSubmit={(e) => handleSubmit(e, "plan")} className="space-y-6">
+                    <div>
+                      <label className="block text-white font-semibold mb-2">Ім'я *</label>
+                      <Input
+                        type="text"
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        placeholder="Ваше ім'я"
+                        className="bg-zinc-900 border-zinc-700 text-white text-lg p-6"
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-white font-semibold mb-2">Телефон / месенджер *</label>
+                      <Input
+                        type="text"
+                        value={formData.contact}
+                        onChange={(e) => setFormData({ ...formData, contact: e.target.value })}
+                        placeholder="+380..."
+                        className="bg-zinc-900 border-zinc-700 text-white text-lg p-6"
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-white font-semibold mb-2">Сайт або ніша *</label>
+                      <Textarea
+                        value={formData.website}
+                        onChange={(e) => setFormData({ ...formData, website: e.target.value })}
+                        placeholder="Розкажіть про ваш бізнес..."
+                        className="bg-zinc-900 border-zinc-700 text-white text-lg min-h-[120px]"
+                        required
+                      />
+                    </div>
+
+                    <Button 
+                      type="submit" 
+                      size="lg" 
+                      className="w-full bg-[#00F0FF] text-black hover:bg-[#00F0FF]/90 font-bold text-xl py-8"
+                      disabled={isSubmitting}
+                    >
+                      {isSubmitting ? "Відправка..." : "🟢 Отримати план запуску"}
+                    </Button>
+                  </form>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <Footer />
+    </>
   );
 }

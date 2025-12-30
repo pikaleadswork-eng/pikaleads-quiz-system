@@ -35,3 +35,18 @@
 - [ ] Implement App Development page with full content
 - [ ] Test all pages responsiveness (mobile, tablet, desktop)
 - [ ] Create final checkpoint with all 7 pages
+
+## URGENT: Fix All Service Buttons on Homepage
+- [ ] Change Google Ads "Дізнатись більше" to navigate to /services/google-ads
+- [ ] Change TikTok Ads "Дізнатись більше" to navigate to /services/tiktok-ads
+- [ ] Change X (Twitter) Ads "Дізнатись більше" to navigate to /services/x-ads
+- [ ] Change Telegram Ads "Дізнатись більше" to navigate to /services/telegram-ads
+- [ ] Change Web Development "Дізнатись більше" to navigate to /services/web-development
+- [ ] Change Web Design "Дізнатись більше" to navigate to /services/web-design
+- [ ] Change App Development "Дізнатись більше" to navigate to /services/app-development
+
+## CRITICAL FIXES (2025-12-31)
+
+- [x] Fix image cropping and alignment on all service pages (images not properly cropped)
+- [x] Rebuild Google Ads service page with complete content from requirements (missing all text blocks, hero, problems, solution system, FAQ, etc.)
+- [x] Make lead generation form look impressive and professional (not just basic form)

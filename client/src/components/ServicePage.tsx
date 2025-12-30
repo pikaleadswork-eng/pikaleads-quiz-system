@@ -68,9 +68,11 @@ export function ServicePage(props: ServicePageProps) {
                 </Button>
               </div>
             </div>
-            <div className="relative">
+            <div className="relative flex items-center justify-center">
               <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/20 to-cyan-500/20 blur-3xl" />
-              <img src={props.heroImage} alt={props.title} className="relative z-10 w-full h-auto drop-shadow-2xl" />
+              <div className="relative z-10 w-full aspect-square max-w-md mx-auto">
+                <img src={props.heroImage} alt={props.title} className="w-full h-full object-contain drop-shadow-2xl" />
+              </div>
             </div>
           </div>
         </div>

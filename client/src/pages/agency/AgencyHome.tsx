@@ -4,8 +4,7 @@ import { useState } from "react";
 import { useLocation } from "wouter";
 import CyberpunkNavigation from "@/components/CyberpunkNavigation";
 import LeadFormModal from "@/components/LeadFormModal";
-import ServiceDetailModal, { ServiceDetail } from "@/components/ServiceDetailModal";
-import { servicesData } from "@/data/servicesData";
+
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { toast } from "sonner";
 import GoogleReviews from "@/components/GoogleReviews";
@@ -25,8 +24,7 @@ export default function AgencyHome() {
   const [, setLocation] = useLocation();
   const [consultationModalOpen, setConsultationModalOpen] = useState(false);
   const [strategyModalOpen, setStrategyModalOpen] = useState(false);
-  const [selectedService, setSelectedService] = useState<ServiceDetail | null>(null);
-  const [serviceModalOpen, setServiceModalOpen] = useState(false);
+
   const [leadFormData, setLeadFormData] = useState({
     name: "",
     phone: "",
@@ -35,18 +33,7 @@ export default function AgencyHome() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleServiceClick = (serviceId: string) => {
-    const service = servicesData.find(s => s.id === serviceId);
-    if (service) {
-      setSelectedService(service);
-      setServiceModalOpen(true);
-    }
-  };
 
-  const handleServiceConsultation = () => {
-    setServiceModalOpen(false);
-    setConsultationModalOpen(true);
-  };
 
   return (
     <>
@@ -407,7 +394,7 @@ export default function AgencyHome() {
                   Контекстна реклама в пошуку, YouTube та партнерських сайтах. Максимальна точність.
                 </p>
                 <button
-                  onClick={() => handleServiceClick('google-ads')}
+                  onClick={() => setLocation('/services/google-ads')}
                   className="w-full mt-auto px-4 py-2.5 bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 hover:border-red-500/50 text-red-400 font-bold rounded-lg transition-all duration-300 text-sm"
                 >
                   Дізнатись більше →
@@ -431,7 +418,7 @@ export default function AgencyHome() {
                   Вірусна реклама для молодої аудиторії. Максимальне охоплення за мінімальну ціну.
                 </p>
                 <button
-                  onClick={() => handleServiceClick('tiktok-ads')}
+                  onClick={() => setLocation('/services/tiktok-ads')}
                   className="w-full mt-auto px-4 py-2.5 bg-pink-500/10 hover:bg-pink-500/20 border border-pink-500/30 hover:border-pink-500/50 text-pink-400 font-bold rounded-lg transition-all duration-300 text-sm"
                 >
                   Дізнатись більше →
@@ -455,7 +442,7 @@ export default function AgencyHome() {
                   Реклама в X (колишній Twitter). Ідеально для B2B, новин та tech-аудиторії.
                 </p>
                 <button
-                  onClick={() => handleServiceClick('x-ads')}
+                  onClick={() => setLocation('/services/x-ads')}
                   className="w-full mt-auto px-4 py-2.5 bg-gray-500/10 hover:bg-gray-500/20 border border-gray-500/30 hover:border-gray-500/50 text-gray-400 font-bold rounded-lg transition-all duration-300 text-sm"
                 >
                   Дізнатись більше →
@@ -479,7 +466,7 @@ export default function AgencyHome() {
                   Найефективніший канал для українського ринку. Охоплення мільйонів активних користувачів.
                 </p>
                 <button
-                  onClick={() => handleServiceClick('telegram-ads')}
+                  onClick={() => setLocation('/services/telegram-ads')}
                   className="w-full mt-auto px-4 py-2.5 bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 hover:border-cyan-500/50 text-cyan-400 font-bold rounded-lg transition-all duration-300 text-sm"
                 >
                   Дізнатись більше →
@@ -503,7 +490,7 @@ export default function AgencyHome() {
                   Лендінги, корпоративні сайти, інтернет-магазини. Швидко, красиво, конверсійно.
                 </p>
                 <button
-                  onClick={() => handleServiceClick('web-development')}
+                  onClick={() => setLocation('/services/web-development')}
                   className="w-full mt-auto px-4 py-2.5 bg-[#FFD93D]/10 hover:bg-[#FFD93D]/20 border border-[#FFD93D]/30 hover:border-[#FFD93D]/50 text-[#FFD93D] font-bold rounded-lg transition-all duration-300 text-sm"
                 >
                   Дізнатись більше →
@@ -527,7 +514,7 @@ export default function AgencyHome() {
                   Мобільні додатки (iOS/Android) та веб-програми. Від ідеї до App Store.
                 </p>
                 <button
-                  onClick={() => handleServiceClick('app-development')}
+                  onClick={() => setLocation('/services/app-development')}
                   className="w-full mt-auto px-4 py-2.5 bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/30 hover:border-purple-500/50 text-purple-400 font-bold rounded-lg transition-all duration-300 text-sm"
                 >
                   Дізнатись більше →
@@ -551,7 +538,7 @@ export default function AgencyHome() {
                   UI/UX дизайн, брендинг, логотипи, банери. Створюємо візуал, що продає.
                 </p>
                 <button
-                  onClick={() => handleServiceClick('design')}
+                  onClick={() => setLocation('/services/design')}
                   className="w-full mt-auto px-4 py-2.5 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 hover:border-emerald-500/50 text-emerald-400 font-bold rounded-lg transition-all duration-300 text-sm"
                 >
                   Дізнатись більше →
@@ -780,13 +767,7 @@ export default function AgencyHome() {
         formType="strategy"
       />
 
-      {/* Service Detail Modal */}
-      <ServiceDetailModal
-        isOpen={serviceModalOpen}
-        onClose={() => setServiceModalOpen(false)}
-        service={selectedService}
-        onConsultation={handleServiceConsultation}
-      />
+
     </>
   );
 }
