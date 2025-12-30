@@ -1,5 +1,16 @@
 # PIKALEADS CRM System TODO
 
+## Phase 184: Add Real Case Studies & Individual Pages (2025-12-30)
+- [x] Add 5 real case studies via SQL with rich content
+- [x] Create individual case study page component (/case-studies/[slug])
+- [x] Update CaseStudyPage to display all results fields dynamically
+- [x] Display full case study content with images, metrics, results
+- [x] Add breadcrumbs and navigation
+- [ ] Verify responsive design on mobile (375px, 414px)
+- [ ] Verify responsive design on tablet (768px, 1024px)
+- [ ] Test "Читати повний кейс" button links
+- [ ] Test all case studies display correctly on Home and Meta Ads pages
+
 ## Phase 178: URGENT - Logo Fixes, Testimonials, Case Studies & Mobile CTA (2025-12-30)
 
 **CRITICAL ISSUES:**
@@ -410,3 +421,14 @@
 - [x] Display case studies on Meta Ads page in proper article format
 - [ ] Test all case studies CRUD operations
 - [ ] Verify case studies display correctly on all pages
+
+## Phase 184: Add Real Case Studies & Individual Pages (2025-12-30)
+- [ ] Add 3-5 real case studies via admin panel with rich content
+- [ ] Create individual case study page component (/case-studies/[slug])
+- [ ] Add route for individual case study pages
+- [ ] Display full case study content with images, metrics, results
+- [ ] Add breadcrumbs and navigation
+- [ ] Verify responsive design on mobile (375px, 414px)
+- [ ] Verify responsive design on tablet (768px, 1024px)
+- [ ] Test "Читати повний кейс" button links
+- [ ] Test all case studies display correctly on Home and Meta Ads pages

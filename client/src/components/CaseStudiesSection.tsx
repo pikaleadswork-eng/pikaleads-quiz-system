@@ -13,21 +13,10 @@ interface CaseStudiesSectionProps {
 
 export default function CaseStudiesSection({ pageSlug, limit = 4 }: CaseStudiesSectionProps = {}) {
   const { language } = useLanguage();
-  const { data: allCases, isLoading } = trpc.caseStudies.getAll.useQuery({});
-
-  // Filter by page visibility if pageSlug is provided
-  const caseStudies = allCases?.filter((caseStudy) => {
-    if (!caseStudy.isPublished) return false;
-    if (!pageSlug) return true; // Show all if no page filter
-    if (!caseStudy.pageVisibility) return false;
-
-    try {
-      const pages = JSON.parse(caseStudy.pageVisibility);
-      return Array.isArray(pages) && pages.includes(pageSlug);
-    } catch {
-      return false;
-    }
-  }).sort((a, b) => a.orderIndex - b.orderIndex).slice(0, limit);
+  // Use pageSlug-specific query if provided, otherwise get all published
+  const { data: caseStudies, isLoading } = pageSlug
+    ? trpc.caseStudies.getByPage.useQuery({ pageSlug })
+    : trpc.caseStudies.getPublished.useQuery({ limit, offset: 0 });
 
   const content = {
     uk: {

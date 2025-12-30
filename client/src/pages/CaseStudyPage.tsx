@@ -78,7 +78,7 @@ export default function CaseStudyPage() {
     );
   }
 
-  let results = { roi: "", leads: "", roas: "", cpl: "" };
+  let results: Record<string, string> = {};
   let tags: string[] = [];
 
   try {
@@ -182,47 +182,25 @@ export default function CaseStudyPage() {
           </div>
 
           {/* Results Section */}
-          <div className="bg-gradient-to-br from-yellow-400/10 to-yellow-600/10 border border-yellow-400/20 rounded-2xl p-8 mb-12">
-            <h2 className="text-2xl font-bold text-yellow-400 mb-6">
-              {t.results}
-            </h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {results.roi && (
-                <div className="text-center">
-                  <div className="text-4xl font-bold text-white mb-2">
-                    {results.roi}
+          {Object.keys(results).length > 0 && (
+            <div className="bg-gradient-to-br from-yellow-400/10 to-yellow-600/10 border border-yellow-400/20 rounded-2xl p-8 mb-12">
+              <h2 className="text-2xl font-bold text-yellow-400 mb-6">
+                {t.results}
+              </h2>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                {Object.entries(results).map(([key, value]) => (
+                  <div key={key} className="text-center">
+                    <div className="text-3xl md:text-4xl font-bold text-white mb-2">
+                      {value}
+                    </div>
+                    <div className="text-xs text-zinc-400 uppercase tracking-wider">
+                      {key.replace(/_/g, ' ')}
+                    </div>
                   </div>
-                  <div className="text-sm text-zinc-400 uppercase">{t.roi}</div>
-                </div>
-              )}
-              {results.leads && (
-                <div className="text-center">
-                  <div className="text-4xl font-bold text-white mb-2">
-                    {results.leads}
-                  </div>
-                  <div className="text-sm text-zinc-400 uppercase">
-                    {t.leads}
-                  </div>
-                </div>
-              )}
-              {results.roas && (
-                <div className="text-center">
-                  <div className="text-4xl font-bold text-white mb-2">
-                    {results.roas}
-                  </div>
-                  <div className="text-sm text-zinc-400 uppercase">{t.roas}</div>
-                </div>
-              )}
-              {results.cpl && (
-                <div className="text-center">
-                  <div className="text-4xl font-bold text-white mb-2">
-                    {results.cpl}
-                  </div>
-                  <div className="text-sm text-zinc-400 uppercase">{t.cpl}</div>
-                </div>
-              )}
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Case Study Content */}
           <div
