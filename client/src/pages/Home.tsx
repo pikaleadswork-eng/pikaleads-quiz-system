@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { ArrowRight, Zap } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -98,26 +97,19 @@ export default function Home() {
         title={{
           uk: "PIKALEADS - Професійна реклама Meta Ads та Google Ads | Збільште продажі на 300%",
           ru: "PIKALEADS - Профессиональная реклама Meta Ads и Google Ads | Увеличьте продажи на 300%",
-          en: "PIKALEADS - Professional Meta Ads & Google Ads Marketing | Increase Sales by 300%",
+          en: "PIKALEADS - Professional Meta Ads and Google Ads | Increase Sales by 300%"
         }}
         description={{
-          uk: "Запускаємо ефективну рекламу в Meta (Facebook, Instagram) та Google з фокусом на реальний результат. Безкоштовний маркетинговий аналіз для вашого бізнесу.",
-          ru: "Запускаем эффективную рекламу в Meta (Facebook, Instagram) и Google с фокусом на реальный результат. Бесплатный маркетинговый анализ для вашего бизнеса.",
-          en: "Launch effective Meta (Facebook, Instagram) and Google advertising focused on real results. Free marketing analysis for your business.",
+          uk: "Експертна настройка та ведення реклами в Meta Ads (Facebook, Instagram) та Google Ads. Гарантуємо зростання продажів на 300%. Безкоштовна консультація!",
+          ru: "Экспертная настройка и ведение рекламы в Meta Ads (Facebook, Instagram) и Google Ads. Гарантируем рост продаж на 300%. Бесплатная консультация!",
+          en: "Expert setup and management of Meta Ads (Facebook, Instagram) and Google Ads. We guarantee 300% sales growth. Free consultation!"
         }}
-        keywords={{
-          uk: "meta ads україна, google ads, таргетована реклама, pikaleads, медіа баїнг",
-          ru: "meta ads украина, google ads, таргетированная реклама, pikaleads, медиа байинг",
-          en: "meta ads ukraine, google ads, targeted advertising, pikaleads, media buying",
-        }}
-        canonical="/quiz-service"
+        keywords={{uk: "Meta Ads, Facebook Ads, Instagram Ads, Google Ads, таргетована реклама, контекстна реклама, performance marketing, digital marketing, квіз маркетинг", ru: "Meta Ads, Facebook Ads, Instagram Ads, Google Ads, таргетированная реклама, контекстная реклама, performance marketing, digital marketing, квиз маркетинг", en: "Meta Ads, Facebook Ads, Instagram Ads, Google Ads, targeted advertising, contextual advertising, performance marketing, digital marketing, quiz marketing"}}
+        ogImage="/og-image-home.jpg"
         structuredData={structuredData}
       />
-      
-      {/* Navigation */}
-      <CyberpunkNavigation currentPath="/quiz-service" />
-      
-      {/* Main Container with Cyberpunk Background */}
+      <CyberpunkNavigation currentPath="/" />
+
       <div className="min-h-screen bg-black relative overflow-hidden">
         {/* Animated Cyber Grid Background */}
         <div className="absolute inset-0 cyber-grid opacity-20" />
@@ -148,8 +140,85 @@ export default function Home() {
           {/* Hero Section - 50/50 Layout */}
           <section className="container mx-auto px-4 py-16 md:py-24 min-h-[90vh] flex items-center">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 lg:gap-24 items-center w-full">
-              {/* Left Side - Text Content */}
-              <div className="space-y-8">
+              
+              {/* Right Side - Visual with Floating Cards (shows FIRST on mobile) */}
+              <div className="relative h-[400px] md:h-[500px] lg:h-[600px] block lg:order-2">
+                {/* Pikachu Hero Image */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <img 
+                    src="/pikachu-transparent.png" 
+                    alt="PikaLeads Mascot" 
+                    className="w-[500px] md:w-[550px] lg:w-[600px] h-auto object-contain animate-float drop-shadow-2xl"
+                    style={{
+                      filter: 'drop-shadow(0 0 40px rgba(255, 217, 61, 0.4))'
+                    }}
+                  />
+                </div>
+
+                {/* Floating Card 1 - Top Left */}
+                <div 
+                  className="absolute top-8 left-0 w-48 animate-float"
+                  style={{ animationDelay: '0s' }}
+                >
+                  <CyberpunkCard variant="purple" glow={true} className="p-4">
+                    <div className="text-3xl font-black text-[#FFD93D] mb-1">300%</div>
+                    <div className="text-xs text-gray-400 uppercase">
+                      {language === "uk" ? "Зростання продажів" : language === "ru" ? "Рост продаж" : "Sales Growth"}
+                    </div>
+                  </CyberpunkCard>
+                </div>
+
+                {/* Floating Card 2 - Top Right */}
+                <div 
+                  className="absolute top-16 right-0 w-52 animate-float"
+                  style={{ animationDelay: '1s' }}
+                >
+                  <CyberpunkCard variant="purple" glow={true} className="p-4">
+                    <div className="text-3xl font-black text-[#FFD93D] mb-1">500+</div>
+                    <div className="text-xs text-gray-400 uppercase">
+                      {language === "uk" ? "Успішних кампаній" : language === "ru" ? "Успешных кампаний" : "Successful Campaigns"}
+                    </div>
+                  </CyberpunkCard>
+                </div>
+
+                {/* Floating Card 4 - Bottom Right */}
+                <div 
+                  className="absolute bottom-8 right-8 w-48 animate-float"
+                  style={{ animationDelay: '1.5s' }}
+                >
+                  <CyberpunkCard variant="purple" glow={true} className="p-4">
+                    <div className="text-3xl font-black text-[#FFD93D] mb-1">97%</div>
+                    <div className="text-xs text-gray-400 uppercase">
+                      {language === "uk" ? "Окупність реклами" : language === "ru" ? "Окупаемость рекламы" : "ROI"}
+                    </div>
+                  </CyberpunkCard>
+                </div>
+
+                {/* Floating Card 5 - Bottom Center */}
+                <div 
+                  className="absolute bottom-20 left-1/2 -translate-x-1/2 w-64 animate-float"
+                  style={{ animationDelay: '0.5s' }}
+                >
+                  <CyberpunkCard variant="purple" glow={true} className="p-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm text-gray-400">{language === "uk" ? "Зростання" : language === "ru" ? "Рост" : "Growth"}</span>
+                      <span className="text-[#00FF00] text-sm font-bold">+23% {language === "uk" ? "цього тижня" : language === "ru" ? "на этой неделе" : "this week"}</span>
+                    </div>
+                    <div className="h-16 flex items-end gap-1">
+                      {[40, 55, 45, 70, 60, 85, 75].map((height, i) => (
+                        <div 
+                          key={i} 
+                          className="flex-1 bg-gradient-to-t from-[#00FF00] to-[#00FF00]/50 rounded-t"
+                          style={{ height: `${height}%` }}
+                        />
+                      ))}
+                    </div>
+                  </CyberpunkCard>
+                </div>
+              </div>
+
+              {/* Left Side - Text Content (shows SECOND on mobile) */}
+              <div className="space-y-8 lg:order-1">
                 {/* Badge */}
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#00FF00]/30 bg-[#00FF00]/5">
                   <div className="w-2 h-2 rounded-full bg-[#00FF00] animate-pulse" />
@@ -205,134 +274,66 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Right Side - Visual with Floating Cards */}
-              <div className="relative h-[400px] md:h-[500px] lg:h-[600px] hidden lg:block">
-                {/* Pikachu Hero Image */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <img 
-                    src="/pikachu-transparent.png" 
-                    alt="PikaLeads Mascot" 
-                    className="w-[500px] md:w-[550px] lg:w-[600px] h-auto object-contain animate-float drop-shadow-2xl"
-                    style={{
-                      filter: 'drop-shadow(0 0 40px rgba(255, 217, 61, 0.4))'
-                    }}
-                  />
-                </div>
-
-                {/* Floating Card 1 - Top Left */}
-                <div 
-                  className="absolute top-8 left-0 w-48 animate-float"
-                  style={{ animationDelay: '0s' }}
-                >
-                  <CyberpunkCard variant="purple" glow={true} className="p-4">
-                    <div className="text-3xl font-black text-[#FFD93D] mb-1">300%</div>
-                    <div className="text-xs text-gray-400 uppercase">
-                      {language === "uk" ? "Зростання продажів" : language === "ru" ? "Рост продаж" : "Sales Growth"}
-                    </div>
-                  </CyberpunkCard>
-                </div>
-
-                {/* Floating Card 2 - Top Right */}
-                <div 
-                  className="absolute top-16 right-0 w-52 animate-float"
-                  style={{ animationDelay: '1s' }}
-                >
-                  <CyberpunkCard variant="purple" glow={true} className="p-4">
-                    <div className="text-3xl font-black text-[#FFD93D] mb-1">500+</div>
-                    <div className="text-xs text-gray-400 uppercase">
-                      {language === "uk" ? "Успішних кампаній" : language === "ru" ? "Успешных кампаний" : "Successful Campaigns"}
-                    </div>
-                  </CyberpunkCard>
-                </div>
-
-
-
-                {/* Floating Card 4 - Bottom Right */}
-                <div 
-                  className="absolute bottom-8 right-8 w-48 animate-float"
-                  style={{ animationDelay: '1.5s' }}
-                >
-                  <CyberpunkCard variant="purple" glow={true} className="p-4">
-                    <div className="text-3xl font-black text-[#FFD93D] mb-1">97%</div>
-                    <div className="text-xs text-gray-400 uppercase">
-                      {language === "uk" ? "Окупність реклами" : language === "ru" ? "Окупаемость рекламы" : "ROI"}
-                    </div>
-                  </CyberpunkCard>
-                </div>
-
-                {/* Floating Card 5 - Bottom Center */}
-                <div 
-                  className="absolute bottom-20 left-1/2 -translate-x-1/2 w-64 animate-float"
-                  style={{ animationDelay: '0.5s' }}
-                >
-                  <CyberpunkCard variant="purple" glow={true} className="p-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm text-gray-400">{language === "uk" ? "Зростання" : language === "ru" ? "Рост" : "Growth"}</span>
-                      <span className="text-[#00FF00] text-sm font-bold">+23% {language === "uk" ? "цього тижня" : language === "ru" ? "на этой неделе" : "this week"}</span>
-                    </div>
-                    <div className="h-16 flex items-end gap-1">
-                      {[40, 55, 45, 70, 60, 85, 75].map((height, i) => (
-                        <div 
-                          key={i} 
-                          className="flex-1 bg-gradient-to-t from-[#00FF00] to-[#00FF00]/50 rounded-t"
-                          style={{ height: `${height}%` }}
-                        />
-                      ))}
-                    </div>
-                  </CyberpunkCard>
-                </div>
-              </div>
             </div>
           </section>
 
           {/* Quizzes Section */}
           <section className="container mx-auto px-4 py-16">
-            {/* META ADS Quizzes */}
+            <div className="text-center mb-12">
+              <h2 className="text-4xl md:text-5xl font-bold mb-4">
+                <GlitchText variant="purple">
+                  {language === "uk" ? "Оберіть свою платформу" : language === "ru" ? "Выберите свою платформу" : "Choose Your Platform"}
+                </GlitchText>
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                {language === "uk" 
+                  ? "Пройдіть квіз та отримайте персональну стратегію для вашого бізнесу"
+                  : language === "ru"
+                  ? "Пройдите квиз и получите персональную стратегию для вашего бизнеса"
+                  : "Take a quiz and get a personalized strategy for your business"}
+              </p>
+            </div>
+
+            {/* Meta Ads Section */}
             {metaQuizzes.length > 0 && (
               <div className="mb-16">
-                <h2 className="text-4xl md:text-5xl font-black text-center mb-12">
-                  <GlitchText variant="cyan" className="text-[#00F0FF]">
-                    {language === "uk" ? "META ADS КВІЗИ" : language === "ru" ? "META ADS КВИЗЫ" : "META ADS QUIZZES"}
-                  </GlitchText>
-                </h2>
+                <h3 className="text-3xl font-bold mb-8 text-center">
+                  <span className="text-[#00FF00]" style={{ textShadow: '0 0 20px rgba(0, 255, 0, 0.5)' }}>
+                    META ADS
+                  </span>
+                  <span className="text-gray-400 text-lg ml-4">
+                    (Facebook & Instagram)
+                  </span>
+                </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                   {renderQuizCards(metaQuizzes)}
                 </div>
               </div>
             )}
 
-            {/* GOOGLE ADS Quizzes */}
+            {/* Google Ads Section */}
             {googleQuizzes.length > 0 && (
-              <div className="mb-16">
-                <h2 className="text-4xl md:text-5xl font-black text-center mb-12">
-                  <GlitchText variant="purple" className="text-[#5B2E90]" style={{
-                    textShadow: '0 0 10px rgba(91,46,144,0.8), 0 0 20px rgba(91,46,144,0.6)'
-                  }}>
-                    {language === "uk" ? "GOOGLE ADS КВІЗИ" : language === "ru" ? "GOOGLE ADS КВИЗЫ" : "GOOGLE ADS QUIZZES"}
-                  </GlitchText>
-                </h2>
+              <div>
+                <h3 className="text-3xl font-bold mb-8 text-center">
+                  <span className="text-[#FFD93D]" style={{ textShadow: '0 0 20px rgba(255, 217, 61, 0.5)' }}>
+                    GOOGLE ADS
+                  </span>
+                  <span className="text-gray-400 text-lg ml-4">
+                    (Search & Display)
+                  </span>
+                </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                   {renderQuizCards(googleQuizzes)}
                 </div>
               </div>
             )}
-
-            {/* No quizzes message */}
-            {allQuizzes.length === 0 && (
-              <div className="text-center py-16">
-                <CyberpunkCard variant="purple" className="max-w-md mx-auto">
-                  <p className="text-gray-400 text-lg">
-                    {language === "uk" ? "Квізи ще не додані" : language === "ru" ? "Квизы еще не добавлены" : "No quizzes available yet"}
-                  </p>
-                </CyberpunkCard>
-              </div>
-            )}
           </section>
 
-          {/* Client Logos Section */}
-          <section className="py-12 lg:py-20">
-            <div className="container px-4">
-              <div className="text-center mb-12">
+          {/* Our Clients Section */}
+          <section className="py-20 relative">
+            <div className="absolute inset-0 scan-lines opacity-5" />
+            <div className="container relative z-10">
+              <div className="text-center mb-16">
                 <h2 className="text-4xl md:text-5xl font-bold mb-4">
                   <GlitchText variant="cyan">
                     {language === "uk" ? "Наші клієнти" : language === "ru" ? "Наши клиенты" : "Our Clients"}
@@ -342,18 +343,29 @@ export default function Home() {
 
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 lg:gap-8 items-center">
                 {[
-                  { name: "Maria Caruso", logo: "/clients/carusoshoes.jpeg" },
-                  { name: "Ovita", logo: "/clients/logo_opt_master_color_422x150_result.webp" },
-                  { name: "ParkSide", logo: "/clients/images.png" },
-                  { name: "Nasledniki", logo: "/clients/logo_1(1).png" },
-                  { name: "EMMI", logo: "/clients/15090.png.webp" },
-                  { name: "Client", logo: "/clients/unnamed.png.webp" }
+                  { name: "Maria Caruso", logo: "/clients/carusoshoes-enhanced.png" },
+                  { name: "Ovita", logo: "/clients/optmaster-enhanced.png" },
+                  { name: "ParkSide", logo: "/clients/parkside-enhanced.png" },
+                  { name: "Nasledniki", logo: "/clients/nasledniki-enhanced.png" },
+                  { name: "EMMI", logo: "/clients/emmi-enhanced.png" },
+                  { name: "Vertera", logo: "/clients/client6-enhanced.png" }
                 ].map((client, index) => (
-                  <CyberpunkCard key={index} variant="cyan" className="flex items-center justify-center p-4 hover:scale-105 transition-transform">
+                  <CyberpunkCard 
+                    key={index} 
+                    variant="cyan" 
+                    className="flex items-center justify-center p-6 hover:scale-110 transition-all duration-500 group"
+                    style={{
+                      animation: `float ${3 + index * 0.5}s ease-in-out infinite`,
+                      animationDelay: `${index * 0.2}s`
+                    }}
+                  >
                     <img 
                       src={client.logo} 
                       alt={client.name}
-                      className="max-w-full h-16 object-contain filter grayscale hover:grayscale-0 transition-all"
+                      className="max-w-full h-20 object-contain transition-all duration-500 group-hover:rotate-[360deg] group-hover:scale-110"
+                      style={{
+                        filter: 'drop-shadow(0 0 10px rgba(0, 255, 255, 0.5))'
+                      }}
                       onError={(e) => {
                         e.currentTarget.style.display = 'none';
                         e.currentTarget.parentElement!.innerHTML = `<div class="text-gray-400 text-sm">${client.name}</div>`;
@@ -380,25 +392,117 @@ export default function Home() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {[
-                  { id: 1, image: '/testimonials/testimonial-1.png' },
-                  { id: 2, image: '/testimonials/testimonial-2.png' },
-                  { id: 3, image: '/testimonials/testimonial-3.png' },
-                  { id: 4, image: '/testimonials/testimonial-4.png' },
-                  { id: 5, image: '/testimonials/testimonial-5.png' },
-                  { id: 6, image: '/testimonials/testimonial-6.png' },
+                  {
+                    id: 1,
+                    name: language === "uk" ? "Інна Морозова" : "Инна Морозова",
+                    rating: 5,
+                    reviews: "6 отзывов · 15 фото",
+                    date: language === "uk" ? "тиждень тому" : "неделю назад",
+                    text: language === "uk" 
+                      ? "Працюємо більше 3 років. Чітко розуміє, що потрібно, добре розуміє смисли. Глибоко розбирається в таргетингу і трафіку. Рекомендую і планую працювати разом далі!"
+                      : "Работаем больше 3 лет. Четко понимает, что нужно, хорошо понимает смыслы. Глубоко разбирается в таргетинге и трафике. Рекомендую и планирую работать вместе дальше!",
+                    tags: [language === "uk" ? "Якість" : "Качество", language === "uk" ? "Ставлення до клієнтів" : "Отношение к клиентам", language === "uk" ? "Професіоналізм" : "Профессионализм", language === "uk" ? "Ціна/якість" : "Цена/качество"]
+                  },
+                  {
+                    id: 2,
+                    name: "SH SH",
+                    rating: 5,
+                    reviews: "1 отзыв",
+                    date: language === "uk" ? "2 тижні тому" : "2 недели назад",
+                    text: language === "uk"
+                      ? "Це агентство порекомендував мені партнер з іншого міста, їхньою роботою він дуже задоволений. Перших клієнтів він отримав через три дні роботи. Моя компанія з агентством працює близько місяця, у нас були проблеми з налаштуванням реклами..."
+                      : "Данное агентство порекомендовал мне партнер из другого города, их работой он очень доволен. Первых клиентов он получил через три дня работы. Моя компания с агентством работает около месяца, у нас были проблемы с настройкой рекламы...",
+                    tags: [language === "uk" ? "Якість" : "Качество", language === "uk" ? "Ставлення до клієнтів" : "Отношение к клиентам", language === "uk" ? "Професіоналізм" : "Профессионализм", language === "uk" ? "Ціна/якість" : "Цена/качество"]
+                  },
+                  {
+                    id: 3,
+                    name: language === "uk" ? "Олексій Гріцай" : "Олексий Грицай",
+                    rating: 5,
+                    reviews: "26 отзывов · 66 фото",
+                    date: language === "uk" ? "2 тижні тому" : "2 недели назад",
+                    text: language === "uk"
+                      ? "Сервіс ідеальний, все швидко і якісно! Як тільки розберемося з клієнтами то повернуся обов'язково!"
+                      : "Сервис идеальный, все быстро и качественно! Как только разберемся с клиентами то вернусь обязательно!",
+                    tags: [language === "uk" ? "Якість" : "Качество", language === "uk" ? "Ставлення до клієнтів" : "Отношение к клиентам", language === "uk" ? "Професіоналізм" : "Профессионализм", language === "uk" ? "Ціна/якість" : "Цена/качество"]
+                  },
+                  {
+                    id: 4,
+                    name: language === "uk" ? "Олександр Більський" : "Александр Бильской",
+                    rating: 4,
+                    reviews: "1 отзыв",
+                    date: language === "uk" ? "2 тижні тому" : "2 недели назад",
+                    text: language === "uk"
+                      ? "Працюючи з агентством, зробили якісний сайт, налаштували CRM систему, налаштували рекламу, набрав замовлень дуже задоволений, розгребу замовлення буду продовжувати!"
+                      : "Приценовав з агентством, зробили якісний сайт, налаштували CRM систему, налаштували рекламу, набрав замовлень дуже задоволений, розгребу замовлення буду продовжувати!",
+                    tags: [language === "uk" ? "Якість" : "Качество", language === "uk" ? "Ставлення до клієнтів" : "Отношение к клиентам", language === "uk" ? "Професіоналізм" : "Профессионализм", language === "uk" ? "Ціна/якість" : "Цена/качество"]
+                  },
+                  {
+                    id: 5,
+                    name: language === "uk" ? "Артем Білокур" : "Артем Билокур",
+                    rating: 4,
+                    reviews: "1 отзыв",
+                    date: language === "uk" ? "2 тижні тому" : "2 недели назад",
+                    text: language === "uk"
+                      ? "Працюємо з хлопцями по рекламі доставки води, скажу так... Було 20 замовлень, стало 150, рост сильний добираю людей і будемо масштабуватися. Подобається підхід, строки, і созвони які тільки по справі без води і прочого"
+                      : "Работаем с ребятами по рекламе доставки воды, скажу так... Было 20 заказов, стало 150, рост сильный добираю людей и будем масштабироваться. Нравиться сильно подход, сроки, и созвоны которые только по делу без воды и прочего",
+                    tags: [language === "uk" ? "Якість" : "Качество", language === "uk" ? "Ставлення до клієнтів" : "Отношение к клиентам", language === "uk" ? "Професіоналізм" : "Профессионализм", language === "uk" ? "Ціна/якість" : "Цена/качество"]
+                  },
+                  {
+                    id: 6,
+                    name: "Alla Dresses",
+                    rating: 5,
+                    reviews: "1 отзыв",
+                    date: language === "uk" ? "2 тижні тому" : "2 недели назад",
+                    text: language === "uk"
+                      ? "Ми довго шукали хлопців для просування інстаграм для своїх проектів, знайшли, і тепер не відпускаємо, робота робиться завжди вчасно, завжди якісно і завжди на рівні, бувало таке що навіть посеред ночі ми дзвонили і хлопці вирішали проблему або пояснювали і знімали наші переживання"
+                      : "Мы долго искали ребят для продвижения инстаграм для своих проектов, нашли, и теперь не отпускаем, работа делается всегда вовремя, всегда качественно и всегда на уровне, бывало такое что даже посреди ночи мы звонили и ребята решали проблему или объясняли и снимали наши переживания",
+                    tags: [language === "uk" ? "Якість" : "Качество", language === "uk" ? "Ставлення до клієнтів" : "Отношение к клиентам", language === "uk" ? "Професіоналізм" : "Профессионализм"]
+                  },
                 ].map((testimonial) => (
                   <CyberpunkCard 
                     key={testimonial.id} 
                     variant="purple" 
                     glow={true}
-                    className="overflow-hidden hover:scale-105 transition-transform duration-300"
+                    className="p-6 hover:scale-105 transition-transform duration-300 flex flex-col"
                   >
-                    <img 
-                      src={testimonial.image} 
-                      alt={`Testimonial ${testimonial.id}`}
-                      className="w-full h-auto object-contain"
-                      loading="lazy"
-                    />
+                    <div className="flex items-start gap-4 mb-4">
+                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-cyan-500 flex items-center justify-center text-white font-bold text-xl">
+                        {testimonial.name.charAt(0)}
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="text-white font-bold text-lg mb-1">{testimonial.name}</h4>
+                        <div className="flex items-center gap-2 mb-1">
+                          <div className="flex">
+                            {Array.from({ length: 5 }).map((_, i) => (
+                              <span key={i} className={i < testimonial.rating ? "text-[#FFD93D]" : "text-gray-600"}>
+                                ★
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                        <p className="text-sm text-gray-400">{testimonial.reviews}</p>
+                      </div>
+                      <span className="text-xs text-gray-500 uppercase px-2 py-1 bg-purple-900/30 rounded">
+                        {language === "uk" ? "НОВЕ" : "НОВОЕ"}
+                      </span>
+                    </div>
+                    
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {testimonial.tags.map((tag, idx) => (
+                        <span key={idx} className="text-xs px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+
+                    <p className="text-gray-300 leading-relaxed flex-1 mb-4">
+                      {testimonial.text}
+                    </p>
+
+                    <div className="flex items-center gap-2 text-gray-500 text-sm">
+                      <span>👍</span>
+                      <span>{language === "uk" ? "Подобається" : "Нравится"}</span>
+                    </div>
                   </CyberpunkCard>
                 ))}
               </div>
