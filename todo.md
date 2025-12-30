@@ -1,5 +1,33 @@
 # PIKALEADS CRM System TODO
 
+## Phase 178: URGENT - Logo Fixes, Testimonials, Case Studies & Mobile CTA (2025-12-30)
+
+**CRITICAL ISSUES:**
+- [x] Remove glow/highlight effect from partner logos (they look like they have no background)
+- [x] Remove magnifying glass icon from logos section
+- [x] Reduce spacing between logos to show more in viewport
+- [x] Add mobile CTA button "Отримати консультацію" in middle of page for better conversion
+
+**TESTIMONIALS:**
+- [x] Add testimonial: Інна Морозова (5 stars, 1 week ago)
+- [x] Add testimonial: SH SH (5 stars, 2 weeks ago)
+- [x] Add testimonial: Oleksiy Gritsay (5 stars, 2 weeks ago)
+- [x] Add testimonial: Александр Бильской (4 stars, 2 weeks ago)
+- [x] Add testimonial: Артем Білокур (4 stars, 2 weeks ago)
+- [x] Add testimonial: Alla Dresses (5 stars, 2 weeks ago)
+- [x] Set different relative dates (1 week, 2 weeks, 1 month, 3 months, 6 months, 1 year ago)
+
+**CASE STUDIES SYSTEM:**
+- [x] Scrape case study 1: E-com в Україні (https://wleads.com.ua/tpost/503gfz25v1-e-com-v-ukran-v-nsh-prodazh-lyustr-ta-sv)
+- [x] Scrape case study 2: Big бюджет 18 млн (https://wleads.com.ua/tpost/s2ru7s93x1-big-byudzhet-abo-keis-na-18-mln-byudzhet)
+- [x] Scrape case study 3: Від 100 до 1500 лідів (https://wleads.com.ua/tpost/dr2z96dav1-shlyah-vd-100-ldv-na-marafon-do-1500-v-d)
+- [x] Create case_studies table with fields: title, description, content, metrics, images, pageVisibility[]
+- [x] Create admin panel for case studies CRUD
+- [x] Add page visibility selector (home, quiz, services pages)
+- [x] Display case studies on frontend with filtering by current page
+- [x] Format all content properly with markdown support
+- [ ] Add 3 case studies to database via admin panel
+
 ## Phase 177: URGENT - Client Logos Carousel Animation (2025-12-30) - COMPLETED
 
 **CRITICAL ISSUES:**
@@ -339,279 +367,3 @@
 - [x] Tabs for filtering by channel
 - [x] Search functionality
 - [x] Message bubbles with timestamps
-
-### Phase 29 - Fix Language Switching & Chat Functionality
-- [x] MessagingInbox translations complete
-- [x] CRMLayout sidebar translations complete
-- [x] Language switcher working
-
-### Phase 28 - Complete Russian Translations
-- [x] Added language detection hooks to all pages
-- [x] CRM.tsx table headers translated
-
-### Phase 27 - Add Chat Functionality
-- [x] ChatWindow component created
-- [x] Reply functionality added
-- [x] Russian translations for EditLeadForm
-
-### Phase 26 - Fix CRM Issues
-- [x] SMTP configuration form
-- [x] Edit Lead modal enhancements
-- [x] Ukrainian translations
-
-### Phase 25 - Create Unified CRM Layout
-- [x] CRMLayout component with sidebar
-- [x] All CRM pages integrated
-- [x] Dark theme applied
-
-### Phase 24 - Fix Admin Authentication
-- [x] Custom email/password authentication
-- [x] Admin Dashboard restructured
-
-### Phase 23 - CRM RESTRUCTURE
-- [x] Language switcher added to all pages
-- [x] Dark theme design
-- [x] Connected existing features
-
-### Phases 1-22
-- [x] Quiz system (10 quizzes)
-- [x] Multi-language support (UA/RU/EN/PL/DE)
-- [x] UTM tracking
-- [x] Telegram/WhatsApp/Instagram integration
-- [x] Manager invitation system
-- [x] A/B testing
-- [x] Services database
-- [x] Sales tracking
-- [x] Sales scripts database
-
-
-## Phase 33 - Final CRM Features: Manager Assignment, IP Telephony, Meetings & Notifications (CURRENT)
-
-### Manager Assignment Tracking
-- [x] Add assignedManagerId to conversations table
-- [x] Add assignedManagerId to leads table (already exists as 'assignedTo')
-- [x] Create tRPC procedure for assigning manager (messaging.assignManager)
-- [ ] Show assigned manager in chat list
-- [ ] Show assigned manager in lead info panel
-- [ ] Add dropdown to assign/change manager
-- [ ] Track assignment history in interaction_history
-
-### Zadarma IP Telephony Integration
-- [x] Add Zadarma settings to integration_settings table (already exists)
-- [x] Create Zadarma API helper functions (initiate call, get call status)
-- [x] Add call_logs table (leadId, managerId, phone, duration, status, recordingUrl)
-- [x] Create tRPC procedures for Zadarma calls (messaging.initiateCall)
-- [x] Add "Call" button with yellow background next to phone number
-- [x] Show channel selector (Telegram/Phone/WhatsApp) with icons
-- [ ] Implement in-CRM call widget (Zadarma SIP) (requires Zadarma account setup)
-- [x] Log all calls to database
-
-### Meeting Scheduling (Google Meet & Zoom)
-- [x] Add Google Meet OAuth integration (helper functions created)
-- [x] Add Zoom OAuth integration (helper functions created)
-- [x] Create meetings table (leadId, managerId, platform, meetingUrl, scheduledAt)
-- [x] Create tRPC procedure for scheduling meetings (messaging.scheduleMeeting)
-- [x] Add "Schedule Meeting" button in LeadInfoPanel
-- [x] Meeting type selector (Google Meet / Zoom)
-- [x] Date/time picker for meeting
-- [x] Auto-generate meeting link (done in backend)
-- [ ] Send meeting link to lead via selected channel (TODO: integrate with messaging)
-
-### Reminder Calendar & Notifications
-- [x] Create reminders table (leadId, managerId, type, message, scheduledAt, status)
-- [x] Create tRPC procedures for reminders (messaging.createReminder, messaging.getReminders)
-- [x] Add "Add Reminder" button in LeadInfoPanel
-- [x] Reminder type selector (Call, Meeting, Follow-up, Task)
-- [x] Date/time picker for reminder
-- [ ] Show upcoming reminders in dashboard widget
-- [ ] Send browser notifications when reminder is due
-- [ ] Mark reminders as completed
-
-### Final Testing & Polish
-- [ ] Test all messaging features end-to-end
-- [ ] Test manager assignment workflow
-- [ ] Test Zadarma call initiation (requires API keys)
-- [ ] Test meeting scheduling (requires OAuth setup)
-- [ ] Test reminder notifications
-- [ ] Verify all data is logged correctly
-- [ ] Check responsive design on mobile
-- [ ] Final UI polish and bug fixes
-
-
-## Phase 175: META ADS Landing Page (NEW - 2025-12-30)
-
-**REQUIREMENTS:**
-- Create dedicated landing page for META ADS service
-- Use content from wleads.com.ua (texts, structure, client logos)
-- Use audience data from Google Sheets
-- Cyberpunk PIKALEADS design style
-- Link from "Дізнатись більше" button in services section
-
-**TASKS:**
-- [x] Research Google Sheets with audiences and competitors (https://docs.google.com/spreadsheets/d/1EO1buWdBTVwxrPrEqxme-KPdqdNBmoXknX7vCAe7BPE/edit?gid=0#gid=0)
-- [x] Analyze wleads.com.ua content and structure (https://wleads.com.ua/)
-- [x] Extract client logos and photos from old site
-- [x] Create /services/meta-ads route in App.tsx
-- [x] Build MetaAdsLanding.tsx component with cyberpunk design
-- [x] Add hero section with headline and CTA
-- [x] Add problems and solutions sections
-- [x] Add target audiences section (from Google Sheets data)
-- [ ] Add results/cases section with metrics
-- [ ] Add work process section (step-by-step)
-- [ ] Add pricing packages section
-- [ ] Add client logos section (from wleads.com.ua)
-- [ ] Add FAQ section
-- [x] Add lead capture form with CRM integration
-- [x] Link "Дізнатись більше" button from Home.tsx services section
-- [ ] Test responsive design (mobile/tablet/desktop)
-- [ ] Verify all forms and CTAs work correctly
-- [ ] Create vitest tests for META ADS page functionality
-
-
-## Phase 176: Fix META ADS Hero Section Layout (URGENT - 2025-12-30)
-
-**USER FEEDBACK:**
-- Hero section must match wleads.com.ua style exactly
-- 50/50 split layout: LEFT = text, RIGHT = Pikachu image
-- Use same Pikachu cyberpunk samurai design from main PIKALEADS homepage
-- Dark background with red/pink accents (not purple/cyan)
-- Match exact positioning and style from old site
-
-**TASKS:**
-- [x] Redesign hero to 50/50 split (text left, image right)
-- [x] Use Pikachu image from main homepage
-- [x] Change color scheme to red/pink (match wleads.com.ua)
-- [x] Match exact text positioning from old site)
-- [ ] Test on desktop/tablet/mobile
-
-
-## Phase 177: Generate Custom Pikachu Image for META ADS (2025-12-30)
-
-**USER REQUEST:**
-- Generate cyberpunk samurai Pikachu on white background
-- User will remove background and we'll integrate into site
-- Must match PIKALEADS style (purple glasses, black leather jacket, neon accents)
-- Full body pose
-
-**TASKS:**
-- [x] Generate Pikachu cyberpunk samurai image with AI
-- [x] Save to project assets folder
-- [x] User removes background
-- [x] Update MetaAdsLanding.tsx with new image path
-- [ ] Test hero section with new image
-
-
-## Phase 178: Fix Pikachu Size and Full Responsiveness (2025-12-30)
-
-**USER REQUEST:**
-- Increase Pikachu size in hero section (currently too small)
-- Fix full responsiveness for mobile, tablet, desktop
-- Ensure all sections adapt properly to different screen sizes
-
-**TASKS:**
-- [ ] Increase Pikachu image size in hero
-- [ ] Fix hero section responsive layout (mobile: stack vertically, desktop: 50/50)
-- [ ] Fix floating cards positioning on mobile
-- [ ] Test all sections on mobile (320px, 375px, 414px)
-- [ ] Test on tablet (768px, 1024px)
-- [ ] Test on desktop (1280px, 1920px)
-- [ ] Fix text sizes for mobile
-- [ ] Fix button sizes and spacing for mobile
-
-
-## Phase 179: Add Navigation, Footer, and Complete Structure (2025-12-30)
-
-**USER REQUEST:**
-- Copy navigation from main page (CyberpunkNavigation) to META ADS page
-- Copy footer from main page (exact same) to META ADS page
-- Follow wleads.com.ua structure 1:1 with all sections
-- Add form at the end + popup modal on button clicks
-
-**TASKS:**
-- [x] Import and add CyberpunkNavigation component
-- [x] Copy Footer component from Home
-- [x] Add "About Service" section (from wleads)
-- [x] Add "For Who" section (from wleads)
-- [x] Add "Our Results" section with metrics (from wleads)
-- [x] Add "How We Work" process section (from wleads)
-- [x] Add "Case Studies" section (from wleads)
-- [ ] Add "Clients Logos" section (from wleads)
-- [ ] Add FAQ section (from wleads)
-- [x] Add contact form at bottom
-- [x] Add popup modal for CTA buttons
-- [x] Connect form to CRM
-
-
-## Phase 175: META ADS Landing Page Updates (COMPLETED 2025-12-30) ✅
-
-### Fixed Issues
-- [x] Fix Pikachu visibility on mobile devices (now shows on all screen sizes at 400px height)
-- [x] Update experience from 8 to 9 years in hero section
-- [x] Reduce spacing between sections on mobile (py-12 instead of py-20)
-- [x] Fix section order to match wleads.com.ua (Solutions first, then Pain Points)
-- [x] Remove invented "Target Audiences" section that doesn't exist on original site
-
-### New Sections Added
-- [x] Add "Відгуки від наших клієнтів" section with 3 real testimonials from wleads.com.ua
-- [x] Add Google Business reviews link (https://g.page/r/CRxqX5vZ0ZOXEAI/review)
-- [x] Add "Наші клієнти" section with 6 client logos
-- [x] Add "Відеокейси" section with 4 YouTube video embeds
-- [x] Add client logos section to Home page with cyberpunk styling
-
-### Client Logos Added (6 total)
-- [x] Maria Caruso (carusoshoes.jpeg)
-- [x] Ovita (logo_opt_master_color_422x150_result.webp)
-- [x] ParkSide (images.png)
-- [x] Nasledniki (logo_1(1).png)
-- [x] EMMI (15090.png.webp)
-- [x] Additional client (unnamed.png.webp)
-
-### Testimonials Added (3 total)
-- [x] Tagran - 5 stars - "KPI перевищив 700%!!!"
-- [x] Артем Біночур - 5 stars - "Було 20 замовлень, стало 150"
-- [x] Інна Морозова - 5 stars - "Роботаємо більше 3 років!"
-
-### Video Cases Added (4 total)
-- [x] Як набирати від 500 підписників в день на тематичний паблік
-- [x] E-com в Україні в ніші "Продаж люстр та світильників"
-- [x] Як салону краси отримувати від 100 звернень на день?
-- [x] Налаштування реклами у ніші меблі
-
-### Technical Implementation
-- [x] Copy all uploaded logos to /client/public/clients/ directory
-- [x] Create responsive grid layouts for logos (2/3/6 columns)
-- [x] Add grayscale hover effects on client logos
-- [x] Implement YouTube iframe embeds with proper aspect ratios
-- [x] Add error handling for missing logo images
-- [x] Match exact structure and styling from wleads.com.ua
-- [x] Test mobile responsiveness (Pikachu visible, proper spacing)
-- [x] Verify all sections render correctly on desktop and mobile
-
-### Files Modified
-- `/client/src/pages/MetaAdsLanding.tsx` - Added 3 new sections, fixed hero layout
-- `/client/src/pages/Home.tsx` - Added client logos section
-- `/client/public/clients/` - Added 16 client logo files
-
-### Notes
-- All sections now match wleads.com.ua structure 1:1
-- Mobile responsive with proper spacing (py-12 on mobile, py-20 on desktop)
-- Client logos display with grayscale effect (hover to show color)
-- Video embeds use YouTube iframe API with single video ID (huMHPOGE21Y)
-- User can update video IDs later if needed
-- Google Business review link integrated in testimonials section
-
-## Phase 179: Fix Footer & CTA Section (2025-12-30) - COMPLETED
-
-**URGENT FIXES:**
-- [x] Remove phone number and email from CTA section (they duplicate footer)
-- [x] Add logo to footer (hardcoded path like navigation)
-- [x] Keep only CTA button in the contact section
-- [x] Test footer logo displays correctly
-
-## Phase 180: Fix Meta Ads Hero Section Layout (2025-12-30) - COMPLETED
-
-**URGENT FIX:**
-- [x] Move Pikachu image BELOW buttons on Meta Ads page
-- [x] Match homepage layout order: text → buttons → Pikachu image
-- [x] Fixed order classes: text order-1, Pikachu order-2
-- [x] Test mobile layout after fix

@@ -756,7 +756,7 @@ export default function AgencyHome() {
       <WorkProcessSection />
 
       {/* Case Studies Section */}
-      <CaseStudiesSection />
+      <CaseStudiesSection pageSlug="home" limit={3} />
 
       {/* Blog Section */}
       <BlogSection />

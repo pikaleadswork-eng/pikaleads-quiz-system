@@ -169,6 +169,8 @@ export const caseStudiesRouter = router({
         images: z.string().optional(), // JSON array
         results: z.string().optional(), // JSON object
         tags: z.string().optional(), // JSON array
+        pageVisibility: z.string().optional(), // JSON array of page IDs
+        author: z.string().optional(),
         isPublished: z.boolean().default(false),
         orderIndex: z.number().default(0),
       })
@@ -228,6 +230,8 @@ export const caseStudiesRouter = router({
         images: z.string().optional(),
         results: z.string().optional(),
         tags: z.string().optional(),
+        pageVisibility: z.string().optional(),
+        author: z.string().optional(),
         isPublished: z.boolean().optional(),
         orderIndex: z.number().optional(),
       })

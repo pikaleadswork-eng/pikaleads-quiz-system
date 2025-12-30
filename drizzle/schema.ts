@@ -1039,6 +1039,8 @@ export const caseStudies = mysqlTable("case_studies", {
   publishedAt: timestamp("publishedAt"),
   viewCount: int("viewCount").default(0).notNull(),
   orderIndex: int("orderIndex").default(0).notNull(), // Display order
+  pageVisibility: text("pageVisibility"), // JSON array of page slugs where this case should appear: ["home", "quiz", "facebook-ads"]
+  author: varchar("author", { length: 255 }), // Author name (e.g., "Roman Hrybuk")
   createdBy: int("createdBy").notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
@@ -1094,3 +1096,5 @@ export const teamMembers = mysqlTable("team_members", {
 
 export type TeamMember = typeof teamMembers.$inferSelect;
 export type InsertTeamMember = typeof teamMembers.$inferInsert;
+
+

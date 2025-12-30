@@ -4,11 +4,30 @@ import { ArrowRight, TrendingUp } from "lucide-react";
 import { Link } from "wouter";
 import { useLanguage } from "@/contexts/LanguageContext";
 
-export default function CaseStudiesSection() {
+interface CaseStudiesSectionProps {
+  /** Current page slug to filter case studies by pageVisibility (optional) */
+  pageSlug?: string;
+  /** Limit number of case studies to display */
+  limit?: number;
+}
+
+export default function CaseStudiesSection({ pageSlug, limit = 4 }: CaseStudiesSectionProps = {}) {
   const { language } = useLanguage();
-  const { data: caseStudies, isLoading } = trpc.caseStudies.getPublished.useQuery({
-    limit: 4,
-  });
+  const { data: allCases, isLoading } = trpc.caseStudies.getAll.useQuery({});
+
+  // Filter by page visibility if pageSlug is provided
+  const caseStudies = allCases?.filter((caseStudy) => {
+    if (!caseStudy.isPublished) return false;
+    if (!pageSlug) return true; // Show all if no page filter
+    if (!caseStudy.pageVisibility) return false;
+
+    try {
+      const pages = JSON.parse(caseStudy.pageVisibility);
+      return Array.isArray(pages) && pages.includes(pageSlug);
+    } catch {
+      return false;
+    }
+  }).sort((a, b) => a.orderIndex - b.orderIndex).slice(0, limit);
 
   const content = {
     uk: {
