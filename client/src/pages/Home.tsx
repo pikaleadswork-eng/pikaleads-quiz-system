@@ -147,7 +147,7 @@ export default function Home() {
         <div className="relative z-10">
           {/* Hero Section - 50/50 Layout */}
           <section className="container mx-auto px-4 py-16 md:py-24 min-h-[90vh] flex items-center">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center w-full">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 lg:gap-24 items-center w-full">
               {/* Left Side - Text Content */}
               <div className="space-y-8">
                 {/* Badge */}
@@ -206,7 +206,7 @@ export default function Home() {
               </div>
 
               {/* Right Side - Visual with Floating Cards */}
-              <div className="relative h-[600px] hidden md:block">
+              <div className="relative h-[400px] md:h-[500px] lg:h-[600px] hidden lg:block">
                 {/* Pikachu Hero Image */}
                 <div className="absolute inset-0 flex items-center justify-center">
                   <img 
@@ -358,6 +358,46 @@ export default function Home() {
                         e.currentTarget.style.display = 'none';
                         e.currentTarget.parentElement!.innerHTML = `<div class="text-gray-400 text-sm">${client.name}</div>`;
                       }}
+                    />
+                  </CyberpunkCard>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Testimonials Section */}
+          <section className="py-20 relative">
+            <div className="absolute inset-0 scan-lines opacity-5" />
+            <div className="container relative z-10">
+              <div className="text-center mb-16">
+                <GlitchText variant="purple" className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: 'Bungee, sans-serif' }}>
+                  {language === "uk" ? "ВІДГУКИ КЛІЄНТІВ" : language === "ru" ? "ОТЗЫВЫ КЛИЕНТОВ" : "CLIENT TESTIMONIALS"}
+                </GlitchText>
+                <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                  {language === "uk" ? "Що кажуть наші клієнти про співпрацю з нами" : language === "ru" ? "Что говорят наши клиенты о сотрудничестве с нами" : "What our clients say about working with us"}
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[
+                  { id: 1, image: '/testimonials/testimonial-1.png' },
+                  { id: 2, image: '/testimonials/testimonial-2.png' },
+                  { id: 3, image: '/testimonials/testimonial-3.png' },
+                  { id: 4, image: '/testimonials/testimonial-4.png' },
+                  { id: 5, image: '/testimonials/testimonial-5.png' },
+                  { id: 6, image: '/testimonials/testimonial-6.png' },
+                ].map((testimonial) => (
+                  <CyberpunkCard 
+                    key={testimonial.id} 
+                    variant="purple" 
+                    glow={true}
+                    className="overflow-hidden hover:scale-105 transition-transform duration-300"
+                  >
+                    <img 
+                      src={testimonial.image} 
+                      alt={`Testimonial ${testimonial.id}`}
+                      className="w-full h-auto object-contain"
+                      loading="lazy"
                     />
                   </CyberpunkCard>
                 ))}

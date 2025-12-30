@@ -1,5 +1,14 @@
 # PIKALEADS CRM System TODO
 
+## Phase 175: Add Testimonials & Fix Responsive Layout (2025-12-30)
+
+**NEW REQUIREMENTS:**
+- [x] Fix responsive layout issues on main page (match homepage adaptation)
+- [x] Add testimonial screenshots section to Home page
+- [x] Copy 6 testimonial images to project public folder
+- [x] Create testimonials component with proper styling
+- [x] Ensure responsive design for testimonials section
+
 ## Phase 174: CRITICAL - Mobile Preview Must Match Published Responsive Behavior (2025-12-25)
 
 **CRITICAL ISSUES:**
