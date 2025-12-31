@@ -10,7 +10,7 @@ import CyberpunkNavigation from "@/components/CyberpunkNavigation";
 import Footer from "@/components/Footer";
 import LeadFormModal from "@/components/LeadFormModal";
 import { Link } from "wouter";
-import MetaCaseStudiesSection from "@/components/MetaCaseStudiesSection";
+import CaseStudiesSection from "@/components/CaseStudiesSection";
 
 export default function MetaAdsLanding() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -124,10 +124,11 @@ export default function MetaAdsLanding() {
                   <img 
                     src="/pikachu-yellow-final.png"
                     alt="Pikachu Cyberpunk"
-                    className="w-[120%] sm:w-[130%] lg:w-[140%] h-full object-contain drop-shadow-2xl scale-110 lg:scale-125"
+                    className="w-[500px] md:w-[650px] lg:w-[750px] xl:w-[850px] h-auto object-contain drop-shadow-2xl animate-float"
                     style={{
                       filter: "drop-shadow(0 0 40px rgba(236, 72, 153, 0.5))"
                     }}
+                    loading="lazy"
                   />
                 </div>
 
@@ -374,7 +375,7 @@ export default function MetaAdsLanding() {
         </section>
 
         {/* Case Studies Section - Dynamic from Database */}
-        <MetaCaseStudiesSection />
+        <CaseStudiesSection />
 
         {/* Client Logos Section - Auto-Rotating Carousel */}
         <section className="py-12 lg:py-20 overflow-hidden">

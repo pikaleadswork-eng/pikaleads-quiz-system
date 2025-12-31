@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowRight, CheckCircle2, AlertCircle } from "lucide-react";
 import CollapsibleFAQ from "@/components/CollapsibleFAQ";
-import MetaCaseStudiesSection from "@/components/MetaCaseStudiesSection";
+import CaseStudiesSection from "@/components/CaseStudiesSection";
 import { toast } from "sonner";
 import { trpc } from "@/lib/trpc";
 
@@ -391,7 +391,7 @@ export default function GoogleAdsPage() {
         </section>
 
         {/* БЛОК 6.5. КЕЙСИ - Dynamic from Database */}
-        <MetaCaseStudiesSection pageSlug="google-ads" />
+        <CaseStudiesSection pageSlug="google-ads" limit={4} />
 
         {/* БЛОК 7. FAQ */}
         <section className="py-20 bg-black">

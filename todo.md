@@ -300,3 +300,51 @@
 - [x] Add fontFamily: "'Eurostile Bold Extended', sans-serif" to CollapsibleFAQ answer text
 - [x] Test on all 7 service pages
 - [x] Added Michroma and Anybody fonts as Eurostile alternatives to Google Fonts
+
+
+## Phase 197: Fix Pricing, Pikachu Images, and Case Studies Design (2025-12-31)
+
+### Critical Issues:
+- [ ] FAQ on homepage mentions $350-400 prices - remove specific amounts, say "price discussed individually"
+- [ ] Pikachu on Meta Ads page is too small - should match homepage size and optimization
+- [ ] Case studies use NEW design instead of EXISTING homepage design - revert to homepage style
+- [ ] Case study buttons are black and invisible on dark background - make visible
+- [ ] Empty case study elements (budget, leads, roas) show even when no data - hide if empty
+- [ ] Case studies need tags functionality added to existing design
+
+### Tasks:
+- [x] Update FAQ pricing text on homepage - "Ціна обговорюється індивідуально в залежності від обсягу роботи і задач"
+- [x] Fix Pikachu image size on Meta Ads page to match homepage (500-850px)
+- [x] Found CaseStudiesSection.tsx - the CORRECT component from homepage with proper design
+- [x] Tags display already exists in CaseStudiesSection
+- [x] Button visibility already correct (yellow-400)
+- [x] Empty metrics already hidden with conditional rendering
+- [x] pageVisibility field exists in database but MISSING from admin form
+
+
+## Phase 198: Add pageVisibility to Admin & Replace Case Studies Component (2025-12-31)
+
+### Critical Tasks:
+- [x] Add pageVisibility multi-select field to AdminCaseStudies form
+  - [x] Available options: ["home", "google-ads", "meta-ads", "tiktok-ads", "x-ads", "telegram-ads", "web-development", "web-design", "app-development"]
+  - [x] Save as JSON array in database
+  - [x] Load existing pageVisibility when editing
+
+- [x] Replace MetaCaseStudiesSection with CaseStudiesSection on ALL service pages:
+  - [x] GoogleAds.tsx
+  - [x] MetaAdsLanding.tsx (services/meta-ads)
+  - [x] TikTokAds.tsx
+  - [x] XAds.tsx
+  - [x] TelegramAds.tsx
+  - [x] WebDevelopment.tsx
+  - [x] WebDesign.tsx
+  - [x] AppDevelopment.tsx
+
+- [x] Add pagination to CaseStudiesSection:
+  - [x] Show 4 cases initially
+  - [x] "Показати ще" button → load +4 more
+  - [x] Repeat until all cases shown
+  - [x] Hide button when no more cases
+
+- [x] Update tRPC router to support pageVisibility filtering
+  - [x] Ensure getByPage query filters by pageSlug correctly (already implemented)

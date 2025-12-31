@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowRight, CheckCircle2, AlertCircle, Zap, Clock, FileText, Shield } from "lucide-react";
 import CollapsibleFAQ from "@/components/CollapsibleFAQ";
-import MetaCaseStudiesSection from "@/components/MetaCaseStudiesSection";
+import CaseStudiesSection from "@/components/CaseStudiesSection";
 import { toast } from "sonner";
 import { trpc } from "@/lib/trpc";
 
@@ -269,7 +269,7 @@ export default function AppDevelopmentPage() {
         </section>
 
         {/* БЛОК 6.5. КЕЙСИ - Dynamic from Database */}
-        <MetaCaseStudiesSection pageSlug="app-development" />
+        <CaseStudiesSection pageSlug="app-development" limit={4} />
 
         {/* БЛОК 7. FAQ */}
         <section className="py-12 sm:py-16 bg-black">

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, TrendingUp } from "lucide-react";
@@ -13,10 +14,20 @@ interface CaseStudiesSectionProps {
 
 export default function CaseStudiesSection({ pageSlug, limit = 4 }: CaseStudiesSectionProps = {}) {
   const { language } = useLanguage();
+  const [displayLimit, setDisplayLimit] = useState(limit);
+  
   // Use pageSlug-specific query if provided, otherwise get all published
-  const { data: caseStudies, isLoading } = pageSlug
+  const { data: allCaseStudies, isLoading } = pageSlug
     ? trpc.caseStudies.getByPage.useQuery({ pageSlug })
-    : trpc.caseStudies.getPublished.useQuery({ limit, offset: 0 });
+    : trpc.caseStudies.getPublished.useQuery({ limit: 100, offset: 0 });
+  
+  // Slice to display only the current limit
+  const caseStudies = allCaseStudies?.slice(0, displayLimit);
+  const hasMore = (allCaseStudies?.length || 0) > displayLimit;
+  
+  const loadMore = () => {
+    setDisplayLimit(prev => prev + 4);
+  };
 
   const content = {
     uk: {
@@ -90,7 +101,7 @@ export default function CaseStudiesSection({ pageSlug, limit = 4 }: CaseStudiesS
         </div>
 
         {/* Case Studies Grid */}
-        <div className="grid md:grid-cols-2 gap-8 mb-12">
+        <div className="grid md:grid-cols-2 gap-8">
           {caseStudies.map((caseStudy) => {
             let results = { roi: "", leads: "", roas: "", cpl: "" };
             let tags: string[] = [];
@@ -205,6 +216,20 @@ export default function CaseStudiesSection({ pageSlug, limit = 4 }: CaseStudiesS
             );
           })}
         </div>
+        
+        {/* Load More Button */}
+        {hasMore && (
+          <div className="text-center mt-12">
+            <Button
+              onClick={loadMore}
+              size="lg"
+              className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold px-8 py-4"
+            >
+              Показати ще +4
+              <ArrowRight className="w-5 h-5 ml-2" />
+            </Button>
+          </div>
+        )}
       </div>
     </section>
   );

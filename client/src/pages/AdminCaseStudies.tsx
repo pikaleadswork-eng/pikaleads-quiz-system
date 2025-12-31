@@ -23,6 +23,7 @@ export default function AdminCaseStudies() {
     coverImage: "",
     results: JSON.stringify({ roi: "", leads: "", roas: "", cpl: "" }, null, 2),
     tags: JSON.stringify(["Meta Ads"], null, 2),
+    pageVisibility: JSON.stringify(["home"], null, 2),
     isPublished: false,
     orderIndex: 0,
   });
@@ -73,6 +74,7 @@ export default function AdminCaseStudies() {
       coverImage: "",
       results: JSON.stringify({ roi: "", leads: "", roas: "", cpl: "" }, null, 2),
       tags: JSON.stringify(["Meta Ads"], null, 2),
+      pageVisibility: JSON.stringify(["home"], null, 2),
       isPublished: false,
       orderIndex: 0,
     });
@@ -91,6 +93,7 @@ export default function AdminCaseStudies() {
       coverImage: caseStudy.coverImage || "",
       results: caseStudy.results || JSON.stringify({ roi: "", leads: "", roas: "", cpl: "" }, null, 2),
       tags: caseStudy.tags || JSON.stringify(["Meta Ads"], null, 2),
+      pageVisibility: caseStudy.pageVisibility || JSON.stringify(["home"], null, 2),
       isPublished: caseStudy.isPublished,
       orderIndex: caseStudy.orderIndex,
     });
@@ -344,6 +347,17 @@ export default function AdminCaseStudies() {
                     className="bg-zinc-800 border-zinc-700 font-mono text-sm"
                   />
                   <p className="text-xs text-zinc-500 mt-1">{t.tagsHelp}</p>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2">{t.formPageVisibility || "Page Visibility (JSON array)"}</label>
+                  <Textarea
+                    value={formData.pageVisibility}
+                    onChange={(e) => setFormData({ ...formData, pageVisibility: e.target.value })}
+                    rows={3}
+                    className="bg-zinc-800 border-zinc-700 font-mono text-sm"
+                  />
+                  <p className="text-xs text-zinc-500 mt-1">{t.pageVisibilityHelp || 'Example: ["home", "google-ads", "meta-ads", "tiktok-ads"]'}</p>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
