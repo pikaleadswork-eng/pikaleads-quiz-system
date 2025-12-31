@@ -413,3 +413,96 @@
 - [x] Need to fix z-index, sizing, and positioning
 - [x] Test on mobile (375px, 414px) and tablet (768px, 1024px)
 - [x] Save checkpoint after fix
+
+
+## Phase 202: Comprehensive SEO & Admin Panel Improvements (2025-12-31)
+
+### 1. SEO Optimization - JSON-LD Structured Data
+- [ ] Add JSON-LD schema to Google Ads service page
+- [ ] Add JSON-LD schema to TikTok Ads service page
+- [ ] Add JSON-LD schema to X Ads service page
+- [ ] Add JSON-LD schema to Telegram Ads service page
+- [ ] Add JSON-LD schema to Web Development service page
+- [ ] Add JSON-LD schema to Web Design service page
+- [ ] Add JSON-LD schema to App Development service page
+- [ ] Add JSON-LD schema to Meta Ads landing page
+
+### 2. Blog Admin Panel Integration
+- [x] Add "Блог" menu item to CRM sidebar navigation
+- [x] Verify blog CRUD operations work correctly
+- [x] Add SEO settings to blog post editor (meta title, description, keywords)
+- [x] Add Open Graph tags settings for blog posts
+- [x] Add Twitter Card settings for blog posts
+- [ ] Test blog post creation, editing, and deletion
+- [ ] Verify blog posts display correctly on /blog and /blog/:slug
+
+### 3. SEO Settings for Case Studies
+- [x] Add SEO fields to case_studies table (metaTitle, metaDescription, keywords, ogImage)
+- [x] Update AdminCaseStudies form to include SEO settings
+- [ ] Add SEO component to individual case study pages
+- [ ] Test SEO meta tags display correctly
+
+### 4. SEO Settings for Quizzes
+- [x] Add SEO fields to quizzes table (metaTitle, metaDescription, keywords, ogImage)
+- [ ] Update quiz editor to include SEO settings tab
+- [ ] Add SEO component to quiz pages (/quiz/:slug)
+- [ ] Test SEO meta tags display correctly for all quizzes
+
+### 5. Quiz Editor Synchronization Verification
+- [ ] Test quiz editor preview matches published quiz on desktop (1920px)
+- [ ] Test quiz editor preview matches published quiz on tablet (768px)
+- [ ] Test quiz editor preview matches published quiz on mobile (375px)
+- [ ] Verify all design settings sync correctly (colors, fonts, sizes, alignment)
+- [ ] Verify background images display correctly in editor and published
+- [ ] Test all 16 quizzes for consistency
+
+### 6. A/B Testing Removal
+- [x] Remove "A/B Тестування" from AdminDashboard navigation
+- [x] Remove /admin/ab-testing route from App.tsx
+- [ ] Keep A/B testing backend functionality (may be useful later)
+- [ ] Verify admin panel works without A/B testing link
+
+### 7. Pikachu Overlap Fixes & Lazy Loading
+- [ ] Fix Pikachu overlap on Google Ads page (mobile/tablet)
+- [ ] Fix Pikachu overlap on TikTok Ads page (mobile/tablet)
+- [ ] Fix Pikachu overlap on X Ads page (mobile/tablet)
+- [ ] Fix Pikachu overlap on Telegram Ads page (mobile/tablet)
+- [ ] Fix Pikachu overlap on Web Development page (mobile/tablet)
+- [ ] Fix Pikachu overlap on Web Design page (mobile/tablet)
+- [ ] Fix Pikachu overlap on App Development page (mobile/tablet)
+- [ ] Add lazy loading to all Pikachu images on service pages
+- [ ] Test all pages on mobile (375px, 414px) and tablet (768px, 1024px)
+
+### 8. Floating Stats Cards Optimization
+- [ ] Change floating stats cards visibility from lg:block to md:block
+- [ ] Test cards display correctly on tablets (768px, 1024px)
+- [ ] Adjust card positioning if needed for tablet layout
+- [ ] Verify cards don't overlap content on tablets
+
+### 9. Final Testing & Checkpoint
+- [ ] Run TypeScript check (no errors)
+- [ ] Run LSP check (no errors)
+- [ ] Test all service pages on mobile/tablet/desktop
+- [ ] Test blog admin panel functionality
+- [ ] Test quiz editor synchronization
+- [ ] Save checkpoint with all improvements
+
+
+## Phase 203: URGENT Font Fixes & Text Cleanup (2025-12-31)
+
+### Font Issues:
+- [x] Fix Google Ads page - subtitles use Bungee instead of Eurostile
+- [x] Fix X Ads page - subtitles use Bungee instead of Eurostile
+- [x] Fix TikTok Ads page - subtitles use Bungee instead of Eurostile
+- [x] Fix Telegram Ads page - subtitles use Bungee instead of Eurostile
+- [x] Fix Meta Ads page - subtitles use Bungee instead of Eurostile
+- [x] Fix Web Development page - subtitles use Bungee instead of Eurostile
+- [x] Fix Web Design page - subtitles use Bungee instead of Eurostile
+- [x] Fix App Development page - subtitles use Bungee instead of Eurostile
+
+### Text to Remove:
+- [x] Remove "Кількість заявок залежить від ніші, бюджету та продукту. Потенціал визначаємо під час аудиту." from all service pages
+
+### Font Rules:
+- **Bungee** - ONLY for H1 main headings
+- **Eurostile Bold Extended / Michroma / Anybody** - for ALL other text (subtitles, paragraphs, descriptions)

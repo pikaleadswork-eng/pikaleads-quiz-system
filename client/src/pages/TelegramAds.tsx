@@ -64,9 +64,6 @@ export default function TelegramAdsPage() {
                 <p className="text-base sm:text-lg md:text-xl text-zinc-300 leading-relaxed" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>
                   Стабільний потік заявок для вашого бізнесу з запуском за 72 години!
                 </p>
-                <p className="text-sm text-zinc-500" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
-                  Кількість заявок залежить від ніші, бюджету та продукту. Потенціал визначаємо під час аудиту.
-                </p>
                 <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
                   <Button size="lg" className="bg-[#00F0FF] text-black hover:bg-[#00F0FF]/90 font-bold w-full sm:w-auto px-6 py-3 sm:px-8 sm:py-4" onClick={() => document.getElementById('audit-form')?.scrollIntoView({ behavior: 'smooth' })}>
                     ОТРИМАТИ АУДИТ <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
