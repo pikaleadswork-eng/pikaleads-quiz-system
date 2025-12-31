@@ -191,3 +191,16 @@
 - [x] Test on all 7 service pages
 - [x] Ensure titles fit in one line on desktop
 - [x] Verify responsive behavior on mobile
+
+## Phase 192: Further Reduce Card Title Font Sizes (2025-12-31)
+
+### Problem:
+- [x] Card titles still too large after first reduction
+- [x] Titles breaking into 2-3 lines on desktop
+- [x] Examples: "НЕРІВНОМІРНІ ЗАЯВКИ", "НЕЗРОЗУМІЛІ ВИТРАТИ", "ПОСТІЙНІ ЕКСПЕРИМЕНТИ", "НЕМОЖЛИВО ПЛАНУВАТИ ЗРОСТАННЯ", "ОПТИМІЗАЦІЯ ПІД РЕЗУЛЬТАТ", "МАСШТАБУВАННЯ"
+
+### Solution:
+- [x] Reduce PremiumCard title from text-lg/xl/2xl to text-base/lg/xl
+- [x] Test on all 7 service pages
+- [x] Ensure ALL titles fit in single line on desktop (1920px)
+- [x] Verify mobile responsiveness maintained
