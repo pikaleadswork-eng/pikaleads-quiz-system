@@ -50,19 +50,19 @@ export default function WebDesignPage() {
       <CyberpunkNavigation currentPath="/services/web-design" />
       <div className="min-h-screen bg-black text-white">
         {/* БЛОК 1. HERO */}
-        <section className="relative min-h-screen flex items-center overflow-hidden pt-20">
+        <section className="relative min-h-screen flex items-center overflow-hidden pt-20 py-12 sm:py-20">
           <div className="absolute inset-0 opacity-20" style={{ backgroundImage: `linear-gradient(rgba(255, 217, 61, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 217, 61, 0.1) 1px, transparent 1px)`, backgroundSize: "50px 50px" }} />
           <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div className="space-y-8">
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight" style={{ fontFamily: "\'Bungee\', \'Eurostile Bold Extended\', sans-serif" }}>
+            <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 items-center">
+              <div className="space-y-6 sm:space-y-8">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-tight" style={{ fontFamily: "\'Bungee\', \'Eurostile Bold Extended\', sans-serif" }}>
                   <span className="text-white">Дизайн сайту, який </span>
                   <span className="text-[#FFD93D]">допомагає продавати</span>
                 </h1>
-                <p className="text-xl text-zinc-300 leading-relaxed" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>
+                <p className="text-base sm:text-lg md:text-xl text-zinc-300 leading-relaxed" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>
                   Без зайвих елементів і складних рішень
                 </p>
-                <ul className="space-y-3 text-lg text-zinc-400">
+                <ul className="space-y-3 text-base sm:text-lg text-zinc-400">
                   <li className="flex items-center gap-3">
                     <CheckCircle2 className="w-6 h-6 text-[#00F0FF] flex-shrink-0" />
                     <span>Дизайн, який веде до заявки</span>
@@ -76,11 +76,11 @@ export default function WebDesignPage() {
                     <span>Адаптація під телефони</span>
                   </li>
                 </ul>
-                <div className="flex flex-wrap gap-4">
-                  <Button size="lg" className="bg-[#00F0FF] text-black hover:bg-[#00F0FF]/90 font-bold" onClick={() => document.getElementById('calc-form')?.scrollIntoView({ behavior: 'smooth' })}>
-                    Отримати прорахунок дизайну <ArrowRight className="ml-2 w-5 h-5" />
+                <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
+                  <Button size="lg" className="bg-[#00F0FF] text-black hover:bg-[#00F0FF]/90 font-bold w-full sm:w-auto px-6 py-3 sm:px-8 sm:py-4" onClick={() => document.getElementById('calc-form')?.scrollIntoView({ behavior: 'smooth' })}>
+                    Отримати прорахунок дизайну <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
                   </Button>
-                  <Button size="lg" className="bg-[#FFD93D] text-black hover:bg-[#FFD93D]/90 font-bold" onClick={() => setModalOpen(true)}>
+                  <Button size="lg" className="bg-[#FFD93D] text-black hover:bg-[#FFD93D]/90 font-bold w-full sm:w-auto px-6 py-3 sm:px-8 sm:py-4" onClick={() => setModalOpen(true)}>
                     Показати приклади
                   </Button>
                 </div>
@@ -96,10 +96,10 @@ export default function WebDesignPage() {
         </section>
 
         {/* БЛОК 2. ВАМ ЦЕ ЗНАЙОМО? */}
-        <section className="py-16 bg-zinc-900/50">
+        <section className="py-12 sm:py-16 bg-zinc-900/50">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Вам це знайомо, коли мова заходить про дизайн?</h2>
+            <div className="text-center mb-8 sm:mb-12">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Вам це знайомо, коли мова заходить про дизайн?</h2>
             </div>
             <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto mb-10">
               {[
@@ -121,11 +121,11 @@ export default function WebDesignPage() {
         </section>
 
         {/* БЛОК 3. ЯК МИ РОБИМО ДИЗАЙН */}
-        <section className="py-16 bg-black">
+        <section className="py-12 sm:py-16 bg-black">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Як ми робимо дизайн, який допомагає продавати</h2>
-              <p className="text-xl text-zinc-400 max-w-3xl mx-auto" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>Без зайвих елементів і складних рішень.</p>
+            <div className="text-center mb-8 sm:mb-12">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Як ми робимо дизайн, який допомагає продавати</h2>
+              <p className="text-base sm:text-lg md:text-xl text-zinc-400 max-w-3xl mx-auto" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>Без зайвих елементів і складних рішень.</p>
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
               {[
@@ -152,9 +152,9 @@ export default function WebDesignPage() {
         <section id="calc-form" className="py-16 bg-gradient-to-br from-zinc-900 to-black">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="max-w-4xl mx-auto">
-              <div className="text-center mb-10">
-                <h2 className="text-4xl md:text-5xl font-black text-white mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Отримайте прорахунок дизайну під ваш бізнес</h2>
-                <p className="text-xl text-zinc-300 mb-4" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>Ми скажемо:</p>
+              <div className="text-center mb-8 sm:mb-10">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Отримайте прорахунок дизайну під ваш бізнес</h2>
+                <p className="text-base sm:text-lg md:text-xl text-zinc-300 mb-4" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>Ми скажемо:</p>
               </div>
               <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
                 {[
@@ -165,7 +165,7 @@ export default function WebDesignPage() {
                 ].map((item, i) => (
                   <Card key={i} className="bg-zinc-800/50" style={{ borderColor: `${item.color}30` }}>
                     <CardContent className="p-6 text-center">
-                      <CheckCircle2 className="w-8 h-8 mx-auto mb-4" style={{ color: item.color }} />
+                      <CheckCircle2 className="w-6 h-6 sm:w-8 sm:h-8 mx-auto mb-3 sm:mb-4" style={{ color: item.color }} />
                       <p className="text-white">{item.text}</p>
                     </CardContent>
                   </Card>
@@ -202,11 +202,11 @@ export default function WebDesignPage() {
         </section>
 
         {/* БЛОК 5. ЩО ВХОДИТЬ У ДИЗАЙН */}
-        <section className="py-16 bg-black">
+        <section className="py-12 sm:py-16 bg-black">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Що ви отримаєте в результаті</h2>
-              <p className="text-xl text-zinc-400 max-w-3xl mx-auto" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>Без зайвих елементів — тільки те, що реально впливає на заявки.</p>
+            <div className="text-center mb-8 sm:mb-12">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Що ви отримаєте в результаті</h2>
+              <p className="text-base sm:text-lg md:text-xl text-zinc-400 max-w-3xl mx-auto" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>Без зайвих елементів — тільки те, що реально впливає на заявки.</p>
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
               {[
@@ -229,7 +229,7 @@ export default function WebDesignPage() {
               ))}
             </div>
             <div className="text-center">
-              <p className="text-2xl font-bold text-[#00F0FF]">
+              <p className="text-xl sm:text-2xl font-bold text-[#00F0FF]">
                 У підсумку: дизайн готовий для розробки і реклами без доробок \"потім\".
               </p>
             </div>
@@ -237,10 +237,10 @@ export default function WebDesignPage() {
         </section>
 
         {/* БЛОК 6. РЕЗУЛЬТАТ */}
-        <section className="py-16 bg-zinc-900/50">
+        <section className="py-12 sm:py-16 bg-zinc-900/50">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Що зазвичай змінюється після нового дизайну</h2>
+            <div className="text-center mb-8 sm:mb-12">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Що зазвичай змінюється після нового дизайну</h2>
             </div>
             <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto mb-10">
               {[
@@ -259,7 +259,7 @@ export default function WebDesignPage() {
               ))}
             </div>
             <div className="text-center">
-              <Button size="lg" className="bg-[#FFD93D] text-black hover:bg-[#FFD93D]/90 font-bold" onClick={() => setModalOpen(true)}>
+              <Button size="lg" className="bg-[#FFD93D] text-black hover:bg-[#FFD93D]/90 font-bold w-full sm:w-auto px-6 py-3 sm:px-8 sm:py-4" onClick={() => setModalOpen(true)}>
                 🟢 Показати приклади дизайнів
               </Button>
             </div>
@@ -267,10 +267,10 @@ export default function WebDesignPage() {
         </section>
 
         {/* БЛОК 7. FAQ */}
-        <section className="py-16 bg-black">
+        <section className="py-12 sm:py-16 bg-black">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Питання та відповіді</h2>
+            <div className="text-center mb-8 sm:mb-12">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Питання та відповіді</h2>
             </div>
             <div className="max-w-4xl mx-auto space-y-6">
               {[
@@ -294,8 +294,8 @@ export default function WebDesignPage() {
         <section className="py-16 bg-gradient-to-br from-zinc-900 via-black to-zinc-900">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="max-w-4xl mx-auto">
-              <div className="text-center mb-10">
-                <h2 className="text-4xl md:text-5xl font-black text-white mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Хочете дизайн, який допомагає продавати?</h2>
+              <div className="text-center mb-8 sm:mb-10">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Хочете дизайн, який допомагає продавати?</h2>
                 <p className="text-xl text-zinc-300" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>
                   Залиште заявку — ми подивимось вашу задачу і скажемо, що саме потрібно зробити і скільки це коштує.
                 </p>

@@ -50,26 +50,26 @@ export default function TelegramAdsPage() {
       <CyberpunkNavigation currentPath="/services/telegram-ads" />
       <div className="min-h-screen bg-black text-white">
         {/* БЛОК 1. HERO */}
-        <section className="relative min-h-screen flex items-center overflow-hidden pt-20">
+        <section className="relative min-h-screen flex items-center overflow-hidden pt-20 py-12 sm:py-20">
           <div className="absolute inset-0 opacity-20" style={{ backgroundImage: `linear-gradient(rgba(255, 217, 61, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 217, 61, 0.1) 1px, transparent 1px)`, backgroundSize: "50px 50px" }} />
           <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div className="space-y-8">
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight" style={{ fontFamily: "\'Bungee\', \'Eurostile Bold Extended\', sans-serif" }}>
+            <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 items-center">
+              <div className="space-y-6 sm:space-y-8">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-tight" style={{ fontFamily: "\'Bungee\', \'Eurostile Bold Extended\', sans-serif" }}>
                   <span className="text-white">Отримуйте від 20 заявок на день через </span>
                   <span className="text-[#FFD93D]">Telegram</span>
                 </h1>
-                <p className="text-xl text-zinc-300 leading-relaxed" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>
+                <p className="text-base sm:text-lg md:text-xl text-zinc-300 leading-relaxed" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>
                   Стабільний потік заявок для вашого бізнесу з запуском за 72 години!
                 </p>
                 <p className="text-sm text-zinc-500">
                   Кількість заявок залежить від ніші, бюджету та продукту. Потенціал визначаємо під час аудиту.
                 </p>
-                <div className="flex flex-wrap gap-4">
-                  <Button size="lg" className="bg-[#00F0FF] text-black hover:bg-[#00F0FF]/90 font-bold" onClick={() => document.getElementById('audit-form')?.scrollIntoView({ behavior: 'smooth' })}>
-                    ОТРИМАТИ АУДИТ <ArrowRight className="ml-2 w-5 h-5" />
+                <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
+                  <Button size="lg" className="bg-[#00F0FF] text-black hover:bg-[#00F0FF]/90 font-bold w-full sm:w-auto px-6 py-3 sm:px-8 sm:py-4" onClick={() => document.getElementById('audit-form')?.scrollIntoView({ behavior: 'smooth' })}>
+                    ОТРИМАТИ АУДИТ <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
                   </Button>
-                  <Button size="lg" className="bg-[#FFD93D] text-black hover:bg-[#FFD93D]/90 font-bold" onClick={() => setModalOpen(true)}>
+                  <Button size="lg" className="bg-[#FFD93D] text-black hover:bg-[#FFD93D]/90 font-bold w-full sm:w-auto px-6 py-3 sm:px-8 sm:py-4" onClick={() => setModalOpen(true)}>
                     Залишити заявку
                   </Button>
                 </div>
@@ -85,12 +85,12 @@ export default function TelegramAdsPage() {
         </section>
 
         {/* БЛОК 2. ВАМ ЦЕ ЗНАЙОМО? */}
-        <section className="py-16 bg-zinc-900/50">
+        <section className="py-12 sm:py-16 bg-zinc-900/50">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Вам це знайомо при роботі з Telegram Ads?</h2>
+            <div className="text-center mb-8 sm:mb-12">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Вам це знайомо при роботі з Telegram Ads?</h2>
             </div>
-            <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-10">
+            <div className="grid sm:grid-cols-2 gap-6 sm:gap-8 max-w-5xl mx-auto mb-8 sm:mb-10">
               {[
                 { title: "Низька конверсія", desc: "Реклама показується, але заявок мало. Складно зрозуміти, чому люди не реагують на оголошення.", icon: "📉" },
                 { title: "Неправильний таргетинг", desc: "Реклама показується не тій аудиторії. Витрачаєте бюджет на покази, які не приносять заявок.", icon: "🎯" },
@@ -108,7 +108,7 @@ export default function TelegramAdsPage() {
               ))}
             </div>
             <div className="text-center">
-              <p className="text-2xl font-bold text-[#FFD93D]">
+              <p className="text-xl sm:text-2xl font-bold text-[#FFD93D]">
                 👉 У результаті Telegram виглядає перспективно, але не працює як надійний канал заявок.
               </p>
             </div>
@@ -116,13 +116,13 @@ export default function TelegramAdsPage() {
         </section>
 
         {/* БЛОК 3. РІШЕННЯ */}
-        <section className="py-16 bg-black">
+        <section className="py-12 sm:py-16 bg-black">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Як ми приводимо заявки з Telegram</h2>
-              <p className="text-xl text-zinc-400 max-w-3xl mx-auto" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>Ми працюємо по чіткій логіці, без хаотичних розміщень.</p>
+            <div className="text-center mb-8 sm:mb-12">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Як ми приводимо заявки з Telegram</h2>
+              <p className="text-base sm:text-lg md:text-xl text-zinc-400 max-w-3xl mx-auto" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>Ми працюємо по чіткій логіці, без хаотичних розміщень.</p>
             </div>
-            <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-10">
+            <div className="grid sm:grid-cols-2 gap-6 sm:gap-8 max-w-5xl mx-auto mb-8 sm:mb-10">
               {[
                 { title: "Аналіз аудиторії", desc: "Глибоко вивчаємо вашу цільову аудиторію в Telegram: інтереси, канали, поведінку. Знаходимо найбільш релевантні сегменти.", icon: "🔍", color: "#FFD93D" },
                 { title: "Створення креативів", desc: "Розробляємо оголошення, які зупиняють скрол. Тестуємо різні підходи та формати для максимальної конверсії.", icon: "🎨", color: "#00F0FF" },
@@ -131,7 +131,7 @@ export default function TelegramAdsPage() {
               ].map((step, i) => (
                 <PremiumCard
                   key={i}
-                  icon={<span className="text-4xl">{step.icon}</span>}
+                  icon={<span className="text-3xl sm:text-4xl">{step.icon}</span>}
                   title={step.title}
                   description={step.desc}
                   borderColor={step.color}
@@ -140,7 +140,7 @@ export default function TelegramAdsPage() {
               ))}
             </div>
             <div className="text-center">
-              <p className="text-2xl font-bold text-[#00F0FF]">
+              <p className="text-xl sm:text-2xl font-bold text-[#00F0FF]">
                 👉 У підсумку ви отримуєте керований потік заявок з Telegram, який можна планувати і збільшувати.
               </p>
             </div>
@@ -148,14 +148,14 @@ export default function TelegramAdsPage() {
         </section>
 
         {/* БЛОК 4. ЛІДГЕН З ОБМЕЖЕННЯМ */}
-        <section id="audit-form" className="py-16 bg-gradient-to-br from-zinc-900 to-black">
+        <section id="audit-form" className="py-12 sm:py-16 bg-gradient-to-br from-zinc-900 to-black">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="max-w-4xl mx-auto">
-              <div className="text-center mb-10">
-                <h2 className="text-4xl md:text-5xl font-black text-white mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Аудит Telegram Ads</h2>
-                <p className="text-xl text-zinc-300 mb-4" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>Ми подивимось вашу ситуацію і скажемо:</p>
+              <div className="text-center mb-8 sm:mb-10">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Аудит Telegram Ads</h2>
+                <p className="text-base sm:text-lg md:text-xl text-zinc-300 mb-4" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>Ми подивимось вашу ситуацію і скажемо:</p>
               </div>
-              <div className="grid md:grid-cols-3 gap-6 mb-10">
+              <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-10">
                 {[
                   { text: "чи реально вийти на 20+ заявок на день", color: "#FFD93D" },
                   { text: "які канали і формати підійдуть", color: "#00F0FF" },
@@ -163,7 +163,7 @@ export default function TelegramAdsPage() {
                 ].map((item, i) => (
                   <Card key={i} className="bg-zinc-800/50" style={{ borderColor: `${item.color}30` }}>
                     <CardContent className="p-6 text-center">
-                      <CheckCircle2 className="w-8 h-8 mx-auto mb-4" style={{ color: item.color }} />
+                      <CheckCircle2 className="w-6 h-6 sm:w-8 sm:h-8 mx-auto mb-3 sm:mb-4" style={{ color: item.color }} />
                       <p className="text-white">{item.text}</p>
                     </CardContent>
                   </Card>
@@ -200,11 +200,11 @@ export default function TelegramAdsPage() {
         </section>
 
         {/* БЛОК 5. ЯК МИ ПРАЦЮЄМО */}
-        <section className="py-16 bg-black">
+        <section className="py-12 sm:py-16 bg-black">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Як виглядає співпраця</h2>
-              <p className="text-xl text-zinc-400 max-w-3xl mx-auto" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>Ми беремо Telegram Ads під ключ.</p>
+            <div className="text-center mb-8 sm:mb-12">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Як виглядає співпраця</h2>
+              <p className="text-base sm:text-lg md:text-xl text-zinc-400 max-w-3xl mx-auto" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>Ми беремо Telegram Ads під ключ.</p>
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
               {[
@@ -222,7 +222,7 @@ export default function TelegramAdsPage() {
               ))}
             </div>
             <div className="text-center">
-              <p className="text-2xl font-bold text-[#FFD93D]">
+              <p className="text-xl sm:text-2xl font-bold text-[#FFD93D]">
                 Вам не потрібно шукати канали і домовлятись — ви отримуєте заявки і бачите результат.
               </p>
             </div>
@@ -230,11 +230,11 @@ export default function TelegramAdsPage() {
         </section>
 
         {/* БЛОК 6. КЕЙСИ */}
-        <section className="py-16 bg-zinc-900/50">
+        <section className="py-12 sm:py-16 bg-zinc-900/50">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>До яких результатів приходять клієнти</h2>
-              <p className="text-xl text-zinc-400 max-w-3xl mx-auto mb-8" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>
+            <div className="text-center mb-8 sm:mb-12">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>До яких результатів приходять клієнти</h2>
+              <p className="text-base sm:text-lg md:text-xl text-zinc-400 max-w-3xl mx-auto mb-8" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>
                 Telegram може давати заявки, якщо працювати з ним правильно.
               </p>
             </div>
@@ -260,10 +260,10 @@ export default function TelegramAdsPage() {
         </section>
 
         {/* БЛОК 7. FAQ */}
-        <section className="py-16 bg-black">
+        <section className="py-12 sm:py-16 bg-black">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Питання та відповіді</h2>
+            <div className="text-center mb-8 sm:mb-12">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Питання та відповіді</h2>
             </div>
             <div className="max-w-4xl mx-auto space-y-6">
               {[
@@ -287,8 +287,8 @@ export default function TelegramAdsPage() {
         <section id="final-form" className="py-16 bg-gradient-to-br from-zinc-900 via-black to-zinc-900">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="max-w-4xl mx-auto">
-              <div className="text-center mb-10">
-                <h2 className="text-4xl md:text-5xl font-black text-white mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Готові отримувати заявки з Telegram?</h2>
+              <div className="text-center mb-8 sm:mb-10">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Готові отримувати заявки з Telegram?</h2>
                 <p className="text-xl text-zinc-300" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>
                   Залиште заявку — ми подивимось ваш бізнес і запропонуємо чіткий план запуску Telegram Ads.
                 </p>
