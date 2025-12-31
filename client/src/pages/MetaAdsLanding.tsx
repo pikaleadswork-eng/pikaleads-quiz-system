@@ -124,7 +124,7 @@ export default function MetaAdsLanding() {
                   <img 
                     src="/pikachu-yellow-final.png"
                     alt="Pikachu Cyberpunk"
-                    className="w-[500px] md:w-[650px] lg:w-[750px] xl:w-[850px] h-auto object-contain drop-shadow-2xl animate-float"
+                    className="w-[350px] md:w-[450px] lg:w-[550px] xl:w-[650px] h-auto object-contain drop-shadow-2xl animate-float"
                     style={{
                       filter: "drop-shadow(0 0 40px rgba(236, 72, 153, 0.5))"
                     }}

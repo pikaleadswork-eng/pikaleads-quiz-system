@@ -366,3 +366,13 @@
 - [x] Add smooth transition animations when filtering
 - [x] Make filters responsive on mobile
 - [x] Test filter functionality on all breakpoints
+
+## CRITICAL FIXES - Case Studies & Pikachu (2025-12-31)
+
+- [x] Fix case study buttons - change from black to yellow (#FFD93D) with black text
+- [x] Add hover effect to case study buttons (hover:bg-yellow-500)
+- [x] Fix case study card alignment - all cards must be equal height (flex flex-col h-full)
+- [x] Fix Pikachu size on Meta Ads page - reduce to prevent ears overlapping
+- [x] Fix Pikachu size on all service pages - reduce to prevent ears overlapping buttons/text
+- [ ] Test button visibility on dark background
+- [ ] Test card alignment on all breakpoints
