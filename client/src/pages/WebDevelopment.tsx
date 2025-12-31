@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import LeadCaptureModal from "@/components/LeadCaptureModal";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import PremiumCard from "@/components/PremiumCard";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowRight, CheckCircle2, AlertCircle, Zap, Clock, FileText, Shield } from "lucide-react";
@@ -54,11 +55,11 @@ export default function WebDevelopmentPage() {
           <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div className="space-y-8">
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight" style={{ fontFamily: "\'Bungee\', \'Eurostile Bold Extended\', sans-serif" }}>
                   <span className="text-white">Створюємо сайти, в яких </span>
                   <span className="text-[#FFD93D]">хочеться залишати заявки</span>
                 </h1>
-                <p className="text-xl text-zinc-300 leading-relaxed">
+                <p className="text-xl text-zinc-300 leading-relaxed" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>
                   Під ключ
                 </p>
                 <ul className="space-y-3 text-lg text-zinc-400">
@@ -79,15 +80,15 @@ export default function WebDevelopmentPage() {
                   <Button size="lg" className="bg-[#00F0FF] text-black hover:bg-[#00F0FF]/90 font-bold" onClick={() => document.getElementById('calc-form')?.scrollIntoView({ behavior: 'smooth' })}>
                     Отримати прорахунок сайту <ArrowRight className="ml-2 w-5 h-5" />
                   </Button>
-                  <Button size="lg" variant="outline" className="border-[#FFD93D] text-[#FFD93D] hover:bg-[#FFD93D]/10" onClick={() => setModalOpen(true)}>
+                  <Button size="lg" className="bg-[#FFD93D] text-black hover:bg-[#FFD93D]/90 font-bold" onClick={() => setModalOpen(true)}>
                     Показати приклади робіт
                   </Button>
                 </div>
               </div>
               <div className="relative flex items-center justify-center">
                 <div className="absolute inset-0 bg-gradient-to-tr from-[#FFD93D]/20 to-[#00F0FF]/20 blur-3xl" />
-                <div className="relative z-10 w-full aspect-square max-w-md mx-auto">
-                  <img src="/web-dev-hero.png" alt="Web Development" className="w-full h-full object-contain drop-shadow-2xl" />
+                <div className="relative z-10 w-full max-w-2xl mx-auto">
+                  <img src="/web-dev-hero.png" alt="Web Development" className="w-full h-auto object-contain drop-shadow-2xl" style={{ maxHeight: "850px", minHeight: "500px" }} />
                 </div>
               </div>
             </div>
@@ -98,24 +99,22 @@ export default function WebDevelopmentPage() {
         <section className="py-16 bg-zinc-900/50">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-6">Вам це знайомо, коли мова заходить про сайт?</h2>
+              <h2 className="text-4xl md:text-5xl font-black text-white mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Вам це знайомо, коли мова заходить про сайт?</h2>
             </div>
             <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto mb-10">
               {[
-                { title: "Сайт є, але з нього майже не пишуть", desc: "Люди заходять, дивляться сторінку і просто йдуть. Немає відчуття, що сайт \"пояснює\" і веде до заявки." },
-                { title: "Ви не розумієте, що саме в ньому не так", desc: "Дизайн ніби нормальний, тексти є, кнопки є, але результату немає — і ніхто не може пояснити чому." },
-                { title: "Все виглядає складно і незрозуміло", desc: "ТЗ, структура, тексти, дизайн, правки — здається, що без повного занурення нічого не вийде." },
-                { title: "Є страх знову витратити гроші дарма", desc: "Бо сайт уже робили, а заявок так і не з'явилось." }
+                { title: "Сайт є, але з нього майже не пишуть", desc: "Люди заходять, дивляться сторінку і просто йдуть. Немає відчуття, що сайт \"пояснює\" і веде до заявки.", icon: "📉" },
+                { title: "Ви не розумієте, що саме в ньому не так", desc: "Дизайн ніби нормальний, тексти є, кнопки є, але результату немає — і ніхто не може пояснити чому.", icon: "❓" },
+                { title: "Все виглядає складно і незрозуміло", desc: "ТЗ, структура, тексти, дизайн, правки — здається, що без повного занурення нічого не вийде.", icon: "🤯" },
+                { title: "Є страх знову витратити гроші дарма", desc: "Бо сайт уже робили, а заявок так і не з'явилось.", icon: "💸" }
               ].map((problem, i) => (
-                <Card key={i} className="bg-zinc-800/50 border-zinc-700 hover:border-red-500/50 transition-all">
-                  <CardContent className="p-6 space-y-4">
-                    <div className="w-12 h-12 bg-red-500/10 rounded-lg flex items-center justify-center text-red-400">
-                      <AlertCircle className="w-6 h-6" />
-                    </div>
-                    <h3 className="text-xl font-bold text-white">{problem.title}</h3>
-                    <p className="text-zinc-400">{problem.desc}</p>
-                  </CardContent>
-                </Card>
+                <PremiumCard
+                  key={i}
+                  icon={<span className="text-4xl">{problem.icon}</span>}
+                  title={problem.title}
+                  description={problem.desc}
+                  color="#EF4444"
+                />
               ))}
             </div>
           </div>
@@ -125,8 +124,8 @@ export default function WebDevelopmentPage() {
         <section className="py-16 bg-black">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-6">Як ми робимо сайт, в якому хочеться залишити заявку</h2>
-              <p className="text-xl text-zinc-400 max-w-3xl mx-auto">Неважливо, є у вас сайт чи його немає взагалі.</p>
+              <h2 className="text-4xl md:text-5xl font-black text-white mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Як ми робимо сайт, в якому хочеться залишити заявку</h2>
+              <p className="text-xl text-zinc-400 max-w-3xl mx-auto" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>Неважливо, є у вас сайт чи його немає взагалі.</p>
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
               {[
@@ -154,8 +153,8 @@ export default function WebDevelopmentPage() {
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="max-w-4xl mx-auto">
               <div className="text-center mb-10">
-                <h2 className="text-4xl md:text-5xl font-black text-white mb-6">Отримайте прорахунок сайту під ваш бізнес</h2>
-                <p className="text-xl text-zinc-300 mb-4">Ми скажемо:</p>
+                <h2 className="text-4xl md:text-5xl font-black text-white mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Отримайте прорахунок сайту під ваш бізнес</h2>
+                <p className="text-xl text-zinc-300 mb-4" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>Ми скажемо:</p>
               </div>
               <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
                 {[
@@ -206,8 +205,8 @@ export default function WebDevelopmentPage() {
         <section className="py-16 bg-black">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-6">Що ви отримаєте в результаті</h2>
-              <p className="text-xl text-zinc-400 max-w-3xl mx-auto">Без технічної мови і зайвих слів — тільки те, що реально впливає на заявки.</p>
+              <h2 className="text-4xl md:text-5xl font-black text-white mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Що ви отримаєте в результаті</h2>
+              <p className="text-xl text-zinc-400 max-w-3xl mx-auto" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>Без технічної мови і зайвих слів — тільки те, що реально впливає на заявки.</p>
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
               {[
@@ -241,7 +240,7 @@ export default function WebDevelopmentPage() {
         <section className="py-16 bg-zinc-900/50">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-6">Що зазвичай змінюється після запуску нового сайту</h2>
+              <h2 className="text-4xl md:text-5xl font-black text-white mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Що зазвичай змінюється після запуску нового сайту</h2>
             </div>
             <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto mb-10">
               {[
@@ -271,7 +270,7 @@ export default function WebDevelopmentPage() {
         <section className="py-16 bg-black">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-6">Питання та відповіді</h2>
+              <h2 className="text-4xl md:text-5xl font-black text-white mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Питання та відповіді</h2>
             </div>
             <div className="max-w-4xl mx-auto space-y-6">
               {[
@@ -296,8 +295,8 @@ export default function WebDevelopmentPage() {
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="max-w-4xl mx-auto">
               <div className="text-center mb-10">
-                <h2 className="text-4xl md:text-5xl font-black text-white mb-6">Хочете сайт, в якому хочеться залишати заявки?</h2>
-                <p className="text-xl text-zinc-300">
+                <h2 className="text-4xl md:text-5xl font-black text-white mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Хочете сайт, в якому хочеться залишати заявки?</h2>
+                <p className="text-xl text-zinc-300" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>
                   Залиште заявку — ми подивимось вашу задачу і скажемо, що саме потрібно зробити і скільки це коштує.
                 </p>
               </div>

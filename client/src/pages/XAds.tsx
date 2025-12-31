@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import LeadCaptureModal from "@/components/LeadCaptureModal";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import PremiumCard from "@/components/PremiumCard";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowRight, CheckCircle2, AlertCircle } from "lucide-react";
@@ -39,7 +40,7 @@ export default function XAdsPage() {
       phone: formData.contact,
       email: "",
       telegram: "",
-      source: formType === "audit" ? "X Ads - Безкоштовний аудит" : "X Ads - План запуску",
+      source: formType === "audit" ? "X Ads - Аудит" : "X Ads - План запуску",
       notes: formData.website ? `Сайт/ніша: ${formData.website}` : ""
     });
   };
@@ -54,11 +55,11 @@ export default function XAdsPage() {
           <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div className="space-y-8">
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight" style={{ fontFamily: "\'Bungee\', \'Eurostile Bold Extended\', sans-serif" }}>
                   <span className="text-white">Отримуйте від 20 заявок на день через </span>
                   <span className="text-[#FFD93D]">X (Twitter)</span>
                 </h1>
-                <p className="text-xl text-zinc-300 leading-relaxed">
+                <p className="text-xl text-zinc-300 leading-relaxed" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>
                   Стабільний потік заявок для вашого бізнесу з запуском за 72 години!
                 </p>
                 <p className="text-sm text-zinc-500">
@@ -66,17 +67,17 @@ export default function XAdsPage() {
                 </p>
                 <div className="flex flex-wrap gap-4">
                   <Button size="lg" className="bg-[#00F0FF] text-black hover:bg-[#00F0FF]/90 font-bold" onClick={() => document.getElementById('audit-form')?.scrollIntoView({ behavior: 'smooth' })}>
-                    Отримати безкоштовний аудит <ArrowRight className="ml-2 w-5 h-5" />
+                    ОТРИМАТИ АУДИТ <ArrowRight className="ml-2 w-5 h-5" />
                   </Button>
-                  <Button size="lg" variant="outline" className="border-[#FFD93D] text-[#FFD93D] hover:bg-[#FFD93D]/10" onClick={() => setModalOpen(true)}>
+                  <Button size="lg" className="bg-[#FFD93D] text-black hover:bg-[#FFD93D]/90 font-bold" onClick={() => setModalOpen(true)}>
                     Залишити заявку
                   </Button>
                 </div>
               </div>
               <div className="relative flex items-center justify-center">
                 <div className="absolute inset-0 bg-gradient-to-tr from-[#FFD93D]/20 to-[#00F0FF]/20 blur-3xl" />
-                <div className="relative z-10 w-full aspect-square max-w-md mx-auto">
-                  <img src="/x-ads-hero.png" alt="X Ads" className="w-full h-full object-contain drop-shadow-2xl" />
+                <div className="relative z-10 w-full max-w-2xl mx-auto">
+                  <img src="/x-ads-hero.png" alt="X Ads" className="w-full h-auto object-contain drop-shadow-2xl" style={{ maxHeight: "850px", minHeight: "500px" }} />
                 </div>
               </div>
             </div>
@@ -87,24 +88,23 @@ export default function XAdsPage() {
         <section className="py-16 bg-zinc-900/50">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-6">Вам це знайомо при роботі з рекламою в X (Twitter)?</h2>
+              <h2 className="text-4xl md:text-5xl font-black text-white mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Вам це знайомо при роботі з рекламою в X (Twitter)?</h2>
             </div>
-            <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto mb-10">
+            <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-10">
               {[
-                { title: "Заявки з'являються нерівномірно", desc: "Сьогодні щось є, завтра — тиша. Немає розуміння, чи це можна повторити." },
-                { title: "Ви не розумієте, що реально працює", desc: "Реклама крутиться, бюджет витрачається, але немає чіткого розуміння, які оголошення приводять заявки." },
-                { title: "Кожна зміна — це експеримент", desc: "Будь-яка правка виглядає як \"давай спробуємо\", а не як кероване рішення." },
-                { title: "Неможливо планувати масштабування", desc: "Ви не можете сказати: \"збільшимо бюджет — отримаємо більше заявок\"." }
+                { title: "Заявки з'являються нерівномірно", desc: "Сьогодні щось є, завтра — тиша. Немає розуміння, чи це можна повторити.", icon: "⚠️" },
+                { title: "Відсутність аналітики", desc: "Реклама крутиться, бюджет витрачається, але немає чіткого розуміння, які оголошення приводять заявки.", icon: "❓" },
+                { title: "Хаотичні експерименти", desc: "Будь-яка правка виглядає як 'давай спробуємо', а не як кероване рішення.", icon: "🎲" },
+                { title: "Неможливо масштабувати", desc: "Ви не можете сказати: 'збільшимо бюджет — отримаємо більше заявок'. Немає передбачуваності.", icon: "🚫" }
               ].map((problem, i) => (
-                <Card key={i} className="bg-zinc-800/50 border-zinc-700 hover:border-red-500/50 transition-all">
-                  <CardContent className="p-6 space-y-4">
-                    <div className="w-12 h-12 bg-red-500/10 rounded-lg flex items-center justify-center text-red-400">
-                      <AlertCircle className="w-6 h-6" />
-                    </div>
-                    <h3 className="text-xl font-bold text-white">{problem.title}</h3>
-                    <p className="text-zinc-400">{problem.desc}</p>
-                  </CardContent>
-                </Card>
+                <PremiumCard
+                  key={i}
+                  icon={<span className="text-4xl">{problem.icon}</span>}
+                  title={problem.title}
+                  description={problem.desc}
+                  borderColor="#EF4444"
+                  iconBgColor="rgba(239, 68, 68, 0.15)"
+                />
               ))}
             </div>
             <div className="text-center">
@@ -119,25 +119,24 @@ export default function XAdsPage() {
         <section className="py-16 bg-black">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-6">Як ми приводимо заявки з X (Twitter)</h2>
-              <p className="text-xl text-zinc-400 max-w-3xl mx-auto">Ми працюємо по чіткій логіці, без хаотичних дій.</p>
+              <h2 className="text-4xl md:text-5xl font-black text-white mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Як ми приводимо заявки з X (Twitter)</h2>
+              <p className="text-xl text-zinc-400 max-w-3xl mx-auto" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>Ми працюємо по чіткій логіці, без хаотичних дій.</p>
             </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+            <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-10">
               {[
-                { num: "1", title: "Готуємо оффер під заявки", desc: "Ми адаптуємо ваш продукт і подачу так, щоб люди не просто бачили рекламу, а залишали заявку.", color: "#FFD93D" },
-                { num: "2", title: "Запускаємо рекламу з фокусом на результат", desc: "Оголошення запускаються одразу з метою отримання заявок, а не охоплень чи кліків.", color: "#00F0FF" },
-                { num: "3", title: "Залишаємо тільки те, що працює", desc: "Ми відсіюємо все неефективне і концентруємо бюджет на оголошеннях, які приводять заявки.", color: "#A855F7" },
-                { num: "4", title: "Масштабуємо стабільний результат", desc: "Коли заявки йдуть рівно, ми збільшуємо обсяг без різких просідань.", color: "#10B981" }
+                { title: "Готуємо оффер під заявки", desc: "Ми адаптуємо ваш продукт і подачу так, щоб люди не просто бачили рекламу, а залишали заявку. Фокус на конверсії, а не на кліках.", icon: "🎯", color: "#FFD93D" },
+                { title: "Запуск з фокусом на результат", desc: "Оголошення запускаються одразу з метою отримання заявок, а не охоплень чи кліків. Системний підхід до тестування.", icon: "🚀", color: "#00F0FF" },
+                { title: "Залишаємо тільки те, що працює", desc: "Ми відсіюємо все неефективне і концентруємо бюджет на оголошеннях, які приводять заявки. Постійна оптимізація.", icon: "✅", color: "#A855F7" },
+                { title: "Масштабуємо стабільний результат", desc: "Коли заявки йдуть рівно, ми збільшуємо обсяг без різких просідань. Прогнозований ріст без ризиків.", icon: "📈", color: "#10B981" }
               ].map((step, i) => (
-                <Card key={i} className="bg-gradient-to-br from-zinc-800/80 to-zinc-900/80 border-zinc-700 transition-all">
-                  <CardContent className="p-6 space-y-4">
-                    <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{ backgroundColor: `${step.color}20` }}>
-                      <span className="text-3xl font-black" style={{ color: step.color }}>{step.num}</span>
-                    </div>
-                    <h3 className="text-2xl font-bold text-white">{step.title}</h3>
-                    <p className="text-zinc-400">{step.desc}</p>
-                  </CardContent>
-                </Card>
+                <PremiumCard
+                  key={i}
+                  icon={<span className="text-4xl">{step.icon}</span>}
+                  title={step.title}
+                  description={step.desc}
+                  borderColor={step.color}
+                  iconBgColor={`${step.color}20`}
+                />
               ))}
             </div>
             <div className="text-center">
@@ -153,8 +152,8 @@ export default function XAdsPage() {
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="max-w-4xl mx-auto">
               <div className="text-center mb-10">
-                <h2 className="text-4xl md:text-5xl font-black text-white mb-6">Безкоштовний аудит реклами в X (Twitter)</h2>
-                <p className="text-xl text-zinc-300 mb-4">Ми подивимось ваш бізнес і скажемо:</p>
+                <h2 className="text-4xl md:text-5xl font-black text-white mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Аудит реклами в X (Twitter)</h2>
+                <p className="text-xl text-zinc-300 mb-4" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>Ми подивимось ваш бізнес і скажемо:</p>
               </div>
               <div className="grid md:grid-cols-3 gap-6 mb-10">
                 {[
@@ -191,7 +190,7 @@ export default function XAdsPage() {
                       <Input type="text" value={formData.website} onChange={(e) => setFormData({ ...formData, website: e.target.value })} placeholder="example.com або опишіть вашу нішу" className="bg-zinc-900 border-zinc-700 text-white" />
                     </div>
                     <Button type="submit" size="lg" className="w-full bg-[#00F0FF] text-black hover:bg-[#00F0FF]/90 font-bold text-lg" disabled={isSubmitting}>
-                      {isSubmitting ? "Відправка..." : "Отримати безкоштовний аудит"}
+                      {isSubmitting ? "Відправка..." : "ОТРИМАТИ АУДИТ"}
                     </Button>
                   </form>
                 </CardContent>
@@ -204,8 +203,8 @@ export default function XAdsPage() {
         <section className="py-16 bg-black">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-6">Як виглядає співпраця</h2>
-              <p className="text-xl text-zinc-400 max-w-3xl mx-auto">Ми беремо рекламу під ключ і ведемо її самостійно.</p>
+              <h2 className="text-4xl md:text-5xl font-black text-white mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Як виглядає співпраця</h2>
+              <p className="text-xl text-zinc-400 max-w-3xl mx-auto" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>Ми беремо рекламу під ключ і ведемо її самостійно.</p>
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
               {[
@@ -234,8 +233,8 @@ export default function XAdsPage() {
         <section className="py-16 bg-zinc-900/50">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-6">До яких результатів приходять клієнти</h2>
-              <p className="text-xl text-zinc-400 max-w-3xl mx-auto mb-8">
+              <h2 className="text-4xl md:text-5xl font-black text-white mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>До яких результатів приходять клієнти</h2>
+              <p className="text-xl text-zinc-400 max-w-3xl mx-auto mb-8" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>
                 X (Twitter) може давати заявки, якщо працювати з ним правильно.
               </p>
             </div>
@@ -255,7 +254,7 @@ export default function XAdsPage() {
               ))}
             </div>
             <div className="text-center">
-              <p className="text-xl text-zinc-300">Кожен проєкт починається з оцінки потенціалу.</p>
+              <p className="text-xl text-zinc-300" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>Кожен проєкт починається з оцінки потенціалу.</p>
             </div>
           </div>
         </section>
@@ -264,7 +263,7 @@ export default function XAdsPage() {
         <section className="py-16 bg-black">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-6">Питання та відповіді</h2>
+              <h2 className="text-4xl md:text-5xl font-black text-white mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Питання та відповіді</h2>
             </div>
             <div className="max-w-4xl mx-auto space-y-6">
               {[
@@ -289,8 +288,8 @@ export default function XAdsPage() {
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="max-w-4xl mx-auto">
               <div className="text-center mb-10">
-                <h2 className="text-4xl md:text-5xl font-black text-white mb-6">Готові отримувати заявки з X (Twitter)?</h2>
-                <p className="text-xl text-zinc-300">
+                <h2 className="text-4xl md:text-5xl font-black text-white mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Готові отримувати заявки з X (Twitter)?</h2>
+                <p className="text-xl text-zinc-300" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>
                   Залиште заявку — ми подивимось ваш бізнес і запропонуємо чіткий план запуску реклами.
                 </p>
               </div>

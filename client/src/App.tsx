@@ -13,6 +13,12 @@ import AgencyHome from "./pages/agency/AgencyHome";
 import AgencyThankYou from "./pages/agency/ThankYou";
 import MetaAdsLanding from "./pages/MetaAdsLanding";
 import GoogleAdsPage from "./pages/GoogleAds";
+import TikTokAdsPage from "./pages/TikTokAds";
+import XAdsPage from "./pages/XAds";
+import TelegramAdsPage from "./pages/TelegramAds";
+import WebDevelopmentPage from "./pages/WebDevelopment";
+import WebDesignPage from "./pages/WebDesign";
+import AppDevelopmentPage from "./pages/AppDevelopment";
 
 // Quiz System Pages (moved to /quiz-service)
 import Home from "./pages/Home";
@@ -90,6 +96,12 @@ function Router() {
       <Route path={"/"} component={AgencyHome} />
       <Route path="/services/meta-ads" component={MetaAdsLanding} />
       <Route path="/services/google-ads" component={GoogleAdsPage} />
+      <Route path="/services/tiktok-ads" component={TikTokAdsPage} />
+      <Route path="/services/x-ads" component={XAdsPage} />
+      <Route path="/services/telegram-ads" component={TelegramAdsPage} />
+      <Route path="/services/web-development" component={WebDevelopmentPage} />
+      <Route path="/services/web-design" component={WebDesignPage} />
+      <Route path="/services/app-development" component={AppDevelopmentPage} />
       <Route path="/blog" component={BlogList} />
       <Route path="/blog/:slug" component={BlogPost} />
       <Route path="/case-studies/:slug" component={CaseStudyPage} />

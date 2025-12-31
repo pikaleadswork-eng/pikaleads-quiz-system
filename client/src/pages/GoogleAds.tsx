@@ -4,6 +4,7 @@ import CyberpunkNavigation from "@/components/CyberpunkNavigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import PremiumCard from "@/components/PremiumCard";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowRight, CheckCircle2, AlertCircle } from "lucide-react";
@@ -44,7 +45,7 @@ export default function GoogleAdsPage() {
       phone: formData.contact,
       email: "",
       telegram: "",
-      source: formType === "audit" ? "Google Ads - Безкоштовний аудит" : "Google Ads - План запуску",
+      source: formType === "audit" ? "Google Ads - Аудит" : "Google Ads - План запуску",
       notes: formData.website ? `Сайт/ніша: ${formData.website}` : ""
     });
   };
@@ -70,16 +71,16 @@ export default function GoogleAdsPage() {
           <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div className="space-y-8">
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight" style={{ fontFamily: "\'Bungee\', \'Eurostile Bold Extended\', sans-serif" }}>
                   <span className="text-white">Заявки за зрозумілою ціною — </span>
                   <span className="text-[#FFD93D]">без хаосу і зливу бюджету</span>
                 </h1>
                 
-                <p className="text-xl text-zinc-300 leading-relaxed">
+                <p className="text-xl text-zinc-300 leading-relaxed" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>
                   Ми беремо на себе всю рекламу в Google, щоб ви стабільно отримували заявки і могли масштабуватися.
                 </p>
 
-                <p className="text-lg text-zinc-400">
+                <p className="text-lg text-zinc-400" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>
                   Запуск, ведення та оптимізація реклами — під ключ, без вашої участі в процесі.
                 </p>
 
@@ -89,27 +90,24 @@ export default function GoogleAdsPage() {
                     className="bg-[#00F0FF] text-black hover:bg-[#00F0FF]/90 font-bold"
                     onClick={() => document.getElementById('audit-form')?.scrollIntoView({ behavior: 'smooth' })}
                   >
-                    Отримати безкоштовний аудит <ArrowRight className="ml-2 w-5 h-5" />
+                    ОТРИМАТИ АУДИТ <ArrowRight className="ml-2 w-5 h-5" />
                   </Button>
                   <Button 
                     size="lg" 
-                    variant="outline" 
-                    className="border-[#FFD93D] text-[#FFD93D] hover:bg-[#FFD93D]/10"
+                    className="bg-[#FFD93D] text-black hover:bg-[#FFD93D]/90 font-bold"
                     onClick={() => document.getElementById('final-form')?.scrollIntoView({ behavior: 'smooth' })}
                   >
                     Залишити заявку
                   </Button>
                 </div>
 
-                <p className="text-sm text-zinc-500">
-                  Без зобов'язань. Скажемо чесно, чи має сенс запуск у вашій ніші.
-                </p>
+                
               </div>
 
               <div className="relative flex items-center justify-center">
                 <div className="absolute inset-0 bg-gradient-to-tr from-[#FFD93D]/20 to-[#00F0FF]/20 blur-3xl" />
-                <div className="relative z-10 w-full aspect-square max-w-md mx-auto">
-                  <img src="/google-ads-hero.png" alt="Google Ads" className="w-full h-full object-contain drop-shadow-2xl" />
+                <div className="relative z-10 w-full max-w-2xl mx-auto">
+                  <img src="/google-ads-hero.png" alt="Google Ads" className="w-full h-auto object-contain drop-shadow-2xl" style={{ maxHeight: "850px", minHeight: "500px" }} />
                 </div>
               </div>
             </div>
@@ -120,52 +118,32 @@ export default function GoogleAdsPage() {
         <section className="py-20 bg-zinc-900/50">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-6">Вам це знайомо?</h2>
-              <p className="text-xl text-zinc-400 max-w-3xl mx-auto">
+              <h2 className="text-4xl md:text-5xl font-black text-white mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Вам це знайомо?</h2>
+              <p className="text-xl text-zinc-400 max-w-3xl mx-auto" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>
                 Реклама в Google ніби працює, але не як стабільний бізнес-інструмент.
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto mb-12">
-              <Card className="bg-zinc-800/50 border-zinc-700 hover:border-red-500/50 transition-all">
-                <CardContent className="p-6 space-y-4">
-                  <div className="w-12 h-12 bg-red-500/10 rounded-lg flex items-center justify-center text-red-400">
-                    <AlertCircle className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-xl font-bold text-white">заявки з'являються нерівномірно</h3>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-zinc-800/50 border-zinc-700 hover:border-red-500/50 transition-all">
-                <CardContent className="p-6 space-y-4">
-                  <div className="w-12 h-12 bg-red-500/10 rounded-lg flex items-center justify-center text-red-400">
-                    <AlertCircle className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-xl font-bold text-white">бюджет витрачається, але складно зрозуміти, що саме дає результат</h3>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-zinc-800/50 border-zinc-700 hover:border-red-500/50 transition-all">
-                <CardContent className="p-6 space-y-4">
-                  <div className="w-12 h-12 bg-red-500/10 rounded-lg flex items-center justify-center text-red-400">
-                    <AlertCircle className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-xl font-bold text-white">кожна зміна в рекламі виглядає як новий експеримент</h3>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-zinc-800/50 border-zinc-700 hover:border-red-500/50 transition-all">
-                <CardContent className="p-6 space-y-4">
-                  <div className="w-12 h-12 bg-red-500/10 rounded-lg flex items-center justify-center text-red-400">
-                    <AlertCircle className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-xl font-bold text-white">важко планувати зростання, бо немає передбачуваності</h3>
-                </CardContent>
-              </Card>
+            <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-12">
+              {[
+                { title: "Нерівномірні заявки", desc: "Заявки з'являються нерівномірно. Сьогодні є, завтра немає. Важко планувати роботу відділу продажів.", icon: "📉" },
+                { title: "Незрозумілі витрати", desc: "Бюджет витрачається, але складно зрозуміти, що саме дає результат. Немає чіткої аналітики.", icon: "💸" },
+                { title: "Постійні експерименти", desc: "Кожна зміна в рекламі виглядає як новий експеримент. Немає системного підходу до оптимізації.", icon: "🔄" },
+                { title: "Неможливо планувати зростання", desc: "Важко планувати зростання, бо немає передбачуваності. Реклама забирає увагу замість того, щоб приносити спокій.", icon: "⏸️" }
+              ].map((problem, i) => (
+                <PremiumCard
+                  key={i}
+                  icon={<span className="text-4xl">{problem.icon}</span>}
+                  title={problem.title}
+                  description={problem.desc}
+                  borderColor="#EF4444"
+                  iconBgColor="rgba(239, 68, 68, 0.15)"
+                />
+              ))}
             </div>
 
             <div className="text-center space-y-4">
-              <p className="text-xl text-zinc-300">
+              <p className="text-xl text-zinc-300" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>
                 У результаті реклама починає забирати увагу, замість того щоб приносити заявки і спокій.
               </p>
               <p className="text-2xl font-bold text-[#FFD93D]">
@@ -179,62 +157,30 @@ export default function GoogleAdsPage() {
         <section className="py-20 bg-black">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-6">
+              <h2 className="text-4xl md:text-5xl font-black text-white mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>
                 Як ми будуємо систему, яка приносить заявки
               </h2>
-              <p className="text-xl text-zinc-400 max-w-3xl mx-auto">
+              <p className="text-xl text-zinc-400 max-w-3xl mx-auto" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>
                 Ми забираємо всі незрозумілі рекламні задачі на себе і вибудовуємо послідовний процес, який працює в довгу.
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-              <Card className="bg-gradient-to-br from-zinc-800/80 to-zinc-900/80 border-[#FFD93D]/30 hover:border-[#FFD93D] transition-all">
-                <CardContent className="p-6 space-y-4">
-                  <div className="w-16 h-16 bg-[#FFD93D]/20 rounded-full flex items-center justify-center">
-                    <span className="text-3xl font-black text-[#FFD93D]">1</span>
-                  </div>
-                  <h3 className="text-2xl font-bold text-white">Аналіз і основа</h3>
-                  <p className="text-zinc-400">
-                    Починаємо з розуміння бізнесу: що продаємо, кому і за якою логікою люди залишають заявки.
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-gradient-to-br from-zinc-800/80 to-zinc-900/80 border-[#00F0FF]/30 hover:border-[#00F0FF] transition-all">
-                <CardContent className="p-6 space-y-4">
-                  <div className="w-16 h-16 bg-[#00F0FF]/20 rounded-full flex items-center justify-center">
-                    <span className="text-3xl font-black text-[#00F0FF]">2</span>
-                  </div>
-                  <h3 className="text-2xl font-bold text-white">Структура реклами</h3>
-                  <p className="text-zinc-400">
-                    Будуємо логічну структуру кампаній, де кожен елемент виконує конкретну задачу.
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-gradient-to-br from-zinc-800/80 to-zinc-900/80 border-purple-500/30 hover:border-purple-500 transition-all">
-                <CardContent className="p-6 space-y-4">
-                  <div className="w-16 h-16 bg-purple-500/20 rounded-full flex items-center justify-center">
-                    <span className="text-3xl font-black text-purple-400">3</span>
-                  </div>
-                  <h3 className="text-2xl font-bold text-white">Оптимізація під результат</h3>
-                  <p className="text-zinc-400">
-                    Регулярно працюємо з витратами і якістю заявок, прибираючи все зайве і підсилюючи те, що працює.
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-gradient-to-br from-zinc-800/80 to-zinc-900/80 border-green-500/30 hover:border-green-500 transition-all">
-                <CardContent className="p-6 space-y-4">
-                  <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center">
-                    <span className="text-3xl font-black text-green-400">4</span>
-                  </div>
-                  <h3 className="text-2xl font-bold text-white">Масштабування</h3>
-                  <p className="text-zinc-400">
-                    Коли система стабільна — бюджет можна збільшувати без різких просідань.
-                  </p>
-                </CardContent>
-              </Card>
+            <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-12">
+              {[
+                { title: "Аналіз і основа", desc: "Починаємо з розуміння бізнесу: що продаємо, кому і за якою логікою люди залишають заявки. Глибокий аналіз аудиторії та конкурентів.", icon: "🔍", color: "#FFD93D" },
+                { title: "Структура реклами", desc: "Будуємо логічну структуру кампаній, де кожен елемент виконує конкретну задачу. Чітка сегментація та таргетинг.", icon: "🏭️", color: "#00F0FF" },
+                { title: "Оптимізація під результат", desc: "Регулярно працюємо з витратами і якістю заявок, прибираючи все зайве і підсилюючи те, що працює. Постійний моніторинг KPI.", icon: "⚙️", color: "#A855F7" },
+                { title: "Масштабування", desc: "Коли система стабільна — бюджет можна збільшувати без різких просідань. Прогнозований ріст та контрольоване масштабування.", icon: "📈", color: "#10B981" }
+              ].map((step, i) => (
+                <PremiumCard
+                  key={i}
+                  icon={<span className="text-4xl">{step.icon}</span>}
+                  title={step.title}
+                  description={step.desc}
+                  borderColor={step.color}
+                  iconBgColor={`${step.color}20`}
+                />
+              ))}
             </div>
 
             <div className="text-center">
@@ -250,10 +196,10 @@ export default function GoogleAdsPage() {
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="max-w-4xl mx-auto">
               <div className="text-center mb-12">
-                <h2 className="text-4xl md:text-5xl font-black text-white mb-6">
-                  Безкоштовний аудит реклами в Google
+                <h2 className="text-4xl md:text-5xl font-black text-white mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>
+                  Аудит реклами в Google
                 </h2>
-                <p className="text-xl text-zinc-300 mb-4">
+                <p className="text-xl text-zinc-300 mb-4" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>
                   Ми подивимось вашу ситуацію і дамо чітке розуміння:
                 </p>
               </div>
@@ -331,7 +277,7 @@ export default function GoogleAdsPage() {
                       className="w-full bg-[#00F0FF] text-black hover:bg-[#00F0FF]/90 font-bold text-lg"
                       disabled={isSubmitting}
                     >
-                      {isSubmitting ? "Відправка..." : "Отримати безкоштовний аудит"}
+                      {isSubmitting ? "Відправка..." : "ОТРИМАТИ АУДИТ"}
                     </Button>
                   </form>
                 </CardContent>
@@ -344,10 +290,10 @@ export default function GoogleAdsPage() {
         <section className="py-20 bg-black">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-6">
+              <h2 className="text-4xl md:text-5xl font-black text-white mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>
                 Як виглядає робота з нами
               </h2>
-              <p className="text-xl text-zinc-400 max-w-3xl mx-auto">
+              <p className="text-xl text-zinc-400 max-w-3xl mx-auto" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>
                 Ми беремо рекламу в Google під ключ і відповідаємо за результат у своїй зоні відповідальності.
               </p>
             </div>
@@ -394,10 +340,10 @@ export default function GoogleAdsPage() {
         <section className="py-20 bg-zinc-900/50">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-6">
+              <h2 className="text-4xl md:text-5xl font-black text-white mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>
                 До яких результатів ми приходимо з клієнтами
               </h2>
-              <p className="text-xl text-zinc-400 max-w-3xl mx-auto mb-8">
+              <p className="text-xl text-zinc-400 max-w-3xl mx-auto mb-8" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>
                 Ми не обіцяємо однакові цифри для всіх. Ми будуємо систему, яка дає стабільність і можливість росту.
               </p>
             </div>
@@ -433,7 +379,7 @@ export default function GoogleAdsPage() {
             </div>
 
             <div className="text-center">
-              <p className="text-xl text-zinc-300">
+              <p className="text-xl text-zinc-300" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>
                 Кожен проєкт починається з оцінки потенціалу і чесного розуміння можливого результату.
               </p>
             </div>
@@ -444,7 +390,7 @@ export default function GoogleAdsPage() {
         <section className="py-20 bg-black">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-6">
+              <h2 className="text-4xl md:text-5xl font-black text-white mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>
                 Питання та відповіді
               </h2>
             </div>
@@ -502,10 +448,10 @@ export default function GoogleAdsPage() {
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="max-w-4xl mx-auto">
               <div className="text-center mb-12">
-                <h2 className="text-4xl md:text-5xl font-black text-white mb-6">
+                <h2 className="text-4xl md:text-5xl font-black text-white mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>
                   Готові отримувати заявки без хаосу в рекламі?
                 </h2>
-                <p className="text-xl text-zinc-300">
+                <p className="text-xl text-zinc-300" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>
                   Залиште заявку — ми подивимось ваш бізнес і запропонуємо зрозумілий план дій.
                 </p>
               </div>

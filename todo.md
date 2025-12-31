@@ -75,3 +75,35 @@
 - [ ] Test popup modal works on all pages
 - [ ] Test all forms submit correctly
 - [ ] Verify unified design across all 7 pages
+
+## URGENT: Service Pages Fixes (2025-12-31)
+
+### Critical Issues
+- [x] Fix TikTok Ads 404 error - check route in App.tsx
+- [x] Fix X (Twitter) Ads 404 error - check route in App.tsx
+- [x] Fix all other service pages 404 errors
+- [x] Verify all routes work: /services/tiktok-ads, /services/x-ads, /services/telegram-ads, /services/web-development, /services/web-design, /services/app-development
+
+### Design Improvements
+- [x] Apply homepage fonts to ALL service pages (Bungee for headings, Eurostile Bold Extended for body text)
+- [x] Redesign all content cards with premium style (large icons, neon borders, gradient backgrounds like reference image)
+- [x] Add large platform icons to "Вам це знайомо" blocks on TikTok, X, Google, Telegram Ads
+- [x] Add icons to "Наше рішення" blocks on TikTok, X, Google, Telegram Ads
+- [x] Add premium cards to Web Development page
+- [x] Add premium cards to Web Design page
+- [x] Add premium cards to App Development page
+
+### Button Fixes
+- [x] Change "ОТРИМАТИ БЕЗКОШТОВНИЙ АУДИТ" to "ОТРИМАТИ АУДИТ" everywhere
+- [x] Make "Залишити заявку" button yellow (#FFD93D) with black text
+- [x] Remove text "Без зобов'язань. Скажемо чесно, чи має сенс запуск у вашій ніші."
+
+### Pikachu Size Fixes
+- [x] Increase Pikachu size on TikTok Ads page to match homepage (500-850px)
+- [x] Increase Pikachu size on X Ads page to match homepage
+- [x] Increase Pikachu size on Telegram Ads page to match homepage
+- [x] Increase Pikachu size on Google Ads page to match homepage
+- [x] Increase Pikachu size on Web Dev page to match homepage
+- [x] Increase Pikachu size on Web Design page to match homepage
+- [x] Increase Pikachu size on App Dev page to match homepage
+- [ ] Verify Pikachu responsive sizing on mobile/tablet/desktop

@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import LeadCaptureModal from "@/components/LeadCaptureModal";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import PremiumCard from "@/components/PremiumCard";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowRight, CheckCircle2, AlertCircle } from "lucide-react";
@@ -72,16 +73,16 @@ export default function TikTokAdsPage() {
           <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div className="space-y-8">
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight" style={{ fontFamily: "'Bungee', 'Eurostile Bold Extended', sans-serif" }}>
                   <span className="text-white">Стабільні заявки з TikTok Ads — </span>
                   <span className="text-[#FFD93D]">без хаосу і ручного контролю</span>
                 </h1>
                 
-                <p className="text-xl text-zinc-300 leading-relaxed">
+                <p className="text-xl text-zinc-300 leading-relaxed" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
                   Ми беремо на себе всю рекламу в TikTok, щоб ви отримували заявки з нового каналу і могли масштабуватися.
                 </p>
 
-                <p className="text-lg text-zinc-400">
+                <p className="text-lg text-zinc-400" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
                   Запуск, тестування та ведення TikTok Ads — під ключ, без вашого залучення.
                 </p>
 
@@ -91,27 +92,24 @@ export default function TikTokAdsPage() {
                     className="bg-[#00F0FF] text-black hover:bg-[#00F0FF]/90 font-bold"
                     onClick={() => document.getElementById('audit-form')?.scrollIntoView({ behavior: 'smooth' })}
                   >
-                    Отримати безкоштовний аудит <ArrowRight className="ml-2 w-5 h-5" />
+                    ОТРИМАТИ АУДИТ <ArrowRight className="ml-2 w-5 h-5" />
                   </Button>
                   <Button 
                     size="lg" 
-                    variant="outline" 
-                    className="border-[#FFD93D] text-[#FFD93D] hover:bg-[#FFD93D]/10"
+                    className="bg-[#FFD93D] text-black hover:bg-[#FFD93D]/90 font-bold"
                     onClick={() => setModalOpen(true)}
                   >
                     Залишити заявку
                   </Button>
                 </div>
 
-                <p className="text-sm text-zinc-500">
-                  Скажемо прямо, чи підходить TikTok для вашого бізнесу.
-                </p>
+
               </div>
 
               <div className="relative flex items-center justify-center">
                 <div className="absolute inset-0 bg-gradient-to-tr from-[#FFD93D]/20 to-[#00F0FF]/20 blur-3xl" />
-                <div className="relative z-10 w-full aspect-square max-w-md mx-auto">
-                  <img src="/tiktok-ads-hero.png" alt="TikTok Ads" className="w-full h-full object-contain drop-shadow-2xl" />
+                <div className="relative z-10 w-full max-w-2xl mx-auto">
+                  <img src="/tiktok-ads-hero.png" alt="TikTok Ads" className="w-full h-auto object-contain drop-shadow-2xl" style={{ maxHeight: "850px", minHeight: "500px" }} />
                 </div>
               </div>
             </div>
@@ -122,27 +120,27 @@ export default function TikTokAdsPage() {
         <section className="py-16 bg-zinc-900/50">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-6">Вам це знайомо?</h2>
+              <h2 className="text-4xl md:text-5xl font-black text-white mb-6" style={{ fontFamily: "'Bungee', sans-serif" }}>Вам це знайомо?</h2>
               <p className="text-xl text-zinc-400 max-w-3xl mx-auto">
                 TikTok виглядає перспективно, але результату або немає, або він нестабільний.
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto mb-10">
+            <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-10">
               {[
-                "заявки можуть бути, але їх складно повторити",
-                "креативи \"вигорають\" за кілька днів",
-                "складно зрозуміти, що саме спрацювало",
-                "бюджет витрачається швидко, а впевненості немає"
+                { title: "Нестабільні результати", desc: "Заявки можуть бути, але їх складно повторити. Сьогодні працює, завтра — ні." },
+                { title: "Швидке вигорання", desc: "Креативи \"вигорають\" за кілька днів. Постійно потрібен новий контент." },
+                { title: "Відсутність аналітики", desc: "Складно зрозуміти, що саме спрацювало. Немає чіткої системи тестування." },
+                { title: "Невпевненість у бюджеті", desc: "Бюджет витрачається швидко, а впевненості в результаті немає." }
               ].map((problem, i) => (
-                <Card key={i} className="bg-zinc-800/50 border-zinc-700 hover:border-red-500/50 transition-all">
-                  <CardContent className="p-6 space-y-4">
-                    <div className="w-12 h-12 bg-red-500/10 rounded-lg flex items-center justify-center text-red-400">
-                      <AlertCircle className="w-6 h-6" />
-                    </div>
-                    <h3 className="text-xl font-bold text-white">{problem}</h3>
-                  </CardContent>
-                </Card>
+                <PremiumCard
+                  key={i}
+                  icon={<AlertCircle className="w-10 h-10" />}
+                  title={problem.title}
+                  description={problem.desc}
+                  borderColor="#EF4444"
+                  iconBgColor="rgba(239, 68, 68, 0.15)"
+                />
               ))}
             </div>
 
@@ -161,7 +159,7 @@ export default function TikTokAdsPage() {
         <section className="py-16 bg-black">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-6">
+              <h2 className="text-4xl md:text-5xl font-black text-white mb-6" style={{ fontFamily: "'Bungee', sans-serif" }}>
                 Як ми будуємо результат у TikTok Ads
               </h2>
               <p className="text-xl text-zinc-400 max-w-3xl mx-auto">
@@ -169,22 +167,21 @@ export default function TikTokAdsPage() {
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+            <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-10">
               {[
-                { num: "1", title: "Позиціонування і сценарії", desc: "Формуємо правильну подачу продукту під TikTok: хуки, сценарії, формати, які реально дивляться.", color: "#FFD93D" },
-                { num: "2", title: "Запуск і тестування", desc: "Запускаємо кілька креативних гіпотез, швидко відсіюємо слабке і залишаємо те, що працює.", color: "#00F0FF" },
-                { num: "3", title: "Оптимізація під заявки", desc: "Фокус не на переглядах, а на реальних зверненнях, які можна масштабувати.", color: "#A855F7" },
-                { num: "4", title: "Масштабування", desc: "Коли є стабільна логіка, ми збільшуємо бюджети без хаотичних зливів.", color: "#10B981" }
+                { title: "Позиціонування і сценарії", desc: "Формуємо правильну подачу продукту під TikTok: хуки, сценарії, формати, які реально дивляться. Створюємо контент, який зупиняє скрол.", color: "#FFD93D", icon: "🎯" },
+                { title: "Запуск і тестування", desc: "Запускаємо кілька креативних гіпотез, швидко відсіюємо слабке і залишаємо те, що працює. Системний підхід до тестування.", color: "#00F0FF", icon: "🚀" },
+                { title: "Оптимізація під заявки", desc: "Фокус не на переглядах, а на реальних зверненнях, які можна масштабувати. Налаштовуємо під ваші бізнес-метрики.", color: "#A855F7", icon: "📊" },
+                { title: "Масштабування", desc: "Коли є стабільна логіка, ми збільшуємо бюджети без хаотичних зливів. Прогнозований ріст без ризиків.", color: "#10B981", icon: "📈" }
               ].map((step, i) => (
-                <Card key={i} className="bg-gradient-to-br from-zinc-800/80 to-zinc-900/80 border-zinc-700 hover:border-[${step.color}] transition-all">
-                  <CardContent className="p-6 space-y-4">
-                    <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{ backgroundColor: `${step.color}20` }}>
-                      <span className="text-3xl font-black" style={{ color: step.color }}>{step.num}</span>
-                    </div>
-                    <h3 className="text-2xl font-bold text-white">{step.title}</h3>
-                    <p className="text-zinc-400">{step.desc}</p>
-                  </CardContent>
-                </Card>
+                <PremiumCard
+                  key={i}
+                  icon={<span className="text-4xl">{step.icon}</span>}
+                  title={step.title}
+                  description={step.desc}
+                  borderColor={step.color}
+                  iconBgColor={`${step.color}20`}
+                />
               ))}
             </div>
 
@@ -201,7 +198,7 @@ export default function TikTokAdsPage() {
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="max-w-4xl mx-auto">
               <div className="text-center mb-10">
-                <h2 className="text-4xl md:text-5xl font-black text-white mb-6">
+                <h2 className="text-4xl md:text-5xl font-black text-white mb-6" style={{ fontFamily: "'Bungee', sans-serif" }}>
                   Безкоштовний аудит TikTok Ads
                 </h2>
                 <p className="text-xl text-zinc-300 mb-4">
@@ -274,7 +271,7 @@ export default function TikTokAdsPage() {
                       className="w-full bg-[#00F0FF] text-black hover:bg-[#00F0FF]/90 font-bold text-lg"
                       disabled={isSubmitting}
                     >
-                      {isSubmitting ? "Відправка..." : "Отримати безкоштовний аудит"}
+                      {isSubmitting ? "Відправка..." : "ОТРИМАТИ АУДИТ"}
                     </Button>
                   </form>
                 </CardContent>
@@ -287,7 +284,7 @@ export default function TikTokAdsPage() {
         <section className="py-16 bg-black">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-6">
+              <h2 className="text-4xl md:text-5xl font-black text-white mb-6" style={{ fontFamily: "'Bungee', sans-serif" }}>
                 Як виглядає робота з нами
               </h2>
               <p className="text-xl text-zinc-400 max-w-3xl mx-auto">
@@ -323,7 +320,7 @@ export default function TikTokAdsPage() {
         <section className="py-16 bg-zinc-900/50">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-6">
+              <h2 className="text-4xl md:text-5xl font-black text-white mb-6" style={{ fontFamily: "'Bungee', sans-serif" }}>
                 До яких результатів ми приходимо в TikTok Ads
               </h2>
               <p className="text-xl text-zinc-400 max-w-3xl mx-auto mb-8">
@@ -359,7 +356,7 @@ export default function TikTokAdsPage() {
         <section className="py-16 bg-black">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-6">
+              <h2 className="text-4xl md:text-5xl font-black text-white mb-6" style={{ fontFamily: "'Bungee', sans-serif" }}>
                 Питання та відповіді
               </h2>
             </div>
@@ -389,7 +386,7 @@ export default function TikTokAdsPage() {
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="max-w-4xl mx-auto">
               <div className="text-center mb-10">
-                <h2 className="text-4xl md:text-5xl font-black text-white mb-6">
+                <h2 className="text-4xl md:text-5xl font-black text-white mb-6" style={{ fontFamily: "'Bungee', sans-serif" }}>
                   Готові запустити TikTok як канал заявок?
                 </h2>
                 <p className="text-xl text-zinc-300">
