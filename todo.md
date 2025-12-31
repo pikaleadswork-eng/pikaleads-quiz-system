@@ -177,3 +177,17 @@
 - [x] Add flex-grow to description paragraphs
 - [x] Add mt-auto to buttons/bottom elements
 - [x] Test equal heights on all breakpoints
+
+
+## Phase 191: Fix Oversized Card Titles (2025-12-31)
+
+### Problem:
+- [x] Card titles are too large and break into multiple lines
+- [x] Text overflows card boundaries on all service pages
+- [x] Affects problem cards and solution cards
+
+### Solution:
+- [x] Reduce PremiumCard title font size from text-2xl to text-lg/xl
+- [x] Test on all 7 service pages
+- [x] Ensure titles fit in one line on desktop
+- [x] Verify responsive behavior on mobile
