@@ -117,16 +117,16 @@ export default function GoogleAdsPage() {
         </section>
 
         {/* БЛОК 2. ВАМ ЦЕ ЗНАЙОМО? */}
-        <section className="py-20 bg-zinc-900/50">
+        <section className="py-12 bg-zinc-900/50">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-            <div className="text-center mb-16">
+            <div className="text-center mb-10">
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Вам це знайомо?</h2>
               <p className="text-base sm:text-lg md:text-xl text-zinc-400 max-w-3xl mx-auto" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>
                 Реклама в Google ніби працює, але не як стабільний бізнес-інструмент.
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-12">
+            <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-10">
               {[
                 { title: "Нерівномірні заявки", desc: "Заявки з'являються нерівномірно. Сьогодні є, завтра немає. Важко планувати роботу відділу продажів.", icon: "📉" },
                 { title: "Незрозумілі витрати", desc: "Бюджет витрачається, але складно зрозуміти, що саме дає результат. Немає чіткої аналітики.", icon: "💸" },
@@ -156,9 +156,9 @@ export default function GoogleAdsPage() {
         </section>
 
         {/* БЛОК 3. РІШЕННЯ — СИСТЕМА 1–2–3–4 */}
-        <section className="py-20 bg-black">
+        <section className="py-12 bg-black">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-            <div className="text-center mb-16">
+            <div className="text-center mb-10">
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>
                 Як ми будуємо систему, яка приносить заявки
               </h2>
@@ -167,7 +167,7 @@ export default function GoogleAdsPage() {
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-12">
+            <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-10">
               {[
                 { title: "Аналіз і основа", desc: "Починаємо з розуміння бізнесу: що продаємо, кому і за якою логікою люди залишають заявки. Проводимо глибокий аналіз аудиторії та конкурентів для побудови ефективної стратегії.", icon: "🔍", color: "#FFD93D" },
                 { title: "Структура реклами", desc: "Будуємо логічну структуру кампаній, де кожен елемент виконує конкретну задачу. Впроваджуємо чітку сегментацію та таргетинг для максимальної ефективності.", icon: "🏭️", color: "#00F0FF" },
@@ -194,10 +194,10 @@ export default function GoogleAdsPage() {
         </section>
 
         {/* БЛОК 4. ЛІДГЕН З ОБМЕЖЕННЯМ */}
-        <section id="audit-form" className="py-20 bg-gradient-to-br from-zinc-900 to-black">
+        <section id="audit-form" className="py-12 bg-gradient-to-br from-zinc-900 to-black">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="max-w-4xl mx-auto">
-              <div className="text-center mb-8 sm:mb-12">
+              <div className="text-center mb-8 sm:mb-10">
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>
                   Аудит реклами в Google
                 </h2>
@@ -206,7 +206,7 @@ export default function GoogleAdsPage() {
                 </p>
               </div>
 
-              <div className="grid md:grid-cols-3 gap-6 mb-12">
+              <div className="grid md:grid-cols-3 gap-6 mb-10">
                 <Card className="bg-zinc-800/50 border-[#FFD93D]/30">
                   <CardContent className="p-6 text-center">
                     <CheckCircle2 className="w-8 h-8 text-[#FFD93D] mx-auto mb-4" />
@@ -289,9 +289,9 @@ export default function GoogleAdsPage() {
         </section>
 
         {/* БЛОК 5. ЯК МИ ПРАЦЮЄМО */}
-        <section className="py-20 bg-black">
+        <section className="py-12 bg-black">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-            <div className="text-center mb-16">
+            <div className="text-center mb-10">
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>
                 Як виглядає робота з нами
               </h2>
@@ -300,7 +300,7 @@ export default function GoogleAdsPage() {
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
               <PremiumCard
                 icon={<CheckCircle2 className="w-8 h-8 sm:w-10 sm:h-10 text-black" />}
                 title="Усі налаштування і ведення — на нашій стороні"
@@ -340,9 +340,9 @@ export default function GoogleAdsPage() {
         </section>
 
         {/* БЛОК 6. КЕЙСИ / РЕЗУЛЬТАТИ */}
-        <section className="py-20 bg-zinc-900/50">
+        <section className="py-12 bg-zinc-900/50">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-            <div className="text-center mb-16">
+            <div className="text-center mb-10">
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>
                 До яких результатів ми приходимо з клієнтами
               </h2>
@@ -351,7 +351,7 @@ export default function GoogleAdsPage() {
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
               <PremiumCard
                 icon={<span className="text-4xl sm:text-5xl">📈</span>}
                 title="Вирівнювання потоку заявок"
@@ -394,9 +394,9 @@ export default function GoogleAdsPage() {
         <CaseStudiesSection pageSlug="google-ads" limit={4} />
 
         {/* БЛОК 7. FAQ */}
-        <section className="py-20 bg-black">
+        <section className="py-12 bg-black">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-            <div className="text-center mb-16">
+            <div className="text-center mb-10">
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "'Bungee', sans-serif" }}>
                 Питання та відповіді
               </h2>
@@ -430,10 +430,10 @@ export default function GoogleAdsPage() {
         </section>
 
         {/* БЛОК 8. ФІНАЛЬНИЙ ЛІДГЕН */}
-        <section id="final-form" className="py-20 bg-gradient-to-br from-zinc-900 via-black to-zinc-900">
+        <section id="final-form" className="py-12 bg-gradient-to-br from-zinc-900 via-black to-zinc-900">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="max-w-4xl mx-auto">
-              <div className="text-center mb-8 sm:mb-12">
+              <div className="text-center mb-8 sm:mb-10">
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>
                   Готові отримувати заявки без хаосу в рекламі?
                 </h2>

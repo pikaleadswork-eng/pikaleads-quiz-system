@@ -121,7 +121,7 @@ export default function TikTokAdsPage() {
         {/* БЛОК 2. ВАМ ЦЕ ЗНАЙОМО? */}
         <section className="py-12 sm:py-16 bg-zinc-900/50">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-            <div className="text-center mb-8 sm:mb-12">
+            <div className="text-center mb-8 sm:mb-10">
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "'Bungee', sans-serif" }}>Вам це знайомо?</h2>
               <p className="text-base sm:text-lg md:text-xl text-zinc-400 max-w-3xl mx-auto">
                 TikTok виглядає перспективно, але результату або немає, або він нестабільний.
@@ -160,7 +160,7 @@ export default function TikTokAdsPage() {
         {/* БЛОК 3. РІШЕННЯ — СИСТЕМА 1–2–3–4 */}
         <section className="py-12 sm:py-16 bg-black">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-            <div className="text-center mb-8 sm:mb-12">
+            <div className="text-center mb-8 sm:mb-10">
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "'Bungee', sans-serif" }}>
                 Як ми будуємо результат у TikTok Ads
               </h2>
@@ -283,9 +283,9 @@ export default function TikTokAdsPage() {
         </section>
 
         {/* БЛОК 5. ЯК МИ ПРАЦЮЄМО */}
-        <section className="py-16 bg-black">
+        <section className="py-12 bg-black">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-            <div className="text-center mb-12">
+            <div className="text-center mb-10">
               <h2 className="text-4xl md:text-5xl font-black text-white mb-6" style={{ fontFamily: "'Bungee', sans-serif" }}>
                 Як виглядає робота з нами
               </h2>
@@ -319,9 +319,9 @@ export default function TikTokAdsPage() {
         </section>
 
         {/* БЛОК 6. КЕЙСИ / РЕЗУЛЬТАТИ */}
-        <section className="py-16 bg-zinc-900/50">
+        <section className="py-12 bg-zinc-900/50">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-            <div className="text-center mb-12">
+            <div className="text-center mb-10">
               <h2 className="text-4xl md:text-5xl font-black text-white mb-6" style={{ fontFamily: "'Bungee', sans-serif" }}>
                 До яких результатів ми приходимо в TikTok Ads
               </h2>
@@ -358,9 +358,9 @@ export default function TikTokAdsPage() {
         <CaseStudiesSection pageSlug="tiktok-ads" limit={4} />
 
         {/* БЛОК 7. FAQ */}
-        <section className="py-16 bg-black">
+        <section className="py-12 bg-black">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-            <div className="text-center mb-12">
+            <div className="text-center mb-10">
               <h2 className="text-4xl md:text-5xl font-black text-white mb-6" style={{ fontFamily: "'Bungee', sans-serif" }}>
                 Питання та відповіді
               </h2>
@@ -394,7 +394,7 @@ export default function TikTokAdsPage() {
         </section>
 
         {/* БЛОК 8. ФІНАЛЬНИЙ ЛІДГЕН */}
-        <section id="final-form" className="py-16 bg-gradient-to-br from-zinc-900 via-black to-zinc-900">
+        <section id="final-form" className="py-12 bg-gradient-to-br from-zinc-900 via-black to-zinc-900">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="max-w-4xl mx-auto">
               <div className="text-center mb-10">

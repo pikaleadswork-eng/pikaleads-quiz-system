@@ -89,7 +89,7 @@ export default function TelegramAdsPage() {
         {/* БЛОК 2. ВАМ ЦЕ ЗНАЙОМО? */}
         <section className="py-12 sm:py-16 bg-zinc-900/50">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-            <div className="text-center mb-8 sm:mb-12">
+            <div className="text-center mb-8 sm:mb-10">
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Вам це знайомо при роботі з Telegram Ads?</h2>
             </div>
             <div className="grid sm:grid-cols-2 gap-6 sm:gap-8 max-w-5xl mx-auto mb-8 sm:mb-10">
@@ -120,7 +120,7 @@ export default function TelegramAdsPage() {
         {/* БЛОК 3. РІШЕННЯ */}
         <section className="py-12 sm:py-16 bg-black">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-            <div className="text-center mb-8 sm:mb-12">
+            <div className="text-center mb-8 sm:mb-10">
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Як ми приводимо заявки з Telegram</h2>
               <p className="text-base sm:text-lg md:text-xl text-zinc-400 max-w-3xl mx-auto" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>Ми працюємо по чіткій логіці, без хаотичних розміщень.</p>
             </div>
@@ -204,7 +204,7 @@ export default function TelegramAdsPage() {
         {/* БЛОК 5. ЯК МИ ПРАЦЮЄМО */}
         <section className="py-12 sm:py-16 bg-black">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-            <div className="text-center mb-8 sm:mb-12">
+            <div className="text-center mb-8 sm:mb-10">
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Як виглядає співпраця</h2>
               <p className="text-base sm:text-lg md:text-xl text-zinc-400 max-w-3xl mx-auto" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>Ми беремо Telegram Ads під ключ.</p>
             </div>
@@ -234,7 +234,7 @@ export default function TelegramAdsPage() {
         {/* БЛОК 6. КЕЙСИ */}
         <section className="py-12 sm:py-16 bg-zinc-900/50">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-            <div className="text-center mb-8 sm:mb-12">
+            <div className="text-center mb-8 sm:mb-10">
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>До яких результатів приходять клієнти</h2>
               <p className="text-base sm:text-lg md:text-xl text-zinc-400 max-w-3xl mx-auto mb-8" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>
                 Telegram може давати заявки, якщо працювати з ним правильно.
@@ -267,7 +267,7 @@ export default function TelegramAdsPage() {
         {/* БЛОК 7. FAQ */}
         <section className="py-12 sm:py-16 bg-black">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-            <div className="text-center mb-8 sm:mb-12">
+            <div className="text-center mb-8 sm:mb-10">
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "'Bungee', sans-serif" }}>Питання та відповіді</h2>
             </div>
 
@@ -299,7 +299,7 @@ export default function TelegramAdsPage() {
         </section>
 
         {/* БЛОК 8. ФІНАЛЬНИЙ ЛІДГЕН */}
-        <section id="final-form" className="py-16 bg-gradient-to-br from-zinc-900 via-black to-zinc-900">
+        <section id="final-form" className="py-12 bg-gradient-to-br from-zinc-900 via-black to-zinc-900">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="max-w-4xl mx-auto">
               <div className="text-center mb-8 sm:mb-10">
