@@ -1,0 +1,8 @@
+{
+  "query": "INSERT INTO analytics_settings (platform, pixel_id, api_key, is_active, created_at, updated_at) VALUES \n('meta_pixel', '720023837850036', 'EAAL2VLAkKwsBQArtQkl8yeawxXtASeC4sSoU5ci8Rbuul9XdaFqljBeZBoZCnYECBy1Txr1efCeT7ljBdImbK9CrrVEr45LbIU19CbKFVwngchOLS5KAZBKwHKUsKjQoQXZCtJyFySyUkDqxsn7dt1gtcZBoWS2IV7XGWTZAUDCVrc0ZC7ednm7dGHrJV9YvwZDZD', 1, NOW(), NOW()),\n('ga4', 'G-BS1VTVTWVC', 'mafjIn1MRsSueyQ7d6NF2A', 1, NOW(), NOW()),\n('gtm', 'GTM-KJR4RP5K', 'aWQ9R1RNLVdYWk5DOVFEJmVudj0xJmF1dGg9QUtPTUw4TVFuU1JQb1dhdW04NGVpUQ==', 1, NOW(), NOW())\nON DUPLICATE KEY UPDATE \npixel_id = VALUES(pixel_id),\napi_key = VALUES(api_key),\nis_active = VALUES(is_active),\nupdated_at = NOW();",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user b5yJbKNBA74GJz4.0729dd994af9 --database EcCrELAaL5JgQGs8z45yv6 --execute INSERT INTO analytics_settings (platform, pixel_id, api_key, is_active, created_at, updated_at) VALUES \n('meta_pixel', '720023837850036', 'EAAL2VLAkKwsBQArtQkl8yeawxXtASeC4sSoU5ci8Rbuul9XdaFqljBeZBoZCnYECBy1Txr1efCeT7ljBdImbK9CrrVEr45LbIU19CbKFVwngchOLS5KAZBKwHKUsKjQoQXZCtJyFySyUkDqxsn7dt1gtcZBoWS2IV7XGWTZAUDCVrc0ZC7ednm7dGHrJV9YvwZDZD', 1, NOW(), NOW()),\n('ga4', 'G-BS1VTVTWVC', 'mafjIn1MRsSueyQ7d6NF2A', 1, NOW(), NOW()),\n('gtm', 'GTM-KJR4RP5K', 'aWQ9R1RNLVdYWk5DOVFEJmVudj0xJmF1dGg9QUtPTUw4TVFuU1JQb1dhdW04NGVpUQ==', 1, NOW(), NOW())\nON DUPLICATE KEY UPDATE \npixel_id = VALUES(pixel_id),\napi_key = VALUES(api_key),\nis_active = VALUES(is_active),\nupdated_at = NOW();",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1054 (42S22) at line 1: Unknown column 'platform' in 'field list'"
+  ]
+}

@@ -1,0 +1,1 @@
+ALTER TABLE `quizzes` ADD `platform` enum('google_ads','meta_ads','telegram') DEFAULT 'meta_ads' NOT NULL;

@@ -1,0 +1,122 @@
+{
+  "query": "SELECT id, slug, name, platform, niche FROM quizzes LIMIT 20;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user b5yJbKNBA74GJz4.0729dd994af9 --database EcCrELAaL5JgQGs8z45yv6 --execute SELECT id, slug, name, platform, niche FROM quizzes LIMIT 20;",
+  "rows": [
+    {
+      "id": "11",
+      "slug": "ecommerce-meta",
+      "name": "Інтернет-магазин без продажів — це зламаний таргет",
+      "platform": "meta_ads",
+      "niche": "ecommerce"
+    },
+    {
+      "id": "12",
+      "slug": "ecommerce-google",
+      "name": "Google Ads для інтернет-магазину — не трафік, а продажі",
+      "platform": "google_ads",
+      "niche": "ecommerce"
+    },
+    {
+      "id": "13",
+      "slug": "renovation-meta",
+      "name": "Ремонт без заявок — значить реклама налаштована криво",
+      "platform": "meta_ads",
+      "niche": "renovation"
+    },
+    {
+      "id": "14",
+      "slug": "renovation-google",
+      "name": "Google Ads для ремонту квартир — заявки з пошуку",
+      "platform": "google_ads",
+      "niche": "renovation"
+    },
+    {
+      "id": "15",
+      "slug": "furniture-meta",
+      "name": "Меблева реклама без заявок — проблема не в ринку",
+      "platform": "meta_ads",
+      "niche": "furniture"
+    },
+    {
+      "id": "16",
+      "slug": "furniture-google",
+      "name": "Google Ads для меблів — клієнти з пошуку",
+      "platform": "google_ads",
+      "niche": "furniture"
+    },
+    {
+      "id": "17",
+      "slug": "telegram-meta",
+      "name": "Telegram без результату — реклама ллється не туди",
+      "platform": "meta_ads",
+      "niche": "services"
+    },
+    {
+      "id": "18",
+      "slug": "telegram-google",
+      "name": "Google Ads для Telegram — трафік з наміром",
+      "platform": "google_ads",
+      "niche": "services"
+    },
+    {
+      "id": "19",
+      "slug": "construction-meta",
+      "name": "Будівництво без заявок — реклама працює на конкурентів",
+      "platform": "meta_ads",
+      "niche": "services"
+    },
+    {
+      "id": "20",
+      "slug": "construction-google",
+      "name": "Google Ads для будівництва — клієнти з пошуку",
+      "platform": "google_ads",
+      "niche": "services"
+    },
+    {
+      "id": "21",
+      "slug": "food-delivery-meta",
+      "name": "Доставка їжі без замовлень — таргет не працює",
+      "platform": "meta_ads",
+      "niche": "services"
+    },
+    {
+      "id": "22",
+      "slug": "food-delivery-google",
+      "name": "Google Ads для доставки їжі — замовлення з пошуку",
+      "platform": "google_ads",
+      "niche": "services"
+    },
+    {
+      "id": "23",
+      "slug": "b2b-meta",
+      "name": "B2B реклама без якісних заявок — злитий бюджет",
+      "platform": "meta_ads",
+      "niche": "services"
+    },
+    {
+      "id": "24",
+      "slug": "b2b-google",
+      "name": "Google Ads для B2B — заявки від бізнесу",
+      "platform": "google_ads",
+      "niche": "services"
+    },
+    {
+      "id": "25",
+      "slug": "general-meta",
+      "name": "Реклама без результату — проблема в налаштуванні",
+      "platform": "meta_ads",
+      "niche": "other"
+    },
+    {
+      "id": "26",
+      "slug": "general-google",
+      "name": "Google Ads без результату — налаштуємо правильно",
+      "platform": "google_ads",
+      "niche": "other"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tslug\tname\tplatform\tniche\n11\tecommerce-meta\tІнтернет-магазин без продажів — це зламаний таргет\tmeta_ads\tecommerce\n12\tecommerce-google\tGoogle Ads для інтернет-магазину — не трафік, а продажі\tgoogle_ads\tecommerce\n13\trenovation-meta\tРемонт без заявок — значить реклама налаштована криво\tmeta_ads\trenovation\n14\trenovation-google\tGoogle Ads для ремонту квартир — заявки з пошуку\tgoogle_ads\trenovation\n15\tfurniture-meta\tМеблева реклама без заявок — проблема не в ринку\tmeta_ads\tfurniture\n16\tfurniture-google\tGoogle Ads для меблів — клієнти з пошуку\tgoogle_ads\tfurniture\n17\ttelegram-meta\tTelegram без результату — реклама ллється не туди\tmeta_ads\tservices\n18\ttelegram-google\tGoogle Ads для Telegram — трафік з наміром\tgoogle_ads\tservices\n19\tconstruction-meta\tБудівництво без заявок — реклама працює на конкурентів\tmeta_ads\tservices\n20\tconstruction-google\tGoogle Ads для будівництва — клієнти з пошуку\tgoogle_ads\tservices\n21\tfood-delivery-meta\tДоставка їжі без замовлень — таргет не працює\tmeta_ads\tservices\n22\tfood-delivery-google\tGoogle Ads для доставки їжі — замовлення з пошуку\tgoogle_ads\tservices\n23\tb2b-meta\tB2B реклама без якісних заявок — злитий бюджет\tmeta_ads\tservices\n24\tb2b-google\tGoogle Ads для B2B — заявки від бізнесу\tgoogle_ads\tservices\n25\tgeneral-meta\tРеклама без результату — проблема в налаштуванні\tmeta_ads\tother\n26\tgeneral-google\tGoogle Ads без результату — налаштуємо правильно\tgoogle_ads\tother\n",
+  "stderr": "",
+  "execution_time_ms": 134
+}

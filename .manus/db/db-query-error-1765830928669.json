@@ -1,0 +1,8 @@
+{
+  "query": "SELECT id, quiz_id, question_text, answer_options FROM quiz_questions WHERE quiz_id = 11 LIMIT 3;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user b5yJbKNBA74GJz4.0729dd994af9 --database EcCrELAaL5JgQGs8z45yv6 --execute SELECT id, quiz_id, question_text, answer_options FROM quiz_questions WHERE quiz_id = 11 LIMIT 3;",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1054 (42S22) at line 1: Unknown column 'quiz_id' in 'where clause'"
+  ]
+}

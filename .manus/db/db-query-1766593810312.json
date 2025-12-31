@@ -1,0 +1,39 @@
+{
+  "query": "SELECT * FROM quiz_design_settings WHERE quizId = 1 LIMIT 1;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user b5yJbKNBA74GJz4.0729dd994af9 --database EcCrELAaL5JgQGs8z45yv6 --execute SELECT * FROM quiz_design_settings WHERE quizId = 1 LIMIT 1;",
+  "rows": [
+    {
+      "id": "30001",
+      "quizId": "1",
+      "layoutType": "standard",
+      "backgroundImage": "https://storage.googleapis.com/msgsndr/tYKdp0C36uaD4KULxUMu/media/67697c6ce9b8a3e9e0e7e0e4.png",
+      "logoImage": "NULL",
+      "primaryColor": "#8B5CF6",
+      "accentColor": "#FFD93D",
+      "fontFamily": "Inter",
+      "titleText": "{\"uk\":\"ІНТЕРНЕТ-МАГАЗИН БЕЗ ПРОДАЖІВ — ЦЕ ЗЛАМАНИЙ ТАРГЕТ\",\"ru\":\"ИНТЕРНЕТ-МАГАЗИН БЕЗ ПРОДАЖ — ЭТО СЛОМАННЫЙ ТАРГЕТ\",\"en\":\"ONLINE STORE WITHOUT SALES — BROKEN TARGETING\"}",
+      "subtitleText": "{\"uk\":\"Запускаємо Meta рекламу для e-commerce з фокусом на продажі та окупність, а не охоплення\",\"ru\":\"Запускаем Meta рекламу для e-commerce с фокусом на продажи и окупаемость, а не охват\",\"en\":\"We launch Meta ads for e-commerce focused on sales and ROI, not reach\"}",
+      "buttonText": "Отримати консультацію",
+      "bonusText": "NULL",
+      "createdAt": "2025-12-24 12:56:34",
+      "updatedAt": "2025-12-24 12:58:04",
+      "backgroundVideo": "NULL",
+      "alignment": "left",
+      "bonusEnabled": "0",
+      "companyName": "NULL",
+      "phoneNumber": "NULL",
+      "contactFormTitle": "NULL",
+      "contactFormSubtitle": "NULL",
+      "contactFormFields": "NULL",
+      "thankYouTitle": "NULL",
+      "thankYouSubtitle": "NULL",
+      "thankYouButtonText": "NULL",
+      "thankYouButtonUrl": "NULL",
+      "backgroundGradient": "linear-gradient(135deg, #1f1f3a 0%, #4a1d6f 50%, #1f1f3a 100%)"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tquizId\tlayoutType\tbackgroundImage\tlogoImage\tprimaryColor\taccentColor\tfontFamily\ttitleText\tsubtitleText\tbuttonText\tbonusText\tcreatedAt\tupdatedAt\tbackgroundVideo\talignment\tbonusEnabled\tcompanyName\tphoneNumber\tcontactFormTitle\tcontactFormSubtitle\tcontactFormFields\tthankYouTitle\tthankYouSubtitle\tthankYouButtonText\tthankYouButtonUrl\tbackgroundGradient\n30001\t1\tstandard\thttps://storage.googleapis.com/msgsndr/tYKdp0C36uaD4KULxUMu/media/67697c6ce9b8a3e9e0e7e0e4.png\tNULL\t#8B5CF6\t#FFD93D\tInter\t{\"uk\":\"ІНТЕРНЕТ-МАГАЗИН БЕЗ ПРОДАЖІВ — ЦЕ ЗЛАМАНИЙ ТАРГЕТ\",\"ru\":\"ИНТЕРНЕТ-МАГАЗИН БЕЗ ПРОДАЖ — ЭТО СЛОМАННЫЙ ТАРГЕТ\",\"en\":\"ONLINE STORE WITHOUT SALES — BROKEN TARGETING\"}\t{\"uk\":\"Запускаємо Meta рекламу для e-commerce з фокусом на продажі та окупність, а не охоплення\",\"ru\":\"Запускаем Meta рекламу для e-commerce с фокусом на продажи и окупаемость, а не охват\",\"en\":\"We launch Meta ads for e-commerce focused on sales and ROI, not reach\"}\tОтримати консультацію\tNULL\t2025-12-24 12:56:34\t2025-12-24 12:58:04\tNULL\tleft\t0\tNULL\tNULL\tNULL\tNULL\tNULL\tNULL\tNULL\tNULL\tNULL\tlinear-gradient(135deg, #1f1f3a 0%, #4a1d6f 50%, #1f1f3a 100%)\n",
+  "stderr": "",
+  "execution_time_ms": 154
+}

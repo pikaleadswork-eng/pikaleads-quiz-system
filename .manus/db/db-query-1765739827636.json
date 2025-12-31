@@ -1,0 +1,58 @@
+{
+  "query": "SELECT id, name, slug, platform FROM quizzes LIMIT 10",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user b5yJbKNBA74GJz4.0729dd994af9 --database EcCrELAaL5JgQGs8z45yv6 --execute SELECT id, name, slug, platform FROM quizzes LIMIT 10",
+  "rows": [
+    {
+      "id": "1",
+      "name": "Меблі для дому",
+      "slug": "meta-furniture",
+      "platform": "meta_ads"
+    },
+    {
+      "id": "2",
+      "name": "Тестовий квіз для перевірки",
+      "slug": "furniture",
+      "platform": "meta_ads"
+    },
+    {
+      "id": "3",
+      "name": "Want to Get 30+ Furniture Leads Daily?",
+      "slug": "meta_ads-furniture",
+      "platform": "meta_ads"
+    },
+    {
+      "id": "4",
+      "name": "Get 5-15 Hot Leads Daily for Apartment Renovations",
+      "slug": "meta_ads-renovation",
+      "platform": "meta_ads"
+    },
+    {
+      "id": "5",
+      "name": "Want to Scale Your E-Commerce? Get 30-120 Leads Daily",
+      "slug": "meta_ads-ecommerce",
+      "platform": "meta_ads"
+    },
+    {
+      "id": "6",
+      "name": "Want to Get 30+ Furniture Leads Daily?",
+      "slug": "google_ads-furniture",
+      "platform": "google_ads"
+    },
+    {
+      "id": "7",
+      "name": "Get 5-15 Hot Leads Daily for Apartment Renovations",
+      "slug": "google_ads-renovation",
+      "platform": "google_ads"
+    },
+    {
+      "id": "8",
+      "name": "Want to Scale Your E-Commerce? Get 30-120 Leads Daily",
+      "slug": "google_ads-ecommerce",
+      "platform": "google_ads"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tname\tslug\tplatform\n1\tМеблі для дому\tmeta-furniture\tmeta_ads\n2\tТестовий квіз для перевірки\tfurniture\tmeta_ads\n3\tWant to Get 30+ Furniture Leads Daily?\tmeta_ads-furniture\tmeta_ads\n4\tGet 5-15 Hot Leads Daily for Apartment Renovations\tmeta_ads-renovation\tmeta_ads\n5\tWant to Scale Your E-Commerce? Get 30-120 Leads Daily\tmeta_ads-ecommerce\tmeta_ads\n6\tWant to Get 30+ Furniture Leads Daily?\tgoogle_ads-furniture\tgoogle_ads\n7\tGet 5-15 Hot Leads Daily for Apartment Renovations\tgoogle_ads-renovation\tgoogle_ads\n8\tWant to Scale Your E-Commerce? Get 30-120 Leads Daily\tgoogle_ads-ecommerce\tgoogle_ads\n",
+  "stderr": "",
+  "execution_time_ms": 58
+}

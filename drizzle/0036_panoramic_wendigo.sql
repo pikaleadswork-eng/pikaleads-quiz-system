@@ -1,0 +1,1 @@
+ALTER TABLE `quiz_design_settings` MODIFY COLUMN `layoutType` varchar(20) NOT NULL DEFAULT 'standard';

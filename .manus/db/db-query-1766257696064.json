@@ -1,0 +1,9 @@
+{
+  "query": "INSERT INTO users (name, email, passwordHash, role, isActive, createdAt) VALUES ('Admin', 'admin@pikaleads.com', '$2b$10$mrT7QBR5TYFMt65UCWmEIuk.9AkKzStGEUs7i0t82sm63N7ADUrKy', 'admin', true, NOW()) ON DUPLICATE KEY UPDATE passwordHash = '$2b$10$mrT7QBR5TYFMt65UCWmEIuk.9AkKzStGEUs7i0t82sm63N7ADUrKy', isActive = true;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user b5yJbKNBA74GJz4.0729dd994af9 --database EcCrELAaL5JgQGs8z45yv6 --execute INSERT INTO users (name, email, passwordHash, role, isActive, createdAt) VALUES ('Admin', 'admin@pikaleads.com', '$2b$10$mrT7QBR5TYFMt65UCWmEIuk.9AkKzStGEUs7i0t82sm63N7ADUrKy', 'admin', true, NOW()) ON DUPLICATE KEY UPDATE passwordHash = '$2b$10$mrT7QBR5TYFMt65UCWmEIuk.9AkKzStGEUs7i0t82sm63N7ADUrKy', isActive = true;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 70
+}
