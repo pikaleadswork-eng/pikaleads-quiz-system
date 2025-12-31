@@ -302,7 +302,7 @@ export default function GoogleAdsPage() {
               <Card className="bg-zinc-800/50 border-zinc-700 hover:border-[#FFD93D]/50 transition-all">
                 <CardContent className="p-6 text-center space-y-4">
                   <CheckCircle2 className="w-12 h-12 text-[#FFD93D] mx-auto" />
-                  <p className="text-white font-semibold">усі налаштування і ведення — на нашій стороні</p>
+                  <p className="text-white font-semibold">Усі налаштування і ведення — на нашій стороні</p>
                 </CardContent>
               </Card>
 
