@@ -1,9 +1,0 @@
-{
-  "query": "UPDATE quiz_design_settings SET titleText = '{\"uk\":\"Реклама для магазину працює а продажів мало?\",\"ru\":\"Реклама для магазина работает а продаж мало?\",\"en\":\"Ads working but sales are low?\"}' WHERE quizId = 11",
-  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user b5yJbKNBA74GJz4.0729dd994af9 --database EcCrELAaL5JgQGs8z45yv6 --execute UPDATE quiz_design_settings SET titleText = '{\"uk\":\"Реклама для магазину працює а продажів мало?\",\"ru\":\"Реклама для магазина работает а продаж мало?\",\"en\":\"Ads working but sales are low?\"}' WHERE quizId = 11",
-  "rows": [],
-  "messages": [],
-  "stdout": "",
-  "stderr": "",
-  "execution_time_ms": 60
-}

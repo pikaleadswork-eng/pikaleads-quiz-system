@@ -1,8 +1,0 @@
-{
-  "query": "UPDATE quiz_design_settings SET primaryColor = 'linear-gradient(135deg, #1f1f3a 0%, #4a1d6f 50%, #1f1f3a 100%)', accentColor = '#FFD93D', buttonText = 'Отримати консультацію' WHERE quizId = 1;",
-  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user b5yJbKNBA74GJz4.0729dd994af9 --database EcCrELAaL5JgQGs8z45yv6 --execute UPDATE quiz_design_settings SET primaryColor = 'linear-gradient(135deg, #1f1f3a 0%, #4a1d6f 50%, #1f1f3a 100%)', accentColor = '#FFD93D', buttonText = 'Отримати консультацію' WHERE quizId = 1;",
-  "returncode": 1,
-  "logs": [
-    "ERROR 1406 (22001) at line 1: Data Too Long, field len 7, data len 62"
-  ]
-}

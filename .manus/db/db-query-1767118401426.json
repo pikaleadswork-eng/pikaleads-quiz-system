@@ -1,9 +1,0 @@
-{
-  "query": "ALTER TABLE case_studies \nADD COLUMN pageVisibility TEXT NULL COMMENT 'JSON array of page slugs where this case should appear',\nADD COLUMN author VARCHAR(255) NULL COMMENT 'Author name (e.g., Roman Hrybuk)';",
-  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user b5yJbKNBA74GJz4.0729dd994af9 --database EcCrELAaL5JgQGs8z45yv6 --execute ALTER TABLE case_studies \nADD COLUMN pageVisibility TEXT NULL COMMENT 'JSON array of page slugs where this case should appear',\nADD COLUMN author VARCHAR(255) NULL COMMENT 'Author name (e.g., Roman Hrybuk)';",
-  "rows": [],
-  "messages": [],
-  "stdout": "",
-  "stderr": "",
-  "execution_time_ms": 1378
-}

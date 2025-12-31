@@ -1,9 +1,0 @@
-{
-  "query": "INSERT INTO assignment_rules (name, quizName, managerId, priority, isActive, createdAt, updatedAt) \nSELECT 'Furniture Quiz Auto-Assignment', 'Furniture', id, 10, 1, NOW(), NOW() \nFROM users WHERE openId = 'test_manager_001' LIMIT 1",
-  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user b5yJbKNBA74GJz4.0729dd994af9 --database EcCrELAaL5JgQGs8z45yv6 --execute INSERT INTO assignment_rules (name, quizName, managerId, priority, isActive, createdAt, updatedAt) \nSELECT 'Furniture Quiz Auto-Assignment', 'Furniture', id, 10, 1, NOW(), NOW() \nFROM users WHERE openId = 'test_manager_001' LIMIT 1",
-  "rows": [],
-  "messages": [],
-  "stdout": "",
-  "stderr": "",
-  "execution_time_ms": 69
-}

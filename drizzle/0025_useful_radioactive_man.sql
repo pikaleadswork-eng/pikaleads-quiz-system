@@ -1,1 +1,0 @@
-ALTER TABLE `quizzes` ADD `quizType` enum('lead_generation','ecommerce','calculator','test','form','video_consultant') DEFAULT 'lead_generation' NOT NULL;

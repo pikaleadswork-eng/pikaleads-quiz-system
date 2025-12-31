@@ -1,1 +1,0 @@
-ALTER TABLE `leads` ADD `leadScore` int DEFAULT 0;

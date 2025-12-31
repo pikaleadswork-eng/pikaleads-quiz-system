@@ -1,1 +1,0 @@
-ALTER TABLE `users` ADD `telegramChatId` varchar(255);

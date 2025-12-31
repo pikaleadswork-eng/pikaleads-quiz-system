@@ -1,9 +1,0 @@
-{
-  "query": "INSERT INTO integration_settings (provider, credentials, isActive, createdAt, updatedAt) VALUES ('telegram', '{\"botToken\": \"8109110065:AAFMykyIO2DWzkWj_OKP_OYAZlpH6H39enw\", \"chatId\": \"-1003393497944\"}', 1, NOW(), NOW());",
-  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user b5yJbKNBA74GJz4.0729dd994af9 --database EcCrELAaL5JgQGs8z45yv6 --execute INSERT INTO integration_settings (provider, credentials, isActive, createdAt, updatedAt) VALUES ('telegram', '{\"botToken\": \"8109110065:AAFMykyIO2DWzkWj_OKP_OYAZlpH6H39enw\", \"chatId\": \"-1003393497944\"}', 1, NOW(), NOW());",
-  "rows": [],
-  "messages": [],
-  "stdout": "",
-  "stderr": "",
-  "execution_time_ms": 62
-}
