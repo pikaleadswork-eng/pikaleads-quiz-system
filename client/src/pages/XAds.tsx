@@ -262,7 +262,7 @@ export default function XAdsPage() {
         </section>
 
         {/* БЛОК 6.5. КЕЙСИ - Dynamic from Database */}
-        <MetaCaseStudiesSection />
+        <MetaCaseStudiesSection pageSlug="x-ads" />
 
         {/* БЛОК 7. FAQ */}
         <section className="py-12 sm:py-16 bg-black">

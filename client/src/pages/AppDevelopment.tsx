@@ -269,7 +269,7 @@ export default function AppDevelopmentPage() {
         </section>
 
         {/* БЛОК 6.5. КЕЙСИ - Dynamic from Database */}
-        <MetaCaseStudiesSection />
+        <MetaCaseStudiesSection pageSlug="app-development" />
 
         {/* БЛОК 7. FAQ */}
         <section className="py-12 sm:py-16 bg-black">

@@ -355,7 +355,7 @@ export default function TikTokAdsPage() {
         </section>
 
         {/* БЛОК 6.5. КЕЙСИ - Dynamic from Database */}
-        <MetaCaseStudiesSection />
+        <MetaCaseStudiesSection pageSlug="tiktok-ads" />
 
         {/* БЛОК 7. FAQ */}
         <section className="py-16 bg-black">

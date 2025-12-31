@@ -389,7 +389,7 @@ export default function GoogleAdsPage() {
         </section>
 
         {/* БЛОК 6.5. КЕЙСИ - Dynamic from Database */}
-        <MetaCaseStudiesSection />
+        <MetaCaseStudiesSection pageSlug="google-ads" />
 
         {/* БЛОК 7. FAQ */}
         <section className="py-20 bg-black">

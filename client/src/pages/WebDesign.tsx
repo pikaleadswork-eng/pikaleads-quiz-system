@@ -269,7 +269,7 @@ export default function WebDesignPage() {
         </section>
 
         {/* БЛОК 6.5. КЕЙСИ - Dynamic from Database */}
-        <MetaCaseStudiesSection />
+        <MetaCaseStudiesSection pageSlug="web-design" />
 
         {/* БЛОК 7. FAQ */}
         <section className="py-12 sm:py-16 bg-black">

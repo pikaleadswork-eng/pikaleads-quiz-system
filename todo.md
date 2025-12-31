@@ -238,3 +238,16 @@
 4. [x] Test FAQ expand/collapse functionality
 5. [x] Test case studies load from database
 6. [x] Copy fixes to TikTok, X, Telegram, Web Dev, Web Design, App Dev pages
+
+
+## Phase 195: Case Studies Filtering & Mobile Testing (2025-12-31)
+
+### Tasks:
+- [x] Review case studies database schema (pageSlug field)
+- [x] Update MetaCaseStudiesSection to accept pageSlug prop
+- [x] Configure each service page to pass correct pageSlug
+- [x] Add 3-5 real case studies for Google Ads via SQL
+- [x] Add 2-3 case studies for other service pages (TikTok, X, Telegram, Web Dev, etc.)
+- [x] Test FAQ accordion animation on mobile (375px, 414px, 768px)
+- [x] Verify case studies display correctly on each service page
+- [x] Create final checkpoint

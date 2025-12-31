@@ -262,7 +262,7 @@ export default function TelegramAdsPage() {
         </section>
 
         {/* БЛОК 6.5. КЕЙСИ - Dynamic from Database */}
-        <MetaCaseStudiesSection />
+        <MetaCaseStudiesSection pageSlug="telegram-ads" />
 
         {/* БЛОК 7. FAQ */}
         <section className="py-12 sm:py-16 bg-black">

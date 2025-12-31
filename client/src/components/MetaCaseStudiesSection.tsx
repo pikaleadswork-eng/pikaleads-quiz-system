@@ -4,8 +4,12 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, TrendingUp, DollarSign, Users } from "lucide-react";
 import { Link } from "wouter";
 
-export default function MetaCaseStudiesSection() {
-  const { data: caseStudies } = trpc.caseStudies.getByPage.useQuery({ pageSlug: "meta-ads" });
+interface MetaCaseStudiesSectionProps {
+  pageSlug?: string;
+}
+
+export default function MetaCaseStudiesSection({ pageSlug = "meta-ads" }: MetaCaseStudiesSectionProps) {
+  const { data: caseStudies } = trpc.caseStudies.getByPage.useQuery({ pageSlug });
 
   if (!caseStudies || caseStudies.length === 0) {
     return null;
