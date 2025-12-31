@@ -64,7 +64,7 @@ export default function XAdsPage() {
                 <p className="text-base sm:text-lg md:text-xl text-zinc-300 leading-relaxed" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>
                   Стабільний потік заявок для вашого бізнесу з запуском за 72 години!
                 </p>
-                <p className="text-sm text-zinc-500">
+                <p className="text-sm text-zinc-500" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
                   Кількість заявок залежить від ніші, бюджету та продукту. Потенціал визначаємо під час аудиту.
                 </p>
                 <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
@@ -110,7 +110,7 @@ export default function XAdsPage() {
               ))}
             </div>
             <div className="text-center">
-              <p className="text-xl sm:text-2xl font-bold text-[#FFD93D]">
+              <p className="text-xl sm:text-2xl font-bold text-[#FFD93D]" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
                 👉 У результаті реклама не виглядає надійним каналом, а залишається нестабільною історією без контролю.
               </p>
             </div>
@@ -142,7 +142,7 @@ export default function XAdsPage() {
               ))}
             </div>
             <div className="text-center">
-              <p className="text-xl sm:text-2xl font-bold text-[#00F0FF]">
+              <p className="text-xl sm:text-2xl font-bold text-[#00F0FF]" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
                 👉 У підсумку ви отримуєте керований потік заявок, який можна планувати і збільшувати.
               </p>
             </div>
@@ -166,7 +166,7 @@ export default function XAdsPage() {
                   <Card key={i} className="bg-zinc-800/50" style={{ borderColor: `${item.color}30` }}>
                     <CardContent className="p-6 text-center">
                       <CheckCircle2 className="w-6 h-6 sm:w-8 sm:h-8 mx-auto mb-3 sm:mb-4" style={{ color: item.color }} />
-                      <p className="text-white">{item.text}</p>
+                      <p className="text-white" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>{item.text}</p>
                     </CardContent>
                   </Card>
                 ))}
@@ -174,7 +174,7 @@ export default function XAdsPage() {
               <Card className="bg-zinc-800/80 border-[#FFD93D]/50">
                 <CardContent className="p-8">
                   <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4 mb-8">
-                    <p className="text-red-400 font-bold text-center">
+                    <p className="text-red-400 font-bold text-center" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
                       ❗ Обмеження: Ми беремо обмежену кількість проєктів, щоб запускати рекламу якісно.
                     </p>
                   </div>
@@ -218,13 +218,13 @@ export default function XAdsPage() {
                 <Card key={i} className="bg-zinc-800/50 border-zinc-700 transition-all">
                   <CardContent className="p-6 text-center space-y-4">
                     <CheckCircle2 className="w-12 h-12 mx-auto" style={{ color: item.color }} />
-                    <p className="text-white font-semibold">{item.text}</p>
+                    <p className="text-white font-semibold" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>{item.text}</p>
                   </CardContent>
                 </Card>
               ))}
             </div>
             <div className="text-center">
-              <p className="text-xl sm:text-2xl font-bold text-[#FFD93D]">
+              <p className="text-xl sm:text-2xl font-bold text-[#FFD93D]" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
                 Вам не потрібно розбиратись у рекламі — ви отримуєте заявки і бачите цифри.
               </p>
             </div>
@@ -250,7 +250,7 @@ export default function XAdsPage() {
                 <Card key={i} className="bg-zinc-800/50 border-zinc-700">
                   <CardContent className="p-6 text-center space-y-4">
                     <div className="text-4xl font-black">{item.emoji}</div>
-                    <p className="text-white font-semibold">{item.text}</p>
+                    <p className="text-white font-semibold" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>{item.text}</p>
                   </CardContent>
                 </Card>
               ))}
@@ -268,7 +268,7 @@ export default function XAdsPage() {
         <section className="py-12 sm:py-16 bg-black">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="text-center mb-8 sm:mb-10">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "'Bungee', sans-serif" }}>Питання та відповіді</h2>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "\'Bungee\', \'Eurostile Bold Extended\', sans-serif" }}>Питання та відповіді</h2>
             </div>
 
             <CollapsibleFAQ

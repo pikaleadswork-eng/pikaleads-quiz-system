@@ -182,7 +182,7 @@ export default function MetaAdsLanding() {
 
         <section className="py-12 lg:py-20 bg-gradient-to-b from-black to-gray-900">
           <div className="container px-4">
-            <div className="text-center mb-16">
+            <div className="text-center mb-16 max-w-5xl mx-auto">
               <h2 className="text-4xl md:text-5xl font-bold mb-4">
                 Вирішуйте відразу <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">декілька проблем</span> одночасно:
               </h2>
@@ -218,7 +218,7 @@ export default function MetaAdsLanding() {
                   <div className="relative z-10">
                     <div className="text-2xl font-bold text-cyan-400 mb-2">{solution.number}</div>
                     <h3 className="text-2xl font-bold mb-4">{solution.title}</h3>
-                    <p className="text-gray-400">{solution.description}</p>
+                    <p className="text-gray-400" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>{solution.description}</p>
                   </div>
                 </Card>
               ))}
@@ -229,7 +229,7 @@ export default function MetaAdsLanding() {
         {/* Client Pain Points Section - "А також, ми розуміємо, що можливо, ви стикались" */}
         <section className="py-12 lg:py-20 relative">
           <div className="container px-4">
-            <div className="text-center mb-16">
+            <div className="text-center mb-16 max-w-5xl mx-auto">
               <h2 className="text-4xl md:text-5xl font-bold mb-4">
                 А також, Ми розуміємо, що, можливо, <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-red-500">Ви стикались:</span>
               </h2>
@@ -261,7 +261,7 @@ export default function MetaAdsLanding() {
                 <Card key={index} className="bg-gradient-to-br from-gray-900/80 to-black border-gray-800 p-6 hover:border-pink-500/50 transition-all">
                   <pain.icon className="w-12 h-12 text-pink-500 mb-4" />
                   <h3 className="text-xl font-bold mb-3">{pain.title}</h3>
-                  <p className="text-gray-400">{pain.description}</p>
+                  <p className="text-gray-400" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>{pain.description}</p>
                 </Card>
               ))}
             </div>
@@ -271,7 +271,7 @@ export default function MetaAdsLanding() {
         {/* Testimonials Section */}
         <section className="py-12 lg:py-20 bg-gradient-to-b from-black to-gray-900">
           <div className="container px-4">
-            <div className="text-center mb-16">
+            <div className="text-center mb-16 max-w-5xl mx-auto">
               <h2 className="text-4xl md:text-5xl font-bold mb-4">
                 Відгуки від <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500">наших клієнтів</span>
               </h2>
@@ -346,7 +346,7 @@ export default function MetaAdsLanding() {
                       </div>
                     </div>
                   </div>
-                  <p className="text-gray-300 mb-4 text-sm leading-relaxed">{testimonial.text}</p>
+                  <p className="text-gray-300 mb-4 text-sm leading-relaxed" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>{testimonial.text}</p>
                   <div className="flex flex-wrap gap-2">
                     {testimonial.tags.map((tag, i) => (
                       <span key={i} className="text-xs px-2 py-1 rounded-full bg-purple-500/20 text-purple-300">
@@ -380,7 +380,7 @@ export default function MetaAdsLanding() {
         {/* Client Logos Section - Auto-Rotating Carousel */}
         <section className="py-12 lg:py-20 overflow-hidden">
           <div className="container px-4">
-            <div className="text-center mb-12">
+            <div className="text-center mb-12 max-w-5xl mx-auto">
               <h2 className="text-4xl md:text-5xl font-bold mb-4">
                 Наші <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">клієнти</span>
               </h2>
@@ -453,11 +453,11 @@ export default function MetaAdsLanding() {
         {/* Video Cases Section */}
         <section className="py-12 lg:py-20 bg-gradient-to-b from-black to-gray-900">
           <div className="container px-4">
-            <div className="text-center mb-12">
+            <div className="text-center mb-12 max-w-5xl mx-auto">
               <h2 className="text-4xl md:text-5xl font-bold mb-4">
                 Відео<span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-pink-500">кейси</span>
               </h2>
-              <p className="text-xl text-gray-400">Кейси, які інколи виходять за рамки пристойності</p>
+              <p className="text-xl text-gray-400" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>Кейси, які інколи виходять за рамки пристойності</p>
             </div>
 
             <div className="grid md:grid-cols-2 gap-6">
@@ -502,11 +502,11 @@ export default function MetaAdsLanding() {
         <section id="contact-form" className="py-12 lg:py-20">
           <div className="container px-4">
             <div className="max-w-2xl mx-auto">
-              <div className="text-center mb-12">
+              <div className="text-center mb-12 max-w-5xl mx-auto">
                 <h2 className="text-4xl md:text-5xl font-bold mb-4">
                   Отримайте <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-red-500">безкоштовний аудит</span>
                 </h2>
-                <p className="text-xl text-gray-400">Залишайте заявку та отримуйте повний список необхідних змін для покращення результату</p>
+                <p className="text-xl text-gray-400" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>Залишайте заявку та отримуйте повний список необхідних змін для покращення результату</p>
               </div>
 
               <Card className="bg-gradient-to-br from-gray-900/80 to-black border-pink-500/30 p-8">

@@ -119,7 +119,7 @@ export default function GoogleAdsPage() {
         {/* БЛОК 2. ВАМ ЦЕ ЗНАЙОМО? */}
         <section className="py-12 bg-zinc-900/50">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-            <div className="text-center mb-10">
+            <div className="text-center mb-10 max-w-5xl mx-auto">
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Вам це знайомо?</h2>
               <p className="text-base sm:text-lg md:text-xl text-zinc-400 max-w-3xl mx-auto" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>
                 Реклама в Google ніби працює, але не як стабільний бізнес-інструмент.
@@ -144,11 +144,11 @@ export default function GoogleAdsPage() {
               ))}
             </div>
 
-            <div className="text-center space-y-4">
+            <div className="text-center space-y-4 max-w-5xl mx-auto">
               <p className="text-xl text-zinc-300" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>
                 У результаті реклама починає забирати увагу, замість того щоб приносити заявки і спокій.
               </p>
-              <p className="text-xl sm:text-2xl font-bold text-[#FFD93D]">
+              <p className="text-xl sm:text-2xl font-bold text-[#FFD93D]" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
                 Це не проблема реклами. Це відсутність системи.
               </p>
             </div>
@@ -158,7 +158,7 @@ export default function GoogleAdsPage() {
         {/* БЛОК 3. РІШЕННЯ — СИСТЕМА 1–2–3–4 */}
         <section className="py-12 bg-black">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-            <div className="text-center mb-10">
+            <div className="text-center mb-10 max-w-5xl mx-auto">
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>
                 Як ми будуємо систему, яка приносить заявки
               </h2>
@@ -186,7 +186,7 @@ export default function GoogleAdsPage() {
             </div>
 
             <div className="text-center">
-              <p className="text-xl sm:text-2xl font-bold text-[#00F0FF]">
+              <p className="text-xl sm:text-2xl font-bold text-[#00F0FF]" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
                 Результат: стабільні заявки, зрозумілий процес і мінімальна участь з вашого боку.
               </p>
             </div>
@@ -210,21 +210,21 @@ export default function GoogleAdsPage() {
                 <Card className="bg-zinc-800/50 border-[#FFD93D]/30">
                   <CardContent className="p-6 text-center">
                     <CheckCircle2 className="w-8 h-8 text-[#FFD93D] mx-auto mb-4" />
-                    <p className="text-white">Чи можна зробити заявки стабільними</p>
+                    <p className="text-white" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>Чи можна зробити заявки стабільними</p>
                   </CardContent>
                 </Card>
 
                 <Card className="bg-zinc-800/50 border-[#00F0FF]/30">
                   <CardContent className="p-6 text-center">
                     <CheckCircle2 className="w-8 h-8 text-[#00F0FF] mx-auto mb-4" />
-                    <p className="text-white">Де саме втрачається ефективність</p>
+                    <p className="text-white" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>Де саме втрачається ефективність</p>
                   </CardContent>
                 </Card>
 
                 <Card className="bg-zinc-800/50 border-purple-500/30">
                   <CardContent className="p-6 text-center">
                     <CheckCircle2 className="w-8 h-8 text-purple-400 mx-auto mb-4" />
-                    <p className="text-white">Який формат роботи підійде саме вам</p>
+                    <p className="text-white" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>Який формат роботи підійде саме вам</p>
                   </CardContent>
                 </Card>
               </div>
@@ -232,7 +232,7 @@ export default function GoogleAdsPage() {
               <Card className="bg-zinc-800/80 border-[#FFD93D]/50">
                 <CardContent className="p-8">
                   <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4 mb-8">
-                    <p className="text-red-400 font-bold text-center">
+                    <p className="text-red-400 font-bold text-center" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
                       ❗ Обмеження: Ми беремо обмежену кількість аудитів на тиждень, щоб опрацьовувати кожен проєкт якісно.
                     </p>
                   </div>
@@ -291,7 +291,7 @@ export default function GoogleAdsPage() {
         {/* БЛОК 5. ЯК МИ ПРАЦЮЄМО */}
         <section className="py-12 bg-black">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-            <div className="text-center mb-10">
+            <div className="text-center mb-10 max-w-5xl mx-auto">
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>
                 Як виглядає робота з нами
               </h2>
@@ -332,7 +332,7 @@ export default function GoogleAdsPage() {
             </div>
 
             <div className="text-center">
-              <p className="text-xl sm:text-2xl font-bold text-[#FFD93D]">
+              <p className="text-xl sm:text-2xl font-bold text-[#FFD93D]" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
                 Ви не занурюєтесь у деталі — ви просто бачите, як реклама працює для бізнесу.
               </p>
             </div>
@@ -342,7 +342,7 @@ export default function GoogleAdsPage() {
         {/* БЛОК 6. КЕЙСИ / РЕЗУЛЬТАТИ */}
         <section className="py-12 bg-zinc-900/50">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-            <div className="text-center mb-10">
+            <div className="text-center mb-10 max-w-5xl mx-auto">
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>
                 До яких результатів ми приходимо з клієнтами
               </h2>
@@ -396,8 +396,8 @@ export default function GoogleAdsPage() {
         {/* БЛОК 7. FAQ */}
         <section className="py-12 bg-black">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-            <div className="text-center mb-10">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "'Bungee', sans-serif" }}>
+            <div className="text-center mb-10 max-w-5xl mx-auto">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "\'Bungee\', \'Eurostile Bold Extended\', sans-serif" }}>
                 Питання та відповіді
               </h2>
             </div>
