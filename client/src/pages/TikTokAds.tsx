@@ -111,7 +111,7 @@ export default function TikTokAdsPage() {
               <div className="relative flex items-center justify-center">
                 <div className="absolute inset-0 bg-gradient-to-tr from-[#FFD93D]/20 to-[#00F0FF]/20 blur-3xl" />
                 <div className="relative z-10 w-full max-w-md sm:max-w-lg md:max-w-2xl mx-auto">
-                  <img src="/tiktok-ads-hero.png" alt="TikTok Ads" className="w-full h-auto object-contain drop-shadow-2xl" style={{ maxHeight: "850px", minHeight: "300px" }} />
+                  <img src="/tiktok-ads-hero.png" alt="TikTok Ads" loading="lazy" className="w-full h-auto object-contain drop-shadow-2xl" style={{ maxHeight: "850px", minHeight: "300px" }} />
                 </div>
               </div>
             </div>

@@ -506,3 +506,34 @@
 ### Font Rules:
 - **Bungee** - ONLY for H1 main headings
 - **Eurostile Bold Extended / Michroma / Anybody** - for ALL other text (subtitles, paragraphs, descriptions)
+
+
+## Phase 204: CRITICAL Quiz Editor Bugs (2025-12-31)
+
+### Quiz List Synchronization
+- [x] Fix quiz list not updating when editor changes are saved
+- [x] Ensure quiz card title/description updates immediately after save
+- [x] Check if refetch() is called after quiz design update
+
+### Mobile Preview Issues
+- [x] Fix text overflow in mobile preview (editor)
+- [x] Add proper responsive classes (text-sm, text-base, etc.)
+- [x] Ensure text wraps correctly on small screens
+- [x] Fix heading font size on mobile (too large)
+
+### Published Quiz Mobile Layout
+- [x] Fix text overflow on published quiz mobile version
+- [x] Add proper word-break and text wrapping
+- [x] Test on actual mobile devices (375px, 390px, 414px)
+- [x] Ensure button fits on screen
+
+### Logo & Name Display
+- [x] Find where logo should be displayed in quiz
+- [x] Add logo image to quiz start page
+- [x] Add quiz name/title display
+- [x] Style logo and name appropriately
+
+### Pikachu Lazy Loading
+- [x] Add loading="lazy" to all Pikachu images on service pages
+- [x] Test lazy loading works correctly
+- [x] Verify images still display properly

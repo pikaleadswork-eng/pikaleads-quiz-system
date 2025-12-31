@@ -109,7 +109,7 @@ export default function GoogleAdsPage() {
               <div className="relative flex items-center justify-center">
                 <div className="absolute inset-0 bg-gradient-to-tr from-[#FFD93D]/20 to-[#00F0FF]/20 blur-3xl" />
                 <div className="relative z-10 w-full max-w-2xl mx-auto">
-                  <img src="/google-ads-hero.png" alt="Google Ads" className="w-full h-auto object-contain drop-shadow-2xl" style={{ maxHeight: "850px", minHeight: "500px" }} />
+                  <img src="/google-ads-hero.png" alt="Google Ads" loading="lazy" className="w-full h-auto object-contain drop-shadow-2xl" style={{ maxHeight: "850px", minHeight: "500px" }} />
                 </div>
               </div>
             </div>

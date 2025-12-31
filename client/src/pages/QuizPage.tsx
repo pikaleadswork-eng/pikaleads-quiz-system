@@ -204,6 +204,7 @@ export default function QuizPage() {
   if (!quizStarted) {
     const alignment = designSettings?.alignment || "center";
     const fontFamily = designSettings?.fontFamily || "Inter";
+    const logoImage = designSettings?.logoImage;
     const titleColor = designSettings?.titleColor || "#FFFFFF";
     const subtitleColor = designSettings?.subtitleColor || "#FFFFFF";
     const titleWeight = designSettings?.titleWeight || "bold";
@@ -242,15 +243,20 @@ export default function QuizPage() {
             {/* Text on RIGHT */}
             <div className="flex-1 flex items-center justify-end p-8 lg:p-16">
               <div className="max-w-xl text-right">
+                {logoImage && (
+                  <div className="flex justify-end mb-6">
+                    <img src={logoImage} alt="Logo" className="h-12 md:h-16 w-auto object-contain" />
+                  </div>
+                )}
                 <h1 
-                  className="text-3xl md:text-4xl lg:text-5xl mb-6 leading-tight"
-                  style={{ fontFamily, color: titleColor, fontSize: `${titleFontSize}px`, fontWeight: getFontWeight(titleWeight), textTransform: 'none' }}
+                  className="text-xl sm:text-2xl md:text-4xl lg:text-5xl mb-6 leading-tight break-words"
+                  style={{ fontFamily, color: titleColor, fontWeight: getFontWeight(titleWeight), textTransform: 'none' }}
                 >
                   {title}
                 </h1>
                 <p 
-                  className="text-lg md:text-xl mb-10 leading-relaxed"
-                  style={{ fontFamily, color: subtitleColor, fontSize: `${subtitleFontSize}px`, fontWeight: getFontWeight(subtitleWeight) }}
+                  className="text-sm sm:text-base md:text-xl mb-10 leading-relaxed break-words"
+                  style={{ fontFamily, color: subtitleColor, fontWeight: getFontWeight(subtitleWeight) }}
                 >
                   {subtitle}
                 </p>
@@ -298,15 +304,22 @@ export default function QuizPage() {
               <div className={`max-w-xl ${
                 alignment === "left" ? "text-left" : "text-center"
               }`}>
+                {logoImage && (
+                  <div className={`flex mb-6 ${
+                    alignment === "center" ? "justify-center" : "justify-start"
+                  }`}>
+                    <img src={logoImage} alt="Logo" className="h-12 md:h-16 w-auto object-contain" />
+                  </div>
+                )}
                 <h1 
-                  className="text-3xl md:text-4xl lg:text-5xl mb-6 leading-tight"
-                  style={{ fontFamily, color: titleColor, fontSize: `${titleFontSize}px`, fontWeight: getFontWeight(titleWeight), textTransform: 'none' }}
+                  className="text-xl sm:text-2xl md:text-4xl lg:text-5xl mb-6 leading-tight break-words"
+                  style={{ fontFamily, color: titleColor, fontWeight: getFontWeight(titleWeight), textTransform: 'none' }}
                 >
                   {title}
                 </h1>
                 <p 
-                  className="text-lg md:text-xl mb-10 leading-relaxed"
-                  style={{ fontFamily, color: subtitleColor, fontSize: `${subtitleFontSize}px`, fontWeight: getFontWeight(subtitleWeight) }}
+                  className="text-sm sm:text-base md:text-xl mb-10 leading-relaxed break-words"
+                  style={{ fontFamily, color: subtitleColor, fontWeight: getFontWeight(subtitleWeight) }}
                 >
                   {subtitle}
                 </p>
