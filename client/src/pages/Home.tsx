@@ -342,7 +342,7 @@ export default function Home() {
                 </h2>
               </div>
 
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3 lg:gap-4 items-center">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 lg:gap-4 items-center">
                 {[
                   { name: "Maria Caruso", logo: "/clients/carusoshoes-enhanced.png" },
                   { name: "Ovita", logo: "/clients/optmaster-enhanced.png" },

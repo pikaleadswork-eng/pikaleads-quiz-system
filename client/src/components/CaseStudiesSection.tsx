@@ -121,7 +121,7 @@ export default function CaseStudiesSection({ pageSlug, limit = 4 }: CaseStudiesS
             return (
               <div
                 key={caseStudy.id}
-                className="group bg-zinc-900/50 backdrop-blur border border-zinc-800 rounded-2xl overflow-hidden hover:border-yellow-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-yellow-500/10 flex flex-col h-full"
+                className="group bg-zinc-900/50 backdrop-blur border border-zinc-800 rounded-2xl overflow-hidden hover:border-yellow-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-yellow-500/10"
               >
                 {/* Cover Image */}
                 {caseStudy.coverImage && (
@@ -135,7 +135,7 @@ export default function CaseStudiesSection({ pageSlug, limit = 4 }: CaseStudiesS
                   </div>
                 )}
 
-                <div className="p-8 flex flex-col flex-grow">
+                <div className="p-8">
                   {/* Tags */}
                   <div className="flex flex-wrap gap-2 mb-4">
                     {tags.slice(0, 3).map((tag, idx) => (
@@ -158,7 +158,7 @@ export default function CaseStudiesSection({ pageSlug, limit = 4 }: CaseStudiesS
                   </p>
 
                   {/* Results Grid */}
-                  <div className="grid grid-cols-2 gap-4 mb-6 p-4 bg-black/30 rounded-xl border border-zinc-800 flex-grow">
+                  <div className="grid grid-cols-2 gap-4 mb-6 p-4 bg-black/30 rounded-xl border border-zinc-800">
                     {results.roi && (
                       <div>
                         <div className="text-2xl font-bold text-yellow-400">
@@ -202,9 +202,10 @@ export default function CaseStudiesSection({ pageSlug, limit = 4 }: CaseStudiesS
                   </div>
 
                   {/* View Case Button */}
-                  <Link href={`/case-studies/${caseStudy.slug}`} className="mt-auto">
+                  <Link href={`/case-studies/${caseStudy.slug}`}>
                     <Button
-                      className="w-full group/btn bg-yellow-400 hover:bg-yellow-500 text-black font-bold transition-all"
+                      variant="outline"
+                      className="w-full group/btn border-yellow-400/20 hover:bg-yellow-400 hover:text-black transition-all"
                     >
                       {t.viewCase}
                       <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />

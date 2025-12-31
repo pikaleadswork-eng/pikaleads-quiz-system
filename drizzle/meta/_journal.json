@@ -379,13 +379,6 @@
       "when": 1767118314638,
       "tag": "0053_noisy_lila_cheney",
       "breakpoints": true
-    },
-    {
-      "idx": 54,
-      "version": "5",
-      "when": 1767178716329,
-      "tag": "0054_steady_arachne",
-      "breakpoints": true
     }
   ]
 }

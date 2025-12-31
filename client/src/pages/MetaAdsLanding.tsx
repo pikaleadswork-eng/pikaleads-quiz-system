@@ -1,10 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import PhoneInput from "@/components/PhoneInput";
 import { Textarea } from "@/components/ui/textarea";
 import { CheckCircle2, Zap, Target, TrendingUp, Users, Shield, Clock, BarChart3, Phone, Mail } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 import { trpc } from "@/lib/trpc";
 import CyberpunkNavigation from "@/components/CyberpunkNavigation";
@@ -14,10 +13,6 @@ import { Link } from "wouter";
 import CaseStudiesSection from "@/components/CaseStudiesSection";
 
 export default function MetaAdsLanding() {
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'instant' });
-  }, []);
-  
   const [modalOpen, setModalOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -63,7 +58,7 @@ export default function MetaAdsLanding() {
           <div className="absolute inset-0 bg-black" />
           
           <div className="container relative z-10 px-4 py-12 lg:py-20">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-[70vh] lg:min-h-[80vh]">
               {/* LEFT SIDE - Text Content */}
               <div className="space-y-4 lg:space-y-8 order-1 lg:order-1">
                 {/* Badge */}
@@ -120,16 +115,16 @@ export default function MetaAdsLanding() {
               </div>
 
               {/* RIGHT SIDE - Pikachu Image */}
-              <div className="relative h-[300px] sm:h-[400px] md:h-[500px] lg:h-[700px] xl:h-[800px] order-2 lg:order-2 flex items-center justify-center">
+              <div className="relative h-[400px] lg:h-[800px] order-2 lg:order-2">
                 {/* Glow Effect */}
                 <div className="absolute inset-0 bg-gradient-to-l from-pink-500/20 via-purple-500/20 to-transparent blur-3xl" />
                 
                 {/* Pikachu Character */}
-                <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
+                <div className="relative w-full h-full flex items-center justify-center">
                   <img 
                     src="/pikachu-yellow-final.png"
                     alt="Pikachu Cyberpunk"
-                    className="w-[280px] sm:w-[350px] md:w-[400px] lg:w-[500px] xl:w-[600px] h-auto object-contain drop-shadow-2xl animate-float max-h-full"
+                    className="w-[500px] md:w-[650px] lg:w-[750px] xl:w-[850px] h-auto object-contain drop-shadow-2xl animate-float"
                     style={{
                       filter: "drop-shadow(0 0 40px rgba(236, 72, 153, 0.5))"
                     }}
@@ -187,7 +182,7 @@ export default function MetaAdsLanding() {
 
         <section className="py-12 lg:py-20 bg-gradient-to-b from-black to-gray-900">
           <div className="container px-4">
-            <div className="text-center mb-16 max-w-5xl mx-auto">
+            <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold mb-4">
                 Вирішуйте відразу <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">декілька проблем</span> одночасно:
               </h2>
@@ -223,7 +218,7 @@ export default function MetaAdsLanding() {
                   <div className="relative z-10">
                     <div className="text-2xl font-bold text-cyan-400 mb-2">{solution.number}</div>
                     <h3 className="text-2xl font-bold mb-4">{solution.title}</h3>
-                    <p className="text-gray-400" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>{solution.description}</p>
+                    <p className="text-gray-400">{solution.description}</p>
                   </div>
                 </Card>
               ))}
@@ -234,7 +229,7 @@ export default function MetaAdsLanding() {
         {/* Client Pain Points Section - "А також, ми розуміємо, що можливо, ви стикались" */}
         <section className="py-12 lg:py-20 relative">
           <div className="container px-4">
-            <div className="text-center mb-16 max-w-5xl mx-auto">
+            <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold mb-4">
                 А також, Ми розуміємо, що, можливо, <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-red-500">Ви стикались:</span>
               </h2>
@@ -266,7 +261,7 @@ export default function MetaAdsLanding() {
                 <Card key={index} className="bg-gradient-to-br from-gray-900/80 to-black border-gray-800 p-6 hover:border-pink-500/50 transition-all">
                   <pain.icon className="w-12 h-12 text-pink-500 mb-4" />
                   <h3 className="text-xl font-bold mb-3">{pain.title}</h3>
-                  <p className="text-gray-400" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>{pain.description}</p>
+                  <p className="text-gray-400">{pain.description}</p>
                 </Card>
               ))}
             </div>
@@ -276,7 +271,7 @@ export default function MetaAdsLanding() {
         {/* Testimonials Section */}
         <section className="py-12 lg:py-20 bg-gradient-to-b from-black to-gray-900">
           <div className="container px-4">
-            <div className="text-center mb-16 max-w-5xl mx-auto">
+            <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold mb-4">
                 Відгуки від <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500">наших клієнтів</span>
               </h2>
@@ -351,7 +346,7 @@ export default function MetaAdsLanding() {
                       </div>
                     </div>
                   </div>
-                  <p className="text-gray-300 mb-4 text-sm leading-relaxed" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>{testimonial.text}</p>
+                  <p className="text-gray-300 mb-4 text-sm leading-relaxed">{testimonial.text}</p>
                   <div className="flex flex-wrap gap-2">
                     {testimonial.tags.map((tag, i) => (
                       <span key={i} className="text-xs px-2 py-1 rounded-full bg-purple-500/20 text-purple-300">
@@ -385,7 +380,7 @@ export default function MetaAdsLanding() {
         {/* Client Logos Section - Auto-Rotating Carousel */}
         <section className="py-12 lg:py-20 overflow-hidden">
           <div className="container px-4">
-            <div className="text-center mb-12 max-w-5xl mx-auto">
+            <div className="text-center mb-12">
               <h2 className="text-4xl md:text-5xl font-bold mb-4">
                 Наші <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">клієнти</span>
               </h2>
@@ -397,15 +392,15 @@ export default function MetaAdsLanding() {
               <div className="flex gap-3 lg:gap-4 animate-scroll hover:pause">
                 {/* First set of logos */}
                 {[
-                  { name: "Maria Caruso", logo: "/clients/caruso-logo.webp", color: "cyan" },
-                  { name: "Ovita", logo: "/clients/optmaster-logo.webp", color: "blue" },
-                  { name: "ParkSide", logo: "/clients/parkside-logo.webp", color: "purple" },
-                  { name: "Nasledniki", logo: "/clients/nasledniki-logo.webp", color: "pink" },
-                  { name: "EMMI", logo: "/clients/emmi-logo.webp", color: "yellow" },
-                  { name: "Client", logo: "/clients/_.png.webp", color: "green" },
-                  { name: "Coral Travel", logo: "/clients/coraltravel-logo.webp", color: "orange" },
-                  { name: "Flower Shop", logo: "/clients/flower-logo.webp", color: "rose" },
-                  { name: "Karpachoff", logo: "/clients/karpachoff-logo.webp", color: "indigo" }
+                  { name: "Maria Caruso", logo: "/clients/carusoshoes-enhanced.png", color: "cyan" },
+                  { name: "Ovita", logo: "/clients/optmaster-enhanced.png", color: "blue" },
+                  { name: "ParkSide", logo: "/clients/parkside-enhanced.png", color: "purple" },
+                  { name: "Nasledniki", logo: "/clients/nasledniki-enhanced.png", color: "pink" },
+                  { name: "EMMI", logo: "/clients/emmi-enhanced.png", color: "yellow" },
+                  { name: "Client", logo: "/clients/client6-enhanced.png", color: "green" },
+                  { name: "Coral Travel", logo: "/clients/coraltravel-enhanced.png", color: "orange" },
+                  { name: "Flower Shop", logo: "/clients/flower-enhanced.png", color: "rose" },
+                  { name: "Karpachoff", logo: "/clients/karpachoff-enhanced.png", color: "indigo" }
                 ].map((client, index) => (
                   <div 
                     key={`first-${index}`} 
@@ -425,15 +420,15 @@ export default function MetaAdsLanding() {
                 
                 {/* Duplicate set for seamless loop */}
                 {[
-                  { name: "Maria Caruso", logo: "/clients/caruso-logo.webp", color: "cyan" },
-                  { name: "Ovita", logo: "/clients/optmaster-logo.webp", color: "blue" },
-                  { name: "ParkSide", logo: "/clients/parkside-logo.webp", color: "purple" },
-                  { name: "Nasledniki", logo: "/clients/nasledniki-logo.webp", color: "pink" },
-                  { name: "EMMI", logo: "/clients/emmi-logo.webp", color: "yellow" },
-                  { name: "Client", logo: "/clients/_.png.webp", color: "green" },
-                  { name: "Coral Travel", logo: "/clients/coraltravel-logo.webp", color: "orange" },
-                  { name: "Flower Shop", logo: "/clients/flower-logo.webp", color: "rose" },
-                  { name: "Karpachoff", logo: "/clients/karpachoff-logo.webp", color: "indigo" }
+                  { name: "Maria Caruso", logo: "/clients/carusoshoes-enhanced.png", color: "cyan" },
+                  { name: "Ovita", logo: "/clients/optmaster-enhanced.png", color: "blue" },
+                  { name: "ParkSide", logo: "/clients/parkside-enhanced.png", color: "purple" },
+                  { name: "Nasledniki", logo: "/clients/nasledniki-enhanced.png", color: "pink" },
+                  { name: "EMMI", logo: "/clients/emmi-enhanced.png", color: "yellow" },
+                  { name: "Client", logo: "/clients/client6-enhanced.png", color: "green" },
+                  { name: "Coral Travel", logo: "/clients/coraltravel-enhanced.png", color: "orange" },
+                  { name: "Flower Shop", logo: "/clients/flower-enhanced.png", color: "rose" },
+                  { name: "Karpachoff", logo: "/clients/karpachoff-enhanced.png", color: "indigo" }
                 ].map((client, index) => (
                   <div 
                     key={`second-${index}`} 
@@ -458,11 +453,11 @@ export default function MetaAdsLanding() {
         {/* Video Cases Section */}
         <section className="py-12 lg:py-20 bg-gradient-to-b from-black to-gray-900">
           <div className="container px-4">
-            <div className="text-center mb-12 max-w-5xl mx-auto">
+            <div className="text-center mb-12">
               <h2 className="text-4xl md:text-5xl font-bold mb-4">
                 Відео<span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-pink-500">кейси</span>
               </h2>
-              <p className="text-xl text-gray-400" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>Кейси, які інколи виходять за рамки пристойності</p>
+              <p className="text-xl text-gray-400">Кейси, які інколи виходять за рамки пристойності</p>
             </div>
 
             <div className="grid md:grid-cols-2 gap-6">
@@ -507,11 +502,11 @@ export default function MetaAdsLanding() {
         <section id="contact-form" className="py-12 lg:py-20">
           <div className="container px-4">
             <div className="max-w-2xl mx-auto">
-              <div className="text-center mb-12 max-w-5xl mx-auto">
+              <div className="text-center mb-12">
                 <h2 className="text-4xl md:text-5xl font-bold mb-4">
                   Отримайте <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-red-500">безкоштовний аудит</span>
                 </h2>
-                <p className="text-xl text-gray-400" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>Залишайте заявку та отримуйте повний список необхідних змін для покращення результату</p>
+                <p className="text-xl text-gray-400">Залишайте заявку та отримуйте повний список необхідних змін для покращення результату</p>
               </div>
 
               <Card className="bg-gradient-to-br from-gray-900/80 to-black border-pink-500/30 p-8">

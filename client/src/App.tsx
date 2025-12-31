@@ -60,7 +60,6 @@ import { SettingsIPTelephony } from "./pages/SettingsIPTelephony";
 import BlogManagement from "./pages/crm/BlogManagement";
 import AdminTeam from "./pages/admin/AdminTeam";
 import AdminCaseStudies from "./pages/admin/AdminCaseStudies";
-import AdminBlog from "./pages/AdminBlog";
 import BlogList from "./pages/BlogList";
 import BlogPost from "./pages/BlogPost";
 import ServicesManagement from "./pages/ServicesManagement";
@@ -151,7 +150,8 @@ function Router() {
       <Route path={"/admin/quizzes"} component={AdminQuizzes} />
       <Route path={"/admin/quizzes/:id/analytics"} component={QuizAnalytics} />
       <Route path={"/admin/quizzes/:quizId/design"} component={QuizDesignPage} />
-      <Route path={"/admin/blog"} component={AdminBlog} />
+      <Route path={"/admin/ab-tests"} component={AdminABTests} />
+      <Route path={"/admin/ab-testing"} component={AdminABTests} />
       <Route path={"/admin/managers"} component={AdminManagers} />
       <Route path={"/admin/analytics"} component={AdminAnalytics} />
       <Route path={"/admin/assignment-rules"} component={AdminAssignmentRules} />

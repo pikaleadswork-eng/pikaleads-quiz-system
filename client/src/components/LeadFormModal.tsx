@@ -3,7 +3,6 @@ import { useLocation } from "wouter";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import PhoneInput from "@/components/PhoneInput";
 import { Textarea } from "@/components/ui/textarea";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
@@ -158,10 +157,12 @@ export default function LeadFormModal({ isOpen, onClose, formType }: LeadFormMod
             <label className="text-sm font-medium text-gray-300 mb-2 block">
               Телефон <span className="text-red-500">*</span>
             </label>
-            <PhoneInput
-              value={formData.phone}
-              onChange={(phone) => setFormData({ ...formData, phone })}
+            <Input
+              type="tel"
               placeholder="+380 XX XXX XX XX"
+              value={formData.phone}
+              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+              className="bg-zinc-800 border-zinc-700 text-white placeholder:text-gray-500 focus:border-[#FFD93D]"
               required
             />
           </div>

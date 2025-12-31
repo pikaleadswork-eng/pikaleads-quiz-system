@@ -36,7 +36,7 @@ export default function Footer() {
       addressText: "Рівненська обл., м.Рівне., вул. Млинівська 12",
       followUs: "Слідкуйте за нами",
       partners: "Сертифіковані партнери",
-      rights: "© 2026 PIKA LEADS. Всі права захищені.",
+      rights: "© 2025 PIKA LEADS. Всі права захищені.",
       company: "ФОП \"Грибук Роман Миколайович\""
     },
     en: {
@@ -60,7 +60,7 @@ export default function Footer() {
       addressText: "Rivne region, Rivne, Mlynivska St. 12",
       followUs: "Follow Us",
       partners: "Certified Partners",
-      rights: "© 2026 PIKA LEADS. All rights reserved.",
+      rights: "© 2025 PIKA LEADS. All rights reserved.",
       company: "FOP \"Hrybuk Roman Mykolaiovych\""
     },
     ru: {
@@ -84,7 +84,7 @@ export default function Footer() {
       addressText: "Ровенская обл., г.Ровно, ул. Млыновская 12",
       followUs: "Следите за нами",
       partners: "Сертифицированные партнеры",
-      rights: "© 2026 PIKA LEADS. Все права защищены.",
+      rights: "© 2025 PIKA LEADS. Все права защищены.",
       company: "ФОП \"Грибук Роман Николаевич\""
     }
   };

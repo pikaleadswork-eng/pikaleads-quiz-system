@@ -40,7 +40,7 @@ export default function PremiumCard({
 
         {/* Title */}
         <h3 
-          className="text-base sm:text-lg md:text-xl font-black text-white mb-3 sm:mb-4 tracking-wide leading-tight break-words"
+          className="text-base sm:text-lg md:text-xl font-black text-white mb-3 sm:mb-4 tracking-wide leading-tight"
           style={{ fontFamily: "'Eurostile Bold Extended', 'Bungee', sans-serif" }}
         >
           {title}

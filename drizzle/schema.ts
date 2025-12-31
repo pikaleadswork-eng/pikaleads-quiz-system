@@ -657,11 +657,6 @@ export const quizzes = mysqlTable("quizzes", {
   createdBy: int("createdBy").notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
-  // SEO fields
-  metaTitle: varchar("metaTitle", { length: 255 }),
-  metaDescription: text("metaDescription"),
-  keywords: text("keywords"),
-  ogImage: varchar("ogImage", { length: 500 }),
 });
 
 export type Quiz = typeof quizzes.$inferSelect;
@@ -1049,11 +1044,6 @@ export const caseStudies = mysqlTable("case_studies", {
   createdBy: int("createdBy").notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
-  // SEO fields
-  metaTitle: varchar("metaTitle", { length: 255 }),
-  metaDescription: text("metaDescription"),
-  keywords: text("keywords"),
-  ogImage: varchar("ogImage", { length: 500 }),
 });
 
 export type CaseStudy = typeof caseStudies.$inferSelect;
