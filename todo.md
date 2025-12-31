@@ -251,3 +251,52 @@
 - [x] Test FAQ accordion animation on mobile (375px, 414px, 768px)
 - [x] Verify case studies display correctly on each service page
 - [x] Create final checkpoint
+
+
+## Phase 196: CRITICAL - Fix Card Styling & Capitalization on ALL Service Pages (2025-12-31)
+
+### Critical Issues:
+- [x] All card texts start with lowercase letters (should be capitalized)
+- [x] Cards have NO premium styling (should have neon borders, gradients, large icons like homepage)
+- [x] "Як виглядає робота з нами" section cards - plain black, need premium style
+- [x] "До яких результатів ми приходимо" section cards - plain black, need premium style
+
+### Styling Requirements (match homepage):
+- [ ] Add neon borders (cyan #00F0FF, yellow #FFD93D, purple #A855F7)
+- [ ] Add gradient backgrounds (from-cyan-500/10, from-yellow-500/10, from-purple-500/10)
+- [ ] Add large colorful icons (text-4xl md:text-6xl)
+- [ ] Add shadow effects (shadow-lg, shadow-cyan-500/20)
+- [ ] Add hover animations (hover:scale-105 transition-transform)
+
+### Pages to Fix (7 total):
+- [x] Google Ads - fix capitalization + apply premium card styling
+- [x] TikTok Ads - fix capitalization + apply premium card styling (already using PremiumCard)
+- [x] X Ads - fix capitalization + apply premium card styling (already using PremiumCard)
+- [x] Telegram Ads - fix capitalization + apply premium card styling (already using PremiumCard)
+- [x] Web Development - fix capitalization + apply premium card styling (already using PremiumCard)
+- [x] Web Design - fix capitalization + apply premium card styling (already using PremiumCard)
+- [x] App Development - fix capitalization + apply premium card styling (already using PremiumCard)
+
+### Examples to Fix:
+- [ ] "регулярна робота з ефективністю витрат" → "Регулярна робота з ефективністю витрат"
+- [ ] "фокус на заявках, а не процесі" → "Фокус на заявках, а не процесі"
+- [ ] "зрозумілий результат у цифрах" → "Зрозумілий результат у цифрах"
+- [ ] "вирівнювання потоку заявок" → "Вирівнювання потоку заявок"
+
+
+## URGENT: Fix Case Studies Layout (2025-12-31)
+
+### Critical Issue:
+- [x] Case studies display vertically (one column) - should be 2 columns (left/right)
+- [x] Change MetaCaseStudiesSection grid from grid-cols-1 to grid-cols-2
+- [x] Ensure responsive: mobile (1 col), tablet+ (2 cols)
+- [x] Test on all 7 service pages
+
+
+## URGENT: Fix FAQ Answer Font (2025-12-31)
+
+### Critical Issue:
+- [x] FAQ answer text uses wrong font (system font instead of Eurostile Bold Extended)
+- [x] Add fontFamily: "'Eurostile Bold Extended', sans-serif" to CollapsibleFAQ answer text
+- [x] Test on all 7 service pages
+- [x] Added Michroma and Anybody fonts as Eurostile alternatives to Google Fonts

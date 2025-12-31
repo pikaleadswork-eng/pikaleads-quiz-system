@@ -301,33 +301,34 @@ export default function GoogleAdsPage() {
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-              <Card className="bg-zinc-800/50 border-zinc-700 hover:border-[#FFD93D]/50 transition-all">
-                <CardContent className="p-6 text-center space-y-4">
-                  <CheckCircle2 className="w-12 h-12 text-[#FFD93D] mx-auto" />
-                  <p className="text-white font-semibold">Усі налаштування і ведення — на нашій стороні</p>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-zinc-800/50 border-zinc-700 hover:border-[#00F0FF]/50 transition-all">
-                <CardContent className="p-6 text-center space-y-4">
-                  <CheckCircle2 className="w-12 h-12 text-[#00F0FF] mx-auto" />
-                  <p className="text-white font-semibold">регулярна робота з ефективністю витрат</p>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-zinc-800/50 border-zinc-700 hover:border-purple-500/50 transition-all">
-                <CardContent className="p-6 text-center space-y-4">
-                  <CheckCircle2 className="w-12 h-12 text-purple-400 mx-auto" />
-                  <p className="text-white font-semibold">фокус на заявках, а не процесі</p>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-zinc-800/50 border-zinc-700 hover:border-green-500/50 transition-all">
-                <CardContent className="p-6 text-center space-y-4">
-                  <CheckCircle2 className="w-12 h-12 text-green-400 mx-auto" />
-                  <p className="text-white font-semibold">зрозумілий результат у цифрах</p>
-                </CardContent>
-              </Card>
+              <PremiumCard
+                icon={<CheckCircle2 className="w-8 h-8 sm:w-10 sm:h-10 text-black" />}
+                title="Усі налаштування і ведення — на нашій стороні"
+                description="Ми беремо на себе всю технічну роботу: від створення кампаній до щоденної оптимізації."
+                borderColor="#FFD93D"
+                iconBgColor="#FFD93D"
+              />
+              <PremiumCard
+                icon={<CheckCircle2 className="w-8 h-8 sm:w-10 sm:h-10 text-black" />}
+                title="Регулярна робота з ефективністю витрат"
+                description="Постійний моніторинг та оптимізація для досягнення найкращого співвідношення ціни та результату."
+                borderColor="#00F0FF"
+                iconBgColor="#00F0FF"
+              />
+              <PremiumCard
+                icon={<CheckCircle2 className="w-8 h-8 sm:w-10 sm:h-10 text-black" />}
+                title="Фокус на заявках, а не процесі"
+                description="Ви отримуєте готові заявки, а не звіти про кліки та покази. Результат, а не процес."
+                borderColor="#A855F7"
+                iconBgColor="#A855F7"
+              />
+              <PremiumCard
+                icon={<CheckCircle2 className="w-8 h-8 sm:w-10 sm:h-10 text-black" />}
+                title="Зрозумілий результат у цифрах"
+                description="Прозора аналітика: скільки витрачено, скільки заявок отримано, який CPL та ROAS."
+                borderColor="#10B981"
+                iconBgColor="#10B981"
+              />
             </div>
 
             <div className="text-center">
@@ -351,33 +352,34 @@ export default function GoogleAdsPage() {
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-              <Card className="bg-zinc-800/50 border-zinc-700">
-                <CardContent className="p-6 text-center space-y-4">
-                  <div className="text-4xl font-black text-[#FFD93D]">📈</div>
-                  <p className="text-white font-semibold">вирівнювання потоку заявок</p>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-zinc-800/50 border-zinc-700">
-                <CardContent className="p-6 text-center space-y-4">
-                  <div className="text-4xl font-black text-[#00F0FF]">💰</div>
-                  <p className="text-white font-semibold">зменшення хаотичних витрат</p>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-zinc-800/50 border-zinc-700">
-                <CardContent className="p-6 text-center space-y-4">
-                  <div className="text-4xl font-black text-purple-400">🎯</div>
-                  <p className="text-white font-semibold">розуміння, що саме масштабувати</p>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-zinc-800/50 border-zinc-700">
-                <CardContent className="p-6 text-center space-y-4">
-                  <div className="text-4xl font-black text-green-400">✅</div>
-                  <p className="text-white font-semibold">передбачуваність у рекламі</p>
-                </CardContent>
-              </Card>
+              <PremiumCard
+                icon={<span className="text-4xl sm:text-5xl">📈</span>}
+                title="Вирівнювання потоку заявок"
+                description="Стабільний потік лідів замість хаотичних спалахів і провалів."
+                borderColor="#FFD93D"
+                iconBgColor="#FFD93D"
+              />
+              <PremiumCard
+                icon={<span className="text-4xl sm:text-5xl">💰</span>}
+                title="Зменшення хаотичних витрат"
+                description="Кожна гривня працює на результат, а не на експерименти."
+                borderColor="#00F0FF"
+                iconBgColor="#00F0FF"
+              />
+              <PremiumCard
+                icon={<span className="text-4xl sm:text-5xl">🎯</span>}
+                title="Розуміння, що саме масштабувати"
+                description="Чітке розуміння, які канали та кампанії приносять найбільше заявок."
+                borderColor="#A855F7"
+                iconBgColor="#A855F7"
+              />
+              <PremiumCard
+                icon={<span className="text-4xl sm:text-5xl">✅</span>}
+                title="Передбачуваність у рекламі"
+                description="Ви знаєте, скільки заявок отримаєте за конкретний бюджет."
+                borderColor="#10B981"
+                iconBgColor="#10B981"
+              />
             </div>
 
             <div className="text-center">

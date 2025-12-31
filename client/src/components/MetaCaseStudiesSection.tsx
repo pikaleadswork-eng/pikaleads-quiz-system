@@ -42,8 +42,8 @@ export default function MetaCaseStudiesSection({ pageSlug = "meta-ads" }: MetaCa
           <p className="text-xl text-gray-400">Реальні результати наших клієнтів</p>
         </div>
 
-        {/* Case Studies Grid - Article Style */}
-        <div className="space-y-12">
+        {/* Case Studies Grid - 2 Column Layout */}
+        <div className="grid md:grid-cols-2 gap-8">
           {caseStudies.map((caseStudy: any, index: number) => {
             const results = parseResults(caseStudy.results);
             const tags = parseTags(caseStudy.tags);
@@ -56,9 +56,9 @@ export default function MetaCaseStudiesSection({ pageSlug = "meta-ads" }: MetaCa
                   isEven ? 'hover:shadow-orange-500/20' : 'hover:shadow-pink-500/20'
                 } hover:shadow-2xl`}
               >
-                <div className={`grid lg:grid-cols-2 gap-0 ${!isEven ? 'lg:grid-flow-dense' : ''}`}>
+                <div className="flex flex-col">
                   {/* Image Side */}
-                  <div className={`relative h-64 lg:h-auto ${!isEven ? 'lg:col-start-2' : ''}`}>
+                  <div className="relative h-64">
                     {caseStudy.coverImage ? (
                       <>
                         <img
@@ -67,7 +67,7 @@ export default function MetaCaseStudiesSection({ pageSlug = "meta-ads" }: MetaCa
                           loading="lazy"
                           className="w-full h-full object-cover"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent lg:bg-gradient-to-r lg:from-black/80 lg:via-black/40 lg:to-transparent" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
                       </>
                     ) : (
                       <div className="w-full h-full bg-gradient-to-br from-orange-900/30 to-red-900/20 flex items-center justify-center">
@@ -77,7 +77,7 @@ export default function MetaCaseStudiesSection({ pageSlug = "meta-ads" }: MetaCa
                   </div>
 
                   {/* Content Side */}
-                  <div className="p-6 lg:p-10 flex flex-col justify-center">
+                  <div className="p-6 flex flex-col">
                     {/* Tags */}
                     {tags.length > 0 && (
                       <div className="flex flex-wrap gap-2 mb-4">
