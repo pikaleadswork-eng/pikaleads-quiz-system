@@ -58,7 +58,7 @@ export default function MetaAdsLanding() {
           <div className="absolute inset-0 bg-black" />
           
           <div className="container relative z-10 px-4 py-12 lg:py-20">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-[70vh] lg:min-h-[80vh]">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center">
               {/* LEFT SIDE - Text Content */}
               <div className="space-y-4 lg:space-y-8 order-1 lg:order-1">
                 {/* Badge */}
@@ -115,16 +115,16 @@ export default function MetaAdsLanding() {
               </div>
 
               {/* RIGHT SIDE - Pikachu Image */}
-              <div className="relative h-[400px] lg:h-[800px] order-2 lg:order-2">
+              <div className="relative h-[300px] sm:h-[400px] md:h-[500px] lg:h-[700px] xl:h-[800px] order-2 lg:order-2 flex items-center justify-center">
                 {/* Glow Effect */}
                 <div className="absolute inset-0 bg-gradient-to-l from-pink-500/20 via-purple-500/20 to-transparent blur-3xl" />
                 
                 {/* Pikachu Character */}
-                <div className="relative w-full h-full flex items-center justify-center">
+                <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
                   <img 
                     src="/pikachu-yellow-final.png"
                     alt="Pikachu Cyberpunk"
-                    className="w-[350px] md:w-[450px] lg:w-[550px] xl:w-[650px] h-auto object-contain drop-shadow-2xl animate-float"
+                    className="w-[280px] sm:w-[350px] md:w-[400px] lg:w-[500px] xl:w-[600px] h-auto object-contain drop-shadow-2xl animate-float max-h-full"
                     style={{
                       filter: "drop-shadow(0 0 40px rgba(236, 72, 153, 0.5))"
                     }}
