@@ -12,6 +12,7 @@ import CyberpunkNavigation from "@/components/CyberpunkNavigation";
 import { toast } from "sonner";
 import LeadFormModal from "@/components/LeadFormModal";
 import Footer from "@/components/Footer";
+import HomeCaseStudiesSection from "@/components/HomeCaseStudiesSection";
 
 
 export default function Home() {
@@ -511,6 +512,9 @@ export default function Home() {
               </div>
             </div>
           </section>
+
+          {/* Case Studies Section with Filters */}
+          <HomeCaseStudiesSection language={language} />
 
           {/* Mobile CTA Section - показується тільки на мобільних */}
           <section className="py-12 md:hidden relative">

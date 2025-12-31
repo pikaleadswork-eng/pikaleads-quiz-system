@@ -348,3 +348,21 @@
 
 - [x] Update tRPC router to support pageVisibility filtering
   - [x] Ensure getByPage query filters by pageSlug correctly (already implemented)
+
+
+## Phase 196: Image Optimization & Category Filters (2025-12-31)
+
+### Image Optimization:
+- [x] Convert all case study cover images to WebP format
+- [x] Compress images for faster loading
+- [x] Update image references in database to use .webp extension
+- [x] Add srcset for responsive images
+- [x] Test image loading performance
+
+### Category Filters:
+- [x] Add filter buttons on homepage case studies section
+- [x] Implement filtering by categories (Google Ads, Meta Ads, TikTok, Web Dev, etc.)
+- [x] Add "Всі" (All) button to show all case studies
+- [x] Add smooth transition animations when filtering
+- [x] Make filters responsive on mobile
+- [x] Test filter functionality on all breakpoints
