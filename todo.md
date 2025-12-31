@@ -50,3 +50,28 @@
 - [x] Fix image cropping and alignment on all service pages (images not properly cropped)
 - [x] Rebuild Google Ads service page with complete content from requirements (missing all text blocks, hero, problems, solution system, FAQ, etc.)
 - [x] Make lead generation form look impressive and professional (not just basic form)
+
+## COMPLETE SERVICE PAGES REBUILD (2025-12-31)
+
+### Design & Components
+- [ ] Create unified design system matching homepage (cyberpunk yellow/cyan colors)
+- [ ] Fix Pikachu images - same size, cropping, presentation as homepage (square, object-contain, centered)
+- [ ] Add popup modal component for lead capture on all service pages
+- [ ] Ensure forms look impressive and professional (not basic)
+- [ ] Add form at bottom of each service page
+
+### Individual Service Pages (Read TZ and implement ALL con- [x] TikTok Ads - read TZ, implement all 8 blocks, add forms and popup
+- [x] X (Twitter) Ads - read TZ, implement all 8 blocks, add forms and popup
+- [x] Telegram Ads - read TZ, implement all 8 blocks, add forms and popup
+- [x] Web Development - read TZ, implement all content blocks, add forms and popup
+- [x] Web Design - read TZ, implement all content blocks, add forms and popup
+- [x] App Development - read TZ, implement all content blocks, add forms and popup
+- [x] Google Ads - read TZ, implement all 8 blocks, add forms and popuptyling
+
+### Testing
+- [ ] Test all images display correctly on desktop
+- [ ] Test all images crop properly on mobile (375px, 414px)
+- [ ] Test all images crop properly on tablet (768px, 1024px)
+- [ ] Test popup modal works on all pages
+- [ ] Test all forms submit correctly
+- [ ] Verify unified design across all 7 pages

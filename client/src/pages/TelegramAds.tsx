@@ -1,0 +1,326 @@
+import { useState } from "react";
+import CyberpunkNavigation from "@/components/CyberpunkNavigation";
+import Footer from "@/components/Footer";
+import LeadCaptureModal from "@/components/LeadCaptureModal";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { ArrowRight, CheckCircle2, AlertCircle } from "lucide-react";
+import { toast } from "sonner";
+import { trpc } from "@/lib/trpc";
+
+export default function TelegramAdsPage() {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [formData, setFormData] = useState({ name: "", contact: "", website: "" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const submitLeadMutation = trpc.leads.submitLead.useMutation({
+    onSuccess: () => {
+      toast.success("Заявку відправлено! Ми зв'яжемось з вами найближчим часом.");
+      setFormData({ name: "", contact: "", website: "" });
+      setIsSubmitting(false);
+    },
+    onError: () => {
+      toast.error("Помилка відправки. Спробуйте ще раз.");
+      setIsSubmitting(false);
+    }
+  });
+
+  const handleSubmit = async (e: React.FormEvent, formType: "audit" | "plan") => {
+    e.preventDefault();
+    if (!formData.name || !formData.contact) {
+      toast.error("Будь ласка, заповніть всі обов'язкові поля");
+      return;
+    }
+    setIsSubmitting(true);
+    submitLeadMutation.mutate({
+      name: formData.name,
+      phone: formData.contact,
+      email: "",
+      telegram: "",
+      source: formType === "audit" ? "Telegram Ads - Безкоштовний аудит" : "Telegram Ads - План запуску",
+      notes: formData.website ? `Сайт/ніша: ${formData.website}` : ""
+    });
+  };
+
+  return (
+    <>
+      <CyberpunkNavigation currentPath="/services/telegram-ads" />
+      <div className="min-h-screen bg-black text-white">
+        {/* БЛОК 1. HERO */}
+        <section className="relative min-h-screen flex items-center overflow-hidden pt-20">
+          <div className="absolute inset-0 opacity-20" style={{ backgroundImage: `linear-gradient(rgba(255, 217, 61, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 217, 61, 0.1) 1px, transparent 1px)`, backgroundSize: "50px 50px" }} />
+          <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div className="space-y-8">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight">
+                  <span className="text-white">Отримуйте від 20 заявок на день через </span>
+                  <span className="text-[#FFD93D]">Telegram</span>
+                </h1>
+                <p className="text-xl text-zinc-300 leading-relaxed">
+                  Стабільний потік заявок для вашого бізнесу з запуском за 72 години!
+                </p>
+                <p className="text-sm text-zinc-500">
+                  Кількість заявок залежить від ніші, бюджету та продукту. Потенціал визначаємо під час аудиту.
+                </p>
+                <div className="flex flex-wrap gap-4">
+                  <Button size="lg" className="bg-[#00F0FF] text-black hover:bg-[#00F0FF]/90 font-bold" onClick={() => document.getElementById('audit-form')?.scrollIntoView({ behavior: 'smooth' })}>
+                    Отримати безкоштовний аудит <ArrowRight className="ml-2 w-5 h-5" />
+                  </Button>
+                  <Button size="lg" variant="outline" className="border-[#FFD93D] text-[#FFD93D] hover:bg-[#FFD93D]/10" onClick={() => setModalOpen(true)}>
+                    Залишити заявку
+                  </Button>
+                </div>
+              </div>
+              <div className="relative flex items-center justify-center">
+                <div className="absolute inset-0 bg-gradient-to-tr from-[#FFD93D]/20 to-[#00F0FF]/20 blur-3xl" />
+                <div className="relative z-10 w-full aspect-square max-w-md mx-auto">
+                  <img src="/telegram-ads-hero.png" alt="Telegram Ads" className="w-full h-full object-contain drop-shadow-2xl" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* БЛОК 2. ВАМ ЦЕ ЗНАЙОМО? */}
+        <section className="py-16 bg-zinc-900/50">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-12">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl md:text-5xl font-black text-white mb-6">Вам це знайомо при роботі з Telegram Ads?</h2>
+            </div>
+            <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto mb-10">
+              {[
+                { title: "Трафік є, заявок мало", desc: "Підписники приходять, перегляди є, але звернень майже немає." },
+                { title: "Немає розуміння, які канали працюють", desc: "Реклама розміщується, бюджети витрачаються, але складно зрозуміти, що саме приводить заявки." },
+                { title: "Результат важко повторити", desc: "Один запуск спрацював, наступний — ні. Немає стабільності." },
+                { title: "Неможливо масштабуватись", desc: "Незрозуміло, як збільшити обсяг заявок без різкого росту витрат." }
+              ].map((problem, i) => (
+                <Card key={i} className="bg-zinc-800/50 border-zinc-700 hover:border-red-500/50 transition-all">
+                  <CardContent className="p-6 space-y-4">
+                    <div className="w-12 h-12 bg-red-500/10 rounded-lg flex items-center justify-center text-red-400">
+                      <AlertCircle className="w-6 h-6" />
+                    </div>
+                    <h3 className="text-xl font-bold text-white">{problem.title}</h3>
+                    <p className="text-zinc-400">{problem.desc}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+            <div className="text-center">
+              <p className="text-2xl font-bold text-[#FFD93D]">
+                👉 У результаті Telegram виглядає перспективно, але не працює як надійний канал заявок.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* БЛОК 3. РІШЕННЯ */}
+        <section className="py-16 bg-black">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-12">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl md:text-5xl font-black text-white mb-6">Як ми приводимо заявки з Telegram</h2>
+              <p className="text-xl text-zinc-400 max-w-3xl mx-auto">Ми працюємо по чіткій логіці, без хаотичних розміщень.</p>
+            </div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+              {[
+                { num: "1", title: "Готуємо оффер під Telegram-аудиторію", desc: "Адаптуємо подачу так, щоб люди переходили і залишали заявку, а не просто читали пост.", color: "#FFD93D" },
+                { num: "2", title: "Підбираємо правильні канали і формати", desc: "Реклама розміщується тільки там, де є ваша цільова аудиторія.", color: "#00F0FF" },
+                { num: "3", title: "Залишаємо ефективні розміщення", desc: "Ми відсіюємо все, що не дає заявок, і концентруємо бюджет на робочих каналах.", color: "#A855F7" },
+                { num: "4", title: "Масштабуємо стабільний результат", desc: "Коли заявки йдуть рівно, збільшуємо обсяг без різких просідань.", color: "#10B981" }
+              ].map((step, i) => (
+                <Card key={i} className="bg-gradient-to-br from-zinc-800/80 to-zinc-900/80 border-zinc-700 transition-all">
+                  <CardContent className="p-6 space-y-4">
+                    <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{ backgroundColor: `${step.color}20` }}>
+                      <span className="text-3xl font-black" style={{ color: step.color }}>{step.num}</span>
+                    </div>
+                    <h3 className="text-2xl font-bold text-white">{step.title}</h3>
+                    <p className="text-zinc-400">{step.desc}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+            <div className="text-center">
+              <p className="text-2xl font-bold text-[#00F0FF]">
+                👉 У підсумку ви отримуєте керований потік заявок з Telegram, який можна планувати і збільшувати.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* БЛОК 4. ЛІДГЕН З ОБМЕЖЕННЯМ */}
+        <section id="audit-form" className="py-16 bg-gradient-to-br from-zinc-900 to-black">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-12">
+            <div className="max-w-4xl mx-auto">
+              <div className="text-center mb-10">
+                <h2 className="text-4xl md:text-5xl font-black text-white mb-6">Безкоштовний аудит Telegram Ads</h2>
+                <p className="text-xl text-zinc-300 mb-4">Ми подивимось вашу ситуацію і скажемо:</p>
+              </div>
+              <div className="grid md:grid-cols-3 gap-6 mb-10">
+                {[
+                  { text: "чи реально вийти на 20+ заявок на день", color: "#FFD93D" },
+                  { text: "які канали і формати підійдуть", color: "#00F0FF" },
+                  { text: "який бюджет потрібен", color: "#A855F7" }
+                ].map((item, i) => (
+                  <Card key={i} className="bg-zinc-800/50" style={{ borderColor: `${item.color}30` }}>
+                    <CardContent className="p-6 text-center">
+                      <CheckCircle2 className="w-8 h-8 mx-auto mb-4" style={{ color: item.color }} />
+                      <p className="text-white">{item.text}</p>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+              <Card className="bg-zinc-800/80 border-[#FFD93D]/50">
+                <CardContent className="p-8">
+                  <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4 mb-8">
+                    <p className="text-red-400 font-bold text-center">
+                      ❗ Обмеження: Ми беремо обмежену кількість проєктів, щоб працювати з кожним запуском якісно.
+                    </p>
+                  </div>
+                  <form onSubmit={(e) => handleSubmit(e, "audit")} className="space-y-6">
+                    <div>
+                      <label className="block text-white font-semibold mb-2">Ім'я *</label>
+                      <Input type="text" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} placeholder="Ваше ім'я" className="bg-zinc-900 border-zinc-700 text-white" required />
+                    </div>
+                    <div>
+                      <label className="block text-white font-semibold mb-2">Телефон / месенджер *</label>
+                      <Input type="text" value={formData.contact} onChange={(e) => setFormData({ ...formData, contact: e.target.value })} placeholder="+380..." className="bg-zinc-900 border-zinc-700 text-white" required />
+                    </div>
+                    <div>
+                      <label className="block text-white font-semibold mb-2">Сайт або ніша</label>
+                      <Input type="text" value={formData.website} onChange={(e) => setFormData({ ...formData, website: e.target.value })} placeholder="example.com або опишіть вашу нішу" className="bg-zinc-900 border-zinc-700 text-white" />
+                    </div>
+                    <Button type="submit" size="lg" className="w-full bg-[#00F0FF] text-black hover:bg-[#00F0FF]/90 font-bold text-lg" disabled={isSubmitting}>
+                      {isSubmitting ? "Відправка..." : "Отримати безкоштовний аудит"}
+                    </Button>
+                  </form>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
+
+        {/* БЛОК 5. ЯК МИ ПРАЦЮЄМО */}
+        <section className="py-16 bg-black">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-12">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl md:text-5xl font-black text-white mb-6">Як виглядає співпраця</h2>
+              <p className="text-xl text-zinc-400 max-w-3xl mx-auto">Ми беремо Telegram Ads під ключ.</p>
+            </div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+              {[
+                { text: "аналізуємо продукт і цільову аудиторію", color: "#FFD93D" },
+                { text: "готуємо рекламні матеріали", color: "#00F0FF" },
+                { text: "розміщуємо рекламу в релевантних каналах", color: "#A855F7" },
+                { text: "працюємо над стабільністю заявок", color: "#10B981" }
+              ].map((item, i) => (
+                <Card key={i} className="bg-zinc-800/50 border-zinc-700 transition-all">
+                  <CardContent className="p-6 text-center space-y-4">
+                    <CheckCircle2 className="w-12 h-12 mx-auto" style={{ color: item.color }} />
+                    <p className="text-white font-semibold">{item.text}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+            <div className="text-center">
+              <p className="text-2xl font-bold text-[#FFD93D]">
+                Вам не потрібно шукати канали і домовлятись — ви отримуєте заявки і бачите результат.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* БЛОК 6. КЕЙСИ */}
+        <section className="py-16 bg-zinc-900/50">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-12">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl md:text-5xl font-black text-white mb-6">До яких результатів приходять клієнти</h2>
+              <p className="text-xl text-zinc-400 max-w-3xl mx-auto mb-8">
+                Telegram може давати заявки, якщо працювати з ним правильно.
+              </p>
+            </div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+              {[
+                { emoji: "📈", text: "стабільний потік заявок" },
+                { emoji: "💡", text: "зрозуміло, які канали працюють" },
+                { emoji: "🚀", text: "можливість масштабування" },
+                { emoji: "✅", text: "Telegram стає окремим каналом залучення клієнтів" }
+              ].map((item, i) => (
+                <Card key={i} className="bg-zinc-800/50 border-zinc-700">
+                  <CardContent className="p-6 text-center space-y-4">
+                    <div className="text-4xl font-black">{item.emoji}</div>
+                    <p className="text-white font-semibold">{item.text}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+            <div className="text-center">
+              <p className="text-xl text-zinc-300">Кожен проєкт починається з оцінки потенціалу.</p>
+            </div>
+          </div>
+        </section>
+
+        {/* БЛОК 7. FAQ */}
+        <section className="py-16 bg-black">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-12">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl md:text-5xl font-black text-white mb-6">Питання та відповіді</h2>
+            </div>
+            <div className="max-w-4xl mx-auto space-y-6">
+              {[
+                { q: "Чи підходить Telegram для мого бізнесу?", a: "Не для всіх. Це ми визначаємо на аудиті.", color: "#FFD93D" },
+                { q: "Коли з'являються перші заявки?", a: "Після запуску і перших розміщень реклами.", color: "#00F0FF" },
+                { q: "Чи потрібна моя участь?", a: "Ні. Ми беремо всю рекламну частину на себе.", color: "#A855F7" },
+                { q: "Чи можна масштабувати результат?", a: "Так, якщо реклама показує стабільні заявки.", color: "#10B981" }
+              ].map((faq, i) => (
+                <Card key={i} className="bg-zinc-800/50 border-zinc-700">
+                  <CardContent className="p-8">
+                    <h3 className="text-2xl font-bold mb-4" style={{ color: faq.color }}>{faq.q}</h3>
+                    <p className="text-zinc-300 text-lg">{faq.a}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* БЛОК 8. ФІНАЛЬНИЙ ЛІДГЕН */}
+        <section id="final-form" className="py-16 bg-gradient-to-br from-zinc-900 via-black to-zinc-900">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-12">
+            <div className="max-w-4xl mx-auto">
+              <div className="text-center mb-10">
+                <h2 className="text-4xl md:text-5xl font-black text-white mb-6">Готові отримувати заявки з Telegram?</h2>
+                <p className="text-xl text-zinc-300">
+                  Залиште заявку — ми подивимось ваш бізнес і запропонуємо чіткий план запуску Telegram Ads.
+                </p>
+              </div>
+              <Card className="bg-zinc-800/80 border-[#00F0FF]/50 shadow-2xl">
+                <CardContent className="p-8">
+                  <form onSubmit={(e) => handleSubmit(e, "plan")} className="space-y-6">
+                    <div>
+                      <label className="block text-white font-semibold mb-2">Ім'я *</label>
+                      <Input type="text" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} placeholder="Ваше ім'я" className="bg-zinc-900 border-zinc-700 text-white text-lg p-6" required />
+                    </div>
+                    <div>
+                      <label className="block text-white font-semibold mb-2">Телефон / месенджер *</label>
+                      <Input type="text" value={formData.contact} onChange={(e) => setFormData({ ...formData, contact: e.target.value })} placeholder="+380..." className="bg-zinc-900 border-zinc-700 text-white text-lg p-6" required />
+                    </div>
+                    <div>
+                      <label className="block text-white font-semibold mb-2">Сайт або ніша *</label>
+                      <Textarea value={formData.website} onChange={(e) => setFormData({ ...formData, website: e.target.value })} placeholder="Розкажіть про ваш бізнес..." className="bg-zinc-900 border-zinc-700 text-white text-lg min-h-[120px]" required />
+                    </div>
+                    <Button type="submit" size="lg" className="w-full bg-[#00F0FF] text-black hover:bg-[#00F0FF]/90 font-bold text-xl py-8" disabled={isSubmitting}>
+                      {isSubmitting ? "Відправка..." : "🟢 Отримати план запуску"}
+                    </Button>
+                  </form>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
+      </div>
+      <Footer />
+      <LeadCaptureModal isOpen={modalOpen} onClose={() => setModalOpen(false)} source="Telegram Ads - Popup Modal" />
+    </>
+  );
+}
