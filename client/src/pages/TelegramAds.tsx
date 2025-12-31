@@ -8,6 +8,8 @@ import PremiumCard from "@/components/PremiumCard";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowRight, CheckCircle2, AlertCircle } from "lucide-react";
+import CollapsibleFAQ from "@/components/CollapsibleFAQ";
+import MetaCaseStudiesSection from "@/components/MetaCaseStudiesSection";
 import { toast } from "sonner";
 import { trpc } from "@/lib/trpc";
 
@@ -259,27 +261,40 @@ export default function TelegramAdsPage() {
           </div>
         </section>
 
+        {/* БЛОК 6.5. КЕЙСИ - Dynamic from Database */}
+        <MetaCaseStudiesSection />
+
         {/* БЛОК 7. FAQ */}
         <section className="py-12 sm:py-16 bg-black">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="text-center mb-8 sm:mb-12">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Питання та відповіді</h2>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "'Bungee', sans-serif" }}>Питання та відповіді</h2>
             </div>
-            <div className="max-w-4xl mx-auto space-y-6">
-              {[
-                { q: "Чи підходить Telegram для мого бізнесу?", a: "Не для всіх. Це ми визначаємо на аудиті.", color: "#FFD93D" },
-                { q: "Коли з'являються перші заявки?", a: "Після запуску і перших розміщень реклами.", color: "#00F0FF" },
-                { q: "Чи потрібна моя участь?", a: "Ні. Ми беремо всю рекламну частину на себе.", color: "#A855F7" },
-                { q: "Чи можна масштабувати результат?", a: "Так, якщо реклама показує стабільні заявки.", color: "#10B981" }
-              ].map((faq, i) => (
-                <Card key={i} className="bg-zinc-800/50 border-zinc-700">
-                  <CardContent className="p-8">
-                    <h3 className="text-2xl font-bold mb-4" style={{ color: faq.color }}>{faq.q}</h3>
-                    <p className="text-zinc-300 text-lg">{faq.a}</p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+
+            <CollapsibleFAQ
+              items={[
+                {
+                  question: "Чи підходить Telegram для мого бізнесу?",
+                  answer: "Не для всіх. Це ми визначаємо на аудиті.",
+                  color: "#FFD93D"
+                },
+                {
+                  question: "Коли з'являються перші заявки?",
+                  answer: "Після запуску і перших розміщень реклами.",
+                  color: "#00F0FF"
+                },
+                {
+                  question: "Чи потрібна моя участь?",
+                  answer: "Ні. Ми беремо всю рекламну частину на себе.",
+                  color: "#A855F7"
+                },
+                {
+                  question: "Чи можна масштабувати результат?",
+                  answer: "Так, якщо реклама показує стабільні заявки.",
+                  color: "#10B981"
+                }
+              ]}
+            />
           </div>
         </section>
 

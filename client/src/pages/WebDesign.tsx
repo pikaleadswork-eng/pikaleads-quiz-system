@@ -7,7 +7,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import PremiumCard from "@/components/PremiumCard";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowRight, CheckCircle2, AlertCircle, Palette, Smartphone, Eye } from "lucide-react";
+import { ArrowRight, CheckCircle2, AlertCircle, Zap, Clock, FileText, Shield } from "lucide-react";
+import CollapsibleFAQ from "@/components/CollapsibleFAQ";
+import MetaCaseStudiesSection from "@/components/MetaCaseStudiesSection";
 import { toast } from "sonner";
 import { trpc } from "@/lib/trpc";
 
@@ -266,27 +268,40 @@ export default function WebDesignPage() {
           </div>
         </section>
 
+        {/* БЛОК 6.5. КЕЙСИ - Dynamic from Database */}
+        <MetaCaseStudiesSection />
+
         {/* БЛОК 7. FAQ */}
         <section className="py-12 sm:py-16 bg-black">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="text-center mb-8 sm:mb-12">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Питання та відповіді</h2>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "'Bungee', sans-serif" }}>Питання та відповіді</h2>
             </div>
-            <div className="max-w-4xl mx-auto space-y-6">
-              {[
-                { q: "Скільки часу займає дизайн?", a: "Зазвичай від 7 днів, залежно від обсягу.", color: "#FFD93D" },
-                { q: "Чи підійде дизайн під розробку?", a: "Так. Ми робимо макети готові до передачі розробнику.", color: "#00F0FF" },
-                { q: "У мене вже є сайт — ви можете переробити дизайн?", a: "Так. Ми дивимось, що заважає заявкам, і переробляємо.", color: "#A855F7" },
-                { q: "Чи підійде дизайн під рекламу?", a: "Так. Ми одразу робимо дизайн під заявки.", color: "#10B981" }
-              ].map((faq, i) => (
-                <Card key={i} className="bg-zinc-800/50 border-zinc-700">
-                  <CardContent className="p-8">
-                    <h3 className="text-2xl font-bold mb-4" style={{ color: faq.color }}>{faq.q}</h3>
-                    <p className="text-zinc-300 text-lg">{faq.a}</p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+
+            <CollapsibleFAQ
+              items={[
+                {
+                  question: "Скільки часу займає дизайн?",
+                  answer: "Зазвичай від 7 днів, залежно від обсягу.",
+                  color: "#FFD93D"
+                },
+                {
+                  question: "Чи підійде дизайн під розробку?",
+                  answer: "Так. Ми робимо макети готові до передачі розробнику.",
+                  color: "#00F0FF"
+                },
+                {
+                  question: "У мене вже є сайт — ви можете переробити дизайн?",
+                  answer: "Так. Ми дивимось, що заважає заявкам, і переробляємо.",
+                  color: "#A855F7"
+                },
+                {
+                  question: "Чи підійде дизайн під рекламу?",
+                  answer: "Так. Ми одразу робимо дизайн під заявки.",
+                  color: "#10B981"
+                }
+              ]}
+            />
           </div>
         </section>
 

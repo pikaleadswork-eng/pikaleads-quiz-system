@@ -8,6 +8,8 @@ import PremiumCard from "@/components/PremiumCard";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowRight, CheckCircle2, AlertCircle, Zap, Clock, FileText, Shield } from "lucide-react";
+import CollapsibleFAQ from "@/components/CollapsibleFAQ";
+import MetaCaseStudiesSection from "@/components/MetaCaseStudiesSection";
 import { toast } from "sonner";
 import { trpc } from "@/lib/trpc";
 
@@ -266,27 +268,40 @@ export default function WebDevelopmentPage() {
           </div>
         </section>
 
+        {/* БЛОК 6.5. КЕЙСИ - Dynamic from Database */}
+        <MetaCaseStudiesSection />
+
         {/* БЛОК 7. FAQ */}
         <section className="py-12 sm:py-16 bg-black">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="text-center mb-8 sm:mb-12">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Питання та відповіді</h2>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "'Bungee', sans-serif" }}>Питання та відповіді</h2>
             </div>
-            <div className="max-w-4xl mx-auto space-y-6">
-              {[
-                { q: "Скільки часу займає розробка?", a: "Зазвичай від 10 днів, залежно від обсягу.", color: "#FFD93D" },
-                { q: "Мені потрібні тексти — ви їх робите?", a: "Так. Тексти входять у розробку.", color: "#00F0FF" },
-                { q: "У мене взагалі немає сайту — ви працюєте з такими?", a: "Так. Більшість сайтів ми робимо з нуля.", color: "#A855F7" },
-                { q: "Чи підійде сайт під рекламу?", a: "Так. Ми одразу робимо сайт під заявки.", color: "#10B981" }
-              ].map((faq, i) => (
-                <Card key={i} className="bg-zinc-800/50 border-zinc-700">
-                  <CardContent className="p-8">
-                    <h3 className="text-2xl font-bold mb-4" style={{ color: faq.color }}>{faq.q}</h3>
-                    <p className="text-zinc-300 text-lg">{faq.a}</p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+
+            <CollapsibleFAQ
+              items={[
+                {
+                  question: "Скільки часу займає розробка?",
+                  answer: "Зазвичай від 10 днів, залежно від обсягу.",
+                  color: "#FFD93D"
+                },
+                {
+                  question: "Мені потрібні тексти — ви їх робите?",
+                  answer: "Так. Тексти входять у розробку.",
+                  color: "#00F0FF"
+                },
+                {
+                  question: "У мене взагалі немає сайту — ви працюєте з такими?",
+                  answer: "Так. Більшість сайтів ми робимо з нуля.",
+                  color: "#A855F7"
+                },
+                {
+                  question: "Чи підійде сайт під рекламу?",
+                  answer: "Так. Ми одразу робимо сайт під заявки.",
+                  color: "#10B981"
+                }
+              ]}
+            />
           </div>
         </section>
 

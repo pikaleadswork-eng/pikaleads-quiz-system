@@ -220,3 +220,21 @@
 - [ ] Web Development page
 - [ ] Web Design page
 - [ ] App Development page
+
+
+## Phase 194: Fix Google Ads Page - Missing Features from TZ (2025-12-31)
+
+### Critical Issues:
+- [x] FAQ block should be collapsible (accordion with expand/collapse animation)
+- [x] Add case studies section (blog-style format like Meta Ads page)
+- [x] Case studies should load dynamically from database (filter by pageSlug="google-ads")
+- [x] Review TZ and verify all content blocks are present
+- [x] Apply same fixes to all 6 other service pages
+
+### Implementation Steps:
+1. [x] Create CollapsibleFAQ component with smooth animations
+2. [x] Add MetaCaseStudiesSection to Google Ads page
+3. [x] Configure case studies to filter by pageSlug="google-ads"
+4. [x] Test FAQ expand/collapse functionality
+5. [x] Test case studies load from database
+6. [x] Copy fixes to TikTok, X, Telegram, Web Dev, Web Design, App Dev pages

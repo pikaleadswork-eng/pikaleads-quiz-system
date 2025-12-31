@@ -8,6 +8,8 @@ import PremiumCard from "@/components/PremiumCard";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowRight, CheckCircle2, AlertCircle } from "lucide-react";
+import CollapsibleFAQ from "@/components/CollapsibleFAQ";
+import MetaCaseStudiesSection from "@/components/MetaCaseStudiesSection";
 import { toast } from "sonner";
 import { trpc } from "@/lib/trpc";
 
@@ -386,60 +388,42 @@ export default function GoogleAdsPage() {
           </div>
         </section>
 
+        {/* БЛОК 6.5. КЕЙСИ - Dynamic from Database */}
+        <MetaCaseStudiesSection />
+
         {/* БЛОК 7. FAQ */}
         <section className="py-20 bg-black">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="text-center mb-16">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "'Bungee', sans-serif" }}>
                 Питання та відповіді
               </h2>
             </div>
 
-            <div className="max-w-4xl mx-auto space-y-6">
-              <Card className="bg-zinc-800/50 border-zinc-700">
-                <CardContent className="p-8">
-                  <h3 className="text-xl sm:text-2xl font-bold text-[#FFD93D] mb-4">
-                    Коли з'являються перші заявки?
-                  </h3>
-                  <p className="text-zinc-300 text-lg">
-                    Після запуску реклама починає працювати одразу. Далі ми доводимо її до стабільності.
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-zinc-800/50 border-zinc-700">
-                <CardContent className="p-8">
-                  <h3 className="text-xl sm:text-2xl font-bold text-[#00F0FF] mb-4">
-                    Чи потрібно мені бути залученим у процес?
-                  </h3>
-                  <p className="text-zinc-300 text-lg">
-                    Ні. Ми беремо рекламні задачі на себе, вам достатньо обробляти заявки.
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-zinc-800/50 border-zinc-700">
-                <CardContent className="p-8">
-                  <h3 className="text-2xl font-bold text-purple-400 mb-4">
-                    Чи працюєте ви з будь-якою нішею?
-                  </h3>
-                  <p className="text-zinc-300 text-lg">
-                    Перед стартом ми оцінюємо нішу і чесно кажемо, чи є сенс запуску.
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-zinc-800/50 border-zinc-700">
-                <CardContent className="p-8">
-                  <h3 className="text-2xl font-bold text-green-400 mb-4">
-                    Чи можна масштабувати рекламу?
-                  </h3>
-                  <p className="text-zinc-300 text-lg">
-                    Так. Саме для цього ми і будуємо систему, а не разові кампанії.
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
+            <CollapsibleFAQ
+              items={[
+                {
+                  question: "Коли з'являються перші заявки?",
+                  answer: "Після запуску реклама починає працювати одразу. Далі ми доводимо її до стабільності.",
+                  color: "#FFD93D"
+                },
+                {
+                  question: "Чи потрібно мені бути залученим у процес?",
+                  answer: "Ні. Ми беремо рекламні задачі на себе, вам достатньо обробляти заявки.",
+                  color: "#00F0FF"
+                },
+                {
+                  question: "Чи працюєте ви з будь-якою нішею?",
+                  answer: "Перед стартом ми оцінюємо нішу і чесно кажемо, чи є сенс запуску.",
+                  color: "#a855f7"
+                },
+                {
+                  question: "Чи можна масштабувати рекламу?",
+                  answer: "Так. Саме для цього ми і будуємо систему, а не разові кампанії.",
+                  color: "#4ade80"
+                }
+              ]}
+            />
           </div>
         </section>
 
