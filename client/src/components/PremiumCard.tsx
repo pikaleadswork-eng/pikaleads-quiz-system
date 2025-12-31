@@ -47,7 +47,7 @@ export default function PremiumCard({
         </h3>
 
         {/* Description */}
-        <p className="text-zinc-400 text-sm sm:text-base leading-relaxed">
+        <p className="text-zinc-400 text-sm sm:text-base leading-relaxed flex-grow">
           {description}
         </p>
       </div>
