@@ -88,7 +88,7 @@ export default function Quiz({ config }: QuizProps) {
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, [currentStep, isFormStep, config.id, totalSteps]);
 
-  const submitLead = trpc.quiz.submitLead.useMutation({
+  const submitLead = trpc.quiz.submit.useMutation({
     onSuccess: () => {
       // Track conversion for A/B test
       trackConversionMutation.mutate({

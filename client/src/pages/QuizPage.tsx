@@ -116,7 +116,7 @@ export default function QuizPage() {
   };
 
   // Submit lead mutation
-  const submitLead = trpc.quiz.submitLead.useMutation({
+  const submitLead = trpc.quiz.submit.useMutation({
     onSuccess: () => {
       setSubmitted(true);
       setIsSubmitting(false);

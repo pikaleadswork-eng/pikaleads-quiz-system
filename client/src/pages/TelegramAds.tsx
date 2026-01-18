@@ -22,7 +22,7 @@ export default function TelegramAdsPage() {
   const [formData, setFormData] = useState({ name: "", contact: "", website: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const submitLeadMutation = trpc.leads.submitLead.useMutation({
+  const submitLeadMutation = trpc.leads.submit.useMutation({
     onSuccess: () => {
       toast.success("Заявку відправлено! Ми зв'яжемось з вами найближчим часом.");
       setFormData({ name: "", contact: "", website: "" });

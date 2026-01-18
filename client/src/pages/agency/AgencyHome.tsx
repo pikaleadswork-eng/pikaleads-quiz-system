@@ -25,6 +25,7 @@ export default function AgencyHome() {
   const [, setLocation] = useLocation();
   const [consultationModalOpen, setConsultationModalOpen] = useState(false);
   const [strategyModalOpen, setStrategyModalOpen] = useState(false);
+  const [serviceModalOpen, setServiceModalOpen] = useState(false);
 
   const [leadFormData, setLeadFormData] = useState({
     name: "",
@@ -384,7 +385,7 @@ export default function AgencyHome() {
                   Facebook та Instagram реклама з точним таргетингом. Охоплення 2+ млрд користувачів.
                 </p>
                 <button
-                  onClick={() => setLocation('/services/meta-ads')}
+                  onClick={() => setServiceModalOpen(true)}
                   className="w-full mt-auto px-4 py-2.5 bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 hover:border-blue-500/50 text-blue-400 font-bold rounded-lg transition-all duration-300 text-sm"
                 >
                   Дізнатись більше →
@@ -408,7 +409,7 @@ export default function AgencyHome() {
                   Контекстна реклама в пошуку, YouTube та партнерських сайтах. Максимальна точність.
                 </p>
                 <button
-                  onClick={() => setLocation('/services/google-ads')}
+                  onClick={() => setServiceModalOpen(true)}
                   className="w-full mt-auto px-4 py-2.5 bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 hover:border-red-500/50 text-red-400 font-bold rounded-lg transition-all duration-300 text-sm"
                 >
                   Дізнатись більше →
@@ -432,7 +433,7 @@ export default function AgencyHome() {
                   Вірусна реклама для молодої аудиторії. Максимальне охоплення за мінімальну ціну.
                 </p>
                 <button
-                  onClick={() => setLocation('/services/tiktok-ads')}
+                  onClick={() => setServiceModalOpen(true)}
                   className="w-full mt-auto px-4 py-2.5 bg-pink-500/10 hover:bg-pink-500/20 border border-pink-500/30 hover:border-pink-500/50 text-pink-400 font-bold rounded-lg transition-all duration-300 text-sm"
                 >
                   Дізнатись більше →
@@ -456,7 +457,7 @@ export default function AgencyHome() {
                   Реклама в X (колишній Twitter). Ідеально для B2B, новин та tech-аудиторії.
                 </p>
                 <button
-                  onClick={() => setLocation('/services/x-ads')}
+                  onClick={() => setServiceModalOpen(true)}
                   className="w-full mt-auto px-4 py-2.5 bg-gray-500/10 hover:bg-gray-500/20 border border-gray-500/30 hover:border-gray-500/50 text-gray-400 font-bold rounded-lg transition-all duration-300 text-sm"
                 >
                   Дізнатись більше →
@@ -480,7 +481,7 @@ export default function AgencyHome() {
                   Найефективніший канал для українського ринку. Охоплення мільйонів активних користувачів.
                 </p>
                 <button
-                  onClick={() => setLocation('/services/telegram-ads')}
+                  onClick={() => setServiceModalOpen(true)}
                   className="w-full mt-auto px-4 py-2.5 bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 hover:border-cyan-500/50 text-cyan-400 font-bold rounded-lg transition-all duration-300 text-sm"
                 >
                   Дізнатись більше →
@@ -504,7 +505,7 @@ export default function AgencyHome() {
                   Лендінги, корпоративні сайти, інтернет-магазини. Швидко, красиво, конверсійно.
                 </p>
                 <button
-                  onClick={() => setLocation('/services/web-development')}
+                  onClick={() => setServiceModalOpen(true)}
                   className="w-full mt-auto px-4 py-2.5 bg-[#FFD93D]/10 hover:bg-[#FFD93D]/20 border border-[#FFD93D]/30 hover:border-[#FFD93D]/50 text-[#FFD93D] font-bold rounded-lg transition-all duration-300 text-sm"
                 >
                   Дізнатись більше →
@@ -528,7 +529,7 @@ export default function AgencyHome() {
                   Мобільні додатки (iOS/Android) та веб-програми. Від ідеї до App Store.
                 </p>
                 <button
-                  onClick={() => setLocation('/services/app-development')}
+                  onClick={() => setServiceModalOpen(true)}
                   className="w-full mt-auto px-4 py-2.5 bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/30 hover:border-purple-500/50 text-purple-400 font-bold rounded-lg transition-all duration-300 text-sm"
                 >
                   Дізнатись більше →
@@ -552,7 +553,7 @@ export default function AgencyHome() {
                   UI/UX дизайн, брендинг, логотипи, банери. Створюємо візуал, що продає.
                 </p>
                 <button
-                  onClick={() => setLocation('/services/design')}
+                  onClick={() => setServiceModalOpen(true)}
                   className="w-full mt-auto px-4 py-2.5 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 hover:border-emerald-500/50 text-emerald-400 font-bold rounded-lg transition-all duration-300 text-sm"
                 >
                   Дізнатись більше →
@@ -779,6 +780,11 @@ export default function AgencyHome() {
         isOpen={strategyModalOpen}
         onClose={() => setStrategyModalOpen(false)}
         formType="strategy"
+      />
+      <LeadFormModal 
+        isOpen={serviceModalOpen}
+        onClose={() => setServiceModalOpen(false)}
+        formType="discuss_project"
       />
 
 
