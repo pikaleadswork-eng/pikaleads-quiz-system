@@ -126,6 +126,22 @@ export const leadsRouter = router({
           eventId: input.eventId || null,
         });
 
+        // Build UTM metadata for CRM/Telegram
+        const utmMetadata = {
+          campaign: input.utmCampaign,
+          source: input.utmSource,
+          medium: input.utmMedium,
+          content: input.utmContent,
+          term: input.utmTerm,
+        };
+
+        // Log lead creation with UTM data
+        console.log(`[Lead] New lead created: ${input.name} (${input.phone})`, {
+          leadId: result.insertId,
+          source: input.source,
+          utm: utmMetadata,
+        });
+
         // Send Telegram notification
         await sendTelegramNotification({
           name: input.name,
