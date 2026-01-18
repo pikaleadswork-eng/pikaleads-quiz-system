@@ -31,6 +31,7 @@ import { calendarRouter } from "./routers/calendar";
 import { eventsLogRouter } from "./routers/eventsLog";
 import { blogRouter } from "./routers/blog";
 import { contactRouter } from "./routers/contact";
+import { leadsRouter } from "./routers/leads";
 import { caseStudiesRouter } from "./routers/caseStudies";
 import { teamRouter } from "./routers/team";
 // import { abTestingRouter } from "./routers/abTesting"; // Disabled - conflicts with existing AB test implementation
@@ -1485,6 +1486,7 @@ ${input.campaign ? `**Campaign:** ${input.campaign}\n` : ""}
   calendar: calendarRouter,
   blog: blogRouter,
   contact: contactRouter,
+  leads: leadsRouter,
   caseStudies: caseStudiesRouter,
   team: teamRouter,
   sales: salesRouter,
@@ -1716,73 +1718,6 @@ ${input.campaign ? `**Campaign:** ${input.campaign}\n` : ""}
   health: healthRouter,
   prometheus: prometheusRouter,
   performance: performanceRouter,
-  leads: router({
-    create: publicProcedure
-      .input(z.object({
-        name: z.string().min(1, "Name is required"),
-        phone: z.string().min(1, "Phone is required"),
-        email: z.string().optional(),
-        comment: z.string().optional(),
-        source: z.string(),
-        status: z.string(),
-        utmSource: z.string().optional(),
-        utmMedium: z.string().optional(),
-        utmCampaign: z.string().optional(),
-        utmTerm: z.string().optional(),
-        utmContent: z.string().optional(),
-      }))
-      .mutation(async ({ input }) => {
-        const { createLead } = await import("./db");
-        const { sendTelegramMessage } = await import("./telegram");
-        
-        // Save lead to database
-        const leadId = await createLead({
-          quizName: input.source,
-          answers: JSON.stringify([]),
-          name: input.name,
-          phone: input.phone,
-          email: input.email || null,
-          telegram: null,
-          language: null,
-          utmCampaign: input.utmCampaign || null,
-          utmAdGroup: null,
-          utmAd: null,
-          utmPlacement: null,
-          utmKeyword: null,
-          utmSite: null,
-          utmSource: input.utmSource || input.source,
-          utmMedium: input.utmMedium || null,
-          utmContent: input.utmContent || null,
-          utmTerm: input.utmTerm || null,
-          fbp: null,
-          fbc: null,
-          clientIp: null,
-          userAgent: null,
-          ga4ClientId: null,
-          eventId: null,
-          leadScore: 50,
-        });
-        
-        // Send Telegram notification
-        const utmInfo = [];
-        if (input.utmSource) utmInfo.push(`Source: ${input.utmSource}`);
-        if (input.utmMedium) utmInfo.push(`Medium: ${input.utmMedium}`);
-        if (input.utmCampaign) utmInfo.push(`Campaign: ${input.utmCampaign}`);
-        
-        const message = `🔥 Нова заявка з сайту!\n\n` +
-          `📋 Тип: ${input.source}\n` +
-          `👤 Ім'я: ${input.name}\n` +
-          `📞 Телефон: ${input.phone}\n` +
-          (input.email ? `📧 Email: ${input.email}\n` : '') +
-          (input.comment ? `💬 Коментар: ${input.comment}\n` : '') +
-          (utmInfo.length > 0 ? `\n📊 UTM:\n${utmInfo.join('\n')}\n` : '') +
-          `\n🆔 ID ліда: ${leadId}`;
-        
-        await sendTelegramMessage(message);
-        
-        return { success: true, leadId };
-      }),
-  }),
 });
 
 export type AppRouter = typeof appRouter;

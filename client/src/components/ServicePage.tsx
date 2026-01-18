@@ -70,7 +70,7 @@ export function ServicePage(props: ServicePageProps) {
             </div>
             <div className="relative flex items-center justify-center">
               <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/20 to-cyan-500/20 blur-3xl" />
-              <div className="relative z-10 w-full aspect-square max-w-md mx-auto">
+              <div className="relative z-10 w-full aspect-square max-w-[350px] md:max-w-[400px] lg:max-w-[450px] mx-auto">
                 <img src={props.heroImage} alt={props.title} className="w-full h-full object-contain drop-shadow-2xl" />
               </div>
             </div>

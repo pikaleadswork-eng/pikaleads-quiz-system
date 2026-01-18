@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CyberpunkNavigation from "@/components/CyberpunkNavigation";
 import Footer from "@/components/Footer";
 import LeadCaptureModal from "@/components/LeadCaptureModal";
@@ -14,6 +14,10 @@ import { toast } from "sonner";
 import { trpc } from "@/lib/trpc";
 
 export default function XAdsPage() {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, []);
+
   const [modalOpen, setModalOpen] = useState(false);
   const [formData, setFormData] = useState({ name: "", contact: "", website: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -64,9 +68,7 @@ export default function XAdsPage() {
                 <p className="text-base sm:text-lg md:text-xl text-zinc-300 leading-relaxed" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>
                   Стабільний потік заявок для вашого бізнесу з запуском за 72 години!
                 </p>
-                <p className="text-sm text-zinc-500">
-                  Кількість заявок залежить від ніші, бюджету та продукту. Потенціал визначаємо під час аудиту.
-                </p>
+
                 <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
                   <Button size="lg" className="bg-[#00F0FF] text-black hover:bg-[#00F0FF]/90 font-bold w-full sm:w-auto px-6 py-3 sm:px-8 sm:py-4" onClick={() => document.getElementById('audit-form')?.scrollIntoView({ behavior: 'smooth' })}>
                     ОТРИМАТИ АУДИТ <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
@@ -79,7 +81,7 @@ export default function XAdsPage() {
               <div className="relative flex items-center justify-center">
                 <div className="absolute inset-0 bg-gradient-to-tr from-[#FFD93D]/20 to-[#00F0FF]/20 blur-3xl" />
                 <div className="relative z-10 w-full max-w-2xl mx-auto">
-                  <img src="/x-ads-hero.png" alt="X Ads" className="w-full h-auto object-contain drop-shadow-2xl" style={{ maxHeight: "850px", minHeight: "500px" }} />
+                  <img src="/x-ads-hero.png" alt="X Ads" loading="lazy" className="w-full h-auto object-contain drop-shadow-2xl" style={{ maxHeight: "850px", minHeight: "500px" }} />
                 </div>
               </div>
             </div>
@@ -89,7 +91,7 @@ export default function XAdsPage() {
         {/* БЛОК 2. ВАМ ЦЕ ЗНАЙОМО? */}
         <section className="py-12 sm:py-16 bg-zinc-900/50">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-            <div className="text-center mb-8 sm:mb-12">
+            <div className="text-center mb-8 sm:mb-10">
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Вам це знайомо при роботі з рекламою в X (Twitter)?</h2>
             </div>
             <div className="grid sm:grid-cols-2 gap-6 sm:gap-8 max-w-5xl mx-auto mb-8 sm:mb-10">
@@ -110,7 +112,7 @@ export default function XAdsPage() {
               ))}
             </div>
             <div className="text-center">
-              <p className="text-xl sm:text-2xl font-bold text-[#FFD93D]">
+              <p className="text-xl sm:text-2xl font-bold text-[#FFD93D]" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
                 👉 У результаті реклама не виглядає надійним каналом, а залишається нестабільною історією без контролю.
               </p>
             </div>
@@ -120,7 +122,7 @@ export default function XAdsPage() {
         {/* БЛОК 3. РІШЕННЯ */}
         <section className="py-12 sm:py-16 bg-black">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-            <div className="text-center mb-8 sm:mb-12">
+            <div className="text-center mb-8 sm:mb-10">
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Як ми приводимо заявки з X (Twitter)</h2>
               <p className="text-base sm:text-lg md:text-xl text-zinc-400 max-w-3xl mx-auto" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>Ми працюємо по чіткій логіці, без хаотичних дій.</p>
             </div>
@@ -142,7 +144,7 @@ export default function XAdsPage() {
               ))}
             </div>
             <div className="text-center">
-              <p className="text-xl sm:text-2xl font-bold text-[#00F0FF]">
+              <p className="text-xl sm:text-2xl font-bold text-[#00F0FF]" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
                 👉 У підсумку ви отримуєте керований потік заявок, який можна планувати і збільшувати.
               </p>
             </div>
@@ -166,7 +168,7 @@ export default function XAdsPage() {
                   <Card key={i} className="bg-zinc-800/50" style={{ borderColor: `${item.color}30` }}>
                     <CardContent className="p-6 text-center">
                       <CheckCircle2 className="w-6 h-6 sm:w-8 sm:h-8 mx-auto mb-3 sm:mb-4" style={{ color: item.color }} />
-                      <p className="text-white">{item.text}</p>
+                      <p className="text-white" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>{item.text}</p>
                     </CardContent>
                   </Card>
                 ))}
@@ -174,7 +176,7 @@ export default function XAdsPage() {
               <Card className="bg-zinc-800/80 border-[#FFD93D]/50">
                 <CardContent className="p-8">
                   <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4 mb-8">
-                    <p className="text-red-400 font-bold text-center">
+                    <p className="text-red-400 font-bold text-center" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
                       ❗ Обмеження: Ми беремо обмежену кількість проєктів, щоб запускати рекламу якісно.
                     </p>
                   </div>
@@ -204,7 +206,7 @@ export default function XAdsPage() {
         {/* БЛОК 5. ЯК МИ ПРАЦЮЄМО */}
         <section className="py-12 sm:py-16 bg-black">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-            <div className="text-center mb-8 sm:mb-12">
+            <div className="text-center mb-8 sm:mb-10">
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>Як виглядає співпраця</h2>
               <p className="text-base sm:text-lg md:text-xl text-zinc-400 max-w-3xl mx-auto" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>Ми беремо рекламу під ключ і ведемо її самостійно.</p>
             </div>
@@ -218,13 +220,13 @@ export default function XAdsPage() {
                 <Card key={i} className="bg-zinc-800/50 border-zinc-700 transition-all">
                   <CardContent className="p-6 text-center space-y-4">
                     <CheckCircle2 className="w-12 h-12 mx-auto" style={{ color: item.color }} />
-                    <p className="text-white font-semibold">{item.text}</p>
+                    <p className="text-white font-semibold" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>{item.text}</p>
                   </CardContent>
                 </Card>
               ))}
             </div>
             <div className="text-center">
-              <p className="text-xl sm:text-2xl font-bold text-[#FFD93D]">
+              <p className="text-xl sm:text-2xl font-bold text-[#FFD93D]" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>
                 Вам не потрібно розбиратись у рекламі — ви отримуєте заявки і бачите цифри.
               </p>
             </div>
@@ -234,7 +236,7 @@ export default function XAdsPage() {
         {/* БЛОК 6. КЕЙСИ */}
         <section className="py-12 sm:py-16 bg-zinc-900/50">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-            <div className="text-center mb-8 sm:mb-12">
+            <div className="text-center mb-8 sm:mb-10">
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "\'Bungee\', sans-serif" }}>До яких результатів приходять клієнти</h2>
               <p className="text-base sm:text-lg md:text-xl text-zinc-400 max-w-3xl mx-auto mb-8" style={{ fontFamily: "\'Eurostile Bold Extended\', sans-serif" }}>
                 X (Twitter) може давати заявки, якщо працювати з ним правильно.
@@ -250,7 +252,7 @@ export default function XAdsPage() {
                 <Card key={i} className="bg-zinc-800/50 border-zinc-700">
                   <CardContent className="p-6 text-center space-y-4">
                     <div className="text-4xl font-black">{item.emoji}</div>
-                    <p className="text-white font-semibold">{item.text}</p>
+                    <p className="text-white font-semibold" style={{ fontFamily: "'Eurostile Bold Extended', sans-serif" }}>{item.text}</p>
                   </CardContent>
                 </Card>
               ))}
@@ -267,8 +269,8 @@ export default function XAdsPage() {
         {/* БЛОК 7. FAQ */}
         <section className="py-12 sm:py-16 bg-black">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-            <div className="text-center mb-8 sm:mb-12">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "'Bungee', sans-serif" }}>Питання та відповіді</h2>
+            <div className="text-center mb-8 sm:mb-10">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6" style={{ fontFamily: "\'Bungee\', \'Eurostile Bold Extended\', sans-serif" }}>Питання та відповіді</h2>
             </div>
 
             <CollapsibleFAQ
@@ -299,7 +301,7 @@ export default function XAdsPage() {
         </section>
 
         {/* БЛОК 8. ФІНАЛЬНИЙ ЛІДГЕН */}
-        <section id="final-form" className="py-16 bg-gradient-to-br from-zinc-900 via-black to-zinc-900">
+        <section id="final-form" className="py-12 bg-gradient-to-br from-zinc-900 via-black to-zinc-900">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="max-w-4xl mx-auto">
               <div className="text-center mb-8 sm:mb-10">

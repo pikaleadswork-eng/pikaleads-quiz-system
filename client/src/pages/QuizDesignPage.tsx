@@ -45,9 +45,13 @@ export default function QuizDesignPage() {
   });
 
   // Update quiz mutation
+  const utils = trpc.useUtils();
   const updateQuizMutation = trpc.quizzes.update.useMutation({
     onSuccess: () => {
       toast.success("Дані квізу оновлено!");
+      // Invalidate quiz list to refresh cards
+      utils.quizzes.list.invalidate();
+      utils.quizzes.getById.invalidate({ id: quizId || 0 });
     },
     onError: (error) => {
       toast.error(`Помилка: ${error.message}`);
@@ -358,11 +362,11 @@ export default function QuizDesignPage() {
                       <div className="flex-1 flex items-center justify-end p-8 lg:p-16">
                         <div className="w-full text-right">
                       <h1 
-                        className="text-2xl md:text-4xl lg:text-6xl mb-4 lg:mb-6 leading-tight"
+                        className="text-xl sm:text-2xl md:text-4xl lg:text-6xl mb-4 lg:mb-6 leading-tight break-words"
                         style={{ 
                           fontFamily: settings.fontFamily || 'Inter',
                           color: settings.titleColor || '#FFFFFF',
-                          fontSize: `${settings.titleFontSize || 48}px`,
+                          fontSize: previewMode === 'mobile' ? '24px' : `${settings.titleFontSize || 48}px`,
                           fontWeight: settings.titleWeight === 'normal' ? 400 :
                                      settings.titleWeight === 'medium' ? 500 :
                                      settings.titleWeight === 'semibold' ? 600 :
@@ -373,11 +377,11 @@ export default function QuizDesignPage() {
                         {getTextForLanguage(settings.title, language as SupportedLanguage || "uk")}
                       </h1>
                       <p 
-                        className="text-base md:text-xl lg:text-2xl mb-6 lg:mb-10 leading-relaxed"
+                        className="text-sm sm:text-base md:text-xl lg:text-2xl mb-6 lg:mb-10 leading-relaxed break-words"
                         style={{ 
                           fontFamily: settings.fontFamily || 'Inter',
                           color: settings.subtitleColor || '#FFFFFF',
-                          fontSize: `${settings.subtitleFontSize || 20}px`,
+                          fontSize: previewMode === 'mobile' ? '14px' : `${settings.subtitleFontSize || 20}px`,
                           fontWeight: settings.subtitleWeight === 'normal' ? 400 :
                                      settings.subtitleWeight === 'medium' ? 500 :
                                      settings.subtitleWeight === 'semibold' ? 600 :
@@ -432,11 +436,11 @@ export default function QuizDesignPage() {
                           settings.alignment === "left" ? "text-left" : "text-center"
                         }`}>
                           <h1 
-                            className="text-2xl md:text-4xl lg:text-6xl mb-4 lg:mb-6 leading-tight"
+                            className="text-xl sm:text-2xl md:text-4xl lg:text-6xl mb-4 lg:mb-6 leading-tight break-words"
                             style={{ 
                               fontFamily: settings.fontFamily || 'Inter',
                               color: settings.titleColor || '#FFFFFF',
-                              fontSize: `${settings.titleFontSize || 48}px`,
+                              fontSize: previewMode === 'mobile' ? '24px' : `${settings.titleFontSize || 48}px`,
                               fontWeight: settings.titleWeight === 'normal' ? 400 :
                                          settings.titleWeight === 'medium' ? 500 :
                                          settings.titleWeight === 'semibold' ? 600 :
@@ -447,11 +451,11 @@ export default function QuizDesignPage() {
                             {getTextForLanguage(settings.title, language as SupportedLanguage || "uk")}
                           </h1>
                           <p 
-                            className="text-base md:text-xl lg:text-2xl mb-6 lg:mb-10 leading-relaxed"
+                            className="text-sm sm:text-base md:text-xl lg:text-2xl mb-6 lg:mb-10 leading-relaxed break-words"
                             style={{ 
                               fontFamily: settings.fontFamily || 'Inter',
                               color: settings.subtitleColor || '#FFFFFF',
-                              fontSize: `${settings.subtitleFontSize || 20}px`,
+                              fontSize: previewMode === 'mobile' ? '14px' : `${settings.subtitleFontSize || 20}px`,
                               fontWeight: settings.subtitleWeight === 'normal' ? 400 :
                                          settings.subtitleWeight === 'medium' ? 500 :
                                          settings.subtitleWeight === 'semibold' ? 600 :

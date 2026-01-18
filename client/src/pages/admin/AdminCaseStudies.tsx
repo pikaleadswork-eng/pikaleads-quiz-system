@@ -8,8 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Plus, Edit, Trash2, Eye, FileText, Image as ImageIcon } from "lucide-react";
 import { toast } from "sonner";
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+// ReactQuill removed - using Textarea for React 19 compatibility
 
 export default function AdminCaseStudies() {
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -47,17 +46,7 @@ export default function AdminCaseStudies() {
     { id: "crm", label: "CRM", icon: "📊" },
   ];
 
-  const quillModules = useMemo(() => ({
-    toolbar: [
-      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-      ['bold', 'italic', 'underline', 'strike'],
-      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-      [{ 'color': [] }, { 'background': [] }],
-      ['blockquote', 'code-block'],
-      ['link', 'image'],
-      ['clean']
-    ],
-  }), []);
+  // ReactQuill removed - using Textarea for React 19 compatibility
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -292,15 +281,13 @@ export default function AdminCaseStudies() {
                   {/* Content Editor */}
                   <div className="bg-zinc-900/50 p-4 rounded-lg space-y-4">
                     <h3 className="text-lg font-semibold text-cyan-400">Повний контент</h3>
-                    <div className="bg-white rounded-lg">
-                      <ReactQuill
-                        theme="snow"
-                        value={formData.content}
-                        onChange={(value: string) => setFormData({ ...formData, content: value })}
-                        modules={quillModules}
-                        className="h-96"
-                      />
-                    </div>
+                    <Textarea
+                      value={formData.content}
+                      onChange={(e) => setFormData({ ...formData, content: e.target.value })}
+                      rows={20}
+                      placeholder="<h2>Про клієнта</h2><p>Опис клієнта...</p>"
+                      className="bg-zinc-700 border-zinc-600 font-mono text-sm"
+                    />
                   </div>
 
                   {/* Media & Metadata */}

@@ -2,6 +2,7 @@ import { Link } from "wouter";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { useLocation } from "wouter";
+import { trpc } from "@/lib/trpc";
 import CyberpunkNavigation from "@/components/CyberpunkNavigation";
 import LeadFormModal from "@/components/LeadFormModal";
 
@@ -32,6 +33,19 @@ export default function AgencyHome() {
     telegram: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  // Use tRPC mutation for lead submission
+  const submitLeadMutation = trpc.leads.submit.useMutation({
+    onSuccess: (result) => {
+      toast.success(result.message || "Дякуємо! Ми зв'яжемося з вами найближчим часом.");
+      setLeadFormData({ name: "", phone: "", email: "", telegram: "" });
+      setIsSubmitting(false);
+    },
+    onError: (error: any) => {
+      toast.error(error?.message || "Помилка. Спробуйте ще раз.");
+      setIsSubmitting(false);
+    }
+  });
 
 
 
@@ -651,21 +665,21 @@ export default function AgencyHome() {
                 <div className="bg-zinc-900/50 border border-yellow-400/30 rounded-xl sm:rounded-2xl p-4 sm:p-6">
                   <form 
                     className="space-y-4"
-                    onSubmit={async (e) => {
+                    onSubmit={(e) => {
                       e.preventDefault();
-                      setIsSubmitting(true);
-                      
-                      try {
-                        // Here you would call your tRPC mutation to save the lead
-                        await new Promise(resolve => setTimeout(resolve, 1000));
-                        
-                        toast.success("Дякуємо! Ми зв'яжемося з вами найближчим часом.");
-                        setLeadFormData({ name: "", phone: "", email: "", telegram: "" });
-                      } catch (error) {
-                        toast.error("Помилка. Спробуйте ще раз.");
-                      } finally {
-                        setIsSubmitting(false);
+                      if (!leadFormData.name || !leadFormData.phone) {
+                        toast.error("Будь ласка, заповніть обов'язкові поля.");
+                        return;
                       }
+                      setIsSubmitting(true);
+                      submitLeadMutation.mutate({
+                        name: leadFormData.name,
+                        phone: leadFormData.phone,
+                        email: leadFormData.email || undefined,
+                        telegram: leadFormData.telegram || undefined,
+                        source: "homepage",
+                        language: "uk"
+                      });
                     }}
                   >
                     <input

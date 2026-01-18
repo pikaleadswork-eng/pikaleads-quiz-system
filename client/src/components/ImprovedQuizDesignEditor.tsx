@@ -389,7 +389,8 @@ export default function ImprovedQuizDesignEditor({ quizId, initialSettings, onSa
                         <Upload className="w-4 h-4" />
                       )}
                     </Button>
-                  </di                  {settings.logoImage && (
+                  </div>
+                  {settings.logoImage && (
                     <img
                       src={settings.logoImage}
                       alt="Logo preview"

@@ -104,10 +104,10 @@ export default function AdminDashboard() {
       bgColor: "bg-yellow-500/10"
     },
     {
-      title: "A/B Тестування",
-      description: "Створення та управління варіантами квізів для тестування",
-      icon: TrendingUp,
-      href: "/admin/ab-testing",
+      title: "Блог",
+      description: "Управління статтями блогу та SEO налаштуваннями",
+      icon: FileText,
+      href: "/admin/blog",
       color: "text-cyan-500",
       bgColor: "bg-cyan-500/10"
     },
@@ -209,17 +209,6 @@ export default function AdminDashboard() {
               </CardHeader>
               <CardContent>
                 <div className="text-3xl font-bold text-foreground">{stats.totalManagers}</div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium text-muted-foreground">
-                  Активні A/B Тести
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-3xl font-bold text-foreground">{stats.activeTests}</div>
               </CardContent>
             </Card>
 

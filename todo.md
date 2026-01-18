@@ -366,3 +366,174 @@
 - [x] Add smooth transition animations when filtering
 - [x] Make filters responsive on mobile
 - [x] Test filter functionality on all breakpoints
+
+## CRITICAL FIXES - Case Studies & Pikachu (2025-12-31)
+
+- [x] Fix case study buttons - change from black to yellow (#FFD93D) with black text
+- [x] Add hover effect to case study buttons (hover:bg-yellow-500)
+- [x] Fix case study card alignment - all cards must be equal height (flex flex-col h-full)
+- [x] Fix Pikachu size on Meta Ads page - reduce to prevent ears overlapping
+- [x] Fix Pikachu size on all service pages - reduce to prevent ears overlapping buttons/text
+- [ ] Test button visibility on dark background
+- [ ] Test card alignment on all breakpoints
+
+
+## Phase 200: Critical Bug Fixes & Design Consistency (2025-12-31)
+
+### Critical Bugs:
+- [x] Fix AdminCaseStudies ReactQuill error (React 19 compatibility) - TypeError: d.default.findDOMNode is not a function
+- [x] Fix client logos display (show all 9 logos instead of 3 on homepage)
+
+### Design Consistency:
+- [x] Add max-w-5xl wrappers to all text sections for width alignment with cards
+- [x] Add Eurostile Bold Extended font to ALL paragraph texts across all pages
+- [x] Fix Web Development page (spacing + fonts consistency)
+- [x] Fix Web Design page (spacing + fonts consistency)
+- [x] Fix App Development page (spacing + fonts consistency)
+- [x] Verify Google Ads page (spacing, fonts, alignment) - 19 Eurostile, 8 max-w-5xl
+- [x] Verify TikTok Ads page (spacing, fonts, alignment) - 25 Eurostile, 6 max-w-5xl
+- [x] Verify X Ads page (spacing, fonts, alignment) - 17 Eurostile, 2 max-w-5xl
+- [x] Verify Telegram Ads page (spacing, fonts, alignment) - 17 Eurostile, 2 max-w-5xl
+- [x] Verify Meta Ads page (spacing, fonts, alignment) - 5 Eurostile, 7 max-w-5xl
+- [x] Verify Homepage (spacing, fonts, alignment) - client logos fixed (3 cols)
+
+### Testing:
+- [x] Test all pages on mobile (375px, 414px)
+- [x] Test all pages on tablet (768px, 1024px)
+- [x] Test all pages on desktop (1920px)
+- [x] Verify all fonts load correctly
+- [x] Verify all sections have proper width alignment
+- [x] Save final checkpoint - version a99b7014
+
+
+## Phase 201: Fix Pikachu Overlap on Meta Ads Page (2025-12-31)
+
+### Issue:
+- [x] Pikachu image overlaps other elements on mobile and tablet
+- [x] Need to fix z-index, sizing, and positioning
+- [x] Test on mobile (375px, 414px) and tablet (768px, 1024px)
+- [x] Save checkpoint after fix
+
+
+## Phase 202: Comprehensive SEO & Admin Panel Improvements (2025-12-31)
+
+### 1. SEO Optimization - JSON-LD Structured Data
+- [ ] Add JSON-LD schema to Google Ads service page
+- [ ] Add JSON-LD schema to TikTok Ads service page
+- [ ] Add JSON-LD schema to X Ads service page
+- [ ] Add JSON-LD schema to Telegram Ads service page
+- [ ] Add JSON-LD schema to Web Development service page
+- [ ] Add JSON-LD schema to Web Design service page
+- [ ] Add JSON-LD schema to App Development service page
+- [ ] Add JSON-LD schema to Meta Ads landing page
+
+### 2. Blog Admin Panel Integration
+- [x] Add "Блог" menu item to CRM sidebar navigation
+- [x] Verify blog CRUD operations work correctly
+- [x] Add SEO settings to blog post editor (meta title, description, keywords)
+- [x] Add Open Graph tags settings for blog posts
+- [x] Add Twitter Card settings for blog posts
+- [ ] Test blog post creation, editing, and deletion
+- [ ] Verify blog posts display correctly on /blog and /blog/:slug
+
+### 3. SEO Settings for Case Studies
+- [x] Add SEO fields to case_studies table (metaTitle, metaDescription, keywords, ogImage)
+- [x] Update AdminCaseStudies form to include SEO settings
+- [ ] Add SEO component to individual case study pages
+- [ ] Test SEO meta tags display correctly
+
+### 4. SEO Settings for Quizzes
+- [x] Add SEO fields to quizzes table (metaTitle, metaDescription, keywords, ogImage)
+- [ ] Update quiz editor to include SEO settings tab
+- [ ] Add SEO component to quiz pages (/quiz/:slug)
+- [ ] Test SEO meta tags display correctly for all quizzes
+
+### 5. Quiz Editor Synchronization Verification
+- [ ] Test quiz editor preview matches published quiz on desktop (1920px)
+- [ ] Test quiz editor preview matches published quiz on tablet (768px)
+- [ ] Test quiz editor preview matches published quiz on mobile (375px)
+- [ ] Verify all design settings sync correctly (colors, fonts, sizes, alignment)
+- [ ] Verify background images display correctly in editor and published
+- [ ] Test all 16 quizzes for consistency
+
+### 6. A/B Testing Removal
+- [x] Remove "A/B Тестування" from AdminDashboard navigation
+- [x] Remove /admin/ab-testing route from App.tsx
+- [ ] Keep A/B testing backend functionality (may be useful later)
+- [ ] Verify admin panel works without A/B testing link
+
+### 7. Pikachu Overlap Fixes & Lazy Loading
+- [ ] Fix Pikachu overlap on Google Ads page (mobile/tablet)
+- [ ] Fix Pikachu overlap on TikTok Ads page (mobile/tablet)
+- [ ] Fix Pikachu overlap on X Ads page (mobile/tablet)
+- [ ] Fix Pikachu overlap on Telegram Ads page (mobile/tablet)
+- [ ] Fix Pikachu overlap on Web Development page (mobile/tablet)
+- [ ] Fix Pikachu overlap on Web Design page (mobile/tablet)
+- [ ] Fix Pikachu overlap on App Development page (mobile/tablet)
+- [ ] Add lazy loading to all Pikachu images on service pages
+- [ ] Test all pages on mobile (375px, 414px) and tablet (768px, 1024px)
+
+### 8. Floating Stats Cards Optimization
+- [ ] Change floating stats cards visibility from lg:block to md:block
+- [ ] Test cards display correctly on tablets (768px, 1024px)
+- [ ] Adjust card positioning if needed for tablet layout
+- [ ] Verify cards don't overlap content on tablets
+
+### 9. Final Testing & Checkpoint
+- [ ] Run TypeScript check (no errors)
+- [ ] Run LSP check (no errors)
+- [ ] Test all service pages on mobile/tablet/desktop
+- [ ] Test blog admin panel functionality
+- [ ] Test quiz editor synchronization
+- [ ] Save checkpoint with all improvements
+
+
+## Phase 203: URGENT Font Fixes & Text Cleanup (2025-12-31)
+
+### Font Issues:
+- [x] Fix Google Ads page - subtitles use Bungee instead of Eurostile
+- [x] Fix X Ads page - subtitles use Bungee instead of Eurostile
+- [x] Fix TikTok Ads page - subtitles use Bungee instead of Eurostile
+- [x] Fix Telegram Ads page - subtitles use Bungee instead of Eurostile
+- [x] Fix Meta Ads page - subtitles use Bungee instead of Eurostile
+- [x] Fix Web Development page - subtitles use Bungee instead of Eurostile
+- [x] Fix Web Design page - subtitles use Bungee instead of Eurostile
+- [x] Fix App Development page - subtitles use Bungee instead of Eurostile
+
+### Text to Remove:
+- [x] Remove "Кількість заявок залежить від ніші, бюджету та продукту. Потенціал визначаємо під час аудиту." from all service pages
+
+### Font Rules:
+- **Bungee** - ONLY for H1 main headings
+- **Eurostile Bold Extended / Michroma / Anybody** - for ALL other text (subtitles, paragraphs, descriptions)
+
+
+## Phase 204: CRITICAL Quiz Editor Bugs (2025-12-31)
+
+### Quiz List Synchronization
+- [x] Fix quiz list not updating when editor changes are saved
+- [x] Ensure quiz card title/description updates immediately after save
+- [x] Check if refetch() is called after quiz design update
+
+### Mobile Preview Issues
+- [x] Fix text overflow in mobile preview (editor)
+- [x] Add proper responsive classes (text-sm, text-base, etc.)
+- [x] Ensure text wraps correctly on small screens
+- [x] Fix heading font size on mobile (too large)
+
+### Published Quiz Mobile Layout
+- [x] Fix text overflow on published quiz mobile version
+- [x] Add proper word-break and text wrapping
+- [x] Test on actual mobile devices (375px, 390px, 414px)
+- [x] Ensure button fits on screen
+
+### Logo & Name Display
+- [x] Find where logo should be displayed in quiz
+- [x] Add logo image to quiz start page
+- [x] Add quiz name/title display
+- [x] Style logo and name appropriately
+
+### Pikachu Lazy Loading
+- [x] Add loading="lazy" to all Pikachu images on service pages
+- [x] Test lazy loading works correctly
+- [x] Verify images still display properly
